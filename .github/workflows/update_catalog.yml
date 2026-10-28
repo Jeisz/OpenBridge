@@ -1,0 +1,119 @@
+name: update-catalog
+
+# 06:00 America/Bogota (UTC-5) equivale a 11:00 UTC.
+on:
+  schedule:
+    - cron: "0 11 * * *"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "dry-run (predeterminado) o apply (requiere aprobación)"
+        type: choice
+        options:
+          - dry-run
+          - apply
+        default: dry-run
+
+permissions:
+  contents: read
+
+# Evita dos sincronizaciones simultáneas; no cancela una ejecución en curso.
+concurrency:
+  group: update-catalog
+  cancel-in-progress: false
+
+defaults:
+  run:
+    working-directory: data-engineering
+
+jobs:
+  sync:
+    name: Sincronización del catálogo (solo lectura)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      PYTHONUNBUFFERED: "1"
+      OPENBRIDGE_SYNC_TARGET: supabase
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      OPENBRIDGE_SUPABASE_DB_HOST: ${{ secrets.OPENBRIDGE_SUPABASE_DB_HOST }}
+      OPENBRIDGE_SUPABASE_DB_PORT: ${{ secrets.OPENBRIDGE_SUPABASE_DB_PORT }}
+      OPENBRIDGE_SUPABASE_DB_NAME: ${{ secrets.OPENBRIDGE_SUPABASE_DB_NAME }}
+      OPENBRIDGE_SUPABASE_DB_USER: ${{ secrets.OPENBRIDGE_SUPABASE_DB_USER }}
+      OPENBRIDGE_SUPABASE_DB_PASSWORD: ${{ secrets.OPENBRIDGE_SUPABASE_DB_PASSWORD }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: data-engineering/requirements.txt
+
+      - name: Instalar dependencias
+        run: python -m pip install --requirement requirements.txt
+
+      - name: Pruebas offline (sin red ni PostgreSQL)
+        run: python -m pytest tests -q
+
+      - name: Plan de sincronización (dry-run, 0 escrituras)
+        shell: bash
+        run: |
+          set +e
+          python scripts/update_catalog.py \
+            --live \
+            --dry-run \
+            --target supabase \
+            --summary-file "$RUNNER_TEMP/openbridge_sync_summary.md"
+          status=$?
+          set -e
+          case "$status" in
+            0) echo "Plan completo (código 0)." ;;
+            3) echo "::warning::Plan incompleto o sin comparación con el destino (código 3)." ;;
+            *) echo "::error::La sincronización devolvió el código $status"; exit "$status" ;;
+          esac
+
+      # Activación futura de escrituras: deshabilitada por defecto.
+      # Requiere (1) dispatch manual con mode=apply, (2) variable de repositorio
+      # OPENBRIDGE_SYNC_WRITES_ENABLED=true y (3) el secreto de confirmación.
+      # Sin la variable, el paso se omite aunque se solicite apply.
+      - name: Aplicación manual (deshabilitada por defecto)
+        if: >-
+          github.event_name == 'workflow_dispatch' &&
+          inputs.mode == 'apply' &&
+          vars.OPENBRIDGE_SYNC_WRITES_ENABLED == 'true'
+        shell: bash
+        env:
+          OPENBRIDGE_SYNC_ALLOW_WRITES: "1"
+          OPENBRIDGE_SYNC_CONFIRMATION: ${{ secrets.OPENBRIDGE_SYNC_CONFIRMATION }}
+        run: |
+          python scripts/update_catalog.py \
+            --live \
+            --apply \
+            --target supabase \
+            --summary-file "$RUNNER_TEMP/openbridge_sync_summary_apply.md"
+
+      - name: Resumen en la ejecución
+        if: always()
+        shell: bash
+        run: |
+          for file in \
+            "$RUNNER_TEMP/openbridge_sync_summary.md" \
+            "$RUNNER_TEMP/openbridge_sync_summary_apply.md"; do
+            if [ -f "$file" ]; then
+              cat "$file" >> "$GITHUB_STEP_SUMMARY"
+            fi
+          done
+          echo "Resumen de sincronización generado (saneado, sin secretos)." >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Publicar resumen como artefacto
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: openbridge-sync-summary
+          path: |
+            ${{ runner.temp }}/openbridge_sync_summary.md
+            ${{ runner.temp }}/openbridge_sync_summary_apply.md
+          if-no-files-found: ignore
+          retention-days: 14
