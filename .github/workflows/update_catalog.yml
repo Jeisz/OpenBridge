@@ -28,12 +28,14 @@ defaults:
 
 jobs:
   sync:
-    name: Sincronización del catálogo (solo lectura)
+    name: Sincronización del catálogo
     runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
       PYTHONUNBUFFERED: "1"
       OPENBRIDGE_SYNC_TARGET: supabase
+      # Solo lectura por defecto; el paso de escritura la habilita explícitamente.
+      OPENBRIDGE_SYNC_ALLOW_WRITES: "0"
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       OPENBRIDGE_SUPABASE_DB_HOST: ${{ secrets.OPENBRIDGE_SUPABASE_DB_HOST }}
       OPENBRIDGE_SUPABASE_DB_PORT: ${{ secrets.OPENBRIDGE_SUPABASE_DB_PORT }}
@@ -58,6 +60,7 @@ jobs:
         run: python -m pytest tests -q
 
       - name: Plan de sincronización (dry-run, 0 escrituras)
+        if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.mode == 'apply') }}
         shell: bash
         run: |
           set +e
@@ -76,13 +79,14 @@ jobs:
 
       # Activación futura de escrituras: deshabilitada por defecto.
       # Requiere (1) dispatch manual con mode=apply, (2) variable de repositorio
-      # OPENBRIDGE_SYNC_WRITES_ENABLED=true y (3) el secreto de confirmación.
-      # Sin la variable, el paso se omite aunque se solicite apply.
+      # OPENBRIDGE_SYNC_ALLOW_WRITES=1 y (3) el secreto de confirmación
+      # OPENBRIDGE_SYNC_CONFIRMATION. Sin la variable, el paso se omite aunque
+      # se solicite apply; la ejecución programada nunca escribe.
       - name: Aplicación manual (deshabilitada por defecto)
         if: >-
           github.event_name == 'workflow_dispatch' &&
           inputs.mode == 'apply' &&
-          vars.OPENBRIDGE_SYNC_WRITES_ENABLED == 'true'
+          vars.OPENBRIDGE_SYNC_ALLOW_WRITES == '1'
         shell: bash
         env:
           OPENBRIDGE_SYNC_ALLOW_WRITES: "1"

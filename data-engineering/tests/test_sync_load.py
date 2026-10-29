@@ -26,7 +26,12 @@ from sync_load import (  # noqa: E402
     read_catalog_state,
     verify_sync_result,
 )
-from sync_plan import CatalogState, build_sync_plan, validate_plan  # noqa: E402
+from sync_plan import (  # noqa: E402
+    README_UPDATE,
+    CatalogState,
+    build_sync_plan,
+    validate_plan,
+)
 
 TEXT = "# README\n"
 
@@ -239,3 +244,78 @@ def test_second_run_after_update_is_idempotent():
     assert second.writes == 0
     assert engine.repos[42]["stargazers_count"] == 5
     assert engine.repos[42]["content_hash"] == first.actions[0].content_hash
+
+
+def legacy_engine(readme_text=TEXT):
+    """Catálogo con una fila histórica: versión NULL y hash no v1."""
+    repo = repo_row()
+    row = stored_row(repo, version=None, content_hash="0" * 64)
+    return FakeCatalogEngine({42: row}, {42: readme_text}), repo
+
+
+def test_apply_backfills_legacy_hash_and_version_atomically():
+    engine, repo = legacy_engine()
+    plan = plan_for(repo, engine)
+    action = plan.actions[0]
+    assert action.legacy_backfill is True
+    summary = apply(engine, plan)
+    assert summary.updated_repositories == 1
+    assert summary.backfilled_repositories == 1
+    assert engine.repos[42]["content_hash"] == action.content_hash
+    assert engine.repos[42]["content_hash_version"] == HASH_VERSION
+    updates = [
+        sql
+        for sql in engine.statements()
+        if sql.startswith("UPDATE public.catalog_repositories")
+    ]
+    assert len(updates) == 1
+    # Hash y versión se escriben en la misma sentencia (atomicidad).
+    assert "content_hash = :content_hash" in updates[0]
+    assert "content_hash_version = :content_hash_version" in updates[0]
+    assert verify_sync_result(engine, plan) == ()
+
+
+def test_backfill_is_idempotent_on_second_run():
+    engine, repo = legacy_engine()
+    first = plan_for(repo, engine)
+    apply(engine, first)
+    second = plan_for(repo, engine)
+    assert second.writes == 0
+    assert second.legacy_backfill_ids == ()
+    assert second.unchanged_repositories == 1
+    summary = apply(engine, second)
+    assert summary.updated_repositories == 0
+    assert summary.backfilled_repositories == 0
+
+
+def test_backfill_rolls_back_when_readme_write_fails():
+    engine, repo = legacy_engine(readme_text="# viejo\n")
+    engine.fail_readme_for = 42
+    plan = plan_for(repo, engine)
+    assert plan.actions[0].readme_action == README_UPDATE
+    with pytest.raises(RuntimeError):
+        apply(engine, plan)
+    assert engine.repos[42]["content_hash"] == "0" * 64
+    assert engine.repos[42]["content_hash_version"] is None
+    assert engine.readmes[42] == "# viejo\n"
+    assert engine.rollback_count == 1
+
+
+def test_backfill_conflict_is_not_overwritten():
+    engine, repo = legacy_engine()
+    plan = plan_for(repo, engine)
+    engine.repos[42]["content_hash"] = "e" * 64
+    with pytest.raises(LoadPlanError, match="Plan obsoleto"):
+        apply(engine, plan)
+    assert engine.repos[42]["content_hash"] == "e" * 64
+    assert engine.repos[42]["content_hash_version"] is None
+    assert engine.rollback_count == 1
+
+
+def test_backfill_never_deletes_rows():
+    engine, repo = legacy_engine()
+    plan = plan_for(repo, engine)
+    apply(engine, plan)
+    assert 42 in engine.repos
+    assert 42 in engine.readmes
+    assert not any("DELETE" in sql.upper() for sql in engine.statements())

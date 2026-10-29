@@ -17,7 +17,13 @@ from sync_config import (  # noqa: E402
     WRITES_ENABLED_ENV,
     WRITE_CONFIRMATION_ENV,
 )
-from sync_doubles import FakeCatalogEngine, FakeFetcher, record  # noqa: E402
+from sync_doubles import (  # noqa: E402
+    FakeCatalogEngine,
+    FakeFetcher,
+    record,
+    repo_row,
+    stored_row,
+)
 from sync_load import SYNC_WRITE_CONFIRMATION  # noqa: E402
 import update_catalog  # noqa: E402
 
@@ -185,6 +191,83 @@ def test_apply_with_authorization_applies_and_verifies(tmp_path, capsys):
     assert engine.readmes[42] == "# README\n"
     assert "INSERT repositorios=1" in output
     assert "Verificación posterior: hashes y READMEs coinciden" in output
+
+
+def test_dry_run_plans_legacy_backfill_without_writing(tmp_path, capsys):
+    repo = repo_row()
+    legacy = stored_row(repo, version=None, content_hash="0" * 64)
+    engine = FakeCatalogEngine({42: legacy}, {42: "# README\n"})
+    code, factory = run(
+        [
+            "--live",
+            "--dry-run",
+            "--target",
+            "supabase",
+            "--repositories",
+            write_approved(tmp_path, "example/proyecto"),
+        ],
+        environ=BASE_ENV,
+        fetcher=FakeFetcher([record()]),
+        engine=engine,
+    )
+    output = capsys.readouterr().out
+    assert code == update_catalog.EXIT_OK
+    assert [call["read_only"] for call in factory.calls] == [True]
+    assert engine.repos[42]["content_hash_version"] is None
+    assert engine.repos[42]["content_hash"] == "0" * 64
+    assert "Hashes históricos sin versión a recalcular con openbridge-ai-v1: 1" in output
+    assert "0 escrituras ejecutadas (dry-run)" in output
+
+
+def test_apply_backfills_legacy_hash_and_version(tmp_path, capsys):
+    repo = repo_row()
+    legacy = stored_row(repo, version=None, content_hash="0" * 64)
+    engine = FakeCatalogEngine({42: legacy}, {42: "# README\n"})
+    code, factory = run(
+        [
+            "--live",
+            "--apply",
+            "--target",
+            "supabase",
+            "--repositories",
+            write_approved(tmp_path, "example/proyecto"),
+        ],
+        environ=WRITE_ENV,
+        fetcher=FakeFetcher([record()]),
+        engine=engine,
+    )
+    output = capsys.readouterr().out
+    assert code == update_catalog.EXIT_OK
+    assert [call["read_only"] for call in factory.calls] == [True, False, True]
+    assert engine.repos[42]["content_hash_version"] == HASH_VERSION
+    assert engine.repos[42]["content_hash"] != "0" * 64
+    assert len(engine.repos[42]["content_hash"]) == 64
+    assert "backfill de hash=1" in output
+    assert "Verificación posterior: hashes y READMEs coinciden" in output
+
+
+def test_dry_run_preserves_legacy_hash_when_readme_is_unresolved(tmp_path, capsys):
+    repo = repo_row()
+    legacy = stored_row(repo, version=None, content_hash="0" * 64)
+    engine = FakeCatalogEngine({42: legacy}, {42: "# README\n"})
+    code, _ = run(
+        [
+            "--live",
+            "--dry-run",
+            "--target",
+            "supabase",
+            "--repositories",
+            write_approved(tmp_path, "example/proyecto"),
+        ],
+        environ=BASE_ENV,
+        fetcher=FakeFetcher([record(status="ERROR_HTTP")]),
+        engine=engine,
+    )
+    output = capsys.readouterr().out
+    assert code == update_catalog.EXIT_WARNINGS
+    assert "a recalcular con openbridge-ai-v1" not in output
+    assert "README no verificable" in output
+    assert engine.repos[42]["content_hash_version"] is None
 
 
 def test_incomplete_extraction_exits_warnings(tmp_path, capsys):

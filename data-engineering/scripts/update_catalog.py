@@ -346,10 +346,17 @@ def _plan_report(
         )
     if plan.unresolved_readme:
         lines.append("README no verificable: " + ", ".join(plan.unresolved_readme))
-    if plan.legacy_hash_ids:
+    if plan.legacy_backfill_ids:
         lines.append(
-            "Hashes históricos sin versión v1 preservados (IDs): "
-            + ", ".join(str(item) for item in plan.legacy_hash_ids)
+            f"Hashes históricos sin versión a recalcular con {HASH_VERSION}: "
+            f"{plan.backfilled_repositories} (IDs: "
+            + ", ".join(str(item) for item in plan.legacy_backfill_ids)
+            + ")"
+        )
+    if plan.unsupported_version_ids:
+        lines.append(
+            "Hashes con versión no soportada preservados (IDs): "
+            + ", ".join(str(item) for item in plan.unsupported_version_ids)
         )
     if plan.inconsistent_hash_ids:
         lines.append(

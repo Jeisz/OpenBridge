@@ -7,8 +7,11 @@ actualizaciones, registros sin cambios y registros preservados.
 Reglas de seguridad:
 
 * Solo se planifican escrituras para hashes ``openbridge-ai-v1`` verificables.
-* Los hashes históricos sin versión (o de otra versión) se preservan y se
-  informan para una migración separada; nunca se recalculan aquí.
+* Los registros históricos con ``content_hash_version`` NULL se recalculan con
+  el contrato canónico v1 (política aprobada) y se actualizan junto con su
+  versión en la misma transacción, siempre que la extracción sea verificable.
+* Los hashes con una versión distinta y desconocida sí se preservan y se
+  informan: este planificador no reinterpreta contratos ajenos.
 * Un README ausente confirmado por HTTP 404 se distingue de un fallo
   transitorio (red, cuota, contenido inválido): los fallos transitorios no
   producen escrituras y nunca se interpretan como 404.
@@ -110,6 +113,7 @@ class SyncAction:
     content_hash_version: str | None
     previous_content_hash: str | None = None
     previous_content_hash_version: str | None = None
+    legacy_backfill: bool = False
 
     @property
     def writes_repository(self) -> bool:
@@ -130,7 +134,8 @@ class SyncPlan:
 
     actions: tuple[SyncAction, ...]
     warnings: tuple[str, ...] = ()
-    legacy_hash_ids: tuple[int, ...] = ()
+    legacy_backfill_ids: tuple[int, ...] = ()
+    unsupported_version_ids: tuple[int, ...] = ()
     inconsistent_hash_ids: tuple[int, ...] = ()
     unresolved_readme: tuple[str, ...] = ()
     missing_repositories: tuple[str, ...] = ()
@@ -155,6 +160,15 @@ class SyncPlan:
     @property
     def preserved_repositories(self) -> int:
         return self._count("repository_action", REPO_PRESERVE)
+
+    @property
+    def backfilled_repositories(self) -> int:
+        """Registros con versión NULL que se actualizan a v1."""
+        return sum(
+            1
+            for action in self.actions
+            if action.legacy_backfill and action.writes_repository
+        )
 
     @property
     def inserted_readmes(self) -> int:
@@ -383,11 +397,16 @@ def _action(
     content_hash_version: str | None = None,
     previous_content_hash: str | None = None,
     previous_content_hash_version: str | None = None,
+    legacy_backfill: bool = False,
 ) -> SyncAction:
     if repository_action not in REPOSITORY_ACTIONS:
         raise SyncPlanError("Acción de repositorio no permitida")
     if readme_action not in README_ACTIONS:
         raise SyncPlanError("Acción de README no permitida")
+    if legacy_backfill and repository_action != REPO_UPDATE:
+        raise SyncPlanError("Un backfill de hash solo puede ser una actualización")
+    if legacy_backfill and previous_content_hash_version is not None:
+        raise SyncPlanError("Un backfill exige que la versión previa sea NULL")
     return SyncAction(
         github_id=github_id,
         full_name=full_name,
@@ -400,6 +419,7 @@ def _action(
         content_hash_version=content_hash_version,
         previous_content_hash=previous_content_hash,
         previous_content_hash_version=previous_content_hash_version,
+        legacy_backfill=legacy_backfill,
     )
 
 
@@ -488,7 +508,8 @@ def build_sync_plan(
 
     actions: list[SyncAction] = []
     warnings: list[str] = []
-    legacy_ids: list[int] = []
+    backfill_ids: list[int] = []
+    unsupported_ids: list[int] = []
     inconsistent_ids: list[int] = []
     unresolved: list[str] = []
 
@@ -554,23 +575,18 @@ def build_sync_plan(
             ))
             continue
 
-        if stored.content_hash_version != HASH_VERSION:
-            legacy_ids.append(identifier)
-            reason = (
-                "hash_version_missing"
-                if stored.content_hash_version is None
-                else f"hash_version_unsupported:{stored.content_hash_version}"
-            )
+        if stored.content_hash_version not in (None, HASH_VERSION):
+            unsupported_ids.append(identifier)
             warnings.append(
-                f"{full_name}: hash sin versión {HASH_VERSION}; "
-                "se preserva para una migración separada"
+                f"{full_name}: versión de hash no soportada "
+                f"({stored.content_hash_version}); se preserva sin reinterpretarla"
             )
             actions.append(_action(
                 github_id=identifier,
                 full_name=full_name,
                 repository_action=REPO_PRESERVE,
                 readme_action=README_PRESERVE,
-                reasons=(reason,),
+                reasons=(f"hash_version_unsupported:{stored.content_hash_version}",),
                 repository=repository,
                 readme_text=None,
             ))
@@ -613,6 +629,37 @@ def build_sync_plan(
         metadata_changed, topics_unverifiable = _metadata_changes(stored, repository)
         readme_changed = readme_state == README_AVAILABLE and stored.readme_text != text
         readme_row_missing = readme_state == README_AVAILABLE and not stored.has_readme_row
+
+        if stored.content_hash_version is None:
+            reasons = ["legacy_hash_backfill"]
+            if metadata_changed or topics_unverifiable:
+                reasons.append("metadata_changed")
+            if readme_changed or readme_row_missing:
+                reasons.append("readme_changed")
+            if readme_row_missing:
+                backfill_readme_action = README_INSERT
+            elif readme_changed:
+                backfill_readme_action = README_UPDATE
+            elif stored.has_readme_row:
+                backfill_readme_action = README_UNCHANGED
+            else:
+                backfill_readme_action = README_NONE
+            backfill_ids.append(identifier)
+            actions.append(_action(
+                github_id=identifier,
+                full_name=full_name,
+                repository_action=REPO_UPDATE,
+                readme_action=backfill_readme_action,
+                reasons=tuple(reasons),
+                repository=repository,
+                readme_text=text,
+                content_hash=content_hash,
+                content_hash_version=HASH_VERSION,
+                previous_content_hash=stored.content_hash,
+                previous_content_hash_version=None,
+                legacy_backfill=True,
+            ))
+            continue
 
         if content_hash == stored.content_hash:
             if readme_changed:
@@ -752,7 +799,8 @@ def build_sync_plan(
     return SyncPlan(
         actions=tuple(actions),
         warnings=tuple(warnings),
-        legacy_hash_ids=tuple(legacy_ids),
+        legacy_backfill_ids=tuple(backfill_ids),
+        unsupported_version_ids=tuple(unsupported_ids),
         inconsistent_hash_ids=tuple(inconsistent_ids),
         unresolved_readme=tuple(unresolved),
         missing_repositories=missing,
@@ -824,6 +872,24 @@ def validate_plan(plan: SyncPlan) -> None:
                 raise SyncPlanError("Una acción preservada no puede declarar hash nuevo")
             if action.writes_anything:
                 raise SyncPlanError("Una acción preservada no puede escribir")
+
+        if action.legacy_backfill:
+            if action.repository_action != REPO_UPDATE:
+                raise SyncPlanError(
+                    "Un backfill de hash histórico debe ser una actualización"
+                )
+            if action.previous_content_hash_version is not None:
+                raise SyncPlanError(
+                    "Un backfill exige una versión previa NULL en el plan"
+                )
+        elif (
+            action.repository_action == REPO_UPDATE
+            and action.previous_content_hash_version != HASH_VERSION
+        ):
+            raise SyncPlanError(
+                f"Actualización de un hash no {HASH_VERSION} sin backfill declarado "
+                f"para {action.full_name}"
+            )
 
         if action.content_hash is not None:
             if action.content_hash_version != HASH_VERSION:

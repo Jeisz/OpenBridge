@@ -216,17 +216,106 @@ def test_ambiguous_readme_state_is_rejected():
         build_sync_plan(result, CatalogState.empty(), approved=("example/proyecto",))
 
 
-def test_legacy_hash_without_version_is_preserved():
+def test_legacy_hash_without_version_is_backfilled():
     result = transformed(record())
     repo = result.repositories[0]
     text = result.readmes[0]["readme_text"]
     row = stored_row(repo, text=text, version=None)
     plan = plan_for(result, state_from(row, text=text))
     action = plan.actions[0]
+    assert action.repository_action == REPO_UPDATE
+    assert action.readme_action == README_UNCHANGED
+    assert action.legacy_backfill is True
+    assert action.content_hash_version == HASH_VERSION
+    assert action.previous_content_hash == row["content_hash"]
+    assert action.previous_content_hash_version is None
+    # El hash recalculado coincide con el almacenado: aun así se actualiza la versión.
+    assert action.content_hash == row["content_hash"]
+    assert "legacy_hash_backfill" in action.reasons
+    assert plan.backfilled_repositories == 1
+    assert plan.legacy_backfill_ids == (repo["github_id"],)
+    assert plan.unchanged_repositories == 0
+    assert plan.incomplete is False
+
+
+def test_legacy_backfill_replaces_stale_hash():
+    result = transformed(record())
+    repo = result.repositories[0]
+    text = result.readmes[0]["readme_text"]
+    row = stored_row(repo, text=text, version=None, content_hash="0" * 64)
+    plan = plan_for(result, state_from(row, text=text))
+    action = plan.actions[0]
+    assert action.repository_action == REPO_UPDATE
+    assert action.legacy_backfill is True
+    assert action.previous_content_hash == "0" * 64
+    assert action.content_hash != "0" * 64
+    assert action.content_hash == content_hash_v1(repo, text)
+
+
+def test_legacy_backfill_accepts_missing_stored_hash():
+    result = transformed(record())
+    repo = result.repositories[0]
+    text = result.readmes[0]["readme_text"]
+    row = stored_row(repo, text=text, version=None)
+    row["content_hash"] = None
+    plan = plan_for(result, state_from(row, text=text))
+    action = plan.actions[0]
+    assert action.repository_action == REPO_UPDATE
+    assert action.legacy_backfill is True
+    assert action.previous_content_hash is None
+    assert action.previous_content_hash_version is None
+    assert action.content_hash == content_hash_v1(repo, text)
+
+
+def test_legacy_backfill_inserts_missing_readme_row():
+    result = transformed(record())
+    repo = result.repositories[0]
+    text = result.readmes[0]["readme_text"]
+    row = stored_row(repo, version=None)
+    plan = plan_for(result, state_from(row, text=None))
+    action = plan.actions[0]
+    assert action.legacy_backfill is True
+    assert action.readme_action == README_INSERT
+    assert action.readme_text == text
+    assert action.content_hash == content_hash_v1(repo, text)
+
+
+def test_legacy_backfill_with_unresolved_readme_writes_nothing():
+    result = transformed(record(status="ERROR_HTTP"))
+    repo = result.repositories[0]
+    row = stored_row(repo, text=TEXT, version=None)
+    plan = plan_for(result, state_from(row, text=TEXT))
+    action = plan.actions[0]
     assert action.repository_action == REPO_PRESERVE
-    assert plan.legacy_hash_ids == (repo["github_id"],)
+    assert action.legacy_backfill is False
+    assert plan.legacy_backfill_ids == ()
     assert plan.writes == 0
-    assert any("sin versión" in warning for warning in plan.warnings)
+    assert plan.incomplete is True
+
+
+def test_legacy_backfill_with_stored_readme_and_404_writes_nothing():
+    result = transformed(record(status="NO_ENCONTRADO"))
+    repo = result.repositories[0]
+    row = stored_row(repo, text=TEXT, version=None)
+    plan = plan_for(result, state_from(row, text=TEXT))
+    action = plan.actions[0]
+    assert action.repository_action == REPO_PRESERVE
+    assert "stored_readme_missing_upstream" in action.reasons
+    assert plan.writes == 0
+
+
+def test_unsupported_hash_version_is_preserved():
+    result = transformed(record())
+    repo = result.repositories[0]
+    text = result.readmes[0]["readme_text"]
+    row = stored_row(repo, text=text, version="openbridge-ai-v0")
+    plan = plan_for(result, state_from(row, text=text))
+    action = plan.actions[0]
+    assert action.repository_action == REPO_PRESERVE
+    assert action.reasons == ("hash_version_unsupported:openbridge-ai-v0",)
+    assert plan.unsupported_version_ids == (repo["github_id"],)
+    assert plan.legacy_backfill_ids == ()
+    assert plan.writes == 0
 
 
 def test_identity_conflict_is_preserved():
@@ -308,12 +397,54 @@ def test_validate_plan_rejects_preserve_with_new_hash():
     result = transformed(record())
     repo = result.repositories[0]
     text = result.readmes[0]["readme_text"]
-    plan = plan_for(result, state_from(stored_row(repo, text=text, version=None)))
+    row = stored_row(repo, text=text, full_name="example/antiguo")
+    plan = plan_for(result, state_from(row, text=text))
     tampered = replace(
         plan,
         actions=(replace(plan.actions[0], content_hash="c" * 64),),
     )
     with pytest.raises(SyncPlanError, match="preservada"):
+        validate_plan(tampered)
+
+
+def test_validate_plan_rejects_backfill_with_previous_version():
+    result = transformed(record())
+    repo = result.repositories[0]
+    text = result.readmes[0]["readme_text"]
+    row = stored_row(repo, text=text, version=None)
+    plan = plan_for(result, state_from(row, text=text))
+    tampered = replace(
+        plan,
+        actions=(
+            replace(plan.actions[0], previous_content_hash_version=HASH_VERSION),
+        ),
+    )
+    with pytest.raises(SyncPlanError, match="backfill exige"):
+        validate_plan(tampered)
+
+
+def test_validate_plan_rejects_non_v1_update_without_backfill_flag():
+    result = transformed(record())
+    repo = result.repositories[0]
+    text = result.readmes[0]["readme_text"]
+    row = stored_row(repo, text=text, version=None)
+    plan = plan_for(result, state_from(row, text=text))
+    tampered = replace(
+        plan,
+        actions=(replace(plan.actions[0], legacy_backfill=False),),
+    )
+    with pytest.raises(SyncPlanError, match="sin backfill"):
+        validate_plan(tampered)
+
+
+def test_validate_plan_rejects_backfill_on_insert():
+    result = transformed(record())
+    plan = plan_for(result)
+    tampered = replace(
+        plan,
+        actions=(replace(plan.actions[0], legacy_backfill=True),),
+    )
+    with pytest.raises(SyncPlanError, match="backfill"):
         validate_plan(tampered)
 
 

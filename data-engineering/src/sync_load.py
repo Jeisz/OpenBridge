@@ -5,6 +5,8 @@ Complementa ``load.py`` (carga inicial insert-only) con la aplicación de un
 
 * lectura del estado en transacción de solo lectura;
 * aplicación transaccional de INSERT/UPDATE con control optimista de versión;
+* recalculación de hashes históricos sin versión: ``content_hash`` y
+  ``content_hash_version`` se escriben en la misma sentencia UPDATE;
 * verificación posterior de hashes y READMEs.
 
 No ejecuta DDL y no contiene ninguna sentencia DELETE. La API de escritura
@@ -116,12 +118,14 @@ class SyncSummary:
     unchanged_repositories: int
     preserved_repositories: int
     elapsed_seconds: float
+    backfilled_repositories: int = 0
 
     def to_line(self) -> str:
         return (
             "INSERT repositorios={i} | UPDATE repositorios={u} | "
             "INSERT READMEs={ri} | UPDATE READMEs={ru} | "
-            "sin cambios={n} | preservados={p} | {s:.3f}s"
+            "sin cambios={n} | preservados={p} | "
+            "backfill de hash={b} | {s:.3f}s"
         ).format(
             i=self.inserted_repositories,
             u=self.updated_repositories,
@@ -129,6 +133,7 @@ class SyncSummary:
             ru=self.updated_readmes,
             n=self.unchanged_repositories,
             p=self.preserved_repositories,
+            b=self.backfilled_repositories,
             s=self.elapsed_seconds,
         )
 
@@ -362,6 +367,7 @@ def apply_sync_plan(
         unchanged_repositories=unchanged,
         preserved_repositories=preserved,
         elapsed_seconds=time.monotonic() - started,
+        backfilled_repositories=plan.backfilled_repositories,
     )
 
 
