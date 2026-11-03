@@ -2,8 +2,8 @@ import {memo,useCallback,useEffect,useRef,useState} from 'react';
 import {SlidersHorizontal,X} from 'lucide-react';
 import LightRays from './components/LightRays/LightRays';
 
-// React Bits Searchlight preset plus the user's Background Studio URL overrides.
-const defaults={color:'#ffffff',raysOrigin:'top-center',raysSpeed:1.3,lightSpread:.1,rayLength:3.8,rayDensity:2.2,tilt:17,raySharpness:.2,glow:.7,haze:.15,atmosphere:1,intensity:1.25,fadeDistance:2,saturation:1.2,mouseInfluence:.65,noiseAmount:.11};
+import defaults from './data/background-light.json';
+
 const storageKey='openbridge-light-rays-v1';
 const origins={'top-left':'Arriba izquierda','top-center':'Arriba centro','top-right':'Arriba derecha',left:'Izquierda',right:'Derecha','bottom-left':'Abajo izquierda','bottom-center':'Abajo centro','bottom-right':'Abajo derecha'};
 const groups=[
