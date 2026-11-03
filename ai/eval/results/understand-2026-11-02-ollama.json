@@ -1,0 +1,1603 @@
+[
+  {
+    "provider": "ollama",
+    "run": 1,
+    "case": "clinica-citas",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "Permitir que los pacientes inicien sesión con su cuenta",
+          "evidence": "con su cuenta"
+        },
+        {
+          "category": "payments",
+          "query": "Procesar la cobranza de un abono al reservar",
+          "evidence": "paguen un abono al reservar"
+        },
+        {
+          "category": "communication",
+          "query": "Enviar recordatorios a pacientes por WhatsApp o correo",
+          "evidence": "reciban recordatorios por WhatsApp o correo"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 3.51,
+    "input_tokens": 1899,
+    "output_tokens": 159,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 1,
+    "case": "tienda-ropa",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "search",
+          "query": "Busca productos tolerante a errores ortográfico",
+          "evidence": "un buscador que encuentre productos aunque el cliente escriba mal"
+        },
+        {
+          "category": "payments",
+          "query": "Procesa pagos con tarjeta y PSE",
+          "evidence": "pagos con tarjeta y PSE"
+        },
+        {
+          "category": "analytics",
+          "query": "Haga dashboards de lo que se vende más por producto",
+          "evidence": "ver qué productos se venden más"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 2.85,
+    "input_tokens": 1910,
+    "output_tokens": 119,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 1,
+    "case": "academia-online",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "frontend",
+          "query": "crear interfaz para ver clases y gestionar pagos",
+          "evidence": "\"los alumnos entran\", \"ven las clases grabadas\""
+        },
+        {
+          "category": "auth",
+          "query": "permitir inicio de sesión con cuenta única",
+          "evidence": "\"los alumnos entran con su cuenta\""
+        },
+        {
+          "category": "payments",
+          "query": "cobrar mensualidad de manera recurrente",
+          "evidence": "\"pagan la mensualidad\""
+        },
+        {
+          "category": "search",
+          "query": "buscar material usando contexto semántico",
+          "evidence": "\"responda dudas con nuestro material\""
+        },
+        {
+          "category": "ai",
+          "query": "ejecutar modelo para generar respuestas a preguntas",
+          "evidence": "\"tienen un chatbot que responde\""
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 3.91,
+    "input_tokens": 1896,
+    "output_tokens": 179,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 1,
+    "case": "logistica-flota",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "messaging",
+          "query": "Recibir y enviar mensajes entre servicios o procesos",
+          "evidence": "\"quieren procesar esos eventos en tiempo real\""
+        },
+        {
+          "category": "data-processing",
+          "query": "Mover, transformar y calcular datos por lotes o en tiempo real",
+          "evidence": "\"Cada camión envía su ubicación cada pocos segundos\""
+        },
+        {
+          "category": "database",
+          "query": "Almacenar información estructurada y consultarla desde el código",
+          "evidence": "\"guardarlos\""
+        },
+        {
+          "category": "analytics",
+          "query": "Medir eventos y mostrar tableros de negocio con dashboards",
+          "evidence": "\"ver tableros de entregas por ciudad\""
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 4.72,
+    "input_tokens": 1903,
+    "output_tokens": 218,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 1,
+    "case": "soporte-ia",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "ai",
+          "query": "Ejecutar modelos de IA con RAG en los propios servidores",
+          "evidence": "con un modelo que corra en sus propios servidores, su documentación"
+        },
+        {
+          "category": "search",
+          "query": "Buscar texto completo dentro de la base de datos",
+          "evidence": "un buscador para su centro de ayuda"
+        },
+        {
+          "category": "analytics",
+          "query": "Medir tiempos de respuesta y tasas de fallo del asistente",
+          "evidence": "saber cuánto tarda y cuántas veces falla el asistente"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 3.87,
+    "input_tokens": 1906,
+    "output_tokens": 158,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 1,
+    "case": "periodico-digital",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "cms",
+          "query": "Editar contenido y publicarlo para la web",
+          "evidence": "editores sencillo"
+        },
+        {
+          "category": "frontend",
+          "query": "Ofrecer experiencia web rápida",
+          "evidence": "sitio web muy rápido"
+        },
+        {
+          "category": "communication",
+          "query": "Enviar boletín diario por correo",
+          "evidence": "enviar el boletín diario por correo"
+        },
+        {
+          "category": "analytics",
+          "query": "Medir lecturas para identificar notas populares",
+          "evidence": "saber qué notas se leen más"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 4.32,
+    "input_tokens": 1894,
+    "output_tokens": 191,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 1,
+    "case": "pantalla-saas-largo",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "Gestionar autenticación multi-società y gestión de roles",
+          "evidence": "SSO mediante OIDC y RBAC por organización"
+        },
+        {
+          "category": "database",
+          "query": "Proteger datos con aislamiento a nivel de base de datos",
+          "evidence": "SaaS multi-tenant con aislamiento de datos"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 2.84,
+    "input_tokens": 1881,
+    "output_tokens": 124,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 1,
+    "case": "pantalla-rag-largo",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "search",
+          "query": "Permita búsqueda híbrida de documentos con texto completo y semántica.",
+          "evidence": "\"RAG privado con búsqueda híbrida\""
+        },
+        {
+          "category": "auth",
+          "query": "Gestione permisos específicos por documento para el usuario.",
+          "evidence": "\"permisos por documento\""
+        },
+        {
+          "category": "ai",
+          "query": "Integre modelos de IA alojados localmente sin servicios externos.",
+          "evidence": "\"modelos alojados en nuestra infraestructura\""
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 3.67,
+    "input_tokens": 1882,
+    "output_tokens": 167,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 1,
+    "case": "pantalla-api-largo",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "backend",
+          "query": "Prover una API escableble con alta disponibilidad",
+          "evidence": "Propón una API de alta disponibilidad"
+        },
+        {
+          "category": "database",
+          "query": "Almacenar datos en una base de datos relacional PostgreSQL",
+          "evidence": "PostgreSQL"
+        },
+        {
+          "category": "cache",
+          "query": "Implementar un caché distribuido para responder rápidamente",
+          "evidence": "caché distribuida"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 3.07,
+    "input_tokens": 1885,
+    "output_tokens": 135,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 1,
+    "case": "pantalla-saas-corto",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "Gestionar inicio de sesión único, roles por organización y permisos",
+          "evidence": "SaaS multiempresa con autenticación y roles por organización"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.92,
+    "input_tokens": 1873,
+    "output_tokens": 76,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 1,
+    "case": "pantalla-rag-corto",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "search",
+          "query": "buscar texto en documentos privados",
+          "evidence": "'consultar documentos'"
+        },
+        {
+          "category": "auth",
+          "query": "gestionar permisos de acceso restrictivo",
+          "evidence": "'con permisos de acceso'"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 2.37,
+    "input_tokens": 1871,
+    "output_tokens": 100,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 1,
+    "case": "pantalla-api-corto",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "backend",
+          "query": "construir una arquitectura de APIs escalable",
+          "evidence": "Diseña una API"
+        },
+        {
+          "category": "cache",
+          "query": "implementar almacenamiento temporal en memoria para mejorar rendimiento",
+          "evidence": "con caché"
+        },
+        {
+          "category": "infrastructure",
+          "query": "orquestar servicios con alta disponibilidad y escalado horizontal",
+          "evidence": "escalado horizontal"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 3.31,
+    "input_tokens": 1872,
+    "output_tokens": 149,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 1,
+    "case": "pantalla-eventos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "payments",
+          "query": "Orquestar pagos y cobros en línea",
+          "evidence": "\"procesar pagos\""
+        },
+        {
+          "category": "messaging",
+          "query": "Mantener colas de mensajes de eventos",
+          "evidence": "\"orientada a eventos con colas\""
+        },
+        {
+          "category": "backend",
+          "query": "Garantizar la idempotencia de las operaciones",
+          "evidence": "\"reintentos e idempotencia\""
+        },
+        {
+          "category": "database",
+          "query": "Almacenar los estados transaccionales y reintentos",
+          "evidence": "nada"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 3.34,
+    "input_tokens": 1881,
+    "output_tokens": 145,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 1,
+    "case": "pantalla-observabilidad",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "observability",
+          "query": "Medir métricas, logs y trazas distribuidados",
+          "evidence": "stack de observabilidad con métricas, logs y trazas distribuidos"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.86,
+    "input_tokens": 1880,
+    "output_tokens": 69,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 1,
+    "case": "una-busqueda",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "search",
+          "query": "Buscar texto con corrección de fallos ortográficos",
+          "evidence": "\"buscador de productos\" ... \"escritba mal\""
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.9,
+    "input_tokens": 1878,
+    "output_tokens": 73,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 1,
+    "case": "una-pagos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "payments",
+          "query": "cobrar pagos recurrentes",
+          "evidence": "'suscripciones mensuales'}]"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.51,
+    "input_tokens": 1871,
+    "output_tokens": 42,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 1,
+    "case": "vago-mejorar-negocio",
+    "error": null,
+    "data": {
+      "needs": [],
+      "clarification_questions": [
+        "¿En qué fase del ciclo de vida operam tu empresa actualmente?",
+        "¿Qué problemas específicos necesitas resolver para considerar la 'modernización'?",
+        "¿Tienes ya alguna arquitectura técnica definida o prefieres desde cero?"
+      ]
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.81,
+    "input_tokens": 1871,
+    "output_tokens": 72,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 1,
+    "case": "vago-startup",
+    "error": null,
+    "data": {
+      "needs": [],
+      "clarification_questions": [
+        "¿Qué tipo de negocio o servicio va a ofrecer?",
+        "¿De qué manera interactúan las personas con su aplicación?",
+        "¿Existen requisitos específicos de tecnología que considere usar?"
+      ]
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.65,
+    "input_tokens": 1872,
+    "output_tokens": 64,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 2,
+    "case": "clinica-citas",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "frontend",
+          "query": "Construir interfaz para reserva de citas en línea",
+          "evidence": "\"pacientes reserven citas en linea con su cuenta\""
+        },
+        {
+          "category": "auth",
+          "query": "Gestionar inicio de sesión y registro de usuarios",
+          "evidence": "\"con su cuenta\", \"reserven\" (implícito)"
+        },
+        {
+          "category": "payments",
+          "query": "Procesar pagos al reservar una cita",
+          "evidence": "\"paguen un abono al reservar\""
+        },
+        {
+          "category": "communication",
+          "query": "Enviar notificaciones por WhatsApp o correo electrónico",
+          "evidence": "\"reciban recordatorios por WhatsApp o correo\""
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 4.4,
+    "input_tokens": 1899,
+    "output_tokens": 201,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 2,
+    "case": "tienda-ropa",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "search",
+          "query": "Buscar productos con autocompletado tolerante a errores",
+          "evidence": "un buscador que encuentre productos aunque el cliente escriba mal"
+        },
+        {
+          "category": "payments",
+          "query": "Procesar pagos con tarjeta y PSE",
+          "evidence": "pagos con tarjeta y PSE"
+        },
+        {
+          "category": "storage",
+          "query": "Guardar copias de seguridad de facturas en el cloud",
+          "evidence": "que cada venta pase sola a nuestra hoja de cálculo contable"
+        },
+        {
+          "category": "analytics",
+          "query": "Mostrar gráficos de los productos más vendidos",
+          "evidence": "ver qué productos se venden más"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 4.56,
+    "input_tokens": 1910,
+    "output_tokens": 215,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 2,
+    "case": "academia-online",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "Gestionar inicio de sesión y registro para usuarios",
+          "evidence": "\"los alumnos entran con su cuenta\""
+        },
+        {
+          "category": "database",
+          "query": "Almacenar información de clases, suscripciones y usuarios",
+          "evidence": "\"ven las clases grabadas que subimos\"; \"paguen la mensualidad\""
+        },
+        {
+          "category": "frontend",
+          "query": "Mostrar lista de clases grabadas y dashboard del alumno",
+          "evidence": "\"ven las clases grabadas\""
+        },
+        {
+          "category": "payments",
+          "query": "Procesar pagos recurrentes mensuales por suscripción",
+          "evidence": "\"paguen la mensualidad\""
+        },
+        {
+          "category": "ai",
+          "query": "Servir un chatbot entrenado con material educativo",
+          "evidence": "\"tienen un chatbot que responde dudas con nuestro material\""
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 5.31,
+    "input_tokens": 1896,
+    "output_tokens": 248,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 2,
+    "case": "logistica-flota",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "messaging",
+          "query": "procesar eventos en tiempo real",
+          "evidence": "Cada camión envía su ubicación cada pocos segundos; quieren procesar esos eventos en tiempo real"
+        },
+        {
+          "category": "database",
+          "query": "guardar y consultar millones de registros de ubicación",
+          "evidence": "procesar esos eventos... guardarlos"
+        },
+        {
+          "category": "analytics",
+          "query": "ver tableros de entregas por ciudad",
+          "evidence": "y ver tableros de entregas por ciudad"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 3.66,
+    "input_tokens": 1903,
+    "output_tokens": 168,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 2,
+    "case": "soporte-ia",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "search",
+          "query": "buscar texto completo y semántico dentro de la documentación",
+          "evidence": "...usando su documentación..."
+        },
+        {
+          "category": "ai",
+          "query": "generar respuestas a clientes basadas en el contexto disponible",
+          "evidence": "...un modelo que corra en sus propios servidores..."
+        },
+        {
+          "category": "observability",
+          "query": "medir latencia y tasa de fallos del asistente",
+          "evidence": "...saber cuánto tarda y cuántas veces falla el asistente."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 3.35,
+    "input_tokens": 1906,
+    "output_tokens": 150,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 2,
+    "case": "periodico-digital",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "cms",
+          "query": "permitir a periodistas escribir, editar y publicar contenido textual e imagen.",
+          "evidence": "los periodistas publiquen desde un editor sencillo"
+        },
+        {
+          "category": "frontend",
+          "query": "renderizar una interfaz web de lectura de artículos optimizada para velocidad.",
+          "evidence": "un sitio web muy rápido"
+        },
+        {
+          "category": "communication",
+          "query": "enviar notificaciones periódicas (correo electrónico) a los suscriptores.",
+          "evidence": "el boletín diario por correo"
+        },
+        {
+          "category": "analytics",
+          "query": "medir el uso del producto para identificar las noticias más populares.",
+          "evidence": "saber qué notas se leen más"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 4.27,
+    "input_tokens": 1894,
+    "output_tokens": 197,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 2,
+    "case": "pantalla-saas-largo",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "Aislar los datos entre diferentes organizaciones (tenantes)",
+          "evidence": "\"aislamiento de datos\""
+        },
+        {
+          "category": "auth",
+          "query": "Gestionar inicio de sesión único y permisos por organización",
+          "evidence": "\"SSO mediante OIDC\", \"RBAC por organización\""
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 2.71,
+    "input_tokens": 1881,
+    "output_tokens": 113,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 2,
+    "case": "pantalla-rag-largo",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "search",
+          "query": "Realizar busca híbrida de texto y vectorial con filtros de documentos",
+          "evidence": "búsqueda híbrida"
+        },
+        {
+          "category": "auth",
+          "query": "Gestionar permisos basado en documentos específicos",
+          "evidence": "permisos por documento"
+        },
+        {
+          "category": "backend",
+          "query": "Proveyer API para inferencia de LLMs locales en entorno privado",
+          "evidence": "modelos alojados en nuestra infraestructura"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 3.61,
+    "input_tokens": 1882,
+    "output_tokens": 163,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 2,
+    "case": "pantalla-api-largo",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "Bases de datos para manejar grandes volúmenes de datos",
+          "evidence": "PostgreSQL"
+        },
+        {
+          "category": "cache",
+          "query": "Caché distribuida para respuesta rápida y escalado horizontal",
+          "evidence": "caché distribuida"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [
+      "si hay necesidades, clarification_questions debe ir vacía"
+    ],
+    "problems_final": [],
+    "seconds": 5.62,
+    "input_tokens": 3961,
+    "output_tokens": 259,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 2,
+    "case": "pantalla-saas-corto",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "Gestionar inicio de sesión, registro y permisos por rol.",
+          "evidence": "con autenticación"
+        },
+        {
+          "category": "backend",
+          "query": "Soportar lógica multiempresa con aislamiento de datos.",
+          "evidence": "SaaS multiempresa... roles por organización"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [
+      "si hay necesidades, clarification_questions debe ir vacía"
+    ],
+    "problems_final": [],
+    "seconds": 6.1,
+    "input_tokens": 3956,
+    "output_tokens": 283,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 2,
+    "case": "pantalla-rag-corto",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "ai",
+          "query": "Crear aplicaciones de inferencia con modelos LLM",
+          "evidence": "RAG privado"
+        },
+        {
+          "category": "database",
+          "query": "Almacenar vectores y documentos estructurados",
+          "evidence": "consultar documentos"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 2.22,
+    "input_tokens": 1871,
+    "output_tokens": 87,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 2,
+    "case": "pantalla-api-corto",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "backend",
+          "query": "Construir lógica del servidor de la API",
+          "evidence": "Diseña una API"
+        },
+        {
+          "category": "cache",
+          "query": "Implementar caché en memoria para rendimiendo",
+          "evidence": "con caché"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [
+      "si hay necesidades, clarification_questions debe ir vacía"
+    ],
+    "problems_final": [],
+    "seconds": 5.31,
+    "input_tokens": 3923,
+    "output_tokens": 244,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 2,
+    "case": "pantalla-eventos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "messaging",
+          "query": "Procesar mensajes síncronos y asincrónicos en colas",
+          "evidence": "colas para reintentos"
+        },
+        {
+          "category": "payments",
+          "query": "Integración de pasarela de pago con facturación",
+          "evidence": "procesar pagos"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 2.67,
+    "input_tokens": 1881,
+    "output_tokens": 116,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 2,
+    "case": "pantalla-observabilidad",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "observability",
+          "query": "Monitorear sistemas en producción con métricas, logs y trazas.",
+          "evidence": "Define un stack de observabilidad con métricas, logs y trazas distribuidas"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 2.12,
+    "input_tokens": 1880,
+    "output_tokens": 79,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 2,
+    "case": "una-busqueda",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "search",
+          "query": "buscar texto con tolerancia a errores",
+          "evidence": "buscador de productos que encuentre resultados aunque el cliente escriba mal."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.84,
+    "input_tokens": 1878,
+    "output_tokens": 73,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 2,
+    "case": "una-pagos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "payments",
+          "query": "Cobrar suscripciones mensuales a clientes",
+          "evidence": "\"Necesito cobrar suscripciones mensuales a los clientes de mi software\""
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.82,
+    "input_tokens": 1871,
+    "output_tokens": 73,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 2,
+    "case": "vago-mejorar-negocio",
+    "error": null,
+    "data": {
+      "needs": [],
+      "clarification_questions": [
+        "¿Qué tipo de negocio es y qué servicios ofrece?",
+        "¿Con qué herramientas tienes actualmente operando tu sistema?",
+        "¿Qué funcionalidad específica necesitas implementar o mejorar?"
+      ]
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.63,
+    "input_tokens": 1871,
+    "output_tokens": 62,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 2,
+    "case": "vago-startup",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "frontend",
+          "query": "Construya una interfaz en el navegador o móvil.",
+          "evidence": "quiero saber qué tecnologías usar"
+        },
+        {
+          "category": "backend",
+          "query": "Construya la lógica del servidor y las APIs.",
+          "evidence": "Tengo una idea de startup y quiero saber qué tecnologías usar"
+        },
+        {
+          "category": "database",
+          "query": "Almacene y gestione los datos estructurados.",
+          "evidence": "quiero saber qué tecnologías usar"
+        },
+        {
+          "category": "infrastructure",
+          "query": "Ejecute y desplegue la aplicación.",
+          "evidence": "Tengo una idea de startup"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 4.36,
+    "input_tokens": 1872,
+    "output_tokens": 206,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 3,
+    "case": "clinica-citas",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "Gestionar autenticación de usuarios y roles",
+          "evidence": "reserven citas en línea con su cuenta"
+        },
+        {
+          "category": "communication",
+          "query": "Enviar notificaciones por WhatsApp o correo",
+          "evidence": "reciban recordatorios por WhatsApp o correo"
+        },
+        {
+          "category": "payments",
+          "query": "Procesar pagos de abono al reservar",
+          "evidence": "paguen un abono al reservar"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 3.48,
+    "input_tokens": 1899,
+    "output_tokens": 158,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 3,
+    "case": "tienda-ropa",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "frontend",
+          "query": "construir una interfaz web para mostrar productos",
+          "evidence": "un buscador que encuentre productos aunque el cliente escriba mal"
+        },
+        {
+          "category": "search",
+          "query": "buscar productos con corrección de faltas ortográficas",
+          "evidence": "pagos con tarjeta y PSE"
+        },
+        {
+          "category": "payments",
+          "query": "procesar pagos con tarjetas bancarias y transferencias",
+          "evidence": "pagos con tarjeta y PSE"
+        },
+        {
+          "category": "ai",
+          "query": "corregir faltas ortográficas durante la búsqueda",
+          "evidence": "un buscador que encuentre productos aunque el cliente escriba mal"
+        },
+        {
+          "category": "data-processing",
+          "query": "sincronizar ventas automáticamente a una hoja de cálculo",
+          "evidence": "que cada venta pase sola a nuestra hoja de cálculo contable"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [
+      "si hay necesidades, clarification_questions debe ir vacía"
+    ],
+    "problems_final": [],
+    "seconds": 11.39,
+    "input_tokens": 4140,
+    "output_tokens": 551,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 3,
+    "case": "academia-online",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "Gestionar inicio de sesión y registro de alumnos",
+          "evidence": "los alumnos entran con su cuenta"
+        },
+        {
+          "category": "storage",
+          "query": "Guardar y servir clases grabadas para video",
+          "evidence": "ven las clases grabadas que subimos"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 2.77,
+    "input_tokens": 1896,
+    "output_tokens": 109,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 3,
+    "case": "logistica-flota",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "Almacenar ubicaciones con actualizaciones frecuentes en tiempo real",
+          "evidence": "guardarlos"
+        },
+        {
+          "category": "messaging",
+          "query": "Procesar eventos de ubicación en tiempo real",
+          "evidence": "procesar esos eventos en tiempo real"
+        },
+        {
+          "category": "analytics",
+          "query": "Visualizar tableros de entregas por ciudad",
+          "evidence": "ver tableros de entregas por ciudad"
+        },
+        {
+          "category": "data-processing",
+          "query": "Transformar y calcular datos para análisis agregado en tiempo real",
+          "evidence": "quieren procesar esos eventos en tiempo real, guardarlos y ver tableros..."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 4.59,
+    "input_tokens": 1903,
+    "output_tokens": 216,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 3,
+    "case": "soporte-ia",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "ai",
+          "query": "Ejecutar un modelo que usa la documentación corporativa como fuente.",
+          "evidence": "con un modelo que corra en sus propios servidores"
+        },
+        {
+          "category": "search",
+          "query": "Buscar y filtrar contenido del centro de ayuda.",
+          "evidence": "un buscador para su centro de ayuda"
+        },
+        {
+          "category": "observability",
+          "query": "Monitorear el tiempo de respuesta y los fallos del sistema.",
+          "evidence": "saber cuánto tarda y cuántas veces falla el asistente"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 3.19,
+    "input_tokens": 1906,
+    "output_tokens": 138,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 3,
+    "case": "periodico-digital",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "cms",
+          "query": "Permita a los periodistas publicar fácilmente artículos",
+          "evidence": "periodistas publiquen desde un editor sencillo"
+        },
+        {
+          "category": "frontend",
+          "query": "Garantizar una interfaz web rápida de visualización",
+          "evidence": "un sitio web muy rápido"
+        },
+        {
+          "category": "communication",
+          "query": "Enviar boletines diarios a los receptores por correo",
+          "evidence": "enviar el boletín diario por correo"
+        },
+        {
+          "category": "analytics",
+          "query": "Identificar qué noticias tienen mayor cantidad de lectores",
+          "evidence": "saber qué notas se leen más"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 4.45,
+    "input_tokens": 1894,
+    "output_tokens": 208,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 3,
+    "case": "pantalla-saas-largo",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "frontend",
+          "query": "renderear interfaz web multi-tenant con acceso personalizado",
+          "evidence": "Diseña un SaaS multi-tenant"
+        },
+        {
+          "category": "backend",
+          "query": "implementar lógica de negocio y APIs para aislar datos entre inquilinos",
+          "evidence": "con aislamiento de datos"
+        },
+        {
+          "category": "auth",
+          "query": "gestionar autenticación centralizada y control de acceso por organización",
+          "evidence": "SSO mediante OIDC y RBAC por organización"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 3.71,
+    "input_tokens": 1881,
+    "output_tokens": 170,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 3,
+    "case": "pantalla-rag-largo",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "search",
+          "query": "Realizar búsqueda híbrida de datos semántica y texto completo con facetas",
+          "evidence": "\"RAG privado con búsqueda híbrida\""
+        },
+        {
+          "category": "auth",
+          "query": "Implementar control de acceso por documento y gestión de roles",
+          "evidence": "\"permisos por documento\""
+        },
+        {
+          "category": "ai",
+          "query": "Ejecutar modelos de lenguaje alojados mediante un servidor local o cliente API",
+          "evidence": "\"modelos alojados en nuestra infraestructura\""
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 3.76,
+    "input_tokens": 1882,
+    "output_tokens": 168,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 3,
+    "case": "pantalla-api-largo",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "backend",
+          "query": "Proveer API escenable para alta carga",
+          "evidence": "Propón una API..."
+        },
+        {
+          "category": "database",
+          "query": "Gestionar base de datos relacional resistente a fallos",
+          "evidence": "...con PostgreSQL..."
+        },
+        {
+          "category": "cache",
+          "query": "Almacenar datos en caché distribuida para reducir latencia",
+          "evidence": "...caché distribuida..."
+        },
+        {
+          "category": "frontend",
+          "query": "Escalar la infraestructura hacia nodos adicionales",
+          "evidence": "...escalado horizontal para 10.000 solicitudes/s."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 3.39,
+    "input_tokens": 1885,
+    "output_tokens": 150,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 3,
+    "case": "pantalla-saas-corto",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "Identificar usuarios únicos con inicio de sesión y permisos organizacionales",
+          "evidence": "\"SaaS multiempresa con autenticación y roles por organización\""
+        },
+        {
+          "category": "database",
+          "query": "Gestionar bases de datos relacionales para almacenar datos de varios clientes",
+          "evidence": "\"Diseña un SaaS multiempresa\""
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 2.9,
+    "input_tokens": 1873,
+    "output_tokens": 127,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 3,
+    "case": "pantalla-rag-corto",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "ai",
+          "query": "servir modelos de IA y generar respuestas basadas en datos",
+          "evidence": "RAG privado"
+        },
+        {
+          "category": "search",
+          "query": "indexar documentos para búsqueda semántica",
+          "evidence": "consultar documentos"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 2.46,
+    "input_tokens": 1871,
+    "output_tokens": 105,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 3,
+    "case": "pantalla-api-corto",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "backend",
+          "query": "Construir lógica de servidor y APIs con alto rendimiento",
+          "evidence": "Diseña una API"
+        },
+        {
+          "category": "cache",
+          "query": "Implementar almacenamiento temporal en memoria para escalar horizontalmente",
+          "evidence": "con caché y escalado horizontal"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 2.65,
+    "input_tokens": 1872,
+    "output_tokens": 113,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 3,
+    "case": "pantalla-eventos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "messaging",
+          "query": "Manejar colas de mensajes para procesos asíncronos",
+          "evidence": "orientada a eventos con colas"
+        },
+        {
+          "category": "backend",
+          "query": "Implementar lógica de reintentos e idempotencia en servicios",
+          "evidence": "reintentos"
+        },
+        {
+          "category": "payments",
+          "query": "Procesar transacciones financieras y gestionar flujo de caja",
+          "evidence": "procesar pagos"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 3.51,
+    "input_tokens": 1881,
+    "output_tokens": 160,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 3,
+    "case": "pantalla-observabilidad",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "observability",
+          "query": "Monitoreo técnico incluyendo métricas, logs y trazar solicitudes",
+          "evidence": "\"stack de observabilidad con métricas, logs y trazas distribuidas\""
+        },
+        {
+          "category": "infrastructure",
+          "query": "Orquestación de contenedores para múltiples microservicios",
+          "evidence": "\"para microservicios en Kubernetes\""
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 2.79,
+    "input_tokens": 1880,
+    "output_tokens": 124,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 3,
+    "case": "una-busqueda",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "search",
+          "query": "Buscar texto completo con autocompletado",
+          "evidence": "buscador de productos"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.7,
+    "input_tokens": 1878,
+    "output_tokens": 63,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 3,
+    "case": "una-pagos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "payments",
+          "query": "procesar cobros recurrentes vía pasarela de pago",
+          "evidence": "\"Necesito cobrar suscripciones mensuales a los clientes\""
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.91,
+    "input_tokens": 1871,
+    "output_tokens": 74,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 3,
+    "case": "vago-mejorar-negocio",
+    "error": null,
+    "data": {
+      "needs": [],
+      "clarification_questions": [
+        "¿Qué tipo de servicio ofrece su negocio?",
+        "¿Quiere que nos enfoque en un área específica o todo el sistema?",
+        "¿Tiene alguna necesidad urgente (cobros, usuarios) para empezar?"
+      ]
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.77,
+    "input_tokens": 1871,
+    "output_tokens": 69,
+    "waited": 0.0
+  },
+  {
+    "provider": "ollama",
+    "run": 3,
+    "case": "vago-startup",
+    "error": null,
+    "data": {
+      "needs": [],
+      "clarification_questions": [
+        "What kind of business model will you have?",
+        "What is the main value proposition for your customers?",
+        "Do you need to manage users, collect payments, or store large amounts of data upfront?"
+      ]
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.52,
+    "input_tokens": 1872,
+    "output_tokens": 58,
+    "waited": 0.0
+  }
+]

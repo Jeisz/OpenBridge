@@ -27,6 +27,16 @@ decisiones en [`eval/README.md`](eval/README.md).
 los repos aceptables esperados, escritos contra el snapshot del catálogo real. Detalle en
 [`eval/ASSISTANT_CASES.md`](eval/ASSISTANT_CASES.md).
 
+**Asistente.** `asistir()` responde un pedido en tres pasos: **entender** (modelo de lenguaje:
+necesidades o preguntas), **buscar** (embeddings, una búsqueda por necesidad) y **generar** el
+mapa (modelo de lenguaje: una herramienta por necesidad, solo entre sus candidatos). El modelo
+escribe con salida estructurada; el código valida contra el contrato `AssistantResponse` y
+reintenta una vez si no cumple. Todavía es una función de Python, no un servicio.
+
+**Modelo de lenguaje.** Principal: Gemini 3.5 Flash-Lite. Respaldo: gpt-oss-120b en Groq, con
+razonamiento bajo. Criterios, comparación y descartados en
+[`eval/LLM_DECISION.md`](eval/LLM_DECISION.md).
+
 ## Estructura
 
 ```
@@ -34,9 +44,12 @@ ai/
 ├── catalog.py                  # load_repos(source) y load_categories(): único punto de acceso a los datos
 ├── embeddings.py               # Modelo de embeddings (EmbeddingGemma por defecto) y umbral
 ├── search.py                   # SearchIndex: texto a embeber, filtros y ranking
+├── llm.py                      # generar(): registro de proveedores de LLM, salida estructurada y errores
+├── assistant.py                # entender(), generar_mapa() y asistir(): el flujo del asistente
 ├── requirements.txt
 ├── scripts/
 │   ├── build_sample_data.py        # Regenera ai/data/ desde la API de GitHub
+│   ├── check_llm.py                # Prueba de humo de los proveedores de LLM
 │   ├── export_catalog_snapshot.py  # Regenera ai/data/catalog/ desde la base (solo lectura)
 │   └── load_seed_example.py        # Carga o borra los datos de ejemplo en las tablas ai.*
 ├── data/
@@ -47,6 +60,7 @@ ai/
 ├── eval/
 │   ├── README.md               # Evaluación de la búsqueda: método, resultados y decisiones
 │   ├── ASSISTANT_CASES.md      # Información de casos de prueba del asistente
+│   ├── LLM_DECISION.md         # Elección del modelo de lenguaje: criterios, resultados y descartados
 │   ├── assistant_cases.json    # Casos de prueba del asistente
 │   ├── assistant_cases.py      # Carga y valida los casos
 │   ├── search_queries_catalog.json  # Golden set contra el catálogo real
@@ -54,7 +68,12 @@ ai/
 │   ├── golden.py               # Carga y valida los golden sets
 │   ├── metrics.py              # hit@k, MRR, recall y umbral
 │   ├── run_search_eval.py      # python -m ai.eval.run_search_eval
-│   └── results/                # Un reporte por golden set y modelo
+│   ├── understand_metrics.py   # Métricas del paso de entender
+│   ├── run_understand_eval.py  # Compara modelos en el paso de entender (18 casos)
+│   ├── flow_metrics.py         # Métricas del flujo completo
+│   ├── run_assistant_eval.py   # Compara modelos con el flujo completo (casos rápidos)
+│   ├── diagnose_latency.py     # Dónde se va el tiempo del paso de generar
+│   └── results/                # Un reporte por evaluación y modelo
 └── tests/
     ├── test_catalog.py           # Cómo se elige el origen de los datos
     ├── test_catalog_snapshot.py  # Valida el snapshot y las funciones del script (sin base)
@@ -63,7 +82,13 @@ ai/
     ├── test_search.py            # Búsqueda: filtros y orden (sin modelo) y pruebas con el modelo real
     ├── test_search_queries.py    # Valida los golden sets
     ├── test_seed_example.py      # Valida los datos de ejemplo y cómo se convierten en filas (sin base)
-    └── test_eval_metrics.py      # Métricas de la evaluación (sin modelo)
+    ├── test_eval_metrics.py      # Métricas de la evaluación (sin modelo)
+    ├── test_llm.py               # generar(): opciones por proveedor y errores (proveedor simulado)
+    ├── test_assistant.py         # Entender: esquema, reglas y reintento (modelo simulado)
+    ├── test_generate.py          # Generar: mensaje, esquema, reglas y respuesta del contrato
+    ├── test_asistir.py           # Flujo completo con búsqueda y modelo simulados
+    ├── test_understand_metrics.py  # Métricas de entender
+    └── test_flow_metrics.py      # Métricas del flujo completo
 ```
 
 ## Puesta en marcha
@@ -102,6 +127,36 @@ Después:
 - En Windows puede aparecer una advertencia de Hugging Face sobre *symlinks*:
   es inofensiva.
 
+### Modelo de lenguaje
+
+Se elige con `AI_LLM_PROVIDER` en `.env` (por defecto, `gemini`). Cada proveedor necesita su
+clave en `.env` (nombres en `.env.example`); **las claves nunca van al repo, al chat ni a las notas**.
+
+| Proveedor (`AI_LLM_PROVIDER`) | Clave | Dónde se obtiene | Costo |
+|---|---|---|---|
+| `gemini` (principal) | `GEMINI_API_KEY` | Google AI Studio → Get API key | Nivel gratuito: 500 consultas/día, 15/min |
+| `groq-low` (respaldo) | `GROQ_API_KEY` | console.groq.com → API Keys | Nivel gratuito: 1.000 consultas/día, 8.000 tokens/min |
+| `claude-haiku` | `ANTHROPIC_API_KEY` | console.anthropic.com → API Keys | De pago |
+| `ollama` | — | Ollama instalado y abierto en la máquina | Local |
+
+- Con el nivel gratuito, Google usa el contenido de las consultas para mejorar sus servicios.
+- En Groq conviene activar "Inference APIs ZDR" en la configuración de la cuenta para que no
+  guarde las consultas.
+- Agregar un proveedor = una entrada en `PROVIDERS` (`ai/llm.py`).
+- El registro conserva proveedores descartados para repetir la comparación; la causa de cada
+  descarte está en [`eval/LLM_DECISION.md`](eval/LLM_DECISION.md).
+
+```python
+from ai import embeddings
+from ai.assistant import asistir
+from ai.search import SearchIndex
+
+index = SearchIndex.build()
+assisted = asistir("Necesito cobrar suscripciones mensuales a mis clientes.",
+                   index.search, min_score=embeddings.model_spec().min_score)
+print(assisted.response)   # AssistantResponse, o None si no se logró una respuesta válida
+```
+
 ## Comandos
 
 ```bash
@@ -114,6 +169,10 @@ python -m ai.scripts.export_catalog_snapshot     # regenera ai/data/catalog/ (re
 python -m ai.scripts.load_seed_example           # carga los datos de ejemplo en ai.* (requiere AI_DATABASE_URL en .env)
 python -m ai.scripts.load_seed_example --limpiar # borra los datos de ejemplo
 python -m ai.eval.run_search_eval                # evalúa la búsqueda sobre el catálogo real (--golden sample: datos de ejemplo)
+python -m ai.scripts.check_llm gemini groq-low   # prueba de humo de los proveedores de LLM (requiere las claves)
+python -m ai.eval.run_understand_eval gemini     # compara modelos en el paso de entender
+python -m ai.eval.run_assistant_eval gemini groq-low  # compara modelos con el flujo completo
+python -m ai.eval.diagnose_latency gemini        # dónde se va el tiempo del paso de generar
 ```
 
 Se usa `python -m` desde la raíz para que `ai` y `shared` se puedan importar
