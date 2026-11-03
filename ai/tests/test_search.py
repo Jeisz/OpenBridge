@@ -158,7 +158,8 @@ model_tests = pytest.mark.skipif(
 
 @pytest.fixture(scope="module")
 def real_index():
-    return SearchIndex.build()
+    # Datos de ejemplo. Los que tienen categorías (la prueba de humo busca "auth").
+    return SearchIndex.build(source="sample")
 
 
 @model_tests

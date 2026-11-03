@@ -20,13 +20,13 @@ CATEGORIES_FILE = (
 @pytest.fixture(scope="module")
 def raw_repos() -> list[dict]:
     """Contenido de repos.json tal cual, sin validar."""
-    return load_raw()
+    return load_raw(source="sample")
 
 
 @pytest.fixture(scope="module")
 def repos() -> list[Repo]:
     """Los repos ya validados con su README."""
-    return load_repos()
+    return load_repos(source="sample")
 
 
 @pytest.fixture(scope="module")
@@ -38,7 +38,7 @@ def category_ids() -> set[str]:
 def test_datos_cumplen_el_contrato():
     # Si algún repo no cumple, load_repos lanza ValidationError y el test falla
     # mostrando todos los errores.
-    load_repos()
+    load_repos(source="sample")
 
 
 def test_claves_son_campos_del_contrato(raw_repos):

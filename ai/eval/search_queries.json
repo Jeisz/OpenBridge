@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "source": "sample",
   "queries": [
     {
       "id": "auth-sso",

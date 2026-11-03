@@ -10,29 +10,28 @@ desde la raíz del repo.
 
 ## Estado
 
-**Datos de ejemplo.** Mientras la IA no lee de la base de datos, trabaja con
-20 repos reales descargados de la API de GitHub, con categorías asignadas a mano.
+**Datos.** La IA lee el snapshot del catálogo real (`data/catalog/`, 100 repos de la vista
+`public.v_repos_for_ai`) con `load_repos()`. Los 20 repos de ejemplo (`data/repos.json`,
+con categorías asignadas a mano) se conservan para pruebas y para repetir la elección del
+modelo de embeddings: `load_repos(source="sample")`.
 
 **Búsqueda semántica.** Dada la necesidad de un cliente en lenguaje natural (en español o inglés),
 devuelve los repos del catálogo más parecidos por significado, con filtros por licencia,
 health score y categoría.
 
-**Evaluación de la búsqueda.** Golden set de 22 consultas, métricas (hit@3, MRR, recall) y umbral de
-"sin evidencia", con un solo comando. resultados y decisiones en [`eval/README.md`](eval/README.md).
+**Evaluación de la búsqueda.** Dos golden sets (catálogo real (Snapshot) y datos de ejemplo), métricas
+(hit@3, MRR, recall) y umbral de "sin evidencia", con un solo comando. Resultados y
+decisiones en [`eval/README.md`](eval/README.md).
 
 **Casos de prueba del asistente.** 18 pedidos de negocio con el status, las necesidades y
 los repos aceptables esperados, escritos contra el snapshot del catálogo real. Detalle en
 [`eval/ASSISTANT_CASES.md`](eval/ASSISTANT_CASES.md).
 
-**Catálogo real (snapshot).** Copia de los 100 repos de la vista `public.v_repos_for_ai`
-en `data/catalog/`, para escribir casos de prueba y medir la búsqueda contra datos reales
-sin conectarse a la base. La búsqueda todavía usa los datos de ejemplo (`load_repos()`).
-
 ## Estructura
 
 ```
 ai/
-├── catalog.py                  # load_repos() y load_categories(): único punto de acceso a los datos
+├── catalog.py                  # load_repos(source) y load_categories(): único punto de acceso a los datos
 ├── embeddings.py               # Modelo de embeddings (EmbeddingGemma por defecto) y umbral
 ├── search.py                   # SearchIndex: texto a embeber, filtros y ranking
 ├── requirements.txt
@@ -41,7 +40,7 @@ ai/
 │   ├── export_catalog_snapshot.py  # Regenera ai/data/catalog/ desde la base (solo lectura)
 │   └── load_seed_example.py        # Carga o borra los datos de ejemplo en las tablas ai.*
 ├── data/
-│   ├── repos.json              # 20 repos con la forma del contrato, sin el README
+│   ├── repos.json              # 20 repos de ejemplo con la forma del contrato, sin el README
 │   ├── readmes/                # README de cada repo (<owner>__<name>.md)
 │   ├── catalog/                # Snapshot del catálogo real: repos.json, readmes/, meta.json
 │   └── seed/                   # Datos de ejemplo para las tablas de la IA (8 repos)
@@ -50,17 +49,19 @@ ai/
 │   ├── ASSISTANT_CASES.md      # Información de casos de prueba del asistente
 │   ├── assistant_cases.json    # Casos de prueba del asistente
 │   ├── assistant_cases.py      # Carga y valida los casos
-│   ├── search_queries.json     # Golden set: consultas y repos esperados
-│   ├── golden.py               # Carga y valida el golden set
+│   ├── search_queries_catalog.json  # Golden set contra el catálogo real
+│   ├── search_queries.json     # Golden set contra los datos de ejemplo
+│   ├── golden.py               # Carga y valida los golden sets
 │   ├── metrics.py              # hit@k, MRR, recall y umbral
 │   ├── run_search_eval.py      # python -m ai.eval.run_search_eval
-│   └── results/                # Un reporte por modelo
+│   └── results/                # Un reporte por golden set y modelo
 └── tests/
+    ├── test_catalog.py           # Cómo se elige el origen de los datos
     ├── test_catalog_snapshot.py  # Valida el snapshot y las funciones del script (sin base)
     ├── test_assistant_cases.py   # Valida los casos del asistente (sin base ni modelo)
     ├── test_sample_data.py       # Valida los datos de ejemplo contra el contrato
     ├── test_search.py            # Búsqueda: filtros y orden (sin modelo) y pruebas con el modelo real
-    ├── test_search_queries.py    # Valida el golden set
+    ├── test_search_queries.py    # Valida los golden sets
     ├── test_seed_example.py      # Valida los datos de ejemplo y cómo se convierten en filas (sin base)
     └── test_eval_metrics.py      # Métricas de la evaluación (sin modelo)
 ```
@@ -112,7 +113,7 @@ python -m ai.scripts.build_sample_data           # regenera ai/data/ (requiere `
 python -m ai.scripts.export_catalog_snapshot     # regenera ai/data/catalog/ (requiere AI_READER_DATABASE_URL en .env)
 python -m ai.scripts.load_seed_example           # carga los datos de ejemplo en ai.* (requiere AI_DATABASE_URL en .env)
 python -m ai.scripts.load_seed_example --limpiar # borra los datos de ejemplo
-python -m ai.eval.run_search_eval                # evalúa la búsqueda y escribe el reporte en ai/eval/results/
+python -m ai.eval.run_search_eval                # evalúa la búsqueda sobre el catálogo real (--golden sample: datos de ejemplo)
 ```
 
 Se usa `python -m` desde la raíz para que `ai` y `shared` se puedan importar
@@ -172,12 +173,13 @@ hay datos reales para alguno de estos repos, la carga falla sin cambiar nada.
 ```python
 from ai.catalog import load_repos
 
-repos = load_repos()   # list[Repo], con readme_text incluido
+repos = load_repos()                   # catálogo real (snapshot), list[Repo] con readme_text
+sample = load_repos(source="sample")   # 20 repos de ejemplo
 ```
 
-El código de la IA lee los repos solo con `load_repos()`. Hoy une `repos.json`
-con los archivos de `readmes/`; cuando la IA lea de la base de datos, cambia
-solo esta función.
+El código de la IA lee los repos solo con `load_repos()`. Une `repos.json` con los archivos
+de `readmes/` del origen elegido; cuando la IA lea de la base de datos, se agrega un origen
+en `ai/catalog.py` y el resto del código no cambia.
 
 ## Cómo buscar
 

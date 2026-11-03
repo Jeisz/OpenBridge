@@ -12,8 +12,10 @@ lo valida con el esquema `Repo` y escribe:
 import json
 import subprocess
 
-from ai.catalog import README_DIR, REPOS_FILE, readme_file
+from ai.catalog import readme_dir, readme_file, repos_file
 from shared.contracts.repo import Repo
+
+SOURCE = "sample"
 
 # Clasificación manual de acuerdo a shared/contracts/categories.
 # Es la referencia contra la que se evaluará más adelante
@@ -57,7 +59,7 @@ def build_repo(full_name: str, category_ids: list[str]) -> Repo:
     readme = gh_api(f"repos/{full_name}/readme", raw=True)
 
     # Guardar el README. La API devuelve el nombre actual si el repo fue renombrado.
-    readme_file(data["full_name"]).write_text(readme, encoding="utf-8", newline="\n")
+    readme_file(data["full_name"], SOURCE).write_text(readme, encoding="utf-8", newline="\n")
 
     return Repo(
         full_name=data["full_name"],
@@ -77,7 +79,7 @@ def build_repo(full_name: str, category_ids: list[str]) -> Repo:
 
 
 def main() -> None:
-    README_DIR.mkdir(parents=True, exist_ok=True)
+    readme_dir(SOURCE).mkdir(parents=True, exist_ok=True)
     repos = []
     for full_name, category_ids in CATEGORIES.items():
         print(f"-> {full_name}")
@@ -85,13 +87,9 @@ def main() -> None:
 
     # El README ya está en su archivo; no se repite dentro de repos.json.
     rows = [r.model_dump(mode="json", exclude={"readme_text"}) for r in repos]
-    REPOS_FILE.write_text(
+    repos_file(SOURCE).write_text(
         json.dumps(rows, indent=2, ensure_ascii=False) + "\n",
         encoding="utf-8",
         newline="\n",
     )
-    print(f"{len(repos)} repos -> {REPOS_FILE}")
-
-
-if __name__ == "__main__":
-    main()
+    print(f"{len(repos)} repos -> {repos_file(SOURCE)}")

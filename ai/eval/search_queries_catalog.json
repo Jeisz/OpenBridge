@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "source": "snapshot",
+  "catalog_taken_at": "2026-10-29T20:42:17+00:00",
+  "queries": [
+    {
+      "id": "msg-eventos",
+      "query": "recibir un flujo continuo de eventos",
+      "expected": ["apache/kafka"],
+      "note": "Necesidad de mensajería de los casos del asistente (logística: ubicación de camiones cada pocos segundos). kafka: 'distributed event streaming platform', topic streaming."
+    },
+    {
+      "id": "proc-tiempo-real",
+      "query": "procesar eventos en tiempo real",
+      "expected": ["apache/flink", "apache/beam"],
+      "note": "Procesamiento de datos de los casos del asistente (logística). flink: 'stream processing framework' en el README. beam: 'unified programming model for Batch and Streaming'. spark fuera: su propósito principal es el análisis por lotes."
+    },
+    {
+      "id": "db-analitica",
+      "query": "guardar millones de eventos para analizarlos",
+      "expected": ["ClickHouse/ClickHouse", "duckdb/duckdb"],
+      "note": "Base de datos de los casos del asistente (logística). ClickHouse: 'real-time analytics database management system'. duckdb: 'high-performance analytical database system', topics analytics y olap. Los casos del asistente aceptan solo ClickHouse porque allí el pedido son tableros sobre un servidor; esta consulta corta no lo dice, y DuckDB también cumple."
+    },
+    {
+      "id": "an-tableros",
+      "query": "tableros de entregas por ciudad",
+      "expected": ["grafana/grafana"],
+      "note": "Analítica de los casos del asistente (logística). grafana: topics dashboard, data-visualization y business-intelligence."
+    },
+    {
+      "id": "ai-rag",
+      "query": "asistente que responde con documentos propios",
+      "expected": ["run-llama/llama_index", "langchain-ai/langchain"],
+      "note": "IA de los casos del asistente (RAG, soporte con documentación). llama_index: 'document processing platform for AI'. langchain: 'agent engineering platform', topics ai y ai-agents. ollama y vllm fuera: corren modelos, no arman respuestas con documentos."
+    },
+    {
+      "id": "obs-stack",
+      "query": "métricas, logs y trazas de microservicios",
+      "expected": ["open-telemetry/opentelemetry-collector", "jaegertracing/jaeger", "prometheus/prometheus"],
+      "note": "Observabilidad de los casos del asistente. opentelemetry-collector: topics metrics, observability y telemetry. jaeger: 'Distributed Tracing Platform'. prometheus: topics metrics y monitoring. grafana fuera de esta lista: visualiza, no recoge."
+    },
+    {
+      "id": "none-pagos",
+      "query": "cobrar suscripciones mensuales con tarjeta",
+      "expected": [],
+      "note": "El catálogo no tiene repos de pagos ni de facturación."
+    },
+    {
+      "id": "none-login",
+      "query": "inicio de sesión de usuarios con su cuenta",
+      "expected": [],
+      "note": "Casi. El catálogo no tiene repos de identidad de usuarios. vault ('privileged access management') guarda secretos de sistemas; no hace login de usuarios finales."
+    },
+    {
+      "id": "none-recordatorios",
+      "query": "enviar recordatorios por WhatsApp o correo",
+      "expected": [],
+      "note": "Casi. Sin repos de mensajería con clientes. alertmanager tiene topics email y notifications, pero envía alertas de monitoreo al equipo técnico."
+    },
+    {
+      "id": "none-videos",
+      "query": "guardar y servir videos de clases",
+      "expected": [],
+      "note": "El catálogo no tiene repos de almacenamiento de archivos ni de video."
+    },
+    {
+      "id": "none-cms",
+      "query": "editor para que periodistas publiquen artículos",
+      "expected": [],
+      "note": "Casi. Sin gestores de contenido. astro ('framework for content-driven websites') construye el sitio, no el editor de quien publica."
+    },
+    {
+      "id": "none-analitica-web",
+      "query": "medir qué páginas se visitan más",
+      "expected": [],
+      "note": "Sin analítica web. grafana visualiza datos que ya existen; no recoge las visitas."
+    }
+  ]
+}
