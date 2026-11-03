@@ -1,72 +1,61 @@
-import {memo, useEffect, useRef} from 'react';
-import artwork from './assets/hero-layers.json';
+import {memo,useCallback,useEffect,useRef,useState} from 'react';
+import {SlidersHorizontal,X} from 'lucide-react';
+import LightRays from './components/LightRays/LightRays';
 
-// Original Figma layers, pre-rendered once so animation never recomputes blur.
-// Only decorative transforms change; React never renders on animation frames.
-export const HeroLights = memo(function HeroLights({inputRef}) {
- const root = useRef(null);
- useEffect(() => {
-  const host = root.current;
-  if(['localhost','127.0.0.1'].includes(location.hostname)&&new URLSearchParams(location.search).get('typingTest')==='static'){host.dataset.running='false';return;}
-  const input = inputRef.current;
-  const layers = [...host.querySelectorAll('.hero-light-stage img')];
-  const burns = [...host.querySelectorAll('.hero-film-burn')];
-  const motion = matchMedia('(prefers-reduced-motion: reduce)');
-  const particles = layers.map(() => ({x:0,y:0,vx:0,vy:0,scale:1,vs:0}));
-  let frame = 0, last = 0, time = 0, energy = 0, visible = true, pulse = 0, warmth = 0;
-  function excite() {
-   if (motion.matches) return;
-   energy = Math.min(1, energy + .22);
-   pulse++;
-   particles.forEach((p,i) => {
-    p.vx += Math.sin(i * 2.4 + pulse) * 35;
-    p.vy -= 28 + 22 * Math.cos(i * 1.8 + pulse);
-   });
-  }
-  function tick(now) {
-   const dt = Math.min((now - (last || now))/1000, .033);
-   last = now;
-   time += dt * (.45 + energy * .8);
-   energy *= Math.exp(-dt * .85);
-   warmth += (energy - warmth) * (1 - Math.exp(-dt * 3));
-   burns.forEach((burn,i) => {
-    burn.style.opacity = (warmth * (i ? .48 : .62)).toFixed(3);
-    burn.style.transform = `translate3d(0,${-warmth*18}px,0) scale(${1+warmth*.06})`;
-   });
-   particles.forEach((p,i) => {
-    const phase = i * 1.73;
-    const tx = Math.sin(time * .72 + phase) * (16 + energy * 62);
-    const ty = Math.cos(time * .61 + phase) * (20 + energy * 76) - energy * 45;
-    const ts = 1 + Math.sin(time * 1.3 + phase) * (.025 + energy * .14);
-    p.vx += ((tx-p.x)*16-p.vx*5)*dt;
-    p.vy += ((ty-p.y)*16-p.vy*5)*dt;
-    p.vs += ((ts-p.scale)*22-p.vs*6)*dt;
-    p.x += p.vx*dt; p.y += p.vy*dt; p.scale += p.vs*dt;
-    layers[i].style.transform = `translate3d(${p.x/artwork[i].width*100}%,${p.y/artwork[i].height*100}%,0) scale(${p.scale})`;
-   });
-   frame = requestAnimationFrame(tick);
-  }
-  function sync() {
-   cancelAnimationFrame(frame); last=0;
-   host.dataset.running=String(!motion.matches && !document.hidden && visible);
-   if (motion.matches) {
-    energy=0; warmth=0;
-    burns.forEach(burn => {burn.style.opacity='0';burn.style.transform='none';});
-    layers.forEach(layer => {layer.style.transform='none';});
-   } else if (!document.hidden && visible) frame=requestAnimationFrame(tick);
-  }
-  const observer = new IntersectionObserver(([entry]) => {visible=entry.isIntersecting;sync();});
-  observer.observe(host);
-  input?.addEventListener('input',excite);
-  motion.addEventListener('change',sync);
-  document.addEventListener('visibilitychange',sync);
-  sync();
-  return () => {
-   cancelAnimationFrame(frame);observer.disconnect();
-   input?.removeEventListener('input',excite);
-   motion.removeEventListener('change',sync);
-   document.removeEventListener('visibilitychange',sync);
-  };
- },[inputRef]);
- return <div ref={root} className="hero-lights" aria-hidden="true"><div className="hero-light-stage">{artwork.map(layer => <img key={layer.src} src={layer.src} alt="" draggable="false" style={{position:'absolute',left:layer.x/1425*100+'%',top:layer.y/625*100+'%',width:layer.width/1425*100+'%',height:layer.height/625*100+'%'}}/>)}</div><div className="hero-film-burn burn-left"/><div className="hero-film-burn burn-right"/></div>;
+// React Bits Searchlight preset plus the user's Background Studio URL overrides.
+const defaults={color:'#ffffff',raysOrigin:'top-center',raysSpeed:1.3,lightSpread:.1,rayLength:3.8,rayDensity:2.2,tilt:17,raySharpness:.2,glow:.7,haze:.15,atmosphere:1,intensity:1.25,fadeDistance:2,saturation:1.2,mouseInfluence:.65,noiseAmount:.11};
+const storageKey='openbridge-light-rays-v1';
+const origins={'top-left':'Arriba izquierda','top-center':'Arriba centro','top-right':'Arriba derecha',left:'Izquierda',right:'Derecha','bottom-left':'Abajo izquierda','bottom-center':'Abajo centro','bottom-right':'Abajo derecha'};
+const groups=[
+ ['Luz',[['intensity','Intensidad',0,2,'',.05],['glow','Resplandor',0,2,'',.05],['haze','Neblina',0,1,'',.05],['atmosphere','Atmósfera',0,1,'',.05],['saturation','Saturación',0,2,'',.05]]],
+ ['Forma y dirección',[['tilt','Dirección',-60,60,'°',1],['lightSpread','Apertura',.1,2,'',.01],['rayLength','Alcance',.5,4,'',.1],['rayDensity','Densidad',.3,4,'',.1],['raySharpness','Definición',0,1,'',.05],['fadeDistance','Desvanecimiento',.3,2,'',.05]]],
+ ['Movimiento y textura',[['raysSpeed','Velocidad',0,3,'',.05],['mouseInfluence','Influencia del cursor',0,1,'',.05],['noiseAmount','Grano',0,.5,'',.01]]],
+];
+const ranges=groups.flatMap(([,fields])=>fields);
+function load(){
+ try{
+  const stored=JSON.parse(localStorage.getItem(storageKey)),next={...defaults};
+  if(!stored)return next;
+  if(Object.hasOwn(origins,stored.raysOrigin))next.raysOrigin=stored.raysOrigin;
+  if(/^#[0-9a-f]{6}$/i.test(stored.color))next.color=stored.color;
+  for(const [key,,min,max] of ranges)if(Number.isFinite(stored[key]))next[key]=Math.max(min,Math.min(max,stored[key]));
+  return next;
+ }catch{return {...defaults};}
+}
+export const HeroLights=memo(function HeroLights(){
+ const root=useRef(null),dialog=useRef(null),trigger=useRef(null);
+ const [local,setLocal]=useState(false),[settings,setSettings]=useState(defaults),[saved,setSaved]=useState(defaults),[saveError,setSaveError]=useState(false);
+ useEffect(()=>{setLocal(['localhost','127.0.0.1'].includes(location.hostname));const value=load();setSettings(value);setSaved(value);},[]);
+ const lighting=useRef({gradient:null,x:null,y:null,intensity:null});
+ const syncBorderLight=useCallback((x,y,intensity)=>{
+  const state=lighting.current;
+  if(!state.gradient?.isConnected)state.gradient=root.current?.closest('.hero')?.querySelector('#prompt-background-light');
+  if(!state.gradient)return;
+  // Quantize updates: share the shader's direction without another animation loop.
+  const qx=Math.round(x*50),qy=Math.round(y*50),power=Math.round(intensity*20)/20;
+  if(state.x===qx&&state.y===qy&&state.intensity===power)return;
+  Object.assign(state,{x:qx,y:qy,intensity:power});
+  const form=state.gradient.closest('form');
+  form?.style.setProperty('--input-light-angle',`${Math.atan2(y,x)*180/Math.PI+90}deg`);
+  form?.style.setProperty('--input-light-strength',String(Math.min(.12,power*.055)));
+  state.gradient.setAttribute('x1',`${50-qx}%`);state.gradient.setAttribute('y1',`${50-qy}%`);
+  state.gradient.setAttribute('x2',`${50+qx}%`);state.gradient.setAttribute('y2',`${50+qy}%`);
+  state.gradient.firstElementChild.setAttribute('stop-opacity',Math.min(.7,.16+power*.36));
+  state.gradient.lastElementChild.setAttribute('stop-opacity',Math.min(.22,.08+power*.06));
+ },[]);
+ function close(){dialog.current.close();trigger.current?.focus({preventScroll:true});}
+ function cancel(){setSettings(saved);setSaveError(false);close();}
+ function save(){try{localStorage.setItem(storageKey,JSON.stringify(settings));setSaved(settings);setSaveError(false);close();}catch{setSaveError(true);}}
+ function change(key,value){setSettings(current=>({...current,[key]:value}));setSaveError(false);}
+ return <><div ref={root} className="hero-directional-light hero-light-rays" aria-hidden="true"><LightRays {...settings} raysColor={settings.color} cursorShadow={false} clickPulse={false} maxDevicePixelRatio={1} onLightDirection={syncBorderLight}/></div>
+ {local&&<><button ref={trigger} type="button" className="light-settings-trigger ui-button" aria-label="Configurar luz del fondo" onClick={()=>dialog.current.showModal()}><SlidersHorizontal size={16}/></button>
+ <dialog ref={dialog} className="submit-appearance-dialog light-settings-dialog" aria-labelledby="light-settings-title" onCancel={e=>{e.preventDefault();cancel();}} onClick={e=>{if(e.target===e.currentTarget)cancel();}}>
+ <div className="submit-appearance-heading"><h2 id="light-settings-title">Luz del fondo</h2><button type="button" aria-label="Cerrar configuración de luz" onClick={cancel}><X size={20}/></button></div>
+ <div className="light-settings-body"><label className="light-color-control">Color de la luz<input type="color" value={settings.color} onChange={e=>change('color',e.target.value)}/><span>{settings.color.toUpperCase()}</span></label>
+ <label className="light-color-control">Origen<select aria-label="Origen" value={settings.raysOrigin} onChange={e=>change('raysOrigin',e.target.value)}>{Object.entries(origins).map(([value,label])=><option key={value} value={value}>{label}</option>)}</select></label>
+ {groups.map(([title,fields])=><fieldset key={title} className="light-settings-group"><legend>{title}</legend><div className="submit-appearance-controls">{fields.map(([key,label,min,max,unit,step])=><label key={key}><span>{label}<output>{settings[key]}{unit}</output></span><input aria-label={label} type="range" min={min} max={max} step={step} value={settings[key]} onChange={e=>change(key,Number(e.target.value))}/></label>)}</div></fieldset>)}
+ </div>{saveError&&<p role="alert">No pudimos guardar la configuración en este navegador.</p>}
+ <div className="submit-appearance-actions"><button type="button" className="ui-button" onClick={()=>setSettings({...defaults})}>Restablecer</button><button type="button" className="ui-button ui-button--primary" onClick={save}>Guardar</button></div>
+ </dialog></>}
+ </>;
 });

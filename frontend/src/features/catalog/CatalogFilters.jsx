@@ -25,7 +25,7 @@ export function CatalogFilters({state,count}){
    </label>
    <label>Estado del repositorio
     <select value={maintenance} onChange={e => setMaintenance(e.target.value)}>
-     <option value="">Todos</option><option value="active">No archivado</option><option value="review">Archivado o deshabilitado</option>
+     <option value="">Todos</option><option value="archived">Archivados</option><option value="disabled">Deshabilitados</option>
     </select>
    </label>
    <label>Estrellas mínimas

@@ -34,7 +34,6 @@ export function ToolCard({ tool, onOpen }) {
    </div>
    <div className="tool-tags">
     <span>{tool.category}</span>
-    <span className="language-tag" title="Lenguaje principal del repositorio">{tool.language}</span>
 
    </div>
    {description&&<CardDescription description={description} tool={tool} onOpen={onOpen}/>}
@@ -45,6 +44,7 @@ export function ToolCard({ tool, onOpen }) {
     <Activity size={20} strokeWidth={1.75} className="health-icon" aria-hidden="true"/>
     <strong aria-hidden="true">{hasHealth?<>{detail.healthScore}<span>/100</span></>:<span>Sin evaluar</span>}</strong>
    </span>
+   <span className="language-tag" title="Lenguaje principal del repositorio">{tool.language}</span>
    </div>
    <dl className="tool-metrics">{metrics.map(([label,value,Icon],index)=><React.Fragment key={label}>
     {index > 0 && <div className="metric-divider" aria-hidden="true"><img src="/assets/cards/divider.svg" alt=""/></div>}

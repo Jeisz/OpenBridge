@@ -28,3 +28,34 @@ test('detail carries ideas in one request and rejects cross-repository data',asy
  assert.equal(calls,1);assert.equal(record.profile.ideas[0].title,'Prueba');
  idea.full_name='other/repo';await assert.rejects(client.detail(repo.full_name,[]),/inválida/);
 });
+
+test('all pages are collected before filtering, including secondary categories',async()=>{
+ const calls=[];
+ const client=createCatalogHttp({baseUrl:'http://localhost/',fetchImpl:async url=>{
+  assert.equal(url.searchParams.get('page_size'),'100');
+  const page=Number(url.searchParams.get('page'));calls.push(page);
+  return {ok:true,headers:new Headers({'X-Total-Pages':'2','X-Total-Count':'2','X-Page':String(page),'X-Page-Size':'1'}),json:async()=>[{...repo,full_name:`owner/repo${page}`,github_id:page}]};
+ }});
+ const result=await client.list();assert.deepEqual(calls,[1,2]);assert.equal(result.tools.length,2);
+});
+test('a failed later page never returns a partial catalog and preserves error code',async()=>{
+ const client=createCatalogHttp({baseUrl:'http://localhost/',fetchImpl:async url=>Number(url.searchParams.get('page'))===1?{ok:true,headers:new Headers({'X-Total-Pages':'2','X-Total-Count':'2','X-Page':'1','X-Page-Size':'1'}),json:async()=>[repo]}:{ok:false,status:503,json:async()=>({error:{code:'catalog_unavailable',message:'private server detail'}})}});
+ await assert.rejects(client.list(),{status:503,code:'catalog_unavailable'});
+});
+test('empty catalog and cancelled loading preserve their states',async()=>{
+ const client=createCatalogHttp({baseUrl:'http://localhost/',fetchImpl:async()=>({ok:true,headers:new Headers({'X-Total-Pages':'0','X-Total-Count':'0','X-Page':'1','X-Page-Size':'20'}),json:async()=>[]})});
+ assert.equal((await client.list()).tools.length,0);
+ const controller=new AbortController();controller.abort();await assert.rejects(client.list(controller.signal),{name:'AbortError'});
+});
+test('Repo v1.2 booleans and nulls come from API rather than presentation defaults',()=>{
+ for(const value of [true,false,null]){
+  const {tool}=adaptApiRepo({...repo,disabled:value,is_maintained:value},[]);
+  assert.equal(tool.disabled,value);assert.equal(tool.maintained,value);
+ }
+});
+test('canonical detail links resolve without a loaded catalog',async()=>{
+ const {detailTarget}=await import('../src/data/detailTarget.mjs');
+ assert.equal(detailTarget('owner/new-repo',[]).fullName,'owner/new-repo');
+ assert.equal(detailTarget('keycloak',[]).fullName,'keycloak/keycloak');
+ assert.equal(detailTarget('unknown-id',[]).fullName,null);
+});

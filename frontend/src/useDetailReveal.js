@@ -16,12 +16,12 @@ export function useDetailReveal(frame,id){
   ];
   groups.forEach(group=>group.forEach((element,index)=>{
    delays.set(element,Math.min(index*28,168));
-   const animation=element.animate([{opacity:0,translate:'0 7px'},{opacity:1,translate:'0 0'}],{duration:280,easing:'cubic-bezier(.22,1,.36,1)',fill:'both'});
+   const animation=element.animate([{opacity:0,translate:'0 7px'},{opacity:1,translate:'0 0'}],{duration:220,easing:'cubic-bezier(.22,1,.36,1)',fill:'both'});
    animation.pause();animations.set(element,animation);
   }));
   const reveal=element=>{
    const animation=animations.get(element);if(!animation)return;
-   animation.effect.updateTiming({delay:Math.max(0,280-(performance.now()-started))+delays.get(element)});
+   animation.effect.updateTiming({delay:Math.max(0,140-(performance.now()-started))+delays.get(element)});
    animation.onfinish=()=>{animation.cancel();animations.delete(element);};
    animation.play();observer.unobserve(element);
   };

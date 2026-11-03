@@ -17,7 +17,7 @@ export function RevealHeading({as:Tag='h2',text,mobileBreak=false,gradientWord})
  let offset=0;
  return <Tag ref={heading} className="reveal-heading" aria-label={text}>{text.split(' ').map((word,index)=>{
   const start=offset;offset+=Array.from(word).length+1;
-  return <React.Fragment key={index}>{index>0&&(mobileBreak&&index===2?<><br className="mobile-break"/>{' '}</>:' ')}<span className={'reveal-word'+(word===gradientWord?' gradient-word':'')} aria-hidden="true">{(word===gradientWord?[word]:Array.from(word)).map((letter,i)=><span className="letter-mask" key={i}><span className="reveal-letter" style={{'--letter-delay':`${Math.min(start+i,36)*12}ms`}}>{letter}</span></span>)}</span></React.Fragment>;
+  return <React.Fragment key={index}>{index>0&&(mobileBreak&&index===2?<><br className="mobile-break"/>{' '}</>:' ')}<span className={'reveal-word'+(word===gradientWord?' gradient-word':'')} aria-hidden="true">{(word===gradientWord?[word]:Array.from(word)).map((letter,i)=><span className="letter-mask" key={i}><span className="reveal-letter" data-glow={word===gradientWord?word:undefined} style={{'--letter-delay':`${Math.min(start+i,36)*12}ms`}}>{letter}</span></span>)}</span></React.Fragment>;
  })}</Tag>;
 }
 
@@ -28,7 +28,11 @@ export function usePageReveal(contentKey){
   const motion=matchMedia('(prefers-reduced-motion: reduce)');
   const groups=[
    ['.nav > .brand, .nav nav a',60],
-   ['.hero-inner > h1, .prompt-heading-initial > h1, .hero-inner > .intro, .hero-inner > .composer',100],
+   ['.hero-inner > h1, .prompt-heading-initial > h1',0,40],
+   ['.hero-inner > .prompt-intro',0,110],
+   ['.hero-inner .prompt-form-slot:not(.is-closed) .composer',0,170],
+   ['.hero-inner .prompt-submit',0,230],
+   ['.prompt-suggestion',45,250],
    ['#catalogo > .section-top h2, #catalogo .search-box, #catalogo .filter-button',0],
    ['.categories > button',35],
    ['.filters > label',45],
@@ -74,7 +78,7 @@ export function usePageReveal(contentKey){
      else if(target.matches('.tool-card')){
       const index=cards.indexOf(target);
       const row=Math.floor(index/columns);
-      stagger=(row-firstRow)*(columns*65+45)+(index%columns)*65;
+      stagger=Math.min((row-firstRow)*(columns*45+30)+(index%columns)*45,220);
       offset=140;
      }
      target.style.setProperty('--reveal-delay',`${Math.max(0,catalogReadyAt.current+offset-now)+stagger}ms`);
@@ -82,28 +86,34 @@ export function usePageReveal(contentKey){
     target.dataset.reveal='visible';observer.unobserve(target);
     if(target.matches('.tool-card')&&!motion.matches){
      // Explicit keyframes avoid browser coalescing the mount and reveal styles.
-     const from='0 -20px';
+     const from='0 10px';
      play(target,[{opacity:0,translate:from},{opacity:1,translate:'0 0'}],{
-      duration:520,delay:(parseFloat(target.style.getPropertyValue('--reveal-delay'))||0)+(grid?.dataset.restoring==='true'?140:0),
+      duration:380,delay:(parseFloat(target.style.getPropertyValue('--reveal-delay'))||0)+(grid?.dataset.restoring==='true'?140:0),
       easing:'cubic-bezier(.22,1,.36,1)',fill:'backwards'
+     });
+     const cardDelay=parseFloat(target.style.getPropertyValue('--reveal-delay'))||0;
+     target.querySelectorAll('.tool-card-title,.tool-tags,.tool-card-intro > p,.card-description,.card-tech-summary,.tool-metric,.tool-actions > *').forEach((child,index)=>{
+      play(child,[{opacity:0,translate:'0 5px'},{opacity:1,translate:'0 0'}],{
+       duration:260,delay:cardDelay+45+Math.min(index*22,176),easing:'cubic-bezier(.22,1,.36,1)',fill:'backwards'
+      });
      });
     }else if(!motion.matches){
      const delay=parseFloat(target.style.getPropertyValue('--reveal-delay'))||0;
      if(target.matches('.reveal-heading')){
       target.querySelectorAll('.reveal-letter').forEach(letter=>play(letter,
        [{transform:'translateY(115%)'},{transform:'translateY(0)'}],
-       {duration:520,delay:delay+(parseFloat(letter.style.getPropertyValue('--letter-delay'))||0),easing:'cubic-bezier(.22,1,.36,1)',fill:'backwards'}));
+       {duration:380,delay:delay+(parseFloat(letter.style.getPropertyValue('--letter-delay'))||0),easing:'cubic-bezier(.22,1,.36,1)',fill:'backwards'}));
      }else{
       play(target,[{opacity:0,translate:'0 14px'},{opacity:1,translate:'0 0'}],
-       {duration:580,delay,easing:'cubic-bezier(.22,1,.36,1)',fill:'backwards'});
+       {duration:380,delay,easing:'cubic-bezier(.22,1,.36,1)',fill:'backwards'});
      }
     }
    }
   },{threshold:.08});
-  for(const [selector,step] of groups)document.querySelectorAll(selector).forEach((el,i)=>{
+  for(const [selector,step,base=0] of groups)document.querySelectorAll(selector).forEach((el,i)=>{
    targets.push(el);
    if(el.dataset.reveal==='visible')return;
-   el.style.setProperty('--reveal-delay',`${Math.min(i*step,260)}ms`);
+   el.style.setProperty('--reveal-delay',`${base+Math.min(i*step,180)}ms`);
    el.dataset.reveal=motion.matches?'visible':'pending';
    if(!motion.matches){
     pendingTargets.push(el);

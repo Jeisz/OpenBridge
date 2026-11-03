@@ -1,10 +1,10 @@
 import {useState,useEffect} from 'react';
 const promptExamples = [
- 'Diseña un SaaS multi-tenant con aislamiento de datos, SSO mediante OIDC y RBAC por organización.',
- 'Propón una arquitectura orientada a eventos con colas, reintentos e idempotencia para procesar pagos.',
- 'Diseña un RAG privado con búsqueda híbrida, permisos por documento y modelos alojados en nuestra infraestructura.',
- 'Define un stack de observabilidad con métricas, logs y trazas distribuidas para microservicios en Kubernetes.',
- 'Propón una API de alta disponibilidad con PostgreSQL, caché distribuida y escalado horizontal para 10.000 solicitudes/s.'
+ 'Quiero gestionar las ventas y el inventario de mis tiendas en un solo lugar.',
+ 'Necesito que mis clientes reserven citas y reciban recordatorios.',
+ 'Quiero organizar los pedidos y hacer seguimiento de las entregas de mi negocio.',
+ 'Necesito centralizar las consultas de mis clientes y asignarlas a mi equipo.',
+ 'Quiero gestionar las suscripciones de mis clientes y saber qué pagos están pendientes.'
 ];
 
 export function useExamplePlaceholder(paused, input) {

@@ -2,9 +2,9 @@ import React from 'react';
 import {ArrowUpRight} from 'lucide-react';
 
 const suggestions=[
- 'Diseña un SaaS multiempresa con autenticación y roles por organización.',
- 'Propón un RAG privado para consultar documentos con permisos de acceso.',
- 'Diseña una API de alta disponibilidad con caché y escalado horizontal.'
+ 'Quiero gestionar las ventas y el inventario de mis tiendas en un solo lugar.',
+ 'Necesito que mis clientes reserven citas y reciban recordatorios.',
+ 'Quiero organizar los pedidos y hacer seguimiento de las entregas de mi negocio.'
 ];
 
 export function PromptSuggestions({flow}){

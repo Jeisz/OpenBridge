@@ -5,7 +5,7 @@ import {Snippet} from './Snippet';
 export function IntegrationIdeas({ideas}){
  const [opened,setOpened]=useState(ideas[0]?.id??null);
  const prefix=useId();
- if(!ideas.length)return null;
+ if(!ideas.length)return <section className="detail-integrations integration-accordion"><h2>Ideas de integración</h2><p>No hay ideas de integración disponibles para esta herramienta.</p></section>;
  return <section className="detail-integrations integration-accordion"><h2>Ideas de integración</h2>
   {ideas.map((idea,index)=>{
    const expanded=opened===idea.id;
