@@ -7,6 +7,7 @@ la respuesta debería mencionarlo como limitación.
 
 Las reglas que comparan contra otros archivos (categorías, catálogo) viven en
 ai/tests/test_assistant_cases.py.
+Los casos de validación viven aparte (VALIDATION_CASES_FILE), con el mismo esquema.
 """
 
 from pathlib import Path
@@ -17,6 +18,10 @@ from shared.contracts.assistant import AssistantRequest, AssistantResponse
 
 EVAL_DIR = Path(__file__).resolve().parent
 ASSISTANT_CASES_FILE = EVAL_DIR / "assistant_cases.json"
+# Casos escritos para validar reglas nuevas del prompt. No se usan para ajustarlo:
+# si se ajusta mirándolos, dejan de medir lo que el asistente hace con pedidos nuevos.
+VALIDATION_CASES_FILE = EVAL_DIR / "assistant_cases_validation.json"
+CASE_FILES = {"base": ASSISTANT_CASES_FILE, "validation": VALIDATION_CASES_FILE}
 
 # Mismos valores que el status de la respuesta del asistente.
 Status = AssistantResponse.model_fields["status"].annotation
@@ -91,6 +96,6 @@ class AssistantCaseSet(BaseModel):
         return self
 
 
-def load_assistant_cases() -> AssistantCaseSet:
-    """Carga y valida los casos. Lanza `ValidationError` si no cumplen."""
-    return AssistantCaseSet.model_validate_json(ASSISTANT_CASES_FILE.read_bytes())
+def load_assistant_cases(path: Path = ASSISTANT_CASES_FILE) -> AssistantCaseSet:
+    """Carga y valida los casos de un archivo. Lanza `ValidationError` si no cumplen."""
+    return AssistantCaseSet.model_validate_json(path.read_bytes())

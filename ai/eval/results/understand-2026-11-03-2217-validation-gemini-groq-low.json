@@ -1,0 +1,802 @@
+[
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "inmobiliaria-portal",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "search",
+          "query": "búsqueda semántica de texto libre",
+          "evidence": "escribiendo cosas como 'apartamento con balcón cerca del metro'"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos multimedia y documentos",
+          "evidence": "los agentes suben las fotos y los planos de cada inmueble"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.11,
+    "input_tokens": 2069,
+    "output_tokens": 121,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "agencia-viajes-web",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "frontend",
+          "query": "framework web para renderizado rápido",
+          "evidence": "Necesitamos un framework web para construir páginas de destinos que carguen muy rápido y se posicionen bien en Google."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.05,
+    "input_tokens": 2058,
+    "output_tokens": 77,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "cooperativa-api",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "backend",
+          "query": "framework para construir la api",
+          "evidence": "un framework para la API que registra las entregas de café de cada productor"
+        },
+        {
+          "category": "database",
+          "query": "base de datos relacional",
+          "evidence": "una base de datos relacional para guardar esos registros"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.07,
+    "input_tokens": 2065,
+    "output_tokens": 112,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "colegio-avisos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "envío de correos y mensajes de texto",
+          "evidence": "avisar por correo o SMS a los padres cuando baje del 80 %"
+        },
+        {
+          "category": "data-processing",
+          "query": "cálculo automático de porcentajes de asistencia",
+          "evidence": "Cada noche debe calcular el porcentaje de asistencia de cada estudiante"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.73,
+    "input_tokens": 2064,
+    "output_tokens": 125,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "ong-voluntarios",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "inicio de sesión con proveedores externos",
+          "evidence": "que sus voluntarios entren con su cuenta de Google"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos y documentos",
+          "evidence": "guardar los certificados escaneados de cada uno en PDF"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.11,
+    "input_tokens": 2051,
+    "output_tokens": 112,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "inmobiliaria-portal",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "search",
+          "query": "búsqueda semántica de texto libre",
+          "evidence": "escribiendo cosas como 'apartamento con balcón cerca del metro'"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos multimedia",
+          "evidence": "suben las fotos y los planos de cada inmueble"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.14,
+    "input_tokens": 2069,
+    "output_tokens": 117,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "agencia-viajes-web",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "frontend",
+          "query": "framework web para renderizado y rendimiento",
+          "evidence": "Necesitamos un framework web para construir páginas de destinos que carguen muy rápido y se posicionen bien en Google."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.16,
+    "input_tokens": 2058,
+    "output_tokens": 78,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "cooperativa-api",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "backend",
+          "query": "framework para construir API en Python",
+          "evidence": "queremos elegir un framework para la API"
+        },
+        {
+          "category": "database",
+          "query": "base de datos relacional",
+          "evidence": "una base de datos relacional para guardar esos registros"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.22,
+    "input_tokens": 2065,
+    "output_tokens": 59,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "colegio-avisos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de registros de asistencia",
+          "evidence": "profesores registren la asistencia"
+        },
+        {
+          "category": "communication",
+          "query": "envío de correos o mensajes de texto",
+          "evidence": "avisar por correo o SMS a los padres cuando baje del 80 %"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.07,
+    "input_tokens": 2064,
+    "output_tokens": 118,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "ong-voluntarios",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "autenticacion de usuarios mediante proveedores externos",
+          "evidence": "entren con su cuenta de Google"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos y documentos",
+          "evidence": "guardar los certificados escaneados de cada uno en PDF"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.27,
+    "input_tokens": 2051,
+    "output_tokens": 113,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "inmobiliaria-portal",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "search",
+          "query": "búsqueda semántica de texto libre",
+          "evidence": "escribiendo cosas como 'apartamento con balcón cerca del metro'"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos y objetos multimedia",
+          "evidence": "los agentes suben las fotos y los planos de cada inmueble"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.22,
+    "input_tokens": 2069,
+    "output_tokens": 121,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "agencia-viajes-web",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "frontend",
+          "query": "framework web para renderizado y seo",
+          "evidence": "Necesitamos un framework web para construir páginas de destinos que carguen muy rápido y se posicionen bien en Google."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.02,
+    "input_tokens": 2058,
+    "output_tokens": 78,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "cooperativa-api",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "backend",
+          "query": "framework para construir la api",
+          "evidence": "un framework para la API"
+        },
+        {
+          "category": "database",
+          "query": "base de datos relacional para registros",
+          "evidence": "una base de datos relacional para guardar esos registros"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.22,
+    "input_tokens": 2065,
+    "output_tokens": 104,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "colegio-avisos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de registros de asistencia escolar",
+          "evidence": "profesores registren la asistencia"
+        },
+        {
+          "category": "backend",
+          "query": "procesamiento nocturno de cálculo de asistencia",
+          "evidence": "Cada noche debe calcular el porcentaje de asistencia de cada estudiante"
+        },
+        {
+          "category": "communication",
+          "query": "envío de alertas por correo o SMS",
+          "evidence": "avisar por correo o SMS a los padres cuando baje del 80 %"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.22,
+    "input_tokens": 2064,
+    "output_tokens": 165,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "ong-voluntarios",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "inicio de sesion con proveedores externos",
+          "evidence": "que sus voluntarios entren con su cuenta de Google"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos y documentos",
+          "evidence": "guardar los certificados escaneados de cada uno en PDF"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.13,
+    "input_tokens": 2051,
+    "output_tokens": 113,
+    "waited": 0.0
+  },
+  {
+    "provider": "groq-low",
+    "run": 1,
+    "case": "inmobiliaria-portal",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "search",
+          "query": "búsqueda de texto completo",
+          "evidence": "Los clientes tienen que poder buscar propiedades escribiendo cosas como 'apartamento con balcón cerca del metro'"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos y objetos",
+          "evidence": "Los agentes suben las fotos y los planos de cada inmueble"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 0.92,
+    "input_tokens": 2310,
+    "output_tokens": 138,
+    "waited": 0.0
+  },
+  {
+    "provider": "groq-low",
+    "run": 1,
+    "case": "agencia-viajes-web",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "frontend",
+          "query": "desarrollo de frontend rápido y SEO",
+          "evidence": "Necesitamos un framework web para construir páginas de destinos que carguen muy rápido y se posicionen bien en Google."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.22,
+    "input_tokens": 2299,
+    "output_tokens": 129,
+    "waited": 0.0
+  },
+  {
+    "provider": "groq-low",
+    "run": 1,
+    "case": "cooperativa-api",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "backend",
+          "query": "framework para construir API",
+          "evidence": "Queremos elegir un framework para la API que registra las entregas de café de cada productor"
+        },
+        {
+          "category": "database",
+          "query": "base de datos relacional",
+          "evidence": "una base de datos relacional para guardar esos registros"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.32,
+    "input_tokens": 2306,
+    "output_tokens": 134,
+    "waited": 10.0
+  },
+  {
+    "provider": "groq-low",
+    "run": 1,
+    "case": "colegio-avisos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de datos estructurados",
+          "evidence": "los profesores registren la asistencia"
+        },
+        {
+          "category": "data-processing",
+          "query": "procesamiento por lotes y cálculos",
+          "evidence": "Cada noche debe calcular el porcentaje de asistencia de cada estudiante"
+        },
+        {
+          "category": "communication",
+          "query": "envío de notificaciones por correo y SMS",
+          "evidence": "avisar por correo o SMS a los padres cuando baje del 80 %"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.2,
+    "input_tokens": 2304,
+    "output_tokens": 229,
+    "waited": 17.0
+  },
+  {
+    "provider": "groq-low",
+    "run": 1,
+    "case": "ong-voluntarios",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "autenticación mediante Google",
+          "evidence": "entrar con su cuenta de Google"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos PDF",
+          "evidence": "guardar los certificados escaneados de cada uno en PDF"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.05,
+    "input_tokens": 2292,
+    "output_tokens": 173,
+    "waited": 17.0
+  },
+  {
+    "provider": "groq-low",
+    "run": 2,
+    "case": "inmobiliaria-portal",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "search",
+          "query": "búsqueda de texto completo",
+          "evidence": "Los clientes tienen que poder buscar propiedades escribiendo cosas como 'apartamento con balcón cerca del metro'"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos y objetos",
+          "evidence": "los agentes suben las fotos y los planos de cada inmueble"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.18,
+    "input_tokens": 2310,
+    "output_tokens": 139,
+    "waited": 2.0
+  },
+  {
+    "provider": "groq-low",
+    "run": 2,
+    "case": "agencia-viajes-web",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "frontend",
+          "query": "framework web de alto rendimiento",
+          "evidence": "Necesitamos un framework web para construir páginas de destinos que carguen muy rápido y se posicionen bien en Google."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.05,
+    "input_tokens": 2299,
+    "output_tokens": 111,
+    "waited": 18.0
+  },
+  {
+    "provider": "groq-low",
+    "run": 2,
+    "case": "cooperativa-api",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "backend",
+          "query": "framework para construir API",
+          "evidence": "queremos elegir un framework para la API que registra las entregas de café"
+        },
+        {
+          "category": "database",
+          "query": "base de datos relacional",
+          "evidence": "una base de datos relacional para guardar esos registros"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.1,
+    "input_tokens": 2306,
+    "output_tokens": 133,
+    "waited": 16.0
+  },
+  {
+    "provider": "groq-low",
+    "run": 2,
+    "case": "colegio-avisos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de datos estructurados",
+          "evidence": "profesores registren la asistencia"
+        },
+        {
+          "category": "data-processing",
+          "query": "procesamiento por lotes programado",
+          "evidence": "Cada noche debe calcular el porcentaje de asistencia de cada estudiante"
+        },
+        {
+          "category": "communication",
+          "query": "envío de notificaciones por correo y SMS",
+          "evidence": "avisar por correo o SMS a los padres cuando baje del 80 %"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.26,
+    "input_tokens": 2304,
+    "output_tokens": 226,
+    "waited": 17.0
+  },
+  {
+    "provider": "groq-low",
+    "run": 2,
+    "case": "ong-voluntarios",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "autenticación con proveedores externos",
+          "evidence": "entrar con su cuenta de Google"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos PDF",
+          "evidence": "guardar los certificados escaneados de cada uno en PDF"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.1,
+    "input_tokens": 2292,
+    "output_tokens": 163,
+    "waited": 17.0
+  },
+  {
+    "provider": "groq-low",
+    "run": 3,
+    "case": "inmobiliaria-portal",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "search",
+          "query": "búsqueda de texto completo",
+          "evidence": "Los clientes tienen que poder buscar propiedades escribiendo cosas como 'apartamento con balcón cerca del metro'"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos",
+          "evidence": "los agentes suben las fotos y los planos de cada inmueble"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.25,
+    "input_tokens": 2310,
+    "output_tokens": 169,
+    "waited": 18.0
+  },
+  {
+    "provider": "groq-low",
+    "run": 3,
+    "case": "agencia-viajes-web",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "frontend",
+          "query": "framework web de alto rendimiento",
+          "evidence": "Necesitamos un framework web para construir páginas de destinos que carguen muy rápido y se posicionen bien en Google."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.34,
+    "input_tokens": 2299,
+    "output_tokens": 109,
+    "waited": 17.0
+  },
+  {
+    "provider": "groq-low",
+    "run": 3,
+    "case": "cooperativa-api",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "backend",
+          "query": "framework para construir API",
+          "evidence": "Queremos elegir un framework para la API que registra las entregas de café"
+        },
+        {
+          "category": "database",
+          "query": "base de datos relacional",
+          "evidence": "una base de datos relacional para guardar esos registros"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 0.95,
+    "input_tokens": 2306,
+    "output_tokens": 133,
+    "waited": 17.0
+  },
+  {
+    "provider": "groq-low",
+    "run": 3,
+    "case": "colegio-avisos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de datos estructurados",
+          "evidence": "profesores registren la asistencia"
+        },
+        {
+          "category": "data-processing",
+          "query": "cálculo periódico de métricas",
+          "evidence": "Cada noche debe calcular el porcentaje de asistencia de cada estudiante"
+        },
+        {
+          "category": "communication",
+          "query": "envío de notificaciones por correo o SMS",
+          "evidence": "avisar por correo o SMS a los padres cuando baje del 80 %"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.44,
+    "input_tokens": 2304,
+    "output_tokens": 204,
+    "waited": 16.0
+  },
+  {
+    "provider": "groq-low",
+    "run": 3,
+    "case": "ong-voluntarios",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "autenticación con Google",
+          "evidence": "entrar con su cuenta de Google"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos PDF",
+          "evidence": "guardar los certificados escaneados de cada uno en PDF"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.13,
+    "input_tokens": 2292,
+    "output_tokens": 168,
+    "waited": 0.0
+  }
+]

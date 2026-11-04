@@ -1,4 +1,4 @@
-"""Valida los casos de prueba del asistente (ai/eval/assistant_cases.json).
+"""Valida los casos de prueba del asistente: los de siempre y los de validación.
 
 Sin base de datos ni modelo de lenguaje. Correr desde la raíz del repo:
     python -m pytest ai/tests/test_assistant_cases.py -v
@@ -11,13 +11,15 @@ import pytest
 from pydantic import ValidationError
 
 from ai.catalog import load_categories
-from ai.eval.assistant_cases import AssistantCase, AssistantCaseSet, load_assistant_cases
+from ai.eval.assistant_cases import (CASE_FILES, AssistantCase, AssistantCaseSet,
+                                     load_assistant_cases)
 from ai.scripts.export_catalog_snapshot import META_FILE, REPOS_FILE
 
 
-@pytest.fixture(scope="module")
-def case_set() -> AssistantCaseSet:
-    return load_assistant_cases()
+@pytest.fixture(scope="module", params=sorted(CASE_FILES))
+def case_set(request) -> AssistantCaseSet:
+    """Cada test que la usa corre una vez por archivo de casos."""
+    return load_assistant_cases(CASE_FILES[request.param])
 
 
 @pytest.fixture(scope="module")
@@ -70,6 +72,15 @@ def test_casos_escritos_con_el_catalogo_actual(case_set):
     )
 
 
+def test_validacion_separada_de_la_base():
+    # Los casos de validación miden pedidos que el prompt no vio: no pueden repetir los de la base.
+    base = load_assistant_cases(CASE_FILES["base"]).cases
+    validation = load_assistant_cases(CASE_FILES["validation"]).cases
+    assert not {c.id for c in base} & {c.id for c in validation}, "id repetido entre archivos"
+    assert not {c.query for c in base} & {c.query for c in validation}, "pedido repetido entre archivos"
+    assert not any(c.quick_set for c in validation), "los casos rápidos son de la base"
+
+
 # --- Reglas del esquema ---
 
 def caso(**cambios) -> dict:
@@ -112,9 +123,9 @@ def test_status_segun_necesidades(needs, status):
     assert AssistantCase.model_validate(caso(needs=needs, expected_status=status)).expected_status == status
 
 
-def test_subconjunto_rapido(case_set):
-    # Cinco casos para comparar modelos rápido; deben cubrir cada comportamiento.
-    quick = [c for c in case_set.cases if c.quick_set]
+def test_subconjunto_rapido():
+    # Cinco casos de la base para comparar modelos rápido; deben cubrir cada comportamiento.
+    quick = [c for c in load_assistant_cases().cases if c.quick_set]
     assert len(quick) == 5
     assert {c.expected_status for c in quick} == {"ok", "no_evidence", "needs_clarification"}
     assert any(len(c.needs) >= 3 for c in quick), "falta un negocio de varias necesidades"

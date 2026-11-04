@@ -3,6 +3,11 @@
 El proveedor se elige con AI_LLM_PROVIDER (por defecto, gemini). Todos los
 proveedores aceptan el formato de OpenAI: solo cambian la dirección, el
 modelo, la clave y algunas opciones. Solo este archivo sabe qué proveedor se usa.
+
+Respaldo: si no se pide un proveedor concreto y el principal falla por algo
+temporal (límite de uso, caída, tiempo agotado), la misma llamada pasa al de
+AI_LLM_FALLBACK (por defecto, groq-low; vacío = sin respaldo), sin esperar.
+Con una fecha límite (Deadline), cada intento usa solo el tiempo que queda.
 """
 
 import os
@@ -78,9 +83,28 @@ PROVIDERS = {
     ),
 }
 DEFAULT_PROVIDER = "gemini"
-TIMEOUT_SECONDS = 15.0  # presupuesto de la IA; el frontend espera 20 s
+DEFAULT_FALLBACK = "groq-low"  # respaldo si el principal falla por algo temporal
+TIMEOUT_SECONDS = 15.0  # tiempo máximo de una llamada sin fecha límite (evaluaciones, pruebas)
+# Con fecha límite (el servicio). Valores iniciales, de las evaluaciones del asistente (nov. 2026):
+FIRST_TRY_SECONDS = 7.0  # tope del principal si hay respaldo: su peor llamada medida fue ~4,5 s
+                         # y deja al respaldo al menos 6 s (Groq tarda ~1,5 s)
+MIN_CALL_SECONDS = 2.5   # por debajo no se empieza una llamada: la mediana de generar es ~2 s
 # Textos con que algunos proveedores (Groq) rechazan una respuesta que no cumple el esquema.
 SCHEMA_REJECTED = ("does not match the expected schema", "Failed to validate JSON")
+
+
+@dataclass(frozen=True)
+class Deadline:
+    """Momento en que se acaba el tiempo de un pedido. Se fija una vez y se consulta en cada paso."""
+
+    at: float  # time.monotonic() del final
+
+    @classmethod
+    def in_seconds(cls, seconds: float) -> "Deadline":
+        return cls(time.monotonic() + seconds)
+
+    def remaining(self) -> float:
+        return self.at - time.monotonic()
 
 
 class LLMError(Exception):
@@ -146,6 +170,17 @@ def provider_key(provider: str | None = None) -> str:
     return key
 
 
+def provider_chain(provider: str | None = None) -> list[str]:
+    """Proveedores a intentar, en orden. Con uno pedido explícitamente, solo ese."""
+    if provider is not None:
+        return [provider_key(provider)]
+    chain = [provider_key()]
+    fallback = os.environ.get("AI_LLM_FALLBACK", DEFAULT_FALLBACK).strip()
+    if fallback and fallback != chain[0]:
+        chain.append(provider_key(fallback))
+    return chain
+
+
 @lru_cache(maxsize=None)
 def _client(key: str) -> OpenAI:
     """Un cliente por proveedor, creado la primera vez que se usa."""
@@ -168,14 +203,9 @@ def _failed_generation(err: openai.APIStatusError) -> str:
     return str(inner.get("failed_generation", ""))
 
 
-def generar(messages: list[dict], *,
-            schema: type[BaseModel] | None = None,
-            provider: str | None = None) -> Generation:
-    """Envía los mensajes al modelo y devuelve su texto con tiempo y tokens.
-
-    Con `schema`, pide la respuesta en ese formato y la valida.
-    """
-    key = provider_key(provider)
+def _generar_uno(key: str, messages: list[dict], schema: type[BaseModel] | None,
+                 timeout: float) -> Generation:
+    """Una llamada a un proveedor, con un tiempo máximo. Traduce sus errores a los nuestros."""
     spec = PROVIDERS[key]
     options = {}
     if spec.temperature is not None:
@@ -195,17 +225,18 @@ def generar(messages: list[dict], *,
     start = time.perf_counter()
     try:
         response = _client(key).chat.completions.create(
-            model=spec.model, messages=messages, **options)
+            model=spec.model, messages=messages, timeout=timeout, **options)
     # El orden importa: cada except atrapa también a sus subclases,
     # así que los casos particulares van antes que los generales.
     except openai.APITimeoutError as err:
-        raise LLMTimeout(f"{key}: sin respuesta en {TIMEOUT_SECONDS:.0f} s") from err
+        raise LLMTimeout(f"{key}: sin respuesta en {timeout:.1f} s") from err
     except openai.APIConnectionError as err:
         hint = " ¿Ollama está abierto?" if key == "ollama" else ""
         raise LLMUnavailable(f"{key}: no se pudo conectar.{hint}") from err
     except openai.RateLimitError as err:
         wait = err.response.headers.get("retry-after")
-        raise LLMRateLimited(f"{key}: límite de uso alcanzado",
+        detail = str(err.message)[:300]  # dice qué límite fue: por minuto o por día
+        raise LLMRateLimited(f"{key}: límite de uso alcanzado: {detail}",
                              retry_after=float(wait) if wait else None) from err
     except (openai.AuthenticationError, openai.PermissionDeniedError) as err:
         raise LLMConfigError(f"{key}: la clave no es válida o no tiene acceso") from err
@@ -243,3 +274,37 @@ def generar(messages: list[dict], *,
         output_tokens=usage.completion_tokens if usage else None,
         data=data,
     )
+
+
+def generar(messages: list[dict], *,
+            schema: type[BaseModel] | None = None,
+            provider: str | None = None,
+            deadline: Deadline | None = None) -> Generation:
+    """Envía los mensajes al modelo y devuelve su texto con tiempo y tokens.
+
+    Con `schema`, pide la respuesta en ese formato y la valida.
+    Con `provider`, usa solo ese proveedor; sin él, el principal y, si falla
+    por algo temporal, el respaldo. Con `deadline`, nunca se pasa de ella:
+    si no alcanza el tiempo para una llamada, lanza LLMTimeout sin hacerla.
+    """
+    chain = provider_chain(provider)
+    last_error: LLMError | None = None
+    for position, key in enumerate(chain):
+        timeout = TIMEOUT_SECONDS
+        if deadline is not None:
+            left = deadline.remaining()
+            if left < MIN_CALL_SECONDS:
+                raise LLMTimeout(f"{key}: quedan {max(left, 0):.1f} s; "
+                                 "no alcanza para otra llamada") from last_error
+            has_next = position < len(chain) - 1
+            # El principal tiene tope si hay respaldo, para que al respaldo le quede tiempo.
+            timeout = min(left, FIRST_TRY_SECONDS) if has_next else left
+        try:
+            return _generar_uno(key, messages, schema, timeout)
+        except (LLMRateLimited, LLMTimeout) as err:
+            last_error = err  # temporal: se prueba el siguiente, sin esperar
+        except LLMUnavailable as err:
+            if not err.transient:
+                raise  # permanente (por ejemplo, un 400): otro proveedor no lo arregla
+            last_error = err
+    raise last_error

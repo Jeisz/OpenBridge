@@ -22,7 +22,7 @@ class NeedOutcome:
     category: str
     detected: bool            # entender la detectó
     wants_tool: bool          # el caso acepta al menos un repo para ella
-    available3: bool          # había un aceptable entre los candidatos que vio el modelo
+    available3: bool          # había un aceptable entre los candidatos que vio el modelo (k)
     available5: bool          # ... entre los 5 primeros de la búsqueda
     chosen: str | None        # repo elegido (None = sin caja o descartada)
     chosen_rank: int | None   # puesto del elegido entre los candidatos (1 = el primero)
@@ -76,7 +76,8 @@ def _user_texts(response) -> list[str]:
 
 
 def flow_outcome(case: AssistantCase, provider: str, run: int, assisted: Assisted | None,
-                 *, waited: float = 0.0, error: str | None = None) -> FlowOutcome:
+                 *, waited: float = 0.0, error: str | None = None,
+                 shown: int = CANDIDATES_SHOWN) -> FlowOutcome:
     """Compara una corrida del flujo con lo esperado del caso."""
     understood = assisted.understood if assisted else None
     generated = assisted.generated if assisted else None
@@ -94,7 +95,7 @@ def flow_outcome(case: AssistantCase, provider: str, run: int, assisted: Assiste
             category=need.category,
             detected=need.category in detected,
             wants_tool=bool(need.acceptable),
-            available3=any(n in need.acceptable for n in names[:CANDIDATES_SHOWN]),
+            available3=any(n in need.acceptable for n in names[:shown]),
             available5=any(n in need.acceptable for n in names),
             chosen=pick,
             chosen_rank=names.index(pick) + 1 if pick in names else None,
@@ -146,6 +147,7 @@ def summarize(outcomes: list[FlowOutcome]) -> dict:
     ok = [o for o in outcomes if o.error is None]
     needs = [n for o in ok for n in o.needs]
     tool_needs = [n for n in needs if n.wants_tool and n.detected]
+    no_tool_needs = [n for n in needs if not n.wants_tool and n.detected]
     available = [n for n in tool_needs if n.available3]
     unavailable = [n for n in needs if n.detected and not n.available3]
     chosen = [n for n in needs if n.chosen]
@@ -170,6 +172,10 @@ def summarize(outcomes: list[FlowOutcome]) -> dict:
         "ceiling5": ratio(sum(n.available5 for n in tool_needs), len(tool_needs)),
         "chose_ok": ratio(sum(n.chosen_ok for n in available), len(available)),
         "declined_ok": ratio(sum(n.chosen is None for n in unavailable), len(unavailable)),
+        # Mismo denominador con cualquier número de candidatos: sirven para comparar k.
+        "chose_ok_all": ratio(sum(n.chosen_ok for n in tool_needs), len(tool_needs)),
+        "declined_no_tool": ratio(sum(n.chosen is None for n in no_tool_needs),
+                                  len(no_tool_needs)),
         "first_rank": ratio(sum(n.chosen_rank == 1 for n in chosen), len(chosen)),
         "repeated_limitations": sum(o.repeated_limitations for o in ok),
         "ids_in_text": sum(o.ids_in_text for o in ok),

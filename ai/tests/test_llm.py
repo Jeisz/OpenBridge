@@ -156,3 +156,81 @@ def test_esquema_rechazado_por_el_proveedor_es_respuesta_invalida(fake, message)
     with pytest.raises(llm.LLMInvalidResponse) as caught:
         llm.generar(MESSAGES, provider="groq")
     assert caught.value.raw_text == '{"label": null}'
+
+
+# --- Respaldo y fecha límite ---
+
+@pytest.fixture
+def fakes(monkeypatch):
+    """Un cliente falso por proveedor, creado al pedirlo; sin variables de entorno."""
+    made = {}
+
+    def client(key):
+        made.setdefault(key, FakeCompletions())
+        return SimpleNamespace(chat=SimpleNamespace(completions=made[key]))
+
+    monkeypatch.setattr(llm, "_client", client)
+    monkeypatch.delenv("AI_LLM_PROVIDER", raising=False)
+    monkeypatch.delenv("AI_LLM_FALLBACK", raising=False)
+    return made
+
+
+def fails(fakes, key, error):
+    """Hace que el proveedor `key` responda con `error`."""
+    fakes.setdefault(key, FakeCompletions()).error = error
+
+
+def test_cadena_de_proveedores(monkeypatch):
+    monkeypatch.delenv("AI_LLM_PROVIDER", raising=False)
+    monkeypatch.delenv("AI_LLM_FALLBACK", raising=False)
+    assert llm.provider_chain() == ["gemini", "groq-low"]
+    assert llm.provider_chain("groq") == ["groq"]          # explícito: sin respaldo
+    monkeypatch.setenv("AI_LLM_FALLBACK", "")
+    assert llm.provider_chain() == ["gemini"]               # vacío: respaldo apagado
+
+
+def test_pasa_al_respaldo_ante_limite_de_uso(fakes):
+    fails(fakes, "gemini", status_error(openai.RateLimitError, 429))
+    result = llm.generar(MESSAGES)
+    assert result.provider == "groq-low"
+
+
+def test_pasa_al_respaldo_ante_error_temporal(fakes):
+    fails(fakes, "gemini", status_error(openai.InternalServerError, 503))
+    assert llm.generar(MESSAGES).provider == "groq-low"
+
+
+def test_proveedor_explicito_no_usa_respaldo(fakes):
+    fails(fakes, "gemini", status_error(openai.RateLimitError, 429))
+    with pytest.raises(llm.LLMRateLimited):
+        llm.generar(MESSAGES, provider="gemini")
+    assert "groq-low" not in fakes
+
+
+def test_error_permanente_no_usa_respaldo(fakes):
+    fails(fakes, "gemini", status_error(openai.BadRequestError, 400))
+    with pytest.raises(llm.LLMUnavailable):
+        llm.generar(MESSAGES)
+    assert "groq-low" not in fakes
+
+
+def test_sin_tiempo_no_llama_al_modelo(fakes):
+    with pytest.raises(llm.LLMTimeout):
+        llm.generar(MESSAGES, deadline=llm.Deadline.in_seconds(llm.MIN_CALL_SECONDS - 1))
+    assert fakes == {}
+
+
+def test_tope_del_primer_intento_solo_si_hay_respaldo(fakes, monkeypatch):
+    llm.generar(MESSAGES, deadline=llm.Deadline.in_seconds(15))
+    assert fakes["gemini"].sent["timeout"] <= llm.FIRST_TRY_SECONDS
+
+    monkeypatch.setenv("AI_LLM_FALLBACK", "")
+    llm.generar(MESSAGES, deadline=llm.Deadline.in_seconds(15))
+    assert fakes["gemini"].sent["timeout"] > llm.FIRST_TRY_SECONDS
+
+
+def test_el_limite_de_uso_guarda_el_mensaje_del_proveedor(fakes):
+    fails(fakes, "groq", status_error(openai.RateLimitError, 429))
+    with pytest.raises(llm.LLMRateLimited) as caught:
+        llm.generar(MESSAGES, provider="groq")
+    assert "error simulado" in str(caught.value)

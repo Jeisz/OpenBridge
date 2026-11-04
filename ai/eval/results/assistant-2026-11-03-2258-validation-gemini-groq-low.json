@@ -1,0 +1,3107 @@
+[
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "inmobiliaria-portal",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "search",
+          "query": "búsqueda semántica de texto libre",
+          "evidence": "escribiendo cosas como 'apartamento con balcón cerca del metro'"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos y objetos multimedia",
+          "evidence": "los agentes suben las fotos y los planos de cada inmueble"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "search": [
+        [
+          "opensearch-project/OpenSearch",
+          0.322
+        ],
+        [
+          "BurntSushi/ripgrep",
+          0.292
+        ],
+        [
+          "pgvector/pgvector",
+          0.29
+        ],
+        [
+          "run-llama/llama_index",
+          0.265
+        ],
+        [
+          "ollama/ollama",
+          0.244
+        ]
+      ],
+      "storage": []
+    },
+    "draft": {
+      "title": "Portal inmobiliario con búsqueda avanzada",
+      "summary": "Proponemos OpenSearch para resolver la búsqueda semántica y de texto libre en el portal. Queda pendiente el almacenamiento de archivos para las fotos y planos de los inmuebles.",
+      "boxes": [
+        {
+          "need": "search",
+          "full_name": "opensearch-project/OpenSearch",
+          "label": "OpenSearch",
+          "role": "Búsqueda y análisis",
+          "rationale": "Permite realizar búsquedas distribuidas y RESTful orientadas a motores de búsqueda, facilitando consultas avanzadas de texto libre como las que requieren los clientes."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Suponemos que el sistema contará con una base de datos relacional o servicio de almacenamiento compatible para los metadatos de las propiedades.",
+        "El almacenamiento de archivos para fotos y planos de los inmuebles requiere una solución externa."
+      ],
+      "other_limitations": [
+        "La propuesta no incluye el almacenamiento de fotos y planos de los inmuebles, que requiere una solución dedicada."
+      ]
+    },
+    "response": {
+      "id": "e6779ee49c364596b02249977918f9d1",
+      "status": "ok",
+      "title": "Portal inmobiliario con búsqueda avanzada",
+      "summary": "Proponemos OpenSearch para resolver la búsqueda semántica y de texto libre en el portal. Queda pendiente el almacenamiento de archivos para las fotos y planos de los inmuebles.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "OpenSearch",
+          "role": "Búsqueda y análisis",
+          "full_name": "opensearch-project/OpenSearch",
+          "rationale": "Permite realizar búsquedas distribuidas y RESTful orientadas a motores de búsqueda, facilitando consultas avanzadas de texto libre como las que requieren los clientes."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Suponemos que el sistema contará con una base de datos relacional o servicio de almacenamiento compatible para los metadatos de las propiedades.",
+        "El almacenamiento de archivos para fotos y planos de los inmuebles requiere una solución externa."
+      ],
+      "limitations": [
+        "Almacenamiento: el catálogo no tiene herramientas para «almacenamiento de archivos y objetos multimedia».",
+        "La propuesta no incluye el almacenamiento de fotos y planos de los inmuebles, que requiere una solución dedicada."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-04T03:19:41.187648Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "agencia-viajes-web",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "frontend",
+          "query": "framework web para renderizado rápido",
+          "evidence": "Necesitamos un framework web para construir páginas de destinos que carguen muy rápido y se posicionen bien en Google"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "frontend": [
+        [
+          "tailwindlabs/tailwindcss",
+          0.403
+        ],
+        [
+          "vitejs/vite",
+          0.403
+        ],
+        [
+          "vercel/next.js",
+          0.399
+        ],
+        [
+          "angular/angular",
+          0.397
+        ],
+        [
+          "nuxt/nuxt",
+          0.388
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Arquitectura web rápida para agencia de viajes",
+      "summary": "Propuesta de framework web para construir páginas de destinos optimizadas para carga rápida y posicionamiento en buscadores. Permite desarrollar una interfaz moderna y eficiente para los usuarios de la agencia.",
+      "boxes": [
+        {
+          "need": "frontend",
+          "full_name": "vercel/next.js",
+          "label": "Next.js",
+          "role": "Framework web para renderizado y desarrollo frontend",
+          "rationale": "Es el framework de React ideal para construir páginas de destinos que carguen muy rápido y se posicionen bien en Google gracias a sus capacidades híbridas y de compilación. Cuenta con licencia MIT y alta actividad reciente."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "La agencia de viajes cuenta con recursos de desarrollo con experiencia en React."
+      ],
+      "other_limitations": [
+        "No se incluyeron herramientas específicas para la gestión del contenido de los destinos o base de datos."
+      ]
+    },
+    "response": {
+      "id": "5b39751902be46088eaf96197f053032",
+      "status": "ok",
+      "title": "Arquitectura web rápida para agencia de viajes",
+      "summary": "Propuesta de framework web para construir páginas de destinos optimizadas para carga rápida y posicionamiento en buscadores. Permite desarrollar una interfaz moderna y eficiente para los usuarios de la agencia.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Next.js",
+          "role": "Framework web para renderizado y desarrollo frontend",
+          "full_name": "vercel/next.js",
+          "rationale": "Es el framework de React ideal para construir páginas de destinos que carguen muy rápido y se posicionen bien en Google gracias a sus capacidades híbridas y de compilación. Cuenta con licencia MIT y alta actividad reciente."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "La agencia de viajes cuenta con recursos de desarrollo con experiencia en React."
+      ],
+      "limitations": [
+        "No se incluyeron herramientas específicas para la gestión del contenido de los destinos o base de datos."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-04T03:19:52.446151Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "cooperativa-api",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "backend",
+          "query": "framework para construir API en Python",
+          "evidence": "un framework para la API que registra las entregas de café de cada productor"
+        },
+        {
+          "category": "database",
+          "query": "motor de base de datos relacional",
+          "evidence": "una base de datos relacional para guardar esos registros"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "backend": [
+        [
+          "fastapi/fastapi",
+          0.443
+        ],
+        [
+          "openai/openai-python",
+          0.407
+        ],
+        [
+          "PrefectHQ/prefect",
+          0.401
+        ],
+        [
+          "pallets/flask",
+          0.398
+        ],
+        [
+          "fastapi/sqlmodel",
+          0.391
+        ]
+      ],
+      "database": [
+        [
+          "redis/redis",
+          0.328
+        ],
+        [
+          "fastapi/sqlmodel",
+          0.296
+        ],
+        [
+          "duckdb/duckdb",
+          0.287
+        ],
+        [
+          "sqlalchemy/sqlalchemy",
+          0.273
+        ],
+        [
+          "ClickHouse/ClickHouse",
+          0.248
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de Registro de Entregas de Café",
+      "summary": "Esta propuesta utiliza FastAPI para construir la interfaz de la API y SQLModel para gestionar la base de datos relacional que almacena las entregas de café de los productores.",
+      "boxes": [
+        {
+          "need": "backend",
+          "full_name": "fastapi/fastapi",
+          "label": "FastAPI",
+          "role": "Framework para la API",
+          "rationale": "Es un framework moderno y de alto rendimiento en Python, ideal para desarrollar rápidamente la API que registra las entregas de café de cada productor."
+        },
+        {
+          "need": "database",
+          "full_name": "fastapi/sqlmodel",
+          "label": "SQLModel",
+          "role": "Base de datos relacional",
+          "rationale": "Permite interactuar con bases de datos SQL en Python de forma sencilla y robusta para guardar los registros de los productores."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "backend",
+          "to_need": "database",
+          "protocol": "HTTP / ORM",
+          "description": "El backend utiliza SQLModel para consultar y guardar los registros en la base de datos."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la cooperativa cuenta con infraestructura propia o en la nube para desplegar la API y la base de datos."
+      ],
+      "other_limitations": []
+    },
+    "response": {
+      "id": "854c6909fed2465ea48f3fc32977ba6a",
+      "status": "ok",
+      "title": "Sistema de Registro de Entregas de Café",
+      "summary": "Esta propuesta utiliza FastAPI para construir la interfaz de la API y SQLModel para gestionar la base de datos relacional que almacena las entregas de café de los productores.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "FastAPI",
+          "role": "Framework para la API",
+          "full_name": "fastapi/fastapi",
+          "rationale": "Es un framework moderno y de alto rendimiento en Python, ideal para desarrollar rápidamente la API que registra las entregas de café de cada productor."
+        },
+        {
+          "key": "c2",
+          "label": "SQLModel",
+          "role": "Base de datos relacional",
+          "full_name": "fastapi/sqlmodel",
+          "rationale": "Permite interactuar con bases de datos SQL en Python de forma sencilla y robusta para guardar los registros de los productores."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c1",
+          "to_key": "c2",
+          "protocol": "HTTP / ORM",
+          "description": "El backend utiliza SQLModel para consultar y guardar los registros en la base de datos."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la cooperativa cuenta con infraestructura propia o en la nube para desplegar la API y la base de datos."
+      ],
+      "limitations": [],
+      "clarification_questions": [],
+      "generated_at": "2026-11-04T03:20:04.221142Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "colegio-avisos",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "envío de correos o mensajes de texto",
+          "evidence": "avisar por correo o SMS a los padres cuando baje del 80 %"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "communication": []
+    },
+    "draft": null,
+    "response": {
+      "id": "1c58363627b44fe5979540f438027a57",
+      "status": "no_evidence",
+      "title": null,
+      "summary": "El catálogo todavía no tiene herramientas para lo que pides: comunicación.",
+      "components": [],
+      "connections": [],
+      "assumptions": [],
+      "limitations": [
+        "Comunicación: el catálogo no tiene herramientas para «envío de correos o mensajes de texto»."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-04T03:20:14.111052Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "ong-voluntarios",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "autenticacion de usuarios mediante proveedores externos",
+          "evidence": "entren con su cuenta de Google"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos y documentos",
+          "evidence": "guardar los certificados escaneados de cada uno en PDF"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "auth": [
+        [
+          "cert-manager/cert-manager",
+          0.203
+        ],
+        [
+          "traefik/traefik",
+          0.197
+        ],
+        [
+          "hashicorp/terraform",
+          0.193
+        ]
+      ],
+      "storage": [
+        [
+          "etcd-io/etcd",
+          0.213
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema Open Source para Autenticación y Almacenamiento de Voluntarios",
+      "summary": "Esta propuesta integra herramientas para la gestión de infraestructura y certificados, aunque ninguna de las opciones disponibles en el catálogo resuelve directamente la autenticación de usuarios mediante cuentas de Google ni el almacenamiento específico de archivos PDF.",
+      "boxes": [
+        {
+          "need": "auth",
+          "full_name": null,
+          "label": "Autenticación",
+          "role": "Gestión de acceso de usuarios",
+          "rationale": "Ninguno de los candidatos resuelve la autenticación de usuarios mediante proveedores externos como Google, ya que se centran en certificados TLS, proxies o infraestructura como código."
+        },
+        {
+          "need": "storage",
+          "full_name": null,
+          "label": "Almacenamiento",
+          "role": "Almacenamiento de documentos en PDF",
+          "rationale": "El candidato disponible es una base de datos clave-valor distribuida y no está diseñado para almacenar archivos y documentos escaneados en formato PDF."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que la ONG cuenta con personal técnico para desplegar infraestructura en Kubernetes o entornos cloud."
+      ],
+      "other_limitations": [
+        "No se dispone de herramientas en el catálogo para el inicio de sesión con cuentas de Google.",
+        "No se dispone de herramientas para la gestión y almacenamiento documental de archivos PDF."
+      ]
+    },
+    "response": {
+      "id": "66d68b3295a24fc78c57c653a856dc54",
+      "status": "no_evidence",
+      "title": "Sistema Open Source para Autenticación y Almacenamiento de Voluntarios",
+      "summary": "Esta propuesta integra herramientas para la gestión de infraestructura y certificados, aunque ninguna de las opciones disponibles en el catálogo resuelve directamente la autenticación de usuarios mediante cuentas de Google ni el almacenamiento específico de archivos PDF.",
+      "components": [],
+      "connections": [],
+      "assumptions": [
+        "Se asume que la ONG cuenta con personal técnico para desplegar infraestructura en Kubernetes o entornos cloud."
+      ],
+      "limitations": [
+        "Autenticación: ninguna herramienta del catálogo encaja. Ninguno de los candidatos resuelve la autenticación de usuarios mediante proveedores externos como Google, ya que se centran en certificados TLS, proxies o infraestructura como código.",
+        "Almacenamiento: ninguna herramienta del catálogo encaja. El candidato disponible es una base de datos clave-valor distribuida y no está diseñado para almacenar archivos y documentos escaneados en formato PDF.",
+        "No se dispone de herramientas en el catálogo para el inicio de sesión con cuentas de Google.",
+        "No se dispone de herramientas para la gestión y almacenamiento documental de archivos PDF."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-04T03:20:25.327420Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "inmobiliaria-portal",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "search",
+          "query": "búsqueda semántica de texto libre",
+          "evidence": "escribiendo cosas como 'apartamento con balcón cerca del metro'"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos multimedia",
+          "evidence": "los agentes suben las fotos y los planos de cada inmueble"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "search": [
+        [
+          "opensearch-project/OpenSearch",
+          0.322
+        ],
+        [
+          "BurntSushi/ripgrep",
+          0.292
+        ],
+        [
+          "pgvector/pgvector",
+          0.29
+        ],
+        [
+          "run-llama/llama_index",
+          0.265
+        ],
+        [
+          "ollama/ollama",
+          0.244
+        ]
+      ],
+      "storage": []
+    },
+    "draft": {
+      "title": "Portal Inmobiliario con Búsqueda Semántica Abierta",
+      "summary": "Esta propuesta integra un motor de búsqueda avanzado para procesar consultas complejas de los clientes en el portal web. Queda pendiente el almacenamiento persistente para las fotos y planos de los inmuebles.",
+      "boxes": [
+        {
+          "need": "search",
+          "full_name": "opensearch-project/OpenSearch",
+          "label": "OpenSearch",
+          "role": "Motor de búsqueda",
+          "rationale": "Permite realizar búsquedas distribuidas de texto libre y análisis para que los clientes encuentren propiedades escribiendo descripciones detalladas. Cuenta con licencia Apache-2.0 y su desarrollo está activo."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que la inmobiliaria cuenta con un sistema de almacenamiento externo para gestionar las fotos y los planos subidos por los agentes."
+      ],
+      "other_limitations": [
+        "No se incluye un sistema de almacenamiento en el catálogo para guardar las imágenes y los planos de los inmuebles."
+      ]
+    },
+    "response": {
+      "id": "b1fe17f6cd4a459fba5cdaa8221ba4a8",
+      "status": "ok",
+      "title": "Portal Inmobiliario con Búsqueda Semántica Abierta",
+      "summary": "Esta propuesta integra un motor de búsqueda avanzado para procesar consultas complejas de los clientes en el portal web. Queda pendiente el almacenamiento persistente para las fotos y planos de los inmuebles.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "OpenSearch",
+          "role": "Motor de búsqueda",
+          "full_name": "opensearch-project/OpenSearch",
+          "rationale": "Permite realizar búsquedas distribuidas de texto libre y análisis para que los clientes encuentren propiedades escribiendo descripciones detalladas. Cuenta con licencia Apache-2.0 y su desarrollo está activo."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que la inmobiliaria cuenta con un sistema de almacenamiento externo para gestionar las fotos y los planos subidos por los agentes."
+      ],
+      "limitations": [
+        "Almacenamiento: el catálogo no tiene herramientas para «almacenamiento de archivos multimedia».",
+        "No se incluye un sistema de almacenamiento en el catálogo para guardar las imágenes y los planos de los inmuebles."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-04T03:20:36.687890Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "agencia-viajes-web",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "frontend",
+          "query": "framework web para renderizado rápido",
+          "evidence": "necesitamos un framework web para construir páginas de destinos que carguen muy rápido y se posicionen bien en Google"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "frontend": [
+        [
+          "tailwindlabs/tailwindcss",
+          0.403
+        ],
+        [
+          "vitejs/vite",
+          0.403
+        ],
+        [
+          "vercel/next.js",
+          0.399
+        ],
+        [
+          "angular/angular",
+          0.397
+        ],
+        [
+          "nuxt/nuxt",
+          0.388
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Arquitectura web de alto rendimiento para agencia de viajes",
+      "summary": "Esta propuesta implementa un framework moderno basado en React para desarrollar las páginas de destinos con renderizado optimizado para buscadores. Se garantiza una velocidad de carga superior y un excelente posicionamiento orgánico en Google.",
+      "boxes": [
+        {
+          "need": "frontend",
+          "full_name": "vercel/next.js",
+          "label": "Next.js",
+          "role": "Framework web para renderizado y desarrollo frontend",
+          "rationale": "Resuelve la necesidad de construir páginas de destinos que carguen muy rápido y se posicionen bien en Google gracias a sus capacidades híbridas y de compilación. Es un framework de React con licencia MIT actualizado recientemente."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que el equipo de desarrollo cuenta con conocimientos en React para aprovechar el framework elegido."
+      ],
+      "other_limitations": [
+        "La propuesta no incluye herramientas adicionales para el diseño de estilos ni empaquetadores avanzados como Vite o Tailwind CSS, los cuales podrían complementarse para optimizar el desarrollo visual."
+      ]
+    },
+    "response": {
+      "id": "3827eefbd77740aaab3bc6be9cbaf406",
+      "status": "ok",
+      "title": "Arquitectura web de alto rendimiento para agencia de viajes",
+      "summary": "Esta propuesta implementa un framework moderno basado en React para desarrollar las páginas de destinos con renderizado optimizado para buscadores. Se garantiza una velocidad de carga superior y un excelente posicionamiento orgánico en Google.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Next.js",
+          "role": "Framework web para renderizado y desarrollo frontend",
+          "full_name": "vercel/next.js",
+          "rationale": "Resuelve la necesidad de construir páginas de destinos que carguen muy rápido y se posicionen bien en Google gracias a sus capacidades híbridas y de compilación. Es un framework de React con licencia MIT actualizado recientemente."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que el equipo de desarrollo cuenta con conocimientos en React para aprovechar el framework elegido."
+      ],
+      "limitations": [
+        "La propuesta no incluye herramientas adicionales para el diseño de estilos ni empaquetadores avanzados como Vite o Tailwind CSS, los cuales podrían complementarse para optimizar el desarrollo visual."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-04T03:20:48.154938Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "cooperativa-api",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "backend",
+          "query": "framework para construir API en Python",
+          "evidence": "queremos elegir un framework para la API que registra las entregas de café de cada productor"
+        },
+        {
+          "category": "database",
+          "query": "motor de base de datos relacional",
+          "evidence": "una base de datos relacional para guardar esos registros"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "backend": [
+        [
+          "fastapi/fastapi",
+          0.443
+        ],
+        [
+          "openai/openai-python",
+          0.407
+        ],
+        [
+          "PrefectHQ/prefect",
+          0.401
+        ],
+        [
+          "pallets/flask",
+          0.398
+        ],
+        [
+          "fastapi/sqlmodel",
+          0.391
+        ]
+      ],
+      "database": [
+        [
+          "redis/redis",
+          0.328
+        ],
+        [
+          "fastapi/sqlmodel",
+          0.296
+        ],
+        [
+          "duckdb/duckdb",
+          0.287
+        ],
+        [
+          "sqlalchemy/sqlalchemy",
+          0.273
+        ],
+        [
+          "ClickHouse/ClickHouse",
+          0.248
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema Open Source para Registro de Café",
+      "summary": "Esta propuesta integra un framework moderno en Python para la API de entregas y una herramienta orientada a bases de datos SQL para guardar los registros de la cooperativa. Ambas tecnologías cubren eficientemente los requerimientos operativos.",
+      "boxes": [
+        {
+          "need": "backend",
+          "full_name": "fastapi/fastapi",
+          "label": "FastAPI",
+          "role": "Framework para construir la API",
+          "rationale": "Es un framework de alta performance y fácil aprendizaje en Python, ideal para desarrollar rápidamente la API que registra las entregas de café de cada productor."
+        },
+        {
+          "need": "database",
+          "full_name": "fastapi/sqlmodel",
+          "label": "SQLModel",
+          "role": "Gestión de base de datos relacional",
+          "rationale": "Ofrece una solución para bases de datos SQL en Python diseñada para la simplicidad y robustez, permitiendo almacenar los registros de manera estructurada."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "backend",
+          "to_need": "database",
+          "protocol": "HTTP/SQL",
+          "description": "El backend procesa las solicitudes de la API y persiste la información en la base de datos relacional."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la cooperativa cuenta con infraestructura propia para desplegar aplicaciones basadas en Python.",
+        "El volumen de entregas puede ser manejado con bases de datos relacionales estándar."
+      ],
+      "other_limitations": [
+        "La solución propuesta no incluye herramientas adicionales de orquestación de datos ni almacenamiento en caché en memoria."
+      ]
+    },
+    "response": {
+      "id": "ee999938116e48e8a0490e1396e9cc08",
+      "status": "ok",
+      "title": "Sistema Open Source para Registro de Café",
+      "summary": "Esta propuesta integra un framework moderno en Python para la API de entregas y una herramienta orientada a bases de datos SQL para guardar los registros de la cooperativa. Ambas tecnologías cubren eficientemente los requerimientos operativos.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "FastAPI",
+          "role": "Framework para construir la API",
+          "full_name": "fastapi/fastapi",
+          "rationale": "Es un framework de alta performance y fácil aprendizaje en Python, ideal para desarrollar rápidamente la API que registra las entregas de café de cada productor."
+        },
+        {
+          "key": "c2",
+          "label": "SQLModel",
+          "role": "Gestión de base de datos relacional",
+          "full_name": "fastapi/sqlmodel",
+          "rationale": "Ofrece una solución para bases de datos SQL en Python diseñada para la simplicidad y robustez, permitiendo almacenar los registros de manera estructurada."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c1",
+          "to_key": "c2",
+          "protocol": "HTTP/SQL",
+          "description": "El backend procesa las solicitudes de la API y persiste la información en la base de datos relacional."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la cooperativa cuenta con infraestructura propia para desplegar aplicaciones basadas en Python.",
+        "El volumen de entregas puede ser manejado con bases de datos relacionales estándar."
+      ],
+      "limitations": [
+        "La solución propuesta no incluye herramientas adicionales de orquestación de datos ni almacenamiento en caché en memoria."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-04T03:20:59.838343Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "colegio-avisos",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "envío de correos y mensajes de texto",
+          "evidence": "avisar por correo o SMS a los padres"
+        },
+        {
+          "category": "data-processing",
+          "query": "cálculo automático de porcentajes diarios",
+          "evidence": "Cada noche debe calcular el porcentaje de asistencia de cada estudiante"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "communication": [],
+      "data-processing": []
+    },
+    "draft": null,
+    "response": {
+      "id": "438380ee414d472fa66c49493a8dc485",
+      "status": "no_evidence",
+      "title": null,
+      "summary": "El catálogo todavía no tiene herramientas para lo que pides: comunicación, procesamiento de datos.",
+      "components": [],
+      "connections": [],
+      "assumptions": [],
+      "limitations": [
+        "Comunicación: el catálogo no tiene herramientas para «envío de correos y mensajes de texto».",
+        "Procesamiento de datos: el catálogo no tiene herramientas para «cálculo automático de porcentajes diarios»."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-04T03:21:09.371442Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "ong-voluntarios",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "autenticacion de usuarios mediante proveedores externos",
+          "evidence": "entren con su cuenta de Google"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos y documentos",
+          "evidence": "guardar los certificados escaneados de cada uno en PDF"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "auth": [
+        [
+          "cert-manager/cert-manager",
+          0.203
+        ],
+        [
+          "traefik/traefik",
+          0.197
+        ],
+        [
+          "hashicorp/terraform",
+          0.193
+        ]
+      ],
+      "storage": [
+        [
+          "etcd-io/etcd",
+          0.213
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de gestión para ONG de voluntarios",
+      "summary": "La propuesta cubre parcialmente los requerimientos de la ONG mediante la infraestructura disponible en el catálogo, aunque ninguna herramienta resuelve directamente la autenticación con Google ni el almacenamiento documental de PDFs. Se requerirá integrar servicios adicionales para completar el flujo solicitado.",
+      "boxes": [
+        {
+          "need": "auth",
+          "full_name": null,
+          "label": "Autenticación",
+          "role": "Gestión de acceso de usuarios",
+          "rationale": "Ninguno de los candidatos disponibles en esta categoría ofrece autenticación de usuarios ni integración con Google. Las opciones presentadas gestionan certificados TLS, aprovisionamiento de infraestructura o enrutamiento de red."
+        },
+        {
+          "need": "storage",
+          "full_name": null,
+          "label": "Almacenamiento",
+          "role": "Repositorio de documentos",
+          "rationale": "El candidato disponible es un almacén de clave-valor distribuido pensado para datos críticos de sistemas, no un sistema de almacenamiento de archivos y documentos PDF para los certificados escaneados."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que la ONG cuenta con personal técnico para implementar soluciones complementarias que no figuran en este catálogo.",
+        "Se asume que el almacenamiento requerido para los PDFs es de baja escala inicial."
+      ],
+      "other_limitations": [
+        "No se dispone de herramientas en el catálogo para la autenticación mediante cuenta de Google.",
+        "No se dispone de herramientas en el catálogo para el almacenamiento de archivos PDF."
+      ]
+    },
+    "response": {
+      "id": "e3c9841f14e747278fd552e538be9fa7",
+      "status": "no_evidence",
+      "title": "Sistema de gestión para ONG de voluntarios",
+      "summary": "La propuesta cubre parcialmente los requerimientos de la ONG mediante la infraestructura disponible en el catálogo, aunque ninguna herramienta resuelve directamente la autenticación con Google ni el almacenamiento documental de PDFs. Se requerirá integrar servicios adicionales para completar el flujo solicitado.",
+      "components": [],
+      "connections": [],
+      "assumptions": [
+        "Se asume que la ONG cuenta con personal técnico para implementar soluciones complementarias que no figuran en este catálogo.",
+        "Se asume que el almacenamiento requerido para los PDFs es de baja escala inicial."
+      ],
+      "limitations": [
+        "Autenticación: ninguna herramienta del catálogo encaja. Ninguno de los candidatos disponibles en esta categoría ofrece autenticación de usuarios ni integración con Google. Las opciones presentadas gestionan certificados TLS, aprovisionamiento de infraestructura o enrutamiento de red.",
+        "Almacenamiento: ninguna herramienta del catálogo encaja. El candidato disponible es un almacén de clave-valor distribuido pensado para datos críticos de sistemas, no un sistema de almacenamiento de archivos y documentos PDF para los certificados escaneados.",
+        "No se dispone de herramientas en el catálogo para la autenticación mediante cuenta de Google.",
+        "No se dispone de herramientas en el catálogo para el almacenamiento de archivos PDF."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-04T03:21:20.714407Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "inmobiliaria-portal",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "search",
+          "query": "búsqueda semántica de texto libre",
+          "evidence": "escribiendo cosas como 'apartamento con balcón cerca del metro'"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos y objetos multimedia",
+          "evidence": "los agentes suben las fotos y los planos de cada inmueble"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "search": [
+        [
+          "opensearch-project/OpenSearch",
+          0.322
+        ],
+        [
+          "BurntSushi/ripgrep",
+          0.292
+        ],
+        [
+          "pgvector/pgvector",
+          0.29
+        ],
+        [
+          "run-llama/llama_index",
+          0.265
+        ],
+        [
+          "ollama/ollama",
+          0.244
+        ]
+      ],
+      "storage": []
+    },
+    "draft": {
+      "title": "Portal Inmobiliario con Búsqueda Semántica Abierta",
+      "summary": "Esta propuesta integra un motor de búsqueda avanzado para procesar consultas complejas de los clientes en el portal inmobiliario. La solución elegida permite realizar búsquedas de texto y análisis distribuidos eficientemente. Queda pendiente la gestión del almacenamiento para las fotos y planos subidos por los agentes.",
+      "boxes": [
+        {
+          "need": "search",
+          "full_name": "opensearch-project/OpenSearch",
+          "label": "OpenSearch",
+          "role": "Motor de búsqueda",
+          "rationale": "Proporciona un motor de búsqueda distribuido y RESTful bajo licencia Apache-2.0 con actividad reciente, ideal para procesar consultas de texto libre como apartamentos con balcón cerca del metro."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Suponemos que el almacenamiento de imágenes y planos se resolverá mediante un servicio de objetos externo.",
+        "El portal requiere indexar descripciones detalladas de cada inmueble para procesar las consultas."
+      ],
+      "other_limitations": [
+        "No se incluye una solución integrada para el almacenamiento de archivos multimedia aportados por los agentes."
+      ]
+    },
+    "response": {
+      "id": "8ef79a12571048bf80858967c1660393",
+      "status": "ok",
+      "title": "Portal Inmobiliario con Búsqueda Semántica Abierta",
+      "summary": "Esta propuesta integra un motor de búsqueda avanzado para procesar consultas complejas de los clientes en el portal inmobiliario. La solución elegida permite realizar búsquedas de texto y análisis distribuidos eficientemente. Queda pendiente la gestión del almacenamiento para las fotos y planos subidos por los agentes.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "OpenSearch",
+          "role": "Motor de búsqueda",
+          "full_name": "opensearch-project/OpenSearch",
+          "rationale": "Proporciona un motor de búsqueda distribuido y RESTful bajo licencia Apache-2.0 con actividad reciente, ideal para procesar consultas de texto libre como apartamentos con balcón cerca del metro."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Suponemos que el almacenamiento de imágenes y planos se resolverá mediante un servicio de objetos externo.",
+        "El portal requiere indexar descripciones detalladas de cada inmueble para procesar las consultas."
+      ],
+      "limitations": [
+        "Almacenamiento: el catálogo no tiene herramientas para «almacenamiento de archivos y objetos multimedia».",
+        "No se incluye una solución integrada para el almacenamiento de archivos multimedia aportados por los agentes."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-04T03:21:33.106591Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "agencia-viajes-web",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "frontend",
+          "query": "framework web para renderizado rápido y SEO",
+          "evidence": "Necesitamos un framework web para construir páginas de destinos que carguen muy rápido y se posicionen bien en Google."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "frontend": [
+        [
+          "nuxt/nuxt",
+          0.409
+        ],
+        [
+          "withastro/astro",
+          0.407
+        ],
+        [
+          "vercel/next.js",
+          0.402
+        ],
+        [
+          "tailwindlabs/tailwindcss",
+          0.396
+        ],
+        [
+          "django/django",
+          0.381
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Arquitectura web de alto rendimiento para agencia de viajes",
+      "summary": "Proponemos el uso de un framework web moderno y optimizado para contenido para desarrollar el nuevo sitio de la agencia de viajes, garantizando tiempos de carga rápidos y un excelente posicionamiento en buscadores para las páginas de destinos.",
+      "boxes": [
+        {
+          "need": "frontend",
+          "full_name": "withastro/astro",
+          "label": "Astro",
+          "role": "Framework web para construir las páginas de destinos",
+          "rationale": "Astro es el framework web para construir páginas de destinos que carguen muy rápido y se posicionen bien en Google gracias a su enfoque en sitios impulsados por contenido. Su licencia no fue identificada por GitHub. Se mantiene actualizado con cambios recientes."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Suponemos que el equipo de desarrollo tiene preferencia o flexibilidad para trabajar con la arquitectura de componentes orientada a contenido que ofrece el framework seleccionado."
+      ],
+      "other_limitations": [
+        "La propuesta no cubre herramientas para la gestión posterior del contenido o bases de datos dinámicas de reservas de viajes."
+      ]
+    },
+    "response": {
+      "id": "279b9a8e7f10448194a7110da7b6de8f",
+      "status": "ok",
+      "title": "Arquitectura web de alto rendimiento para agencia de viajes",
+      "summary": "Proponemos el uso de un framework web moderno y optimizado para contenido para desarrollar el nuevo sitio de la agencia de viajes, garantizando tiempos de carga rápidos y un excelente posicionamiento en buscadores para las páginas de destinos.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Astro",
+          "role": "Framework web para construir las páginas de destinos",
+          "full_name": "withastro/astro",
+          "rationale": "Astro es el framework web para construir páginas de destinos que carguen muy rápido y se posicionen bien en Google gracias a su enfoque en sitios impulsados por contenido. Su licencia no fue identificada por GitHub. Se mantiene actualizado con cambios recientes."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Suponemos que el equipo de desarrollo tiene preferencia o flexibilidad para trabajar con la arquitectura de componentes orientada a contenido que ofrece el framework seleccionado."
+      ],
+      "limitations": [
+        "La propuesta no cubre herramientas para la gestión posterior del contenido o bases de datos dinámicas de reservas de viajes."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-04T03:21:44.270663Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "cooperativa-api",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "backend",
+          "query": "framework para construir la api",
+          "evidence": "elegir un framework para la API"
+        },
+        {
+          "category": "database",
+          "query": "motor de base de datos relacional",
+          "evidence": "una base de datos relacional para guardar esos registros"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "backend": [
+        [
+          "fastapi/fastapi",
+          0.44
+        ],
+        [
+          "hashicorp/terraform",
+          0.369
+        ],
+        [
+          "microsoft/playwright",
+          0.364
+        ],
+        [
+          "pallets/flask",
+          0.358
+        ],
+        [
+          "vuejs/core",
+          0.348
+        ]
+      ],
+      "database": [
+        [
+          "redis/redis",
+          0.328
+        ],
+        [
+          "fastapi/sqlmodel",
+          0.296
+        ],
+        [
+          "duckdb/duckdb",
+          0.287
+        ],
+        [
+          "sqlalchemy/sqlalchemy",
+          0.273
+        ],
+        [
+          "ClickHouse/ClickHouse",
+          0.248
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de gestión para entregas de café",
+      "summary": "Esta propuesta incluye un framework moderno para construir la API de registro de entregas y una librería orientada a bases de datos relacionales en Python. Ambas herramientas se integran de forma nativa para soportar el flujo de la cooperativa agrícola.",
+      "boxes": [
+        {
+          "need": "backend",
+          "full_name": "fastapi/fastapi",
+          "label": "FastAPI",
+          "role": "Framework para construir la API",
+          "rationale": "Es un framework de alto rendimiento, fácil de aprender y rápido de codificar, ideal para crear la API que registra las entregas de café."
+        },
+        {
+          "need": "database",
+          "full_name": "fastapi/sqlmodel",
+          "label": "SQLModel",
+          "role": "Gestión de base de datos relacional",
+          "rationale": "Permite interactuar con bases de datos SQL en Python con simplicidad y robustez, adaptándose al almacenamiento de los registros."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "backend",
+          "to_need": "database",
+          "protocol": "HTTP/SQL",
+          "description": "El backend utiliza SQLModel para consultar y guardar los registros de entrega en la base de datos."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la cooperativa cuenta con un servidor propio o servicio en la nube para desplegar la API y la base de datos.",
+        "Se asume que los desarrolladores prefieren el ecosistema de Python para todo el desarrollo."
+      ],
+      "other_limitations": [
+        "No se incluyó un motor SQL tradicional completo como PostgreSQL o MySQL ya que SQLModel actúa como una capa de mapeo sobre bases de datos relacionales."
+      ]
+    },
+    "response": {
+      "id": "b06bf97d8be84fcaa75719b413842a3a",
+      "status": "ok",
+      "title": "Sistema de gestión para entregas de café",
+      "summary": "Esta propuesta incluye un framework moderno para construir la API de registro de entregas y una librería orientada a bases de datos relacionales en Python. Ambas herramientas se integran de forma nativa para soportar el flujo de la cooperativa agrícola.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "FastAPI",
+          "role": "Framework para construir la API",
+          "full_name": "fastapi/fastapi",
+          "rationale": "Es un framework de alto rendimiento, fácil de aprender y rápido de codificar, ideal para crear la API que registra las entregas de café."
+        },
+        {
+          "key": "c2",
+          "label": "SQLModel",
+          "role": "Gestión de base de datos relacional",
+          "full_name": "fastapi/sqlmodel",
+          "rationale": "Permite interactuar con bases de datos SQL en Python con simplicidad y robustez, adaptándose al almacenamiento de los registros."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c1",
+          "to_key": "c2",
+          "protocol": "HTTP/SQL",
+          "description": "El backend utiliza SQLModel para consultar y guardar los registros de entrega en la base de datos."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la cooperativa cuenta con un servidor propio o servicio en la nube para desplegar la API y la base de datos.",
+        "Se asume que los desarrolladores prefieren el ecosistema de Python para todo el desarrollo."
+      ],
+      "limitations": [
+        "No se incluyó un motor SQL tradicional completo como PostgreSQL o MySQL ya que SQLModel actúa como una capa de mapeo sobre bases de datos relacionales."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-04T03:21:56.146384Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "colegio-avisos",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "communication",
+          "query": "envío de correos y mensajes de texto",
+          "evidence": "avisar por correo o SMS a los padres"
+        },
+        {
+          "category": "database",
+          "query": "almacenamiento de registros de asistencia",
+          "evidence": "registren la asistencia"
+        },
+        {
+          "category": "data-processing",
+          "query": "procesamiento nocturno de datos de asistencia",
+          "evidence": "Cada noche debe calcular el porcentaje de asistencia"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "communication": [],
+      "database": [
+        [
+          "etcd-io/etcd",
+          0.198
+        ]
+      ],
+      "data-processing": [
+        [
+          "dagster-io/dagster",
+          0.214
+        ],
+        [
+          "PrefectHQ/prefect",
+          0.194
+        ],
+        [
+          "apache/beam",
+          0.192
+        ],
+        [
+          "ClickHouse/ClickHouse",
+          0.19
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de Registro y Procesamiento de Asistencia Escolar",
+      "summary": "Esta propuesta incluye el almacenamiento seguro de los registros de asistencia y la orquestación del cálculo nocturno automatizado. Las notificaciones a los padres quedan pendientes por falta de herramientas de comunicación en el catálogo.",
+      "boxes": [
+        {
+          "need": "database",
+          "full_name": "etcd-io/etcd",
+          "label": "etcd",
+          "role": "Almacenamiento de registros",
+          "rationale": "Funciona como un almacén de valores clave distribuido y confiable para guardar los datos críticos del sistema de asistencia."
+        },
+        {
+          "need": "data-processing",
+          "full_name": "dagster-io/dagster",
+          "label": "Dagster",
+          "role": "Orquestación de procesos",
+          "rationale": "Permite desarrollar y observar los activos de datos necesarios para ejecutar el cálculo nocturno del porcentaje de asistencia de los estudiantes."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "data-processing",
+          "to_need": "database",
+          "protocol": "API interna",
+          "description": "El procesador de datos consulta los registros de asistencia almacenados para calcular los porcentajes."
+        }
+      ],
+      "assumptions": [
+        "Se asume que el colegio cuenta con un canal externo para el envío de correos y SMS a los padres, ya que esta necesidad no pudo cubrirse con el catálogo actual."
+      ],
+      "other_limitations": [
+        "La propuesta no resuelve el envío de avisos por correo o SMS a los padres cuando la asistencia baje del 80 por ciento."
+      ]
+    },
+    "response": {
+      "id": "bfa6c0954d944c8699e05ac0e5a55ef9",
+      "status": "ok",
+      "title": "Sistema de Registro y Procesamiento de Asistencia Escolar",
+      "summary": "Esta propuesta incluye el almacenamiento seguro de los registros de asistencia y la orquestación del cálculo nocturno automatizado. Las notificaciones a los padres quedan pendientes por falta de herramientas de comunicación en el catálogo.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "etcd",
+          "role": "Almacenamiento de registros",
+          "full_name": "etcd-io/etcd",
+          "rationale": "Funciona como un almacén de valores clave distribuido y confiable para guardar los datos críticos del sistema de asistencia."
+        },
+        {
+          "key": "c2",
+          "label": "Dagster",
+          "role": "Orquestación de procesos",
+          "full_name": "dagster-io/dagster",
+          "rationale": "Permite desarrollar y observar los activos de datos necesarios para ejecutar el cálculo nocturno del porcentaje de asistencia de los estudiantes."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c2",
+          "to_key": "c1",
+          "protocol": "API interna",
+          "description": "El procesador de datos consulta los registros de asistencia almacenados para calcular los porcentajes."
+        }
+      ],
+      "assumptions": [
+        "Se asume que el colegio cuenta con un canal externo para el envío de correos y SMS a los padres, ya que esta necesidad no pudo cubrirse con el catálogo actual."
+      ],
+      "limitations": [
+        "Comunicación: el catálogo no tiene herramientas para «envío de correos y mensajes de texto».",
+        "La propuesta no resuelve el envío de avisos por correo o SMS a los padres cuando la asistencia baje del 80 por ciento."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-04T03:22:08.635649Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "ong-voluntarios",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "autenticacion con proveedor externo de identidad",
+          "evidence": "entren con su cuenta de Google"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos y documentos",
+          "evidence": "guardar los certificados escaneados de cada uno en PDF"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "auth": [
+        [
+          "cert-manager/cert-manager",
+          0.196
+        ],
+        [
+          "hashicorp/terraform",
+          0.19
+        ]
+      ],
+      "storage": [
+        [
+          "etcd-io/etcd",
+          0.213
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Arquitectura de gestión de identidad y archivos",
+      "summary": "Esta propuesta incluye la gestión de infraestructura base y almacenamiento clave-valor distribuido para la ONG, aunque ninguna de las herramientas del catálogo resuelve de forma directa la autenticación con cuenta de Google ni el almacenamiento documental en PDF.",
+      "boxes": [
+        {
+          "need": "auth",
+          "full_name": null,
+          "label": "Autenticación",
+          "role": "Gestionar el acceso de usuarios al sistema",
+          "rationale": "Ninguno de los candidatos disponibles resuelve la autenticación con un proveedor externo de identidad como Google, ya que cert-manager gestiona certificados TLS y Terraform maneja infraestructura."
+        },
+        {
+          "need": "storage",
+          "full_name": "etcd-io/etcd",
+          "label": "etcd",
+          "role": "Almacenamiento de datos críticos",
+          "rationale": "Proporciona un almacén clave-valor distribuido y confiable para los datos más críticos del sistema, aunque no está diseñado específicamente para guardar archivos PDF de documentos."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que la ONG requiere un entorno en Kubernetes para operar las herramientas de infraestructura seleccionadas."
+      ],
+      "other_limitations": [
+        "No se encontró ninguna herramienta candidata que permita la autenticación directa con la cuenta de Google solicitada."
+      ]
+    },
+    "response": {
+      "id": "0c46cb5b02a54c23baba0f77e7adb577",
+      "status": "ok",
+      "title": "Arquitectura de gestión de identidad y archivos",
+      "summary": "Esta propuesta incluye la gestión de infraestructura base y almacenamiento clave-valor distribuido para la ONG, aunque ninguna de las herramientas del catálogo resuelve de forma directa la autenticación con cuenta de Google ni el almacenamiento documental en PDF.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "etcd",
+          "role": "Almacenamiento de datos críticos",
+          "full_name": "etcd-io/etcd",
+          "rationale": "Proporciona un almacén clave-valor distribuido y confiable para los datos más críticos del sistema, aunque no está diseñado específicamente para guardar archivos PDF de documentos."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que la ONG requiere un entorno en Kubernetes para operar las herramientas de infraestructura seleccionadas."
+      ],
+      "limitations": [
+        "Autenticación: ninguna herramienta del catálogo encaja. Ninguno de los candidatos disponibles resuelve la autenticación con un proveedor externo de identidad como Google, ya que cert-manager gestiona certificados TLS y Terraform maneja infraestructura.",
+        "No se encontró ninguna herramienta candidata que permita la autenticación directa con la cuenta de Google solicitada."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-04T03:22:19.846779Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "groq-low",
+    "run": 1,
+    "case": "inmobiliaria-portal",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "search",
+          "query": "búsqueda de texto completo",
+          "evidence": "Los clientes tienen que poder buscar propiedades escribiendo cosas como 'apartamento con balcón cerca del metro'"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos y objetos",
+          "evidence": "los agentes suben las fotos y los planos de cada inmueble"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "search": [
+        [
+          "BurntSushi/ripgrep",
+          0.283
+        ],
+        [
+          "opensearch-project/OpenSearch",
+          0.269
+        ],
+        [
+          "nuxt/nuxt",
+          0.235
+        ],
+        [
+          "pgvector/pgvector",
+          0.232
+        ],
+        [
+          "huggingface/transformers",
+          0.232
+        ]
+      ],
+      "storage": [
+        [
+          "etcd-io/etcd",
+          0.246
+        ],
+        [
+          "hashicorp/vault",
+          0.202
+        ],
+        [
+          "nginx/nginx",
+          0.19
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Portal inmobiliario con búsqueda y gestión de archivos",
+      "summary": "Se propone OpenSearch para la búsqueda de inmuebles y se indica que ningún candidato del catálogo cubre adecuadamente el almacenamiento de fotos y planos, requiriendo una solución de almacenamiento de objetos externa. No hay enlaces directos entre componentes.",
+      "boxes": [
+        {
+          "need": "search",
+          "full_name": "opensearch-project/OpenSearch",
+          "label": "OpenSearch",
+          "role": "Motor de búsqueda de texto completo para consultas de inmuebles",
+          "rationale": "OpenSearch es un motor de búsqueda distribuido y RESTful que permite consultas de texto libre como \"apartamento con balcón cerca del metro\"."
+        },
+        {
+          "need": "storage",
+          "full_name": null,
+          "label": "Almacenamiento",
+          "role": "Almacenamiento de fotos y planos de inmuebles",
+          "rationale": "Ninguno de los candidatos (etcd, Vault, NGINX) está diseñado para almacenar archivos y objetos binarios de gran tamaño; por lo tanto no satisfacen la necesidad de almacenar imágenes y planos."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asumirá que se integrará una solución de almacenamiento de objetos (por ejemplo, MinIO o S3 compatible) externa al catálogo para gestionar los archivos multimedia."
+      ],
+      "other_limitations": [
+        "Los candidatos de almacenamiento listados no manejan eficientemente archivos grandes; se necesitará una herramienta especializada en almacenamiento de objetos."
+      ]
+    },
+    "response": {
+      "id": "cb17f55d45a04943ac6840ecaab167c8",
+      "status": "ok",
+      "title": "Portal inmobiliario con búsqueda y gestión de archivos",
+      "summary": "Se propone OpenSearch para la búsqueda de inmuebles y se indica que ningún candidato del catálogo cubre adecuadamente el almacenamiento de fotos y planos, requiriendo una solución de almacenamiento de objetos externa. No hay enlaces directos entre componentes.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "OpenSearch",
+          "role": "Motor de búsqueda de texto completo para consultas de inmuebles",
+          "full_name": "opensearch-project/OpenSearch",
+          "rationale": "OpenSearch es un motor de búsqueda distribuido y RESTful que permite consultas de texto libre como \"apartamento con balcón cerca del metro\"."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asumirá que se integrará una solución de almacenamiento de objetos (por ejemplo, MinIO o S3 compatible) externa al catálogo para gestionar los archivos multimedia."
+      ],
+      "limitations": [
+        "Almacenamiento: ninguna herramienta del catálogo encaja. Ninguno de los candidatos (etcd, Vault, NGINX) está diseñado para almacenar archivos y objetos binarios de gran tamaño; por lo tanto no satisfacen la necesidad de almacenar imágenes y planos.",
+        "Los candidatos de almacenamiento listados no manejan eficientemente archivos grandes; se necesitará una herramienta especializada en almacenamiento de objetos."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-04T03:22:31.280138Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "groq-low",
+    "run": 1,
+    "case": "agencia-viajes-web",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "frontend",
+          "query": "framework web rápido y SEO-friendly",
+          "evidence": "Necesitamos un framework web para construir páginas de destinos que carguen muy rápido y se posicionen bien en Google."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "frontend": [
+        [
+          "fastapi/fastapi",
+          0.401
+        ],
+        [
+          "tailwindlabs/tailwindcss",
+          0.397
+        ],
+        [
+          "withastro/astro",
+          0.394
+        ],
+        [
+          "vuejs/core",
+          0.381
+        ],
+        [
+          "django/django",
+          0.38
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sitio de viajes rápido y SEO-friendly con Astro",
+      "summary": "Se propone usar Astro como framework principal para construir las páginas de destinos, garantizando carga ultra rápida y buena indexación en Google. No se requieren herramientas adicionales para la capa frontend. Todas las demás necesidades del proyecto están cubiertas.",
+      "boxes": [
+        {
+          "need": "frontend",
+          "full_name": "withastro/astro",
+          "label": "Astro",
+          "role": "Framework web para crear sitios estáticos y dinámicos con gran rendimiento y SEO",
+          "rationale": "Astro está diseñado para sitios centrados en contenido, genera HTML estático que se carga rápidamente y es altamente amigable con los motores de búsqueda, cumpliendo con la necesidad de velocidad y posicionamiento."
+        }
+      ],
+      "links": [],
+      "assumptions": [],
+      "other_limitations": []
+    },
+    "response": {
+      "id": "ad5bfe99b2d9481d92a61702394f1fda",
+      "status": "ok",
+      "title": "Sitio de viajes rápido y SEO-friendly con Astro",
+      "summary": "Se propone usar Astro como framework principal para construir las páginas de destinos, garantizando carga ultra rápida y buena indexación en Google. No se requieren herramientas adicionales para la capa frontend. Todas las demás necesidades del proyecto están cubiertas.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Astro",
+          "role": "Framework web para crear sitios estáticos y dinámicos con gran rendimiento y SEO",
+          "full_name": "withastro/astro",
+          "rationale": "Astro está diseñado para sitios centrados en contenido, genera HTML estático que se carga rápidamente y es altamente amigable con los motores de búsqueda, cumpliendo con la necesidad de velocidad y posicionamiento."
+        }
+      ],
+      "connections": [],
+      "assumptions": [],
+      "limitations": [],
+      "clarification_questions": [],
+      "generated_at": "2026-11-04T03:23:18.169083Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "groq-low",
+    "run": 1,
+    "case": "cooperativa-api",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "backend",
+          "query": "desarrollo de APIs",
+          "evidence": "Queremos elegir un framework para la API que registra las entregas de café"
+        },
+        {
+          "category": "database",
+          "query": "almacenamiento de datos estructurados",
+          "evidence": "una base de datos relacional para guardar esos registros"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "backend": [
+        [
+          "fastapi/fastapi",
+          0.335
+        ],
+        [
+          "openai/openai-python",
+          0.327
+        ],
+        [
+          "hashicorp/terraform",
+          0.31
+        ],
+        [
+          "fastapi/sqlmodel",
+          0.277
+        ],
+        [
+          "neovim/neovim",
+          0.268
+        ]
+      ],
+      "database": [
+        [
+          "redis/redis",
+          0.319
+        ],
+        [
+          "etcd-io/etcd",
+          0.306
+        ],
+        [
+          "pandas-dev/pandas",
+          0.235
+        ],
+        [
+          "fastapi/sqlmodel",
+          0.22
+        ],
+        [
+          "duckdb/duckdb",
+          0.22
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Propuesta de API y almacenamiento de entregas de café",
+      "summary": "Se selecciona FastAPI como framework para la API que registrará las entregas de café, ya que cumple con los requisitos de desarrollo de APIs en Python. No se encontró una base de datos relacional entre los candidatos, por lo que se indica la ausencia de herramienta adecuada. Se sugiere considerar otras opciones de bases de datos relacionales de código abierto fuera del catálogo.",
+      "boxes": [
+        {
+          "need": "backend",
+          "full_name": "fastapi/fastapi",
+          "label": "FastAPI",
+          "role": "Framework para crear la API REST de registros de entregas",
+          "rationale": "FastAPI es un framework de alto rendimiento, fácil de aprender y listo para producción, ideal para desarrollar APIs en Python."
+        },
+        {
+          "need": "database",
+          "full_name": null,
+          "label": "Relational DB",
+          "role": "Almacén de datos estructurados de entregas",
+          "rationale": "Ninguno de los candidatos (Redis, etcd, pandas) es una base de datos relacional; por lo tanto, no cumplen con la necesidad especificada."
+        }
+      ],
+      "links": [],
+      "assumptions": [],
+      "other_limitations": []
+    },
+    "response": {
+      "id": "2a4357deb02849b691d0c9a5effa98c0",
+      "status": "ok",
+      "title": "Propuesta de API y almacenamiento de entregas de café",
+      "summary": "Se selecciona FastAPI como framework para la API que registrará las entregas de café, ya que cumple con los requisitos de desarrollo de APIs en Python. No se encontró una base de datos relacional entre los candidatos, por lo que se indica la ausencia de herramienta adecuada. Se sugiere considerar otras opciones de bases de datos relacionales de código abierto fuera del catálogo.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "FastAPI",
+          "role": "Framework para crear la API REST de registros de entregas",
+          "full_name": "fastapi/fastapi",
+          "rationale": "FastAPI es un framework de alto rendimiento, fácil de aprender y listo para producción, ideal para desarrollar APIs en Python."
+        }
+      ],
+      "connections": [],
+      "assumptions": [],
+      "limitations": [
+        "Bases de datos: ninguna herramienta del catálogo encaja. Ninguno de los candidatos (Redis, etcd, pandas) es una base de datos relacional; por lo tanto, no cumplen con la necesidad especificada."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-04T03:24:05.889966Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "groq-low",
+    "run": 1,
+    "case": "colegio-avisos",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de datos estructurados",
+          "evidence": "profesores registren la asistencia"
+        },
+        {
+          "category": "data-processing",
+          "query": "procesamiento de datos por lotes",
+          "evidence": "Cada noche debe calcular el porcentaje de asistencia de cada estudiante"
+        },
+        {
+          "category": "communication",
+          "query": "envío de notificaciones por correo o SMS",
+          "evidence": "avisar por correo o SMS a los padres cuando baje del 80 %"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "database": [
+        [
+          "redis/redis",
+          0.319
+        ],
+        [
+          "etcd-io/etcd",
+          0.306
+        ],
+        [
+          "pandas-dev/pandas",
+          0.235
+        ],
+        [
+          "fastapi/sqlmodel",
+          0.22
+        ],
+        [
+          "duckdb/duckdb",
+          0.22
+        ]
+      ],
+      "data-processing": [
+        [
+          "apache/beam",
+          0.333
+        ],
+        [
+          "apache/spark",
+          0.269
+        ],
+        [
+          "PrefectHQ/prefect",
+          0.246
+        ],
+        [
+          "dbt-labs/dbt",
+          0.214
+        ],
+        [
+          "apache/flink",
+          0.21
+        ]
+      ],
+      "communication": []
+    },
+    "draft": {
+      "title": "Sistema de registro y cálculo de asistencia escolar",
+      "summary": "Se propone usar Redis como base de datos para registrar la asistencia de los estudiantes y Apache Beam para procesar los datos cada noche y generar los porcentajes de asistencia. No se incluye una solución de comunicación, por lo que los avisos por correo o SMS deberán implementarse por separado. Otros candidatos podrían complementar la solución pero no son seleccionados como principales.",
+      "boxes": [
+        {
+          "need": "database",
+          "full_name": "redis/redis",
+          "label": "Redis",
+          "role": "Almacén de datos estructurados de asistencia",
+          "rationale": "Redis permite guardar rápidamente registros de asistencia en estructuras de datos en memoria, es fácil de escalar y su licencia no está identificada, pero sigue siendo adecuado para almacenar la información requerida."
+        },
+        {
+          "need": "data-processing",
+          "full_name": "apache/beam",
+          "label": "Apache Beam",
+          "role": "Cálculo nocturno del porcentaje de asistencia",
+          "rationale": "Apache Beam ofrece un modelo unificado para procesamiento por lotes, permite ejecutar un pipeline cada noche que lea los datos de asistencia de Redis y calcule los porcentajes solicitados."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "data-processing",
+          "to_need": "database",
+          "protocol": "API/Redis client",
+          "description": "Beam lee los registros de asistencia almacenados en Redis para calcular los porcentajes."
+        }
+      ],
+      "assumptions": [
+        "Se dispone de un entorno donde se pueden ejecutar contenedores Docker o procesos de Python.",
+        "Los datos de asistencia pueden almacenarse como estructuras clave‑valor (p. ej., hash por estudiante).",
+        "La notificación a los padres se implementará fuera del alcance de este diseño."
+      ],
+      "other_limitations": [
+        "Para la notificación a padres se requeriría una herramienta de comunicación que no está en el catálogo."
+      ]
+    },
+    "response": {
+      "id": "de2a88d46680401fad39fd26342cbf05",
+      "status": "ok",
+      "title": "Sistema de registro y cálculo de asistencia escolar",
+      "summary": "Se propone usar Redis como base de datos para registrar la asistencia de los estudiantes y Apache Beam para procesar los datos cada noche y generar los porcentajes de asistencia. No se incluye una solución de comunicación, por lo que los avisos por correo o SMS deberán implementarse por separado. Otros candidatos podrían complementar la solución pero no son seleccionados como principales.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Redis",
+          "role": "Almacén de datos estructurados de asistencia",
+          "full_name": "redis/redis",
+          "rationale": "Redis permite guardar rápidamente registros de asistencia en estructuras de datos en memoria, es fácil de escalar y su licencia no está identificada, pero sigue siendo adecuado para almacenar la información requerida."
+        },
+        {
+          "key": "c2",
+          "label": "Apache Beam",
+          "role": "Cálculo nocturno del porcentaje de asistencia",
+          "full_name": "apache/beam",
+          "rationale": "Apache Beam ofrece un modelo unificado para procesamiento por lotes, permite ejecutar un pipeline cada noche que lea los datos de asistencia de Redis y calcule los porcentajes solicitados."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c2",
+          "to_key": "c1",
+          "protocol": "API/Redis client",
+          "description": "Beam lee los registros de asistencia almacenados en Redis para calcular los porcentajes."
+        }
+      ],
+      "assumptions": [
+        "Se dispone de un entorno donde se pueden ejecutar contenedores Docker o procesos de Python.",
+        "Los datos de asistencia pueden almacenarse como estructuras clave‑valor (p. ej., hash por estudiante).",
+        "La notificación a los padres se implementará fuera del alcance de este diseño."
+      ],
+      "limitations": [
+        "Comunicación: el catálogo no tiene herramientas para «envío de notificaciones por correo o SMS».",
+        "Para la notificación a padres se requeriría una herramienta de comunicación que no está en el catálogo."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-04T03:24:54.013902Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "groq-low",
+    "run": 1,
+    "case": "ong-voluntarios",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "autenticación con proveedor externo",
+          "evidence": "entrar con su cuenta de Google"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos PDF",
+          "evidence": "guardar los certificados escaneados de cada uno en PDF"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "auth": [
+        [
+          "cert-manager/cert-manager",
+          0.226
+        ],
+        [
+          "traefik/traefik",
+          0.221
+        ],
+        [
+          "hashicorp/terraform",
+          0.206
+        ],
+        [
+          "microsoft/playwright",
+          0.197
+        ],
+        [
+          "nginx/nginx",
+          0.197
+        ]
+      ],
+      "storage": [
+        [
+          "etcd-io/etcd",
+          0.196
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Propuesta de autenticación y almacenamiento para ONG",
+      "summary": "Se propone una solución que permite a los voluntarios autenticarse con Google y almacenar sus certificados PDF. Ninguna de las herramientas del catálogo satisface completamente estas necesidades, por lo que se indica la ausencia de una herramienta adecuada.",
+      "boxes": [
+        {
+          "need": "auth",
+          "full_name": null,
+          "label": "auth",
+          "role": "autenticación de usuarios",
+          "rationale": "Ninguno de los candidatos (cert-manager, traefik, terraform) brinda autenticación directa con proveedores externos como Google; su funcionalidad es distinta."
+        },
+        {
+          "need": "storage",
+          "full_name": null,
+          "label": "storage",
+          "role": "almacenamiento de archivos PDF",
+          "rationale": "etcd es un almacén clave‑valor distribuido, no un sistema de archivos para guardar PDFs; no cumple con la necesidad de almacenar documentos binarios."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que la ONG dispone de infraestructura para ejecutar servicios web.",
+        "Se asume que los certificados PDF deben estar accesibles mediante una API o interfaz de usuario."
+      ],
+      "other_limitations": [
+        "Para autenticación con Google sería necesario integrar una herramienta especializada en OIDC/OAuth, como Keycloak o Dex, que no está en el catálogo.",
+        "Para almacenar PDFs se requeriría un sistema de objetos o un gestor de archivos (ej. MinIO, Nextcloud), también fuera del catálogo."
+      ]
+    },
+    "response": {
+      "id": "4d19cfac5e3a49158e254df7e95a1f5c",
+      "status": "no_evidence",
+      "title": "Propuesta de autenticación y almacenamiento para ONG",
+      "summary": "Se propone una solución que permite a los voluntarios autenticarse con Google y almacenar sus certificados PDF. Ninguna de las herramientas del catálogo satisface completamente estas necesidades, por lo que se indica la ausencia de una herramienta adecuada.",
+      "components": [],
+      "connections": [],
+      "assumptions": [
+        "Se asume que la ONG dispone de infraestructura para ejecutar servicios web.",
+        "Se asume que los certificados PDF deben estar accesibles mediante una API o interfaz de usuario."
+      ],
+      "limitations": [
+        "Autenticación: ninguna herramienta del catálogo encaja. Ninguno de los candidatos (cert-manager, traefik, terraform) brinda autenticación directa con proveedores externos como Google; su funcionalidad es distinta.",
+        "Almacenamiento: ninguna herramienta del catálogo encaja. etcd es un almacén clave‑valor distribuido, no un sistema de archivos para guardar PDFs; no cumple con la necesidad de almacenar documentos binarios.",
+        "Para autenticación con Google sería necesario integrar una herramienta especializada en OIDC/OAuth, como Keycloak o Dex, que no está en el catálogo.",
+        "Para almacenar PDFs se requeriría un sistema de objetos o un gestor de archivos (ej. MinIO, Nextcloud), también fuera del catálogo."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-04T03:25:41.557971Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "groq-low",
+    "run": 2,
+    "case": "inmobiliaria-portal",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "search",
+          "query": "búsqueda de texto completo",
+          "evidence": "Los clientes tienen que poder buscar propiedades escribiendo cosas como 'apartamento con balcón cerca del metro'"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos",
+          "evidence": "los agentes suben las fotos y los planos de cada inmueble"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "search": [
+        [
+          "BurntSushi/ripgrep",
+          0.283
+        ],
+        [
+          "opensearch-project/OpenSearch",
+          0.269
+        ],
+        [
+          "nuxt/nuxt",
+          0.235
+        ],
+        [
+          "pgvector/pgvector",
+          0.232
+        ],
+        [
+          "huggingface/transformers",
+          0.232
+        ]
+      ],
+      "storage": []
+    },
+    "draft": {
+      "title": "Portal inmobiliario con búsqueda avanzada",
+      "summary": "Se propone OpenSearch como motor de búsqueda de texto completo para que los clientes encuentren propiedades mediante consultas naturales. Los agentes pueden subir fotos y planos, pero el almacenamiento de esos archivos no está cubierto por el catálogo. No se requieren otras herramientas para la funcionalidad solicitada.",
+      "boxes": [
+        {
+          "need": "search",
+          "full_name": "opensearch-project/OpenSearch",
+          "label": "OpenSearch",
+          "role": "motor de búsqueda de texto completo",
+          "rationale": "OpenSearch ofrece búsqueda distribuida y RESTful, adecuada para consultas como “apartamento con balcón cerca del metro”. Está bajo licencia Apache-2.0 y se actualiza frecuentemente."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se asume que el portal contará con un componente de almacenamiento para fotos y planos que no está contemplado en el catálogo."
+      ],
+      "other_limitations": []
+    },
+    "response": {
+      "id": "c31ec1636fe44ba3855927e05f0609db",
+      "status": "ok",
+      "title": "Portal inmobiliario con búsqueda avanzada",
+      "summary": "Se propone OpenSearch como motor de búsqueda de texto completo para que los clientes encuentren propiedades mediante consultas naturales. Los agentes pueden subir fotos y planos, pero el almacenamiento de esos archivos no está cubierto por el catálogo. No se requieren otras herramientas para la funcionalidad solicitada.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "OpenSearch",
+          "role": "motor de búsqueda de texto completo",
+          "full_name": "opensearch-project/OpenSearch",
+          "rationale": "OpenSearch ofrece búsqueda distribuida y RESTful, adecuada para consultas como “apartamento con balcón cerca del metro”. Está bajo licencia Apache-2.0 y se actualiza frecuentemente."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se asume que el portal contará con un componente de almacenamiento para fotos y planos que no está contemplado en el catálogo."
+      ],
+      "limitations": [
+        "Almacenamiento: el catálogo no tiene herramientas para «almacenamiento de archivos»."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-04T03:26:29.464347Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "groq-low",
+    "run": 2,
+    "case": "agencia-viajes-web",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "frontend",
+          "query": "framework para sitios web rápidos",
+          "evidence": "Necesitamos un framework web para construir páginas de destinos que carguen muy rápido y se posicionen bien en Google."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "frontend": [
+        [
+          "tailwindlabs/tailwindcss",
+          0.415
+        ],
+        [
+          "withastro/astro",
+          0.412
+        ],
+        [
+          "fastapi/fastapi",
+          0.396
+        ],
+        [
+          "vuejs/core",
+          0.384
+        ],
+        [
+          "django/django",
+          0.378
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sitio de viajes rápido y SEO-friendly con Astro",
+      "summary": "Se propone usar Astro como framework principal para el frontend, garantizando carga ultra rápida y buen posicionamiento SEO. Tailwind CSS puede complementarse para estilos rápidos y responsivos. No hay otras necesidades sin herramienta.",
+      "boxes": [
+        {
+          "need": "frontend",
+          "full_name": "withastro/astro",
+          "label": "Astro",
+          "role": "Framework web para generar sitios estáticos y dinámicos optimizados para SEO",
+          "rationale": "Astro es un framework orientado a sitios basados en contenido que produce páginas estáticas altamente optimizadas, lo que mejora la velocidad de carga y el posicionamiento en Google."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se dispone de un equipo con conocimientos de JavaScript/TypeScript y HTML.",
+        "El sitio se servirá mayoritariamente como contenido estático con posible integración de APIs."
+      ],
+      "other_limitations": [
+        "Tailwind CSS se menciona como complemento de estilos pero no cubre la generación de páginas ni SEO."
+      ]
+    },
+    "response": {
+      "id": "0ee16cca9ed340548af144463d32b417",
+      "status": "ok",
+      "title": "Sitio de viajes rápido y SEO-friendly con Astro",
+      "summary": "Se propone usar Astro como framework principal para el frontend, garantizando carga ultra rápida y buen posicionamiento SEO. Tailwind CSS puede complementarse para estilos rápidos y responsivos. No hay otras necesidades sin herramienta.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Astro",
+          "role": "Framework web para generar sitios estáticos y dinámicos optimizados para SEO",
+          "full_name": "withastro/astro",
+          "rationale": "Astro es un framework orientado a sitios basados en contenido que produce páginas estáticas altamente optimizadas, lo que mejora la velocidad de carga y el posicionamiento en Google."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se dispone de un equipo con conocimientos de JavaScript/TypeScript y HTML.",
+        "El sitio se servirá mayoritariamente como contenido estático con posible integración de APIs."
+      ],
+      "limitations": [
+        "Tailwind CSS se menciona como complemento de estilos pero no cubre la generación de páginas ni SEO."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-04T03:27:16.559601Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "groq-low",
+    "run": 2,
+    "case": "cooperativa-api",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "backend",
+          "query": "framework para API",
+          "evidence": "Queremos elegir un framework para la API que registra las entregas de café"
+        },
+        {
+          "category": "database",
+          "query": "base de datos relacional",
+          "evidence": "una base de datos relacional para guardar esos registros"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "backend": [
+        [
+          "fastapi/fastapi",
+          0.458
+        ],
+        [
+          "microsoft/playwright",
+          0.385
+        ],
+        [
+          "hashicorp/terraform",
+          0.349
+        ],
+        [
+          "Kludex/starlette",
+          0.348
+        ],
+        [
+          "openai/openai-python",
+          0.338
+        ]
+      ],
+      "database": [
+        [
+          "fastapi/sqlmodel",
+          0.324
+        ],
+        [
+          "duckdb/duckdb",
+          0.315
+        ],
+        [
+          "sqlalchemy/sqlalchemy",
+          0.305
+        ],
+        [
+          "redis/redis",
+          0.305
+        ],
+        [
+          "ClickHouse/ClickHouse",
+          0.282
+        ]
+      ]
+    },
+    "draft": {
+      "title": "API con FastAPI y base relacional con SQLAlchemy",
+      "summary": "Se propone usar FastAPI como framework de API para registrar entregas de café y SQLAlchemy como capa de acceso a una base de datos relacional. FastAPI brinda alto rendimiento y facilidad de desarrollo en Python, mientras que SQLAlchemy provee un ORM completo y flexible para bases de datos SQL. No hay limitaciones adicionales más allá de las herramientas seleccionadas.",
+      "boxes": [
+        {
+          "need": "backend",
+          "full_name": "fastapi/fastapi",
+          "label": "FastAPI",
+          "role": "Framework para crear la API REST que registra entregas",
+          "rationale": "FastAPI es un framework de alto rendimiento, fácil de aprender y listo para producción, diseñado específicamente para crear APIs en Python."
+        },
+        {
+          "need": "database",
+          "full_name": "sqlalchemy/sqlalchemy",
+          "label": "SQLAlchemy",
+          "role": "ORM y capa de acceso a la base de datos relacional",
+          "rationale": "SQLAlchemy ofrece un toolkit completo para interactuar con bases de datos SQL, permitiendo definir modelos y consultas de forma robusta y compatible con múltiples motores relacionales."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "backend",
+          "to_need": "database",
+          "protocol": "ORM/SQL",
+          "description": "FastAPI utiliza SQLAlchemy para persistir los registros de entregas en la base de datos."
+        }
+      ],
+      "assumptions": [
+        "Se utilizará una base de datos SQL compatible con SQLAlchemy (por ejemplo PostgreSQL o MySQL).",
+        "Los desarrolladores gestionarán la configuración de la base de datos fuera del alcance de esta propuesta."
+      ],
+      "other_limitations": []
+    },
+    "response": {
+      "id": "228fbfe564dc4215a36b811e20cfd647",
+      "status": "ok",
+      "title": "API con FastAPI y base relacional con SQLAlchemy",
+      "summary": "Se propone usar FastAPI como framework de API para registrar entregas de café y SQLAlchemy como capa de acceso a una base de datos relacional. FastAPI brinda alto rendimiento y facilidad de desarrollo en Python, mientras que SQLAlchemy provee un ORM completo y flexible para bases de datos SQL. No hay limitaciones adicionales más allá de las herramientas seleccionadas.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "FastAPI",
+          "role": "Framework para crear la API REST que registra entregas",
+          "full_name": "fastapi/fastapi",
+          "rationale": "FastAPI es un framework de alto rendimiento, fácil de aprender y listo para producción, diseñado específicamente para crear APIs en Python."
+        },
+        {
+          "key": "c2",
+          "label": "SQLAlchemy",
+          "role": "ORM y capa de acceso a la base de datos relacional",
+          "full_name": "sqlalchemy/sqlalchemy",
+          "rationale": "SQLAlchemy ofrece un toolkit completo para interactuar con bases de datos SQL, permitiendo definir modelos y consultas de forma robusta y compatible con múltiples motores relacionales."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c1",
+          "to_key": "c2",
+          "protocol": "ORM/SQL",
+          "description": "FastAPI utiliza SQLAlchemy para persistir los registros de entregas en la base de datos."
+        }
+      ],
+      "assumptions": [
+        "Se utilizará una base de datos SQL compatible con SQLAlchemy (por ejemplo PostgreSQL o MySQL).",
+        "Los desarrolladores gestionarán la configuración de la base de datos fuera del alcance de esta propuesta."
+      ],
+      "limitations": [],
+      "clarification_questions": [],
+      "generated_at": "2026-11-04T03:28:04.993493Z"
+    },
+    "problems": {
+      "understand": [
+        "la respuesta no cumple el formato pedido: Error code: 400 - Failed to validate JSON. Please adjust your prompt. See 'failed_generation' for more details."
+      ],
+      "generate": []
+    }
+  },
+  {
+    "provider": "groq-low",
+    "run": 2,
+    "case": "colegio-avisos",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de registros de asistencia",
+          "evidence": "profesores registren la asistencia"
+        },
+        {
+          "category": "data-processing",
+          "query": "cálculo periódico de métricas",
+          "evidence": "Cada noche debe calcular el porcentaje de asistencia de cada estudiante"
+        },
+        {
+          "category": "communication",
+          "query": "envío de notificaciones por email o SMS",
+          "evidence": "avisar por correo o SMS a los padres cuando baje del 80 %"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "database": [
+        [
+          "etcd-io/etcd",
+          0.198
+        ]
+      ],
+      "data-processing": [
+        [
+          "prometheus/prometheus",
+          0.289
+        ],
+        [
+          "open-telemetry/opentelemetry-collector",
+          0.24
+        ],
+        [
+          "grafana/grafana",
+          0.193
+        ]
+      ],
+      "communication": [
+        [
+          "prometheus/alertmanager",
+          0.198
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de asistencia escolar con alertas",
+      "summary": "Se propone usar etcd como almacenamiento confiable de los registros de asistencia y Alertmanager para enviar notificaciones por correo cuando el porcentaje baja del 80 %. No hay una herramienta del catálogo adecuada para el cálculo periódico de métricas, por lo que esa necesidad queda sin candidato específico. Se asume la existencia de un scheduler y de un gateway SMS externo.",
+      "boxes": [
+        {
+          "need": "database",
+          "full_name": "etcd-io/etcd",
+          "label": "etcd",
+          "role": "almacén clave‑valor confiable para registros de asistencia",
+          "rationale": "etcd es un store distribuido de clave‑valor que permite guardar de forma fiable los datos críticos como los registros de asistencia de los estudiantes."
+        },
+        {
+          "need": "data-processing",
+          "full_name": null,
+          "label": "cálculo de asistencia",
+          "role": "cálculo periódico del porcentaje de asistencia",
+          "rationale": "Ninguno de los candidatos (Prometheus, OpenTelemetry Collector, Grafana) está diseñado para ejecutar cálculos batch nocturnos de métricas de dominio; por lo tanto no pueden cubrir directamente esta necesidad."
+        },
+        {
+          "need": "communication",
+          "full_name": "prometheus/alertmanager",
+          "label": "Alertmanager",
+          "role": "gestión y envío de notificaciones por email (y potencialmente SMS) a los padres",
+          "rationale": "Alertmanager soporta envío de correos electrónicos basados en alertas, lo que permite notificar cuando el porcentaje de asistencia de un estudiante cae por debajo del umbral definido."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "database",
+          "to_need": "data-processing",
+          "protocol": "query",
+          "description": "Alertmanager consulta los datos de asistencia almacenados en etcd para generar el cálculo nocturno"
+        },
+        {
+          "from_need": "data-processing",
+          "to_need": "communication",
+          "protocol": "alert",
+          "description": "Envía una alerta a Alertmanager cuando el porcentaje de asistencia es menor al 80 %"
+        }
+      ],
+      "assumptions": [
+        "Existe un scheduler (cron, Kubernetes Job, etc.) que ejecuta el cálculo cada noche.",
+        "Se dispondrá de un gateway externo para envío de SMS, ya que Alertmanager no lo soporta nativamente.",
+        "Se desarrollará una interfaz web para que los profesores registren la asistencia."
+      ],
+      "other_limitations": [
+        "Alertmanager no envía SMS directamente; requiere integración con un servicio externo.",
+        "etcd no es una base de datos relacional, por lo que el modelo de datos de asistencia debe adaptarse a un esquema clave‑valor."
+      ]
+    },
+    "response": {
+      "id": "9652f57d641f45768f4adbb69e62e7f0",
+      "status": "ok",
+      "title": "Sistema de asistencia escolar con alertas",
+      "summary": "Se propone usar etcd como almacenamiento confiable de los registros de asistencia y Alertmanager para enviar notificaciones por correo cuando el porcentaje baja del 80 %. No hay una herramienta del catálogo adecuada para el cálculo periódico de métricas, por lo que esa necesidad queda sin candidato específico. Se asume la existencia de un scheduler y de un gateway SMS externo.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "etcd",
+          "role": "almacén clave‑valor confiable para registros de asistencia",
+          "full_name": "etcd-io/etcd",
+          "rationale": "etcd es un store distribuido de clave‑valor que permite guardar de forma fiable los datos críticos como los registros de asistencia de los estudiantes."
+        },
+        {
+          "key": "c2",
+          "label": "Alertmanager",
+          "role": "gestión y envío de notificaciones por email (y potencialmente SMS) a los padres",
+          "full_name": "prometheus/alertmanager",
+          "rationale": "Alertmanager soporta envío de correos electrónicos basados en alertas, lo que permite notificar cuando el porcentaje de asistencia de un estudiante cae por debajo del umbral definido."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Existe un scheduler (cron, Kubernetes Job, etc.) que ejecuta el cálculo cada noche.",
+        "Se dispondrá de un gateway externo para envío de SMS, ya que Alertmanager no lo soporta nativamente.",
+        "Se desarrollará una interfaz web para que los profesores registren la asistencia."
+      ],
+      "limitations": [
+        "Procesamiento de datos: ninguna herramienta del catálogo encaja. Ninguno de los candidatos (Prometheus, OpenTelemetry Collector, Grafana) está diseñado para ejecutar cálculos batch nocturnos de métricas de dominio; por lo tanto no pueden cubrir directamente esta necesidad.",
+        "Alertmanager no envía SMS directamente; requiere integración con un servicio externo.",
+        "etcd no es una base de datos relacional, por lo que el modelo de datos de asistencia debe adaptarse a un esquema clave‑valor."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-04T03:28:54.692174Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "groq-low",
+    "run": 2,
+    "case": "ong-voluntarios",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "inicio de sesión con Google",
+          "evidence": "entrar con su cuenta de Google"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos PDF",
+          "evidence": "guardar los certificados escaneados de cada uno en PDF"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "auth": [],
+      "storage": [
+        [
+          "etcd-io/etcd",
+          0.196
+        ]
+      ]
+    },
+    "draft": null,
+    "response": null,
+    "problems": {
+      "understand": [],
+      "generate": [
+        "la respuesta no cumple el formato pedido: Error code: 400 - Generated JSON does not match the expected schema. Please adjust your prompt. See 'failed_generation' for more details. Error: jsonschema: '/boxes/0/full_name' does not validate with /properties/boxes/items/$ref/properties/full_name/type: expected string, but got null",
+        "en full_name escribe exactamente uno de los candidatos de esa necesidad, o null si ninguno sirve (storage: etcd-io/etcd)"
+      ]
+    }
+  },
+  {
+    "provider": "groq-low",
+    "run": 3,
+    "case": "inmobiliaria-portal",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "search",
+          "query": "búsqueda de texto completo",
+          "evidence": "Los clientes tienen que poder buscar propiedades escribiendo cosas como 'apartamento con balcón cerca del metro'"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos",
+          "evidence": "los agentes suben las fotos y los planos de cada inmueble"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "search": [
+        [
+          "BurntSushi/ripgrep",
+          0.283
+        ],
+        [
+          "opensearch-project/OpenSearch",
+          0.269
+        ],
+        [
+          "nuxt/nuxt",
+          0.235
+        ],
+        [
+          "pgvector/pgvector",
+          0.232
+        ],
+        [
+          "huggingface/transformers",
+          0.232
+        ]
+      ],
+      "storage": []
+    },
+    "draft": {
+      "title": "Portal inmobiliario con búsqueda avanzada",
+      "summary": "Se propone usar OpenSearch como motor de búsqueda de texto completo para que los clientes encuentren propiedades mediante consultas naturales. No se incluyen soluciones de almacenamiento, que deberán evaluarse por separado.",
+      "boxes": [
+        {
+          "need": "search",
+          "full_name": "opensearch-project/OpenSearch",
+          "label": "OpenSearch",
+          "role": "motor de búsqueda de texto completo",
+          "rationale": "OpenSearch es un motor de búsqueda distribuido y RESTful que permite consultas de texto completo, adecuado para buscar inmuebles por descripción."
+        }
+      ],
+      "links": [],
+      "assumptions": [],
+      "other_limitations": [
+        "nuxt/nuxt no cubre la necesidad de búsqueda de texto completo"
+      ]
+    },
+    "response": {
+      "id": "8d331460ea1644c9a52d5b96b2c2352f",
+      "status": "ok",
+      "title": "Portal inmobiliario con búsqueda avanzada",
+      "summary": "Se propone usar OpenSearch como motor de búsqueda de texto completo para que los clientes encuentren propiedades mediante consultas naturales. No se incluyen soluciones de almacenamiento, que deberán evaluarse por separado.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "OpenSearch",
+          "role": "motor de búsqueda de texto completo",
+          "full_name": "opensearch-project/OpenSearch",
+          "rationale": "OpenSearch es un motor de búsqueda distribuido y RESTful que permite consultas de texto completo, adecuado para buscar inmuebles por descripción."
+        }
+      ],
+      "connections": [],
+      "assumptions": [],
+      "limitations": [
+        "Almacenamiento: el catálogo no tiene herramientas para «almacenamiento de archivos».",
+        "nuxt/nuxt no cubre la necesidad de búsqueda de texto completo"
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-04T03:30:30.506761Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "groq-low",
+    "run": 3,
+    "case": "agencia-viajes-web",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "frontend",
+          "query": "framework web de alto rendimiento",
+          "evidence": "Necesitamos un framework web para construir páginas de destinos que carguen muy rápido y se posicionen bien en Google."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "frontend": [
+        [
+          "angular/angular",
+          0.42
+        ],
+        [
+          "vuejs/core",
+          0.382
+        ],
+        [
+          "withastro/astro",
+          0.379
+        ],
+        [
+          "nuxt/nuxt",
+          0.379
+        ],
+        [
+          "django/django",
+          0.379
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sitio de viajes con Astro para alto rendimiento y SEO",
+      "summary": "Se propone usar Astro como framework web principal para crear páginas de destinos rápidas y bien posicionadas en Google. Astro ofrece renderizado estático y arquitectura de islands que optimiza la velocidad y la indexación. No hay otras necesidades sin herramienta.",
+      "boxes": [
+        {
+          "need": "frontend",
+          "full_name": "withastro/astro",
+          "label": "Astro",
+          "role": "Framework web de alto rendimiento para sitios estáticos e híbridos",
+          "rationale": "Astro está diseñado para sitios centrados en contenido, genera HTML estático y carga solo lo necesario, lo que brinda tiempos de carga muy rápidos y mejora el SEO."
+        }
+      ],
+      "links": [],
+      "assumptions": [],
+      "other_limitations": []
+    },
+    "response": {
+      "id": "a62fb71dac244dfa997c13283084a8e0",
+      "status": "ok",
+      "title": "Sitio de viajes con Astro para alto rendimiento y SEO",
+      "summary": "Se propone usar Astro como framework web principal para crear páginas de destinos rápidas y bien posicionadas en Google. Astro ofrece renderizado estático y arquitectura de islands que optimiza la velocidad y la indexación. No hay otras necesidades sin herramienta.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Astro",
+          "role": "Framework web de alto rendimiento para sitios estáticos e híbridos",
+          "full_name": "withastro/astro",
+          "rationale": "Astro está diseñado para sitios centrados en contenido, genera HTML estático y carga solo lo necesario, lo que brinda tiempos de carga muy rápidos y mejora el SEO."
+        }
+      ],
+      "connections": [],
+      "assumptions": [],
+      "limitations": [],
+      "clarification_questions": [],
+      "generated_at": "2026-11-04T03:31:17.967669Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "groq-low",
+    "run": 3,
+    "case": "cooperativa-api",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "backend",
+          "query": "framework para crear APIs",
+          "evidence": "queremos elegir un framework para la API que registra las entregas de café"
+        },
+        {
+          "category": "database",
+          "query": "base de datos relacional",
+          "evidence": "una base de datos relacional para guardar esos registros"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "backend": [
+        [
+          "fastapi/fastapi",
+          0.439
+        ],
+        [
+          "hashicorp/terraform",
+          0.393
+        ],
+        [
+          "microsoft/playwright",
+          0.375
+        ],
+        [
+          "PrefectHQ/prefect",
+          0.338
+        ],
+        [
+          "openai/openai-python",
+          0.337
+        ]
+      ],
+      "database": [
+        [
+          "fastapi/sqlmodel",
+          0.324
+        ],
+        [
+          "duckdb/duckdb",
+          0.315
+        ],
+        [
+          "sqlalchemy/sqlalchemy",
+          0.305
+        ],
+        [
+          "redis/redis",
+          0.305
+        ],
+        [
+          "ClickHouse/ClickHouse",
+          0.282
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Framework API y capa de acceso a base de datos relacional",
+      "summary": "Se propone FastAPI como framework principal para crear la API que registre entregas de café y SQLAlchemy como herramienta para interactuar con una base de datos relacional. No se incluye un motor de base de datos específico, por lo que se asume que se utilizará un SGBD compatible (por ejemplo PostgreSQL o MySQL).",
+      "boxes": [
+        {
+          "need": "backend",
+          "full_name": "fastapi/fastapi",
+          "label": "FastAPI",
+          "role": "Framework para crear la API RESTful de entregas",
+          "rationale": "FastAPI es un framework de alto rendimiento, fácil de aprender y listo para producción, ideal para exponer los endpoints que registren las entregas de café."
+        },
+        {
+          "need": "database",
+          "full_name": "sqlalchemy/sqlalchemy",
+          "label": "SQLAlchemy",
+          "role": "Toolkit ORM para acceder a la base de datos relacional",
+          "rationale": "SQLAlchemy es la biblioteca de referencia en Python para interactuar con bases de datos SQL, ofreciendo mapeo objeto‑relacional y consultas flexibles compatibles con cualquier motor relacional."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "backend",
+          "to_need": "database",
+          "protocol": "SQLAlchemy ORM",
+          "description": "FastAPI utiliza SQLAlchemy para persistir los datos de entregas en la base relacional"
+        }
+      ],
+      "assumptions": [
+        "Los desarrolladores ya disponen o crearán una base de datos relacional (PostgreSQL, MySQL, SQLite, etc.) a la que SQLAlchemy se conectará."
+      ],
+      "other_limitations": []
+    },
+    "response": {
+      "id": "61b0314537fe4ee7b8792300625d1504",
+      "status": "ok",
+      "title": "Framework API y capa de acceso a base de datos relacional",
+      "summary": "Se propone FastAPI como framework principal para crear la API que registre entregas de café y SQLAlchemy como herramienta para interactuar con una base de datos relacional. No se incluye un motor de base de datos específico, por lo que se asume que se utilizará un SGBD compatible (por ejemplo PostgreSQL o MySQL).",
+      "components": [
+        {
+          "key": "c1",
+          "label": "FastAPI",
+          "role": "Framework para crear la API RESTful de entregas",
+          "full_name": "fastapi/fastapi",
+          "rationale": "FastAPI es un framework de alto rendimiento, fácil de aprender y listo para producción, ideal para exponer los endpoints que registren las entregas de café."
+        },
+        {
+          "key": "c2",
+          "label": "SQLAlchemy",
+          "role": "Toolkit ORM para acceder a la base de datos relacional",
+          "full_name": "sqlalchemy/sqlalchemy",
+          "rationale": "SQLAlchemy es la biblioteca de referencia en Python para interactuar con bases de datos SQL, ofreciendo mapeo objeto‑relacional y consultas flexibles compatibles con cualquier motor relacional."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c1",
+          "to_key": "c2",
+          "protocol": "SQLAlchemy ORM",
+          "description": "FastAPI utiliza SQLAlchemy para persistir los datos de entregas en la base relacional"
+        }
+      ],
+      "assumptions": [
+        "Los desarrolladores ya disponen o crearán una base de datos relacional (PostgreSQL, MySQL, SQLite, etc.) a la que SQLAlchemy se conectará."
+      ],
+      "limitations": [],
+      "clarification_questions": [],
+      "generated_at": "2026-11-04T03:32:05.840087Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "groq-low",
+    "run": 3,
+    "case": "colegio-avisos",
+    "error": null,
+    "waited": 645.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "gestión de datos estructurados",
+          "evidence": "profesores registren la asistencia"
+        },
+        {
+          "category": "data-processing",
+          "query": "procesamiento batch de datos",
+          "evidence": "cada noche debe calcular el porcentaje de asistencia de cada estudiante"
+        },
+        {
+          "category": "communication",
+          "query": "envío de notificaciones por correo y SMS",
+          "evidence": "avisar por correo o SMS a los padres cuando baje del 80 %"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "database": [
+        [
+          "pandas-dev/pandas",
+          0.346
+        ],
+        [
+          "dagster-io/dagster",
+          0.338
+        ],
+        [
+          "PrefectHQ/prefect",
+          0.311
+        ],
+        [
+          "ClickHouse/ClickHouse",
+          0.307
+        ],
+        [
+          "redis/redis",
+          0.295
+        ]
+      ],
+      "data-processing": [
+        [
+          "apache/beam",
+          0.416
+        ],
+        [
+          "apache/spark",
+          0.266
+        ],
+        [
+          "PrefectHQ/prefect",
+          0.237
+        ],
+        [
+          "dagster-io/dagster",
+          0.226
+        ],
+        [
+          "dbt-labs/dbt",
+          0.217
+        ]
+      ],
+      "communication": [
+        [
+          "prometheus/alertmanager",
+          0.207
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Sistema de asistencia escolar con cálculo nocturno y notificaciones",
+      "summary": "Se propone usar Apache Beam para procesar nightly el cálculo de asistencia y Alertmanager para notificar por correo cuando el porcentaje baja del 80 %. No se encontró una herramienta de base de datos adecuada entre los candidatos, por lo que se indica la ausencia de solución de almacenamiento. Se advierte que Alertmanager no envía SMS de forma nativa y requerirá integración externa.",
+      "boxes": [
+        {
+          "need": "database",
+          "full_name": null,
+          "label": "database",
+          "role": "almacenamiento de registros de asistencia",
+          "rationale": "Ninguno de los candidatos (pandas, Dagster, Prefect) proporciona capacidades de base de datos; son librerías de análisis o orquestación, no sistemas de gestión de datos estructurados."
+        },
+        {
+          "need": "data-processing",
+          "full_name": "apache/beam",
+          "label": "Apache Beam",
+          "role": "cálculo batch del porcentaje de asistencia nocturno",
+          "rationale": "Apache Beam ofrece un modelo unificado para procesamiento batch, permite programar un pipeline que, cada noche, lea los registros y calcule el porcentaje de asistencia por estudiante."
+        },
+        {
+          "need": "communication",
+          "full_name": "prometheus/alertmanager",
+          "label": "Alertmanager",
+          "role": "envío de notificaciones por correo (y vía webhook para SMS)",
+          "rationale": "Alertmanager gestiona alertas por correo electrónico y, mediante webhook, puede integrarse con servicios externos que envíen SMS, cumpliendo la necesidad de notificar a los padres."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "data-processing",
+          "to_need": "communication",
+          "protocol": "HTTP webhook",
+          "description": "El pipeline de Beam envía una alerta a Alertmanager cuando el porcentaje de asistencia de un estudiante cae bajo 80 %."
+        }
+      ],
+      "assumptions": [
+        "Se dispondrá de una base de datos externa (p.ej., PostgreSQL) para registrar la asistencia, ya que ninguno de los candidatos cumple esa función.",
+        "Los profesores ingresarán los datos a través de una aplicación web que escriba en esa base de datos."
+      ],
+      "other_limitations": [
+        "Alertmanager no soporta envío directo de SMS; sería necesario conectar un gateway SMS o usar un webhook a otro servicio."
+      ]
+    },
+    "response": {
+      "id": "a853cf5654904de59e195edb9aa0928e",
+      "status": "ok",
+      "title": "Sistema de asistencia escolar con cálculo nocturno y notificaciones",
+      "summary": "Se propone usar Apache Beam para procesar nightly el cálculo de asistencia y Alertmanager para notificar por correo cuando el porcentaje baja del 80 %. No se encontró una herramienta de base de datos adecuada entre los candidatos, por lo que se indica la ausencia de solución de almacenamiento. Se advierte que Alertmanager no envía SMS de forma nativa y requerirá integración externa.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Apache Beam",
+          "role": "cálculo batch del porcentaje de asistencia nocturno",
+          "full_name": "apache/beam",
+          "rationale": "Apache Beam ofrece un modelo unificado para procesamiento batch, permite programar un pipeline que, cada noche, lea los registros y calcule el porcentaje de asistencia por estudiante."
+        },
+        {
+          "key": "c2",
+          "label": "Alertmanager",
+          "role": "envío de notificaciones por correo (y vía webhook para SMS)",
+          "full_name": "prometheus/alertmanager",
+          "rationale": "Alertmanager gestiona alertas por correo electrónico y, mediante webhook, puede integrarse con servicios externos que envíen SMS, cumpliendo la necesidad de notificar a los padres."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c1",
+          "to_key": "c2",
+          "protocol": "HTTP webhook",
+          "description": "El pipeline de Beam envía una alerta a Alertmanager cuando el porcentaje de asistencia de un estudiante cae bajo 80 %."
+        }
+      ],
+      "assumptions": [
+        "Se dispondrá de una base de datos externa (p.ej., PostgreSQL) para registrar la asistencia, ya que ninguno de los candidatos cumple esa función.",
+        "Los profesores ingresarán los datos a través de una aplicación web que escriba en esa base de datos."
+      ],
+      "limitations": [
+        "Bases de datos: ninguna herramienta del catálogo encaja. Ninguno de los candidatos (pandas, Dagster, Prefect) proporciona capacidades de base de datos; son librerías de análisis o orquestación, no sistemas de gestión de datos estructurados.",
+        "Alertmanager no soporta envío directo de SMS; sería necesario conectar un gateway SMS o usar un webhook a otro servicio."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-04T03:43:42.577705Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "groq-low",
+    "run": 3,
+    "case": "ong-voluntarios",
+    "error": null,
+    "waited": 804.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "autenticación con OAuth",
+          "evidence": "entrar con su cuenta de Google"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos",
+          "evidence": "guardar los certificados escaneados de cada uno en PDF"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "auth": [],
+      "storage": []
+    },
+    "draft": null,
+    "response": {
+      "id": "35b47dd3d2db46b6bd196ecfc3a162d2",
+      "status": "no_evidence",
+      "title": null,
+      "summary": "El catálogo todavía no tiene herramientas para lo que pides: autenticación, almacenamiento.",
+      "components": [],
+      "connections": [],
+      "assumptions": [],
+      "limitations": [
+        "Autenticación: el catálogo no tiene herramientas para «autenticación con OAuth».",
+        "Almacenamiento: el catálogo no tiene herramientas para «almacenamiento de archivos»."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-04T03:57:53.549488Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  }
+]

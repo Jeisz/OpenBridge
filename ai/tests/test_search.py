@@ -21,7 +21,7 @@ AUTH = {"auth": Category(id="auth", name="Autenticación", description="Login y 
 
 
 def make_repo(name, *, categories=("auth",), license="MIT", health=None,
-              archived=False, description=None, topics=()):
+              archived=False, disabled=None, description=None, topics=()):
     """Repo mínimo válido según el contrato."""
     return Repo.model_validate({
         "full_name": f"test/{name}",
@@ -29,6 +29,7 @@ def make_repo(name, *, categories=("auth",), license="MIT", health=None,
         "stargazers_count": 0,
         "pushed_at": "2026-01-01T00:00:00Z",
         "archived": archived,
+        "disabled": disabled,
         "license_spdx_id": license,
         "health_score": health,
         "description": description,
@@ -83,6 +84,16 @@ def test_lista_vacia_si_nada_pasa_los_filtros():
 def test_archivado_nunca_aparece():
     index = make_index((make_repo("a", archived=True), A), (make_repo("b"), B))
     assert names(index.search_vector(QUERY, k=5)) == ["b"]
+
+
+@pytest.mark.parametrize("disabled, shown", [
+    (True, ["b"]),        # deshabilitado por GitHub: nunca aparece
+    (False, ["a", "b"]),
+    (None, ["a", "b"]),   # sin dato: no se excluye
+])
+def test_deshabilitado_nunca_aparece_y_sin_dato_si(disabled, shown):
+    index = make_index((make_repo("a", disabled=disabled), A), (make_repo("b"), B))
+    assert sorted(names(index.search_vector(QUERY, k=5))) == shown
 
 
 def test_sin_filtro_de_licencia_entran_todas_y_se_marcan():

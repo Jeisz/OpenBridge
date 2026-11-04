@@ -20,7 +20,7 @@ def fake_generar(replies):
     """Un generar() falso que responde en orden y guarda lo que recibió."""
     calls = []
 
-    def generar(messages, *, schema=None, provider=None):
+    def generar(messages, *, schema=None, provider=None, deadline=None):
         calls.append(list(messages))  # copia: entender() agrega mensajes a la misma lista
         reply = replies[len(calls) - 1]
         if isinstance(reply, Exception):

@@ -24,14 +24,17 @@ health score y categoría.
 decisiones en [`eval/SEARCH_DECISION.md`](eval/SEARCH_DECISION.md).
 
 **Casos de prueba del asistente.** 18 pedidos de negocio con el status, las necesidades y
-los repos aceptables esperados, escritos contra el snapshot del catálogo real. Detalle en
+los repos aceptables esperados, escritos contra el snapshot del catálogo real, y 5 casos de
+validación aparte para comprobar reglas nuevas con pedidos que el prompt no vio. Detalle en
 [`eval/ASSISTANT_CASES.md`](eval/ASSISTANT_CASES.md).
 
 **Asistente.** `asistir()` responde un pedido en tres pasos: **entender** (modelo de lenguaje:
 necesidades o preguntas), **buscar** (embeddings, una búsqueda por necesidad) y **generar** el
-mapa (modelo de lenguaje: una herramienta por necesidad, solo entre sus candidatos). El modelo
-escribe con salida estructurada; el código valida contra el contrato `AssistantResponse` y
-reintenta una vez si no cumple. Todavía es una función de Python, no un servicio.
+mapa (modelo de lenguaje: una herramienta por necesidad, solo entre sus 5 primeros candidatos,
+o ninguna si no sirven). El modelo escribe con salida estructurada; el código valida contra el
+contrato `AssistantResponse` y reintenta una vez si no cumple. Todo el pedido tiene un
+presupuesto de 15 s, y si el proveedor principal falla por algo temporal, la llamada pasa al
+respaldo sin esperar. Todavía es una función de Python, no un servicio.
 
 **Modelo de lenguaje.** Principal: Gemini 3.5 Flash-Lite. Respaldo: gpt-oss-120b en Groq, con
 razonamiento bajo. Criterios, comparación y descartados en
@@ -136,10 +139,20 @@ clave en `.env` (nombres en `.env.example`); **las claves nunca van al repo, al 
 | Proveedor (`AI_LLM_PROVIDER`) | Clave | Dónde se obtiene | Costo |
 |---|---|---|---|
 | `gemini` (principal) | `GEMINI_API_KEY` | Google AI Studio → Get API key | Nivel gratuito: 500 consultas/día, 15/min |
-| `groq-low` (respaldo) | `GROQ_API_KEY` | console.groq.com → API Keys | Nivel gratuito: 1.000 consultas/día, 8.000 tokens/min |
+| `groq-low` (respaldo) | `GROQ_API_KEY` | console.groq.com → API Keys | Nivel gratuito, por organización: 30 consultas/min, 1.000/día, 8.000 tokens/min y **200.000 tokens/día** |
 | `claude-haiku` | `ANTHROPIC_API_KEY` | console.anthropic.com → API Keys | De pago |
 | `ollama` | — | Ollama instalado y abierto en la máquina | Local |
 
+**Respaldo y presupuesto.** Si no se pide un proveedor concreto, `generar()` usa el principal
+y, si falla por algo temporal (límite de uso, caída, tiempo agotado), repite la llamada con el
+de `AI_LLM_FALLBACK` (por defecto, `groq-low`; vacío = sin respaldo), **sin esperar**.
+`asistir()` le da a todo el pedido 15 s (`BUDGET_SECONDS`): cada llamada usa solo el tiempo
+que queda, el principal tiene un tope de 7 s para que al respaldo le quede tiempo, y si no
+alcanza para otra llamada se corta con `LLMTimeout`. `error_response()` traduce cada error
+al código HTTP y al cuerpo del contrato (502, 503, 504).
+
+- Un flujo usa unos 5.000 tokens: el límite diario de Groq alcanza para unos 40 pedidos y se
+  comparte con las evaluaciones. **No correr evaluaciones con Groq el día de una demo.**
 - Con el nivel gratuito, Google usa el contenido de las consultas para mejorar sus servicios.
 - En Groq conviene activar "Inference APIs ZDR" en la configuración de la cuenta para que no
   guarde las consultas.
@@ -149,13 +162,17 @@ clave en `.env` (nombres en `.env.example`); **las claves nunca van al repo, al 
 
 ```python
 from ai import embeddings
-from ai.assistant import asistir
+from ai.assistant import asistir, error_response
+from ai.llm import LLMError
 from ai.search import SearchIndex
 
 index = SearchIndex.build()
-assisted = asistir("Necesito cobrar suscripciones mensuales a mis clientes.",
-                   index.search, min_score=embeddings.model_spec().min_score)
-print(assisted.response)   # AssistantResponse, o None si no se logró una respuesta válida
+try:
+    assisted = asistir("Necesito cobrar suscripciones mensuales a mis clientes.",
+                       index.search, min_score=embeddings.model_spec().min_score)
+    print(assisted.response or error_response(None))   # None = sin respuesta válida → 502
+except LLMError as err:
+    print(error_response(err))                          # (503 o 504, ErrorResponse)
 ```
 
 ## Comandos
@@ -171,8 +188,8 @@ python -m ai.scripts.load_seed_example           # carga los datos de ejemplo en
 python -m ai.scripts.load_seed_example --limpiar # borra los datos de ejemplo
 python -m ai.eval.run_search_eval                # evalúa la búsqueda sobre el catálogo real (--golden sample: datos de ejemplo)
 python -m ai.scripts.check_llm gemini groq-low   # prueba de humo de los proveedores de LLM (requiere las claves)
-python -m ai.eval.run_understand_eval gemini     # compara modelos en el paso de entender
-python -m ai.eval.run_assistant_eval gemini groq-low  # compara modelos con el flujo completo
+python -m ai.eval.run_understand_eval gemini     # compara modelos en el paso de entender (--cases validation: casos de validación)
+python -m ai.eval.run_assistant_eval gemini groq-low  # compara modelos con el flujo completo (--cases validation, --shown 3)
 python -m ai.eval.diagnose_latency gemini        # dónde se va el tiempo del paso de generar
 ```
 

@@ -7,7 +7,7 @@ from pydantic import ValidationError
 
 from ai import assistant
 from ai.catalog import load_repos
-from ai.llm import Generation
+from ai.llm import Generation, LLMInvalidResponse
 from ai.search import SearchResult
 
 NOW = datetime(2026, 11, 2, tzinfo=timezone.utc)
@@ -141,7 +141,7 @@ def test_reintenta_si_elige_un_repo_de_otra_necesidad(monkeypatch):
     replies = [draft([box("redis/redis"), box("redis/redis", need="cache")]), draft(VALID)]
     calls = []
 
-    def fake_generar(messages, *, schema=None, provider=None):
+    def fake_generar(messages, *, schema=None, provider=None, deadline=None):
         calls.append(messages)
         reply = replies[len(calls) - 1]
         return Generation(text=reply.model_dump_json(), provider="fake", model="fake",
@@ -162,3 +162,29 @@ def test_esquema_fijo_acepta_cualquier_texto_y_las_reglas_lo_revisan():
                links=[], assumptions=[], other_limitations=[])
     problems = assistant.draft_problems(d, CANDIDATES)
     assert any("no es candidato de ai" in p for p in problems)
+
+
+def test_formato_rechazado_reintenta_con_los_valores_validos(monkeypatch):
+    # Algunos proveedores rechazan el JSON con un error técnico que no dice qué valores
+    # eran válidos: el reintento debe decirlos, por necesidad, incluido null.
+    rejected = LLMInvalidResponse("no cumple", raw_text='{"boxes": []}',
+                                  detail="expected null, but got string")
+    replies = [rejected, draft(VALID)]
+    calls = []
+
+    def fake_generar(messages, *, schema=None, provider=None, deadline=None):
+        calls.append(list(messages))
+        reply = replies[len(calls) - 1]
+        if isinstance(reply, Exception):
+            raise reply
+        return Generation(text=reply.model_dump_json(), provider="fake", model="fake",
+                          seconds=0.1, input_tokens=100, output_tokens=10, data=reply)
+
+    monkeypatch.setattr(assistant, "generar", fake_generar)
+    response, result_ = assistant.generar_mapa(REQUEST, needs("ai", "cache"), CANDIDATES)
+
+    retry = calls[1][-1]["content"]  # el mensaje del reintento
+    assert "ai: run-llama/llama_index" in retry and "cache: redis/redis" in retry
+    assert "o null" in retry
+    assert result_.attempts == 2
+    assert response is not None and response.status == "ok"

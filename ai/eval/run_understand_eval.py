@@ -1,12 +1,14 @@
 """Mide el paso de entender con los casos del asistente y escribe el reporte.
 
 Uso, desde la raíz del repo:
-    python -m ai.eval.run_understand_eval                  # todos los proveedores del registro, 3 corridas
-    python -m ai.eval.run_understand_eval gemini --runs 1  # uno, una corrida
+    python -m ai.eval.run_understand_eval                            # todos los proveedores del registro, 3 corridas
+    python -m ai.eval.run_understand_eval gemini --runs 1            # uno, una corrida
+    python -m ai.eval.run_understand_eval gemini --cases validation  # casos de validación
 
 Cada proveedor recibe primero una llamada de calentamiento que no se cuenta.
 Si el proveedor pide esperar por límite de uso, se espera y se anota.
-Escribe ai/eval/results/understand-<fecha>.md (reporte) y .json (todas las respuestas).
+Escribe ai/eval/results/understand-<fecha>-<hora>[-validation][-proveedores].md (reporte)
+y .json (todas las respuestas).
 """
 
 import argparse
@@ -18,9 +20,9 @@ from datetime import date
 from dotenv import load_dotenv
 
 from ai.assistant import entender
-from ai.eval.assistant_cases import EVAL_DIR, load_assistant_cases
+from ai.eval.assistant_cases import CASE_FILES, EVAL_DIR, load_assistant_cases
 from ai.eval.understand_metrics import case_outcome, summarize
-from ai.llm import PROVIDERS, LLMError, LLMRateLimited,LLMTimeout, LLMUnavailable
+from ai.llm import PROVIDERS, LLMError, LLMRateLimited, LLMTimeout, LLMUnavailable
 
 RESULTS_DIR = EVAL_DIR / "results"
 WARMUP = "Necesito que los clientes de mi tienda puedan buscar productos por nombre."
@@ -28,6 +30,7 @@ MIN_PAUSE = {"gemini": 4.0}  # nivel gratuito: 15 llamadas por minuto
 DEFAULT_WAIT = 20.0          # si el límite de uso no dice cuánto esperar
 MAX_WAITS = 5
 TRANSIENT_WAIT = 10.0        # error temporal del proveedor (503, sin conexión)
+MAX_WAIT = 120.0             # si el proveedor pide esperar más (límite diario), no se insiste
 WARMUP_TRIES = 6  # 6 × 15 s: un modelo local frío puede tardar ~1 min en cargar
 
 
@@ -51,6 +54,8 @@ def call(request: str, provider: str):
         try:
             return entender(request, provider=provider), waited
         except LLMRateLimited as err:
+            if err.retry_after and err.retry_after > MAX_WAIT:
+                raise  # límite diario: esperar no tiene sentido en esta corrida
             pause, reason = err.retry_after or DEFAULT_WAIT, "límite de uso"
         except LLMUnavailable as err:
             if not err.transient:
@@ -163,8 +168,11 @@ def render_report(providers, summaries, cold, outcomes, answers, cases, runs) ->
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Mide el paso de entender.")
-    parser.add_argument("providers", nargs="*", help="gemini, groq u ollama (por defecto, los tres)")
+    parser.add_argument("providers", nargs="*",
+                        help="por defecto, todos los proveedores del registro")
     parser.add_argument("--runs", type=int, default=3)
+    parser.add_argument("--cases", choices=CASE_FILES, default="base",
+                        help="base: todos los casos (por defecto); validation: los casos de validación")
     args = parser.parse_args()
     unknown = [p for p in args.providers if p not in PROVIDERS]
     if unknown:
@@ -172,7 +180,7 @@ def main() -> None:
     args.providers = args.providers or list(PROVIDERS)
 
     load_dotenv()
-    cases = load_assistant_cases().cases
+    cases = load_assistant_cases(CASE_FILES[args.cases]).cases
     outcomes, answers, cold = [], [], {}
 
     for provider in args.providers:
@@ -212,7 +220,10 @@ def main() -> None:
     summaries = {p: summarize([o for o in outcomes if o.provider == p]) for p in ran}
 
     RESULTS_DIR.mkdir(exist_ok=True)
-    name = f"understand-{date.today()}"
+    # Con la hora en el nombre, dos corridas del mismo día no se pisan.
+    name = f"understand-{date.today()}-{time.strftime('%H%M')}"
+    if args.cases != "base":
+        name += f"-{args.cases}"
     if set(ran) != set(PROVIDERS):
         name += "-" + "-".join(ran)
     stem = RESULTS_DIR / name

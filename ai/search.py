@@ -125,8 +125,9 @@ def _passes(repo: Repo,
             min_health: float | None,
             categories: Collection[str] | None,) -> bool:
     """True si el repo pasa todos los filtros"""
-    if repo.archived:
-        return False    # repo archivado no se recomienda
+    if repo.archived or repo.disabled:
+        return False    # archivado o deshabilitado por GitHub: no se recomienda nunca.
+                        # disabled = None (sin dato) no excluye.
     if licenses is not None and repo.license_spdx_id not in licenses:
         return False    # NOASSERTION o None no confirman ninguna licencia.
     if min_health is not None and repo.health_score is not None and repo.health_score < min_health:

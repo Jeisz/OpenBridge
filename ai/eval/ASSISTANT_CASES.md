@@ -4,7 +4,8 @@ Pedidos de negocio fijos con lo que el asistente **debería** responder. Sirven
 para elegir el modelo de lenguaje y para medir el asistente cada vez que cambia.
 Se escriben antes de mirar lo que responde el asistente o la búsqueda.
 
-Archivos: `assistant_cases.json` (los casos) y `assistant_cases.py` (esquema y carga).
+Archivos: `assistant_cases.json` (los casos), `assistant_cases_validation.json` (casos de
+validación, ver abajo) y `assistant_cases.py` (esquema y carga).
 Tests: `ai/tests/test_assistant_cases.py`, sin base de datos ni modelo.
 
 ## Qué tiene un caso
@@ -55,6 +56,29 @@ Resultado esperado: 12 `ok`, 4 `no_evidence`, 2 `needs_clarification`.
 
 En los pares corto/largo, las necesidades del pedido largo contienen las del
 corto: el asistente debería responder de forma coherente a los dos.
+
+## Casos de validación (5 casos)
+
+Los 18 casos de arriba se usan para mirar fallos y ajustar los prompts: mejorar en ellos no
+prueba que una regla nueva sirva. Para eso hay un archivo aparte,
+`assistant_cases_validation.json`, con el mismo esquema y estas reglas:
+
+- Se escriben **antes** de cambiar el prompt, desde las políticas generales, en negocios
+  distintos a los de la base.
+- **No se usan para afinar el prompt.** Si se ajusta mirándolos, dejan de medir lo que el
+  asistente hace con pedidos nuevos, y hacen falta otros.
+- Primero se mide sin el cambio (línea base), con criterios de éxito escritos antes de ver
+  los números; después, una sola ronda con el cambio.
+- No comparten ids ni pedidos con la base (lo comprueba un test).
+
+Hoy prueban dos reglas: que la aplicación que el usuario describe no se convierta en una
+necesidad de frontend o backend, y que el asistente no proponga un candidato que solo se
+parece a lo pedido.
+
+```bash
+python -m ai.eval.run_understand_eval gemini --cases validation
+python -m ai.eval.run_assistant_eval gemini --cases validation
+```
 
 ## Qué no se mide aquí
 
