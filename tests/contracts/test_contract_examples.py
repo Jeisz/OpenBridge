@@ -12,6 +12,7 @@ from pydantic import ValidationError
 from shared.contracts.assistant import AssistantRequest, AssistantResponse, ErrorResponse
 from shared.contracts.integration_idea import IntegrationIdea
 from shared.contracts.repo import CategoryList, Repo
+from shared.contracts.repo_detail import RepoDetail
 
 CONTRACTS_DIR = Path(__file__).resolve().parents[2] / "shared" / "contracts"
 
@@ -44,6 +45,10 @@ IDEA = {
     "docs_url": "https://www.keycloak.org/documentation",
     "generated_by": "llm", "reviewed_at": None, "based_on_hash": "a1b2c3",
 }
+
+# Ficha: el repo y las ideas que encajan (0–3). Cuatro ideas exceden el tope.
+FICHA = {"repo": REPO, "integration_ideas": [IDEA]}
+CUATRO_IDEAS = [{**IDEA, "id": f"idea_keycloak_0{n}"} for n in range(1, 5)]
 
 RESPONSE = {
     "id": "resp_0001", "status": "ok", "title": "Un estudio de yoga, conectado.",
@@ -114,6 +119,16 @@ def test_idea_valida():
     IntegrationIdea.model_validate(IDEA)
 
 
+def test_ficha_valida():
+    RepoDetail.model_validate(FICHA)
+
+
+def test_ficha_sin_ideas_es_valida():
+    # Cero ideas es válido: repo archivado, sin README o sin ideas revisadas.
+    ficha = RepoDetail.model_validate({"repo": {**REPO, "archived": True}, "integration_ideas": []})
+    assert ficha.integration_ideas == []
+
+
 def test_pregunta_valida():
     AssistantRequest(query="Quiero una app web para un estudio de yoga con reservas de clases.")
 
@@ -171,13 +186,17 @@ def test_summary_es_de_250_es_valido():
             "Un servidor Keycloak en ejecución, con un realm, un client público con PKCE y usuarios de prueba"]}),
         (IntegrationIdea, IDEA, {"compatible_stack": ["React", " "]}),
         (ErrorResponse, ERROR, {"error": {"code": "server_error", "message": "x"}}),
+        (RepoDetail, FICHA, {"integration_ideas": [{**IDEA, "full_name": "otro/repo"}]}),
+        (RepoDetail, FICHA, {"repo": {**REPO, "archived": True}}),
+        (RepoDetail, FICHA, {"integration_ideas": CUATRO_IDEAS}),
     ],
-        ids=["estrellas-negativas", "homepage-invalida", "full-name-sin-barra",
+    ids=["estrellas-negativas", "homepage-invalida", "full-name-sin-barra",
          "summary-es-251", "is-maintained-no-booleano",
          "snippet-sin-lenguaje", "flecha-a-caja-inexistente", "aclaracion-sin-preguntas",
          "key-repetida", "fecha-sin-zona", "sin-evidencia-sin-summary", "summary-solo-espacios",
          "label-solo-espacios", "supuesto-vacio", "stack-largo", "dependencia-larga",
-         "stack-elemento-vacio", "error-code-desconocido"],
+         "stack-elemento-vacio", "error-code-desconocido",
+         "ficha-idea-de-otro-repo", "ficha-archivado-con-ideas", "ficha-cuatro-ideas"],
 )
 def test_casos_invalidos_se_rechazan(modelo, base, cambio):
     with pytest.raises(ValidationError):
