@@ -1,0 +1,160 @@
+{
+  "version": 2,
+  "source": "sample",
+  "queries": [
+    {
+      "id": "auth-sso",
+      "query": "Mis empleados deben entrar a todas las apps internas con una sola cuenta corporativa, por SAML, y quiero administrar roles y permisos en un solo lugar",
+      "expected": ["keycloak/keycloak", "zitadel/zitadel"],
+      "pair": "auth",
+      "note": "Pide gestión de acceso (roles y permisos) además de SAML. keycloak: 'Identity and Access Management', topic saml. zitadel: topics sso, saml, authorization. kratos fuera: menciona SAML pero no declara roles ni permisos."
+    },
+    {
+      "id": "auth-social",
+      "query": "Quiero que los clientes de mi app pequeña entren rápido con su cuenta de Google, sin montar algo complejo",
+      "expected": ["supertokens/supertokens-core", "pocketbase/pocketbase"],
+      "pair": "auth",
+      "note": "supertokens: topic social-login, alternativa a Firebase Auth. pocketbase: backend en 1 archivo con autenticación."
+    },
+    {
+      "id": "auth-passkeys",
+      "query": "Login sin contraseña, con passkeys o la huella del celular",
+      "expected": ["zitadel/zitadel", "ory/kratos"],
+      "pair": null,
+      "note": "Caso zitadel fuera del top-3. zitadel: topics passkeys, fido2. kratos: 'Passkeys' en la descripción. keycloak fuera: los datos del catálogo no mencionan passkeys."
+    },
+    {
+      "id": "pay-subs",
+      "query": "Cobrar una suscripción mensual a los clientes de mi software",
+      "expected": ["killbill/killbill", "getlago/lago"],
+      "pair": "billing",
+      "note": "killbill: 'Subscription Billing'. lago: 'Subscription management'."
+    },
+    {
+      "id": "pay-usage",
+      "query": "Cobrarle a cada cliente según lo que consumió, por ejemplo por cada llamada a mi API",
+      "expected": ["getlago/lago"],
+      "pair": "billing",
+      "note": "lago: 'Metering and Usage Based Billing'. killbill fuera: lo menciona solo el README; su descripción es de suscripciones."
+    },
+    {
+      "id": "pay-gateways",
+      "query": "Aceptar pagos con tarjeta y conectar varias pasarelas, como Stripe y Adyen, desde un mismo lugar",
+      "expected": ["juspay/hyperswitch"],
+      "pair": null,
+      "note": "hyperswitch: topics payment-gateway, stripe, adyen; conecta varios proveedores de pago."
+    },
+    {
+      "id": "an-web",
+      "query": "Saber cuántas personas visitan mi sitio web sin usar cookies ni Google Analytics",
+      "expected": ["plausible/analytics", "umami-software/umami"],
+      "pair": "analytics",
+      "note": "Ambos: sin cookies, topic google-analytics (como alternativa)."
+    },
+    {
+      "id": "an-product",
+      "query": "Ver cómo usan mi app los usuarios: grabar sus sesiones, activar funciones por grupos y hacer experimentos A/B",
+      "expected": ["PostHog/posthog"],
+      "pair": "analytics",
+      "note": "posthog: topics session-replay, feature-flags, ab-testing."
+    },
+    {
+      "id": "an-bi",
+      "query": "Que el área de finanzas arme sus propios tableros e informes con los datos de la empresa",
+      "expected": ["metabase/metabase"],
+      "pair": null,
+      "note": "metabase: 'Business Intelligence', topics dashboard, reporting."
+    },
+    {
+      "id": "search-shop",
+      "query": "Un buscador para mi tienda en línea que encuentre productos aunque el cliente escriba mal",
+      "expected": ["meilisearch/meilisearch", "typesense/typesense"],
+      "pair": null,
+      "note": "Ambos: topics typo-tolerance, site-search."
+    },
+    {
+      "id": "ai-docs",
+      "query": "Un asistente que responda preguntas usando los documentos internos de mi empresa",
+      "expected": ["run-llama/llama_index", "langchain-ai/langchain"],
+      "pair": null,
+      "note": "Ambos: topic rag. llama_index: 'document processing platform for AI'."
+    },
+    {
+      "id": "ai-local",
+      "query": "Usar modelos de lenguaje en mis propios servidores, sin enviar datos a terceros",
+      "expected": ["ollama/ollama"],
+      "pair": null,
+      "note": "ollama: corre modelos localmente; topics llm, llama, qwen."
+    },
+    {
+      "id": "db-backend",
+      "query": "Un backend con base de datos, usuarios y datos en tiempo real para mi app móvil, sin administrar servidores",
+      "expected": ["supabase/supabase", "pocketbase/pocketbase"],
+      "pair": null,
+      "note": "supabase: plataforma Postgres, topics auth, realtime. pocketbase: 'realtime backend'."
+    },
+    {
+      "id": "db-cache",
+      "query": "Guardar en memoria datos que se leen mucho, para que mi app responda más rápido",
+      "expected": ["redis/redis"],
+      "pair": null,
+      "note": "redis: topics cache, in-memory."
+    },
+    {
+      "id": "none-notify",
+      "query": "Enviar recordatorios por WhatsApp y SMS a mis clientes",
+      "expected": [],
+      "pair": null,
+      "note": "Sin respuesta: ningún repo tiene notificaciones como propósito (zitadel y supertokens usan SMS solo para códigos de login)."
+    },
+    {
+      "id": "none-video",
+      "query": "Editar videos cortos para las redes sociales de mi negocio",
+      "expected": [],
+      "pair": null,
+      "note": "Sin respuesta: nada parecido en el catálogo."
+    },
+    {
+      "id": "none-agenda",
+      "query": "Que mis pacientes agenden citas en mi consultorio",
+      "expected": [],
+      "pair": null,
+      "note": "Sin respuesta: nada parecido en el catálogo."
+    },
+    {
+      "id": "none-email",
+      "query": "Enviar correos de marketing masivos a mi lista de clientes",
+      "expected": [],
+      "pair": null,
+      "note": "Sin respuesta, pero 'casi': suena a analítica (umami habla de campañas) y ningún repo envía correos. Pone a prueba el umbral."
+    },
+        {
+      "id": "none-accounting",
+      "query": "Llevar la contabilidad y la nómina de mis empleados",
+      "expected": [],
+      "pair": null,
+      "note": "Sin respuesta, 'casi': suena a pagos y facturación (lago, killbill), pero ninguno hace contabilidad ni nómina."
+    },
+    {
+      "id": "none-einvoice",
+      "query": "Emitir facturas electrónicas válidas ante la DIAN",
+      "expected": [],
+      "pair": null,
+      "note": "Sin respuesta, 'casi' difícil: lago tiene el topic invoices, pero factura suscripciones; no hace facturación electrónica legal."
+    },
+    {
+      "id": "none-inventory",
+      "query": "Controlar el inventario de productos de mi bodega",
+      "expected": [],
+      "pair": null,
+      "note": "Sin respuesta: nada en el catálogo gestiona inventario."
+    },
+    {
+      "id": "none-videocall",
+      "query": "Hacer videollamadas con mis clientes desde mi página web",
+      "expected": [],
+      "pair": null,
+      "note": "Sin respuesta: nada parecido en el catálogo."
+    }
+  ]
+}

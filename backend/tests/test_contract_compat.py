@@ -1,6 +1,7 @@
 """Alineación con los contratos compartidos y superficie HTTP publicada."""
 import json
 from pathlib import Path
+from typing import get_args
 
 from conftest import FakeRepository, build_client, list_row
 from backend.app.api.schemas import (
@@ -47,12 +48,35 @@ def test_out_of_scope_routes_are_not_exposed():
 def test_catalog_repo_is_a_superset_of_the_shared_contract():
     assert issubclass(CatalogRepo, Repo)
     assert issubclass(CatalogListItem, CatalogRepo)
-    for extra in ("html_url", "forks_count"):
-        assert extra in CatalogRepo.model_fields
-        assert extra not in Repo.model_fields
-    for shared in ("disabled", "is_maintained"):
-        assert shared in Repo.model_fields
-        assert CatalogRepo.model_fields[shared].annotation == Repo.model_fields[shared].annotation
+    # Lo único que la API añade al contrato son columnas de la tabla base que la
+    # ficha necesita; `disabled` e `is_maintained` ya no son extra desde v1.2.
+    extras = set(CatalogRepo.model_fields) - set(Repo.model_fields)
+    assert extras == {"name", "html_url", "forks_count"}
+
+
+def test_repo_v12_fields_are_part_of_the_shared_contract():
+    """`disabled` e `is_maintained` los fija Repo v1.2, no los inventa la API."""
+    for field_name in ("disabled", "is_maintained"):
+        field = Repo.model_fields[field_name]
+        assert set(get_args(field.annotation)) == {bool, type(None)}
+        assert field.default is None
+        # La API los publica porque están en el contrato, no como extra propio.
+        assert field_name in CatalogRepo.model_fields
+
+
+def test_disabled_comes_from_the_row_and_is_maintained_is_not_invented():
+    """`disabled` se copia tal cual; `is_maintained` sigue en null (sin criterio en la API)."""
+    with build_client(FakeRepository([list_row(disabled=True)])) as client:
+        item = client.get("/repos").json()[0]
+
+    assert item["disabled"] is True
+    assert item["is_maintained"] is None
+
+    with build_client(FakeRepository([list_row(disabled=None)])) as client:
+        item = client.get("/repos").json()[0]
+
+    # NULL es "sin dato": no se convierte a false.
+    assert item["disabled"] is None
 
 
 def test_detail_response_reuses_the_shared_wrapper():

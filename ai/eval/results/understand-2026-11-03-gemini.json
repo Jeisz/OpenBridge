@@ -1,0 +1,1543 @@
+[
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "clinica-citas",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "gestion de identidad de usuarios",
+          "evidence": "con su cuenta"
+        },
+        {
+          "category": "communication",
+          "query": "envio de notificaciones por canales digitales",
+          "evidence": "reciban recordatorios por WhatsApp o correo"
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos y cobros",
+          "evidence": "paguen un abono al reservar"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.38,
+    "input_tokens": 1917,
+    "output_tokens": 143,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "tienda-ropa",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "search",
+          "query": "búsqueda tolerante a errores ortográficos",
+          "evidence": "un buscador que encuentre productos aunque el cliente escriba mal"
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos con tarjeta",
+          "evidence": "pagos con tarjeta y PSE"
+        },
+        {
+          "category": "data-processing",
+          "query": "integración y sincronización de datos",
+          "evidence": "que cada venta pase sola a nuestra hoja de cálculo contable"
+        },
+        {
+          "category": "analytics",
+          "query": "analítica de ventas de productos",
+          "evidence": "ver qué productos se venden más"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.73,
+    "input_tokens": 1925,
+    "output_tokens": 198,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "academia-online",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "inicio de sesión de usuarios",
+          "evidence": "los alumnos entran con su cuenta"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos de video",
+          "evidence": "ven las clases grabadas que subimos"
+        },
+        {
+          "category": "payments",
+          "query": "cobros de suscripciones recurrentes",
+          "evidence": "pagan la mensualidad"
+        },
+        {
+          "category": "ai",
+          "query": "asistente conversacional con inteligencia artificial",
+          "evidence": "tienen un chatbot que responde dudas con nuestro material"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.12,
+    "input_tokens": 1915,
+    "output_tokens": 108,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "logistica-flota",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "messaging",
+          "query": "procesamiento de flujos de eventos",
+          "evidence": "Cada camión envía su ubicación cada pocos segundos; quieren procesar esos eventos en tiempo real"
+        },
+        {
+          "category": "database",
+          "query": "almacenamiento de datos geoespaciales",
+          "evidence": "guardarlos"
+        },
+        {
+          "category": "analytics",
+          "query": "visualizacion de tableros de negocio",
+          "evidence": "ver tableros de entregas por ciudad"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.33,
+    "input_tokens": 1923,
+    "output_tokens": 94,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "soporte-ia",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "ai",
+          "query": "servidor para modelos de lenguaje locales",
+          "evidence": "con un modelo que corra en sus propios servidores"
+        },
+        {
+          "category": "search",
+          "query": "búsqueda de texto en documentos",
+          "evidence": "un buscador para su centro de ayuda"
+        },
+        {
+          "category": "observability",
+          "query": "monitoreo de rendimiento y errores",
+          "evidence": "saber cuánto tarda y cuántas veces falla el asistente"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.43,
+    "input_tokens": 1923,
+    "output_tokens": 155,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "periodico-digital",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "cms",
+          "query": "edición sencilla de contenidos periodísticos",
+          "evidence": "que los periodistas publiquen desde un editor sencillo"
+        },
+        {
+          "category": "frontend",
+          "query": "construcción de sitio web rápido",
+          "evidence": "un sitio web muy rápido"
+        },
+        {
+          "category": "communication",
+          "query": "envío masivo de correo electrónico",
+          "evidence": "enviar el boletín diario por correo"
+        },
+        {
+          "category": "analytics",
+          "query": "medición de lectura de notas",
+          "evidence": "saber qué notas se leen más"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.38,
+    "input_tokens": 1913,
+    "output_tokens": 190,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "pantalla-saas-largo",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "autenticacion de usuarios mediante OIDC y RBAC",
+          "evidence": "SSO mediante OIDC y RBAC por organización"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.06,
+    "input_tokens": 1898,
+    "output_tokens": 71,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "pantalla-rag-largo",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "search",
+          "query": "búsqueda híbrida y vectorial de texto",
+          "evidence": "búsqueda híbrida"
+        },
+        {
+          "category": "auth",
+          "query": "control de acceso y permisos por documento",
+          "evidence": "permisos por documento"
+        },
+        {
+          "category": "ai",
+          "query": "modelos de lenguaje e inferencia local",
+          "evidence": "modelos alojados en nuestra infraestructura"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.08,
+    "input_tokens": 1898,
+    "output_tokens": 145,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "pantalla-api-largo",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "gestión de base de datos relacional",
+          "evidence": "PostgreSQL"
+        },
+        {
+          "category": "cache",
+          "query": "caché distribuida en memoria",
+          "evidence": "caché distribuida"
+        },
+        {
+          "category": "infrastructure",
+          "query": "escalado horizontal y alta disponibilidad",
+          "evidence": "alta disponibilidad con PostgreSQL, caché distribuida y escalado horizontal"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.26,
+    "input_tokens": 1905,
+    "output_tokens": 143,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "pantalla-saas-corto",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "autenticacion y control de acceso por roles",
+          "evidence": "con autenticación y roles por organización."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.04,
+    "input_tokens": 1891,
+    "output_tokens": 66,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "pantalla-rag-corto",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "ai",
+          "query": "recuperacion de informacion y generacion aumentada",
+          "evidence": "RAG privado para consultar documentos"
+        },
+        {
+          "category": "auth",
+          "query": "gestion de identidad y control de acceso",
+          "evidence": "con permisos de acceso"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.09,
+    "input_tokens": 1890,
+    "output_tokens": 103,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "pantalla-api-corto",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "backend",
+          "query": "construccion de api web escalable",
+          "evidence": "Diseña una API"
+        },
+        {
+          "category": "cache",
+          "query": "almacenamiento temporal en memoria",
+          "evidence": "con caché"
+        },
+        {
+          "category": "infrastructure",
+          "query": "escalado horizontal de contenedores",
+          "evidence": "y escalado horizontal"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.12,
+    "input_tokens": 1890,
+    "output_tokens": 135,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "pantalla-eventos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "messaging",
+          "query": "procesamiento asíncrono basado en eventos",
+          "evidence": "arquitectura orientada a eventos con colas"
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento y cobro de pagos",
+          "evidence": "procesar pagos"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.22,
+    "input_tokens": 1899,
+    "output_tokens": 106,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "pantalla-observabilidad",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "observability",
+          "query": "recoleccion y visualizacion de metricas logs y trazas",
+          "evidence": "Define un stack de observabilidad con métricas, logs y trazas distribuidas"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.43,
+    "input_tokens": 1899,
+    "output_tokens": 79,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "una-busqueda",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "search",
+          "query": "búsqueda tolerante a errores de escritura",
+          "evidence": "buscador de productos que encuentre resultados aunque el cliente escriba mal"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 0.93,
+    "input_tokens": 1896,
+    "output_tokens": 70,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "una-pagos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "payments",
+          "query": "cobro de suscripciones recurrentes",
+          "evidence": "cobrar suscripciones mensuales a los clientes"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.12,
+    "input_tokens": 1889,
+    "output_tokens": 64,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "vago-mejorar-negocio",
+    "error": null,
+    "data": {
+      "needs": [],
+      "clarification_questions": [
+        "¿A qué se dedica tu negocio y qué procesos actuales te gustaría mejorar o automatizar?",
+        "¿Qué tipo de usuarios utilizarán el sistema (clientes, empleados, proveedores) y qué funciones principales necesitan realizar?",
+        "¿Ya cuentas con algún sistema o software funcionando actualmente?"
+      ]
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.2,
+    "input_tokens": 1892,
+    "output_tokens": 82,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "vago-startup",
+    "error": null,
+    "data": {
+      "needs": [],
+      "clarification_questions": [
+        "¿Qué tipo de producto o servicio principal planeas ofrecer con tu startup?",
+        "¿Qué funcionalidades clave necesitas que tenga el sistema en su primera versión?",
+        "¿Tienes experiencia previa con algún lenguaje de programación o plataforma tecnológica?"
+      ]
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.12,
+    "input_tokens": 1892,
+    "output_tokens": 72,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "clinica-citas",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "gestion de identidad de usuarios",
+          "evidence": "reserven citas en línea con su cuenta"
+        },
+        {
+          "category": "communication",
+          "query": "envio de mensajes a usuarios",
+          "evidence": "reciban recordatorios por WhatsApp o correo"
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de cobros en linea",
+          "evidence": "paguen un abono al reservar"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.24,
+    "input_tokens": 1917,
+    "output_tokens": 146,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "tienda-ropa",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "search",
+          "query": "búsqueda de texto con tolerancia a errores",
+          "evidence": "un buscador que encuentre productos aunque el cliente escriba mal"
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos con tarjeta y transferencias",
+          "evidence": "pagos con tarjeta y PSE"
+        },
+        {
+          "category": "automation",
+          "query": "automatización de registro de ventas en hojas de cálculo",
+          "evidence": "que cada venta pase sola a nuestra hoja de cálculo contable"
+        },
+        {
+          "category": "analytics",
+          "query": "analítica de ventas y productos populares",
+          "evidence": "ver qué productos se venden más"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.25,
+    "input_tokens": 1925,
+    "output_tokens": 203,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "academia-online",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "gestion de cuentas de usuario",
+          "evidence": "los alumnos entran con su cuenta"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos de video",
+          "evidence": "ven las clases grabadas que subimos"
+        },
+        {
+          "category": "payments",
+          "query": "cobro de suscripciones mensuales",
+          "evidence": "pagan la mensualidad"
+        },
+        {
+          "category": "ai",
+          "query": "asistente conversacional con inteligencia artificial",
+          "evidence": "tienen un chatbot que responde dudas con nuestro material"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.17,
+    "input_tokens": 1915,
+    "output_tokens": 107,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "logistica-flota",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "almacenamiento de datos geoespaciales y eventos",
+          "evidence": "guardarlos"
+        },
+        {
+          "category": "analytics",
+          "query": "visualización de datos en tableros de control",
+          "evidence": "ver tableros de entregas por ciudad"
+        },
+        {
+          "category": "messaging",
+          "query": "procesamiento de flujos de eventos en tiempo real",
+          "evidence": "procesar esos eventos en tiempo real"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.33,
+    "input_tokens": 1923,
+    "output_tokens": 155,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "soporte-ia",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "ai",
+          "query": "ejecucion local de modelos de inteligencia artificial",
+          "evidence": "con un modelo que corra en sus propios servidores"
+        },
+        {
+          "category": "search",
+          "query": "buscador de texto para centro de ayuda",
+          "evidence": "un buscador para su centro de ayuda"
+        },
+        {
+          "category": "observability",
+          "query": "monitoreo de rendimiento y errores de aplicacion",
+          "evidence": "saber cuánto tarda y cuántas veces falla el asistente"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.32,
+    "input_tokens": 1923,
+    "output_tokens": 160,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "periodico-digital",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "cms",
+          "query": "gestion de contenido editorial",
+          "evidence": "que los periodistas publiquen desde un editor sencillo"
+        },
+        {
+          "category": "frontend",
+          "query": "construccion de interfaz web rapida",
+          "evidence": "un sitio web muy rápido"
+        },
+        {
+          "category": "communication",
+          "query": "envio masivo de correos",
+          "evidence": "enviar el boletín diario por correo"
+        },
+        {
+          "category": "analytics",
+          "query": "analitica de uso de contenido",
+          "evidence": "saber qué notas se leen más"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.32,
+    "input_tokens": 1913,
+    "output_tokens": 189,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "pantalla-saas-largo",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "autenticación federada y control de acceso basado en roles",
+          "evidence": "SSO mediante OIDC y RBAC por organización"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.02,
+    "input_tokens": 1898,
+    "output_tokens": 43,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "pantalla-rag-largo",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "ai",
+          "query": "inferencia de modelos de inteligencia artificial",
+          "evidence": "modelos alojados en nuestra infraestructura"
+        },
+        {
+          "category": "search",
+          "query": "búsqueda híbrida de texto y vectores",
+          "evidence": "búsqueda híbrida"
+        },
+        {
+          "category": "auth",
+          "query": "control de acceso y permisos por documento",
+          "evidence": "permisos por documento"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.22,
+    "input_tokens": 1898,
+    "output_tokens": 144,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "pantalla-api-largo",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "gestión de base de datos relacional",
+          "evidence": "PostgreSQL"
+        },
+        {
+          "category": "cache",
+          "query": "caché distribuida en memoria",
+          "evidence": "caché distribuida"
+        },
+        {
+          "category": "backend",
+          "query": "desarrollo de servicios de API",
+          "evidence": "API de alta disponibilidad"
+        },
+        {
+          "category": "infrastructure",
+          "query": "orquestación y escalado de contenedores",
+          "evidence": "escalado horizontal para 10.000 solicitudes/s"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.33,
+    "input_tokens": 1905,
+    "output_tokens": 187,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "pantalla-saas-corto",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "autenticación y gestión de roles",
+          "evidence": "con autenticación y roles por organización"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.07,
+    "input_tokens": 1891,
+    "output_tokens": 63,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "pantalla-rag-corto",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "ai",
+          "query": "recuperación de información aumentada por generación",
+          "evidence": "RAG privado para consultar documentos"
+        },
+        {
+          "category": "search",
+          "query": "búsqueda semántica de texto vectorial",
+          "evidence": "consultar documentos"
+        },
+        {
+          "category": "auth",
+          "query": "gestión de permisos de acceso",
+          "evidence": "con permisos de acceso"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.12,
+    "input_tokens": 1890,
+    "output_tokens": 140,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "pantalla-api-corto",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "backend",
+          "query": "construcción de API de alta disponibilidad",
+          "evidence": "Diseña una API de alta disponibilidad"
+        },
+        {
+          "category": "cache",
+          "query": "almacenamiento en caché en memoria",
+          "evidence": "con caché"
+        },
+        {
+          "category": "infrastructure",
+          "query": "escalado horizontal de infraestructura",
+          "evidence": "escalado horizontal"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.05,
+    "input_tokens": 1890,
+    "output_tokens": 72,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "pantalla-eventos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "messaging",
+          "query": "procesamiento asíncrono basado en colas",
+          "evidence": "arquitectura orientada a eventos con colas, reintentos e idempotencia"
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento y cobros en línea",
+          "evidence": "procesar pagos"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.13,
+    "input_tokens": 1899,
+    "output_tokens": 113,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "pantalla-observabilidad",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "observability",
+          "query": "recolección de métricas, logs y trazas",
+          "evidence": "un stack de observabilidad con métricas, logs y trazas distribuidas"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.22,
+    "input_tokens": 1899,
+    "output_tokens": 76,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "una-busqueda",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "search",
+          "query": "búsqueda tolerante a errores de escritura",
+          "evidence": "buscador de productos que encuentre resultados aunque el cliente escriba mal"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.23,
+    "input_tokens": 1896,
+    "output_tokens": 70,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "una-pagos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "payments",
+          "query": "cobro de suscripciones mensuales",
+          "evidence": "cobrar suscripciones mensuales a los clientes"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.12,
+    "input_tokens": 1889,
+    "output_tokens": 63,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "vago-mejorar-negocio",
+    "error": null,
+    "data": {
+      "needs": [],
+      "clarification_questions": [
+        "¿A qué se dedica tu negocio y qué procesos actuales te gustaría mejorar o automatizar?",
+        "¿Qué tipo de usuarios utilizarán el sistema (clientes, empleados, proveedores) y qué funciones principales necesitan realizar?",
+        "¿Ya cuentas con algún software, base de datos o sistema que debamos integrar?"
+      ]
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 3.57,
+    "input_tokens": 1892,
+    "output_tokens": 88,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 2,
+    "case": "vago-startup",
+    "error": null,
+    "data": {
+      "needs": [],
+      "clarification_questions": [
+        "¿Qué tipo de producto o servicio principal planeas ofrecer con tu startup?",
+        "¿Qué funcionalidades clave necesitas que tenga tu sistema en esta primera etapa?",
+        "¿Cuentas con preferencia por algún lenguaje de programación o entorno técnico en particular?"
+      ]
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.39,
+    "input_tokens": 1892,
+    "output_tokens": 76,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "clinica-citas",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "gestion de cuentas de usuario",
+          "evidence": "con su cuenta"
+        },
+        {
+          "category": "payments",
+          "query": "cobro de abonos en linea",
+          "evidence": "paguen un abono al reservar"
+        },
+        {
+          "category": "communication",
+          "query": "envio de notificaciones por canales digitales",
+          "evidence": "reciban recordatorios por WhatsApp o correo"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.16,
+    "input_tokens": 1917,
+    "output_tokens": 78,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "tienda-ropa",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "search",
+          "query": "búsqueda tolerante a errores ortográficos",
+          "evidence": "un buscador que encuentre productos aunque el cliente escriba mal"
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento de pagos con tarjeta",
+          "evidence": "pagos con tarjeta y PSE"
+        },
+        {
+          "category": "data-processing",
+          "query": "automatización de transferencia de datos",
+          "evidence": "que cada venta pase sola a nuestra hoja de cálculo contable"
+        },
+        {
+          "category": "analytics",
+          "query": "analítica de ventas y productos populares",
+          "evidence": "ver qué productos se venden más"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.63,
+    "input_tokens": 1925,
+    "output_tokens": 198,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "academia-online",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "gestion de identidad y acceso de usuarios",
+          "evidence": "los alumnos entran con su cuenta"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos multimedia",
+          "evidence": "ven las clases grabadas que subimos"
+        },
+        {
+          "category": "payments",
+          "query": "cobros recurrentes de mensualidades",
+          "evidence": "pagan la mensualidad"
+        },
+        {
+          "category": "ai",
+          "query": "asistente conversacional basado en modelos",
+          "evidence": "tienen un chatbot que responde dudas con nuestro material"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.38,
+    "input_tokens": 1915,
+    "output_tokens": 192,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "logistica-flota",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "messaging",
+          "query": "procesamiento de eventos en tiempo real",
+          "evidence": "quieren procesar esos eventos en tiempo real"
+        },
+        {
+          "category": "database",
+          "query": "almacenamiento de datos de ubicación",
+          "evidence": "guardarlos"
+        },
+        {
+          "category": "analytics",
+          "query": "visualización de tableros de entregas",
+          "evidence": "ver tableros de entregas por ciudad"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.17,
+    "input_tokens": 1923,
+    "output_tokens": 84,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "soporte-ia",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "search",
+          "query": "b&#250;squeda de texto en documentos",
+          "evidence": "un buscador para su centro de ayuda"
+        },
+        {
+          "category": "ai",
+          "query": "inferencia de modelos de lenguaje local",
+          "evidence": "un modelo que corra en sus propios servidores"
+        },
+        {
+          "category": "observability",
+          "query": "monitoreo de rendimiento de aplicaciones",
+          "evidence": "saber qu&#233; tanto tarda y cu&#225;ntas veces falla el asistente"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.22,
+    "input_tokens": 1923,
+    "output_tokens": 124,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "periodico-digital",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "cms",
+          "query": "gestion de contenido editorial",
+          "evidence": "que los periodistas publiquen desde un editor sencillo"
+        },
+        {
+          "category": "frontend",
+          "query": "desarrollo de interfaz web rapida",
+          "evidence": "un sitio web muy rápido"
+        },
+        {
+          "category": "communication",
+          "query": "envio masivo de correos",
+          "evidence": "enviar el boletín diario por correo"
+        },
+        {
+          "category": "analytics",
+          "query": "analitica de lectura de contenido",
+          "evidence": "saber qué notas se leen más"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.32,
+    "input_tokens": 1913,
+    "output_tokens": 190,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "pantalla-saas-largo",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "autenticación de usuarios y control de acceso",
+          "evidence": "SSO mediante OIDC y RBAC por organización"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.02,
+    "input_tokens": 1898,
+    "output_tokens": 69,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "pantalla-rag-largo",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "search",
+          "query": "búsqueda híbrida de texto y vectores",
+          "evidence": "búsqueda híbrida"
+        },
+        {
+          "category": "auth",
+          "query": "gestión de permisos por documento",
+          "evidence": "permisos por documento"
+        },
+        {
+          "category": "ai",
+          "query": "ejecución local de modelos inteligentes",
+          "evidence": "modelos alojados en nuestra infraestructura"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.22,
+    "input_tokens": 1898,
+    "output_tokens": 143,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "pantalla-api-largo",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "database",
+          "query": "gestión de base de datos relacional",
+          "evidence": "PostgreSQL"
+        },
+        {
+          "category": "cache",
+          "query": "almacenamiento en caché distribuida en memoria",
+          "evidence": "caché distribuida"
+        },
+        {
+          "category": "infrastructure",
+          "query": "escalado horizontal y alta disponibilidad",
+          "evidence": "alta disponibilidad con ... y escalado horizontal"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.22,
+    "input_tokens": 1905,
+    "output_tokens": 143,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "pantalla-saas-corto",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "auth",
+          "query": "gestión de identidad y control de acceso basado en roles",
+          "evidence": "con autenticación y roles por organización"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.12,
+    "input_tokens": 1891,
+    "output_tokens": 67,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "pantalla-rag-corto",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "ai",
+          "query": "recuperacion y generacion aumentada de texto",
+          "evidence": "RAG privado"
+        },
+        {
+          "category": "storage",
+          "query": "almacenamiento de archivos y documentos",
+          "evidence": "consultar documentos"
+        },
+        {
+          "category": "auth",
+          "query": "control de acceso y permisos",
+          "evidence": "con permisos de acceso"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.22,
+    "input_tokens": 1890,
+    "output_tokens": 137,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "pantalla-api-corto",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "backend",
+          "query": "construccion de la logica del servidor",
+          "evidence": "Diseña una API"
+        },
+        {
+          "category": "cache",
+          "query": "almacenamiento temporal en memoria",
+          "evidence": "con caché"
+        },
+        {
+          "category": "infrastructure",
+          "query": "escalado horizontal y alta disponibilidad",
+          "evidence": "de alta disponibilidad con caché y escalado horizontal."
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.22,
+    "input_tokens": 1890,
+    "output_tokens": 141,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "pantalla-eventos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "messaging",
+          "query": "procesamiento asíncrono basado en colas",
+          "evidence": "arquitectura orientada a eventos con colas, reintentos e idempotencia"
+        },
+        {
+          "category": "payments",
+          "query": "procesamiento y gestión de pagos",
+          "evidence": "procesar pagos"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.32,
+    "input_tokens": 1899,
+    "output_tokens": 112,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "pantalla-observabilidad",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "observability",
+          "query": "recoleccion de metricas logs y trazas distribuidas",
+          "evidence": "stack de observabilidad con métricas, logs y trazas distribuidas"
+        },
+        {
+          "category": "infrastructure",
+          "query": "orquestacion de contenedores",
+          "evidence": "microservicios en Kubernetes"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.03,
+    "input_tokens": 1899,
+    "output_tokens": 68,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "una-busqueda",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "search",
+          "query": "búsqueda tolerante a errores ortográficos",
+          "evidence": "un buscador de productos que encuentre resultados aunque el cliente escriba mal"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.32,
+    "input_tokens": 1896,
+    "output_tokens": 71,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "una-pagos",
+    "error": null,
+    "data": {
+      "needs": [
+        {
+          "category": "payments",
+          "query": "cobro de suscripciones recurrentes",
+          "evidence": "cobrar suscripciones mensuales a los clientes"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.02,
+    "input_tokens": 1889,
+    "output_tokens": 64,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "vago-mejorar-negocio",
+    "error": null,
+    "data": {
+      "needs": [],
+      "clarification_questions": [
+        "¿A qué se dedica tu negocio y qué procesos actuales te gustaría mejorar?",
+        "¿Qué tipo de herramientas o software utilizas actualmente en tu día a día?",
+        "¿Qué objetivos específicos buscas lograr con esta modernización tecnológica?"
+      ]
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 3.34,
+    "input_tokens": 1892,
+    "output_tokens": 73,
+    "waited": 0.0
+  },
+  {
+    "provider": "gemini",
+    "run": 3,
+    "case": "vago-startup",
+    "error": null,
+    "data": {
+      "needs": [],
+      "clarification_questions": [
+        "¿De qué trata tu startup y qué problema resuelve?",
+        "¿Qué funciones principales tendrá la primera versión de tu aplicación?",
+        "¿Qué lenguajes o tecnologías prefieres utilizar o ya conoces?"
+      ]
+    },
+    "problems_first": [],
+    "problems_final": [],
+    "seconds": 1.25,
+    "input_tokens": 1892,
+    "output_tokens": 68,
+    "waited": 0.0
+  }
+]

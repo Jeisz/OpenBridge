@@ -230,3 +230,4 @@ class RepoRepository:
                 .first()
             )
         return dict(row) if row is not None else None
+

@@ -112,6 +112,27 @@ necesita `html_url`, `open_issues_count` o `disabled` en las 100 filas, la
 ingesta debe poblarlos; si necesita `summary_es`/categorías/ideas en todo el
 catálogo, la IA debe ejecutarse. Ninguna de las dos cosas es parte de esta tarea.
 
+### Campos del contrato que no existen en la base
+
+| Campo | Estado real | Respuesta de la API |
+| --- | --- | --- |
+| `is_maintained` | no hay columna en `public.catalog_repositories` ni DDL aplicado en `main` | `null` siempre |
+| `health_score` | no hay columna ni fórmula acordada | `null` siempre |
+
+La API no calcula ninguno de los dos: no se inventan valores. Cuando el equipo de
+datos cree `is_maintained` (hay una propuesta de DDL sin ejecutar) y Jeison
+entregue la fórmula de `health_score`, sólo hay que añadirlos al `SELECT`: el
+contrato ya los admite (`bool | None` y `float | None` entre 0 y 100).
+
+### Filas que la API no puede servir
+
+`archived` y `pushed_at` son obligatorios en `Repo` v1.2 y el frontend los valida
+en tiempo de ejecución (`typeof archived === 'boolean'` y `Date.parse(pushed_at)`
+finito). Si la ingesta deja NULL en cualquiera de los dos, `GET /repos` y la
+ficha responden **503 `catalog_unavailable`** en lugar de inventar `false` o una
+fecha. Hoy no hay filas así (`archived`: 0 NULL), pero la ingesta debe garantizar
+ambos campos.
+
 ## 5. Cuando se resuelva: cómo se configura
 
 ```ini

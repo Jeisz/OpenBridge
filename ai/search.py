@@ -5,7 +5,7 @@ from collections.abc import Collection
 import numpy as np
 from pydantic import BaseModel
 
-from ai.catalog import load_categories, load_repos
+from ai.catalog import DEFAULT_SOURCE, Source, load_categories, load_repos
 from shared.contracts.repo import Category, Repo
 
 # Topics de ruido que no describen qué hace un repo: campañas, etiquetas
@@ -72,11 +72,11 @@ class SearchIndex:
         self.vectors = vectors
 
     @classmethod
-    def build(cls) -> "SearchIndex":
-        """Carga el catálogo y calcula sus vectores con el modelo"""
-        from ai import embeddings   # Se importa aqui por torch
+    def build(cls, source: Source = DEFAULT_SOURCE) -> "SearchIndex":
+        """Carga el catálogo del origen elegido y calcula sus vectores con el modelo."""
+        from ai import embeddings   # Se importa aquí por torch
 
-        repos = load_repos()
+        repos = load_repos(source)
         categories = load_categories()
         texts = [build_embedding_text(r, categories) for r in repos]
         return cls(repos, embeddings.embed_documents(texts))
@@ -125,8 +125,9 @@ def _passes(repo: Repo,
             min_health: float | None,
             categories: Collection[str] | None,) -> bool:
     """True si el repo pasa todos los filtros"""
-    if repo.archived:
-        return False    # repo archivado no se recomienda
+    if repo.archived or repo.disabled:
+        return False    # archivado o deshabilitado por GitHub: no se recomienda nunca.
+                        # disabled = None (sin dato) no excluye.
     if licenses is not None and repo.license_spdx_id not in licenses:
         return False    # NOASSERTION o None no confirman ninguna licencia.
     if min_health is not None and repo.health_score is not None and repo.health_score < min_health:

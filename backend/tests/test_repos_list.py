@@ -73,6 +73,23 @@ def test_empty_result_is_an_empty_array_with_zero_totals():
     }
 
 
+def test_page_beyond_the_last_one_is_empty_but_keeps_the_real_totals():
+    """Pedir una página que no existe no es un error: `[]` con los totales reales."""
+    repository = FakeRepository([], total=12)
+    with build_client(repository) as client:
+        response = client.get("/repos", params={"page": 5, "page_size": 10})
+
+    assert response.status_code == 200
+    assert response.json() == []
+    assert repository.list_calls[0]["offset"] == 40
+    assert _pagination(response) == {
+        "total": 12,
+        "total_pages": 2,
+        "page": 5,
+        "page_size": 10,
+    }
+
+
 def test_list_does_not_expose_columns_it_does_not_query():
     repository = FakeRepository([list_row()])
     with build_client(repository) as client:

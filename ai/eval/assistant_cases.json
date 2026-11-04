@@ -1,0 +1,192 @@
+{
+  "version": 1,
+  "catalog_taken_at": "2026-10-29T20:42:17+00:00",
+  "cases": [
+    {
+      "id": "clinica-citas",
+      "query": "Mi cliente es una red de clínicas odontológicas. Quieren que los pacientes reserven citas en línea con su cuenta, reciban recordatorios por WhatsApp o correo y paguen un abono al reservar.",
+      "expected_status": "no_evidence",
+      "needs": [
+        {"category": "auth", "acceptable": [], "note": "\"Con su cuenta\". El catálogo no tiene repos de inicio de sesión de usuarios (vault guarda secretos)."},
+        {"category": "communication", "acceptable": [], "note": "\"Recordatorios por WhatsApp o correo\". Sin repos de mensajería con clientes (alertmanager solo envía alertas de monitoreo)."},
+        {"category": "payments", "acceptable": [], "note": "\"Paguen un abono\". El catálogo no tiene repos de pagos."}
+      ],
+      "note": "Negocio de varias necesidades donde ninguna tiene evidencia: debería responder sin evidencia y no con un mapa vacío. La reserva de citas es parte de la app del cliente."
+    },
+    {
+      "id": "tienda-ropa",
+      "query": "Tenemos una tienda de ropa y queremos vender en línea: un buscador que encuentre productos aunque el cliente escriba mal, pagos con tarjeta y PSE, que cada venta pase sola a nuestra hoja de cálculo contable y ver qué productos se venden más.",
+      "expected_status": "ok",
+      "needs": [
+        {"category": "search", "acceptable": ["opensearch-project/OpenSearch"], "note": "\"Un buscador\". OpenSearch: \"search engine\", topics search y search-engine. Los datos del catálogo no confirman tolerancia a errores de escritura."},
+        {"category": "payments", "acceptable": [], "note": "\"Pagos con tarjeta y PSE\". El catálogo no tiene repos de pagos."},
+        {"category": "automation", "acceptable": [], "note": "\"Cada venta pase sola a la hoja de cálculo\": flujo entre aplicaciones. ansible automatiza servidores; airflow y prefect son pipelines de datos."},
+        {"category": "analytics", "acceptable": ["grafana/grafana"], "note": "\"Ver qué productos se venden más\": tableros sobre datos propios. grafana: topics business-intelligence, dashboard, data-visualization, postgres, mysql."}
+      ],
+      "note": "Negocio de 4 necesidades con dos limitaciones: mapa con buscador y tableros, y pagos y automatización en limitaciones."
+    },
+    {
+      "id": "academia-online",
+      "query": "Una academia de inglés en línea: los alumnos entran con su cuenta, ven las clases grabadas que subimos, pagan la mensualidad y tienen un chatbot que responde dudas con nuestro material.",
+      "expected_status": "ok",
+      "needs": [
+        {"category": "auth", "acceptable": [], "note": "\"Entran con su cuenta\". Sin repos de inicio de sesión de usuarios en el catálogo."},
+        {"category": "storage", "acceptable": [], "note": "\"Clases grabadas que subimos\": guardar videos. El catálogo no tiene repos de almacenamiento de archivos."},
+        {"category": "payments", "acceptable": [], "note": "\"Pagan la mensualidad\". El catálogo no tiene repos de pagos."},
+        {"category": "ai", "acceptable": ["run-llama/llama_index", "langchain-ai/langchain"], "note": "\"Chatbot que responde con nuestro material\": preguntas sobre documentos propios. llama_index: \"document processing platform for AI\". langchain: \"agent engineering platform\", topics ai-agents."}
+      ],
+      "note": "Negocio de 4 necesidades con una sola cubierta: mapa pequeño con tres limitaciones."
+    },
+    {
+      "id": "logistica-flota",
+      "query": "Mi cliente es una empresa de logística con 200 camiones. Cada camión envía su ubicación cada pocos segundos; quieren procesar esos eventos en tiempo real, guardarlos y ver tableros de entregas por ciudad.",
+      "expected_status": "ok",
+      "quick_set": true,
+      "needs": [
+        {"category": "messaging", "acceptable": ["apache/kafka"], "note": "\"Envía su ubicación cada pocos segundos\": recibir un flujo continuo de eventos. kafka: \"distributed event streaming platform\"."},
+        {"category": "data-processing", "acceptable": ["apache/flink", "apache/beam"], "note": "\"Procesar esos eventos en tiempo real\". flink: \"stream processing framework\" (README). beam: \"unified programming model for Batch and Streaming\". spark fuera: su propósito principal es el análisis por lotes."},
+        {"category": "database", "acceptable": ["ClickHouse/ClickHouse"], "note": "\"Guardarlos\" para analizarlos: muchos eventos que se consultan en tableros. ClickHouse: \"real-time analytics database\", topics olap y self-hosted."},
+        {"category": "analytics", "acceptable": ["grafana/grafana"], "note": "\"Tableros de entregas por ciudad\". grafana: topics dashboard, data-visualization, business-intelligence."}
+      ],
+      "note": "Negocio de 4 necesidades, todas con evidencia: mapa completo sin limitaciones."
+    },
+    {
+      "id": "soporte-ia",
+      "query": "Una empresa de software quiere un asistente que responda a sus clientes usando su documentación, con un modelo que corra en sus propios servidores, un buscador para su centro de ayuda y saber cuánto tarda y cuántas veces falla el asistente.",
+      "expected_status": "ok",
+      "needs": [
+        {"category": "ai", "acceptable": ["run-llama/llama_index", "ollama/ollama", "vllm-project/vllm"], "note": "\"Asistente con su documentación\" y \"modelo en sus propios servidores\". llama_index: documentos para IA. ollama: correr modelos propios. vllm: \"inference and serving engine for LLMs\"."},
+        {"category": "search", "acceptable": ["opensearch-project/OpenSearch"], "note": "\"Buscador para su centro de ayuda\". OpenSearch: \"search engine\", topics search y search-engine."},
+        {"category": "observability", "acceptable": ["prometheus/prometheus", "grafana/grafana", "open-telemetry/opentelemetry-collector"], "note": "\"Cuánto tarda y cuántas veces falla\": métricas del servicio. prometheus: monitoring, metrics. grafana: observabilidad y tableros. opentelemetry-collector: metrics, observability."}
+      ],
+      "note": "Negocio de 3 necesidades, todas con evidencia."
+    },
+    {
+      "id": "periodico-digital",
+      "query": "Un periódico digital quiere que los periodistas publiquen desde un editor sencillo, un sitio web muy rápido, enviar el boletín diario por correo y saber qué notas se leen más.",
+      "expected_status": "ok",
+      "needs": [
+        {"category": "cms", "acceptable": [], "note": "\"Publiquen desde un editor sencillo\". El catálogo no tiene gestores de contenido."},
+        {"category": "frontend", "acceptable": ["withastro/astro", "vercel/next.js", "nuxt/nuxt"], "note": "\"Un sitio web muy rápido\": aquí el sitio es una necesidad en sí. astro: \"framework for content-driven websites\" (licencia: el README indica MIT). next.js y nuxt: frameworks web completos."},
+        {"category": "communication", "acceptable": [], "note": "\"Boletín diario por correo\". Sin repos de envío de correo a clientes."},
+        {"category": "analytics", "acceptable": [], "note": "\"Qué notas se leen más\": medir visitas. grafana muestra datos pero no los recoge; no hay herramientas de analítica web."}
+      ],
+      "note": "Negocio de 4 necesidades con tres limitaciones: sigue siendo ok porque una tiene evidencia."
+    },
+    {
+      "id": "pantalla-saas-largo",
+      "query": "Diseña un SaaS multi-tenant con aislamiento de datos, SSO mediante OIDC y RBAC por organización.",
+      "expected_status": "no_evidence",
+      "needs": [
+        {"category": "auth", "acceptable": [], "note": "\"SSO mediante OIDC y RBAC\". Sin repos de identidad y acceso en el catálogo."},
+        {"category": "database", "acceptable": [], "note": "\"Aislamiento de datos\" por cliente: base transaccional. El catálogo no tiene PostgreSQL ni MySQL; ClickHouse y DuckDB son analíticas."}
+      ],
+      "note": "Texto de ejemplo de la pantalla del asistente (versión larga del par saas)."
+    },
+    {
+      "id": "pantalla-rag-largo",
+      "query": "Diseña un RAG privado con búsqueda híbrida, permisos por documento y modelos alojados en nuestra infraestructura.",
+      "expected_status": "ok",
+      "needs": [
+        {"category": "ai", "acceptable": ["run-llama/llama_index", "langchain-ai/langchain", "ollama/ollama"], "note": "\"RAG privado\" y \"modelos alojados en nuestra infraestructura\". llama_index y langchain: armar el RAG. ollama: correr modelos propios."},
+        {"category": "search", "acceptable": ["opensearch-project/OpenSearch"], "note": "\"Búsqueda híbrida\". OpenSearch: \"search engine\". pgvector fuera: su licencia no se pudo confirmar en el README."},
+        {"category": "auth", "acceptable": [], "note": "\"Permisos por documento\". Sin repos de control de acceso en el catálogo."}
+      ],
+      "note": "Texto de ejemplo de la pantalla del asistente (versión larga del par rag)."
+    },
+    {
+      "id": "pantalla-api-largo",
+      "query": "Propón una API de alta disponibilidad con PostgreSQL, caché distribuida y escalado horizontal para 10.000 solicitudes/s.",
+      "expected_status": "ok",
+      "needs": [
+        {"category": "database", "acceptable": [], "note": "El usuario nombra PostgreSQL, que no está en el catálogo: debería decirlo en limitaciones, sin reemplazarlo en silencio por otra base."},
+        {"category": "cache", "acceptable": ["redis/redis"], "note": "\"Caché distribuida\". redis: topics cache, caching, in-memory. Licencia: el README indica que desde la 8.x se puede usar bajo AGPLv3."},
+        {"category": "infrastructure", "acceptable": ["kubernetes/kubernetes", "nginx/nginx", "traefik/traefik"], "note": "\"Alta disponibilidad y escalado horizontal\". kubernetes: \"container scheduling\". nginx: topic load-balancer. traefik: \"application proxy\", topics gateway, ingress."}
+      ],
+      "note": "Texto de ejemplo de la pantalla del asistente (versión larga del par api)."
+    },
+    {
+      "id": "pantalla-saas-corto",
+      "query": "Diseña un SaaS multiempresa con autenticación y roles por organización.",
+      "expected_status": "no_evidence",
+      "needs": [
+        {"category": "auth", "acceptable": [], "note": "\"Autenticación y roles\". Sin repos de identidad y acceso en el catálogo."}
+      ],
+      "note": "Botón de ejemplo de la pantalla del asistente (versión corta del par saas)."
+    },
+    {
+      "id": "pantalla-rag-corto",
+      "query": "Propón un RAG privado para consultar documentos con permisos de acceso.",
+      "expected_status": "ok",
+      "quick_set": true,
+      "needs": [
+        {"category": "ai", "acceptable": ["run-llama/llama_index", "langchain-ai/langchain", "ollama/ollama"], "note": "\"RAG privado para consultar documentos\". llama_index y langchain: armar el RAG. ollama: modelos propios."},
+        {"category": "auth", "acceptable": [], "note": "\"Permisos de acceso\". Sin repos de control de acceso en el catálogo."}
+      ],
+      "note": "Botón de ejemplo de la pantalla del asistente (versión corta del par rag): pedido corto con una limitación."
+    },
+    {
+      "id": "pantalla-api-corto",
+      "query": "Diseña una API de alta disponibilidad con caché y escalado horizontal.",
+      "expected_status": "ok",
+      "needs": [
+        {"category": "cache", "acceptable": ["redis/redis"], "note": "\"Caché\". redis: topics cache, caching. Licencia: el README indica que desde la 8.x se puede usar bajo AGPLv3."},
+        {"category": "infrastructure", "acceptable": ["kubernetes/kubernetes", "nginx/nginx", "traefik/traefik"], "note": "\"Alta disponibilidad y escalado horizontal\". kubernetes, nginx (load-balancer), traefik (proxy, ingress)."}
+      ],
+      "note": "Botón de ejemplo de la pantalla del asistente (versión corta del par api)."
+    },
+    {
+      "id": "pantalla-eventos",
+      "query": "Propón una arquitectura orientada a eventos con colas, reintentos e idempotencia para procesar pagos.",
+      "expected_status": "ok",
+      "needs": [
+        {"category": "messaging", "acceptable": ["apache/kafka", "celery/celery"], "note": "\"Colas y reintentos\". kafka: \"event streaming platform\". celery: \"Distributed Task Queue\", el README menciona reintentos automáticos; licencia: el README indica BSD."}
+      ],
+      "note": "Texto de ejemplo de la pantalla del asistente. Los pagos son el tema de la app, no una herramienta pedida."
+    },
+    {
+      "id": "pantalla-observabilidad",
+      "query": "Define un stack de observabilidad con métricas, logs y trazas distribuidas para microservicios en Kubernetes.",
+      "expected_status": "ok",
+      "quick_set": true,
+      "needs": [
+        {"category": "observability", "acceptable": ["open-telemetry/opentelemetry-collector", "jaegertracing/jaeger", "prometheus/prometheus"], "note": "\"Métricas, logs y trazas\". opentelemetry-collector: metrics, observability, telemetry. jaeger: \"Distributed Tracing Platform\". prometheus: monitoring, metrics."}
+      ],
+      "note": "Texto de ejemplo de la pantalla del asistente. Kubernetes es el entorno que ya tienen, no una necesidad."
+    },
+    {
+      "id": "una-busqueda",
+      "query": "Quiero agregar a mi sitio un buscador de productos que encuentre resultados aunque el cliente escriba mal.",
+      "expected_status": "ok",
+      "needs": [
+        {"category": "search", "acceptable": ["opensearch-project/OpenSearch"], "note": "OpenSearch: \"search engine\", topics search y search-engine. Los datos del catálogo no confirman tolerancia a errores de escritura."}
+      ],
+      "note": "Una sola necesidad con evidencia: mapa pequeño (la app del cliente + una herramienta)."
+    },
+    {
+      "id": "una-pagos",
+      "query": "Necesito cobrar suscripciones mensuales a los clientes de mi software.",
+      "expected_status": "no_evidence",
+      "quick_set": true,
+      "needs": [
+        {"category": "payments", "acceptable": [], "note": "El catálogo no tiene repos de pagos ni de facturación."}
+      ],
+      "note": "Una sola necesidad, clara, sin evidencia: sin evidencia y no una pregunta de aclaración."
+    },
+    {
+      "id": "vago-mejorar-negocio",
+      "query": "Quiero modernizar mi negocio con tecnología, ¿qué me recomiendas?",
+      "expected_status": "needs_clarification",
+      "needs": [],
+      "note": "No nombra ninguna necesidad concreta: el asistente debería preguntar antes de armar un mapa."
+    },
+    {
+      "id": "vago-startup",
+      "query": "Tengo una idea de startup y quiero saber qué tecnologías usar para empezar bien.",
+      "expected_status": "needs_clarification",
+      "quick_set": true,
+      "needs": [],
+      "note": "No dice qué hace la startup: el asistente debería preguntar antes de armar un mapa."
+    }
+  ]
+}

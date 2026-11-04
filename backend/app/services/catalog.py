@@ -288,3 +288,4 @@ class CatalogService:
             )
             return ideas[:MAX_INTEGRATION_IDEAS]
         return ideas
+

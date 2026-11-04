@@ -5,7 +5,9 @@
   contrato `shared.contracts.repo_detail.RepoDetail`.
 
 `CatalogRepo` es un superconjunto de `shared.contracts.repo.Repo`: añade las
-columnas que sólo existen en la ficha (`html_url`, `forks_count`, `disabled`).
+columnas que sólo existen en la tabla base (`name`, `html_url`, `forks_count`).
+`disabled` e `is_maintained` ya forman parte de `Repo` desde el contrato v1.2;
+la API sólo documenta cómo los rellena.
 Un repositorio que cumple `Repo` cumple `CatalogRepo`; el frontend ignora los
 campos extra.
 

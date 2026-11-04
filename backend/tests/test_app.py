@@ -57,3 +57,4 @@ def test_cors_exposes_the_pagination_headers():
         response = client.get("/health", headers={"Origin": "http://localhost:4173"})
 
     assert "x-total-count" in response.headers["access-control-expose-headers"].lower()
+

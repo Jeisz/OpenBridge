@@ -88,3 +88,4 @@ def register_exception_handlers(app: FastAPI) -> None:
             # Código del contrato del asistente, no el del catálogo.
             return _error(422, "invalid_query", _ASSISTANT_INVALID_QUERY)
         return _error(422, "invalid_request", _validation_message(first))
+

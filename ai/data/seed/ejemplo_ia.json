@@ -1,0 +1,389 @@
+{
+  "marker": "seed-ejemplo",
+  "note": "Datos de ejemplo para probar la API del catálogo y la ficha antes de que la IA genere los reales. Escritos desde el README de cada repo y revisados por una persona; no son salida del LLM. Antes de generar los datos reales, borrarlos con el script de limpieza. En categories, el orden importa: la primera es la principal.",
+  "repos": [
+    {
+      "github_id": 658928958,
+      "full_name": "ollama/ollama",
+      "summary_es": "Ejecuta modelos de lenguaje abiertos (Gemma, Qwen, DeepSeek y otros) en tu máquina o en la nube, con privacidad. Se usa desde la terminal, con una API REST local o con librerías para Python y JavaScript.",
+      "use_cases": [],
+      "categories": [
+        {
+          "category_id": "ai",
+          "assigned_by": "human"
+        }
+      ],
+      "ideas": [
+        {
+          "id": "seed-ollama-1",
+          "title": "Responder mensajes de chat desde tu backend con la API REST de Ollama",
+          "integration_type": "rest_api",
+          "summary": "Tu backend envía la conversación al endpoint /api/chat de Ollama, que corre en tu servidor, y recibe la respuesta del modelo en JSON. Con un modelo local, los mensajes no salen de tu infraestructura.",
+          "compatible_stack": [
+            "Backend con HTTP"
+          ],
+          "dependencies": [
+            "Ollama corriendo en el servidor (puerto 11434)",
+            "Un modelo disponible en Ollama (p. ej., gemma4)"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Mensaje del usuario en el chat de tu app"
+          ],
+          "snippet": "curl http://localhost:11434/api/chat -d '{\n  \"model\": \"gemma4\",\n  \"messages\": [{\n    \"role\": \"user\",\n    \"content\": \"Why is the sky blue?\"\n  }],\n  \"stream\": false\n}'",
+          "snippet_language": "shell",
+          "docs_url": "https://docs.ollama.com/api",
+          "generated_by": "human",
+          "reviewed_at": null,
+          "based_on_hash": "seed-ejemplo"
+        },
+        {
+          "id": "seed-ollama-2",
+          "title": "Usar un modelo local desde tu código con la librería oficial de Python o JavaScript",
+          "integration_type": "sdk",
+          "summary": "Instalas el paquete ollama (pip o npm), llamas a chat() con el modelo y los mensajes, y lees el texto en response.message.content. Evita escribir las llamadas HTTP a mano.",
+          "compatible_stack": [
+            "Python",
+            "JavaScript"
+          ],
+          "dependencies": [
+            "Paquete ollama (pip install ollama o npm i ollama)",
+            "Ollama corriendo con un modelo disponible"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Petición que necesita texto generado por el modelo"
+          ],
+          "snippet": "from ollama import chat\n\nresponse = chat(model='gemma4', messages=[\n  {\n    'role': 'user',\n    'content': 'Why is the sky blue?',\n  },\n])\nprint(response.message.content)",
+          "snippet_language": "python",
+          "docs_url": "https://github.com/ollama/ollama-python",
+          "generated_by": "human",
+          "reviewed_at": null,
+          "based_on_hash": "seed-ejemplo"
+        },
+        {
+          "id": "seed-ollama-3",
+          "title": "Desplegar Ollama como un contenedor más de tu infraestructura",
+          "integration_type": "docker",
+          "summary": "La imagen oficial ollama/ollama de Docker Hub corre Ollama como un servicio aparte; tus otros servicios consumen su API REST por la red interna.",
+          "compatible_stack": [
+            "Docker"
+          ],
+          "dependencies": [
+            "Docker"
+          ],
+          "difficulty": "low",
+          "triggers": [],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://hub.docker.com/r/ollama/ollama",
+          "generated_by": "human",
+          "reviewed_at": null,
+          "based_on_hash": "seed-ejemplo"
+        }
+      ]
+    },
+    {
+      "github_id": 156018,
+      "full_name": "redis/redis",
+      "summary_es": "Servidor de datos en memoria con latencia muy baja. Se usa como caché, almacén de sesiones, colas y mensajería, motor de búsqueda (también vectorial) y almacén clave-valor, de documentos JSON y de series de tiempo.",
+      "use_cases": [],
+      "categories": [
+        {
+          "category_id": "cache",
+          "assigned_by": "human"
+        },
+        {
+          "category_id": "database",
+          "assigned_by": "human"
+        }
+      ],
+      "ideas": [
+        {
+          "id": "seed-redis-1",
+          "title": "Caché con expiración delante de tu base de datos",
+          "integration_type": "sdk",
+          "summary": "Guardas en Redis, con un tiempo de expiración, el resultado de consultas lentas o repetidas y lo sirves desde memoria en las siguientes peticiones. Tu backend se conecta con la librería cliente de su lenguaje.",
+          "compatible_stack": [
+            "Python",
+            "JavaScript",
+            "Java",
+            "Go"
+          ],
+          "dependencies": [
+            "Instancia de Redis accesible desde el backend",
+            "Librería cliente de Redis (p. ej., redis-py o node-redis)"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Consulta repetida a la base de datos o a una API externa"
+          ],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://redis.io/docs/latest/develop/clients/",
+          "generated_by": "human",
+          "reviewed_at": null,
+          "based_on_hash": "seed-ejemplo"
+        },
+        {
+          "id": "seed-redis-2",
+          "title": "Levantar Redis con Docker para desarrollo",
+          "integration_type": "docker",
+          "summary": "Con la imagen oficial de Docker Hub tienes Redis escuchando en el puerto 6379 en un solo comando, sin compilarlo desde el código fuente.",
+          "compatible_stack": [
+            "Docker"
+          ],
+          "dependencies": [
+            "Docker"
+          ],
+          "difficulty": "low",
+          "triggers": [],
+          "snippet": "docker run -d -p 6379:6379 redis:latest",
+          "snippet_language": "shell",
+          "docs_url": "https://hub.docker.com/_/redis",
+          "generated_by": "human",
+          "reviewed_at": null,
+          "based_on_hash": "seed-ejemplo"
+        }
+      ]
+    },
+    {
+      "github_id": 138754790,
+      "full_name": "duckdb/duckdb",
+      "summary_es": "Base de datos analítica de alto rendimiento que corre dentro de tu aplicación, sin servidor aparte. Consulta con SQL archivos CSV, Parquet, JSON o Excel, locales o en la nube, y se conecta a PostgreSQL, MySQL o SQLite para cruzar datos.",
+      "use_cases": [],
+      "categories": [
+        {
+          "category_id": "database",
+          "assigned_by": "human"
+        },
+        {
+          "category_id": "analytics",
+          "assigned_by": "human"
+        }
+      ],
+      "ideas": [
+        {
+          "id": "seed-duckdb-1",
+          "title": "Consultar archivos CSV o Parquet con SQL dentro de tu aplicación",
+          "integration_type": "sdk",
+          "summary": "Con el cliente de DuckDB para tu lenguaje, tu app consulta con SQL un archivo CSV, Parquet o JSON con solo nombrarlo en el FROM, sin cargarlo antes en otra base ni levantar un servidor.",
+          "compatible_stack": [
+            "Python",
+            "R",
+            "Java",
+            "Go",
+            "Rust"
+          ],
+          "dependencies": [
+            "Cliente de DuckDB para tu lenguaje"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Carga de un archivo de datos para un reporte"
+          ],
+          "snippet": "SELECT * FROM 'myfile.csv';\nSELECT * FROM 'myfile.parquet';",
+          "snippet_language": "sql",
+          "docs_url": "https://duckdb.org/docs/current/data/csv/overview",
+          "generated_by": "human",
+          "reviewed_at": null,
+          "based_on_hash": "seed-ejemplo"
+        }
+      ]
+    },
+    {
+      "github_id": 359952601,
+      "full_name": "pgvector/pgvector",
+      "summary_es": "Extensión de PostgreSQL para búsqueda por similitud de vectores: guardas los vectores junto al resto de tus datos y buscas los vecinos más cercanos, exactos o aproximados, con SQL y desde cualquier lenguaje con cliente de Postgres.",
+      "use_cases": [],
+      "categories": [
+        {
+          "category_id": "search",
+          "assigned_by": "human"
+        }
+      ],
+      "ideas": [
+        {
+          "id": "seed-pgvector-1",
+          "title": "Búsqueda semántica sobre tus datos de PostgreSQL",
+          "integration_type": "sdk",
+          "summary": "Agregas una columna vector a tu tabla, guardas los embeddings de cada registro y ordenas por distancia (L2, coseno o producto interno) para traer los más parecidos a la consulta del usuario.",
+          "compatible_stack": [
+            "PostgreSQL"
+          ],
+          "dependencies": [
+            "PostgreSQL 13 o superior con la extensión vector",
+            "Embeddings calculados por tu app o por un modelo aparte"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Búsqueda del usuario por significado"
+          ],
+          "snippet": "CREATE EXTENSION vector;\n\nCREATE TABLE items (id bigserial PRIMARY KEY, embedding vector(3));\n\nINSERT INTO items (embedding) VALUES ('[1,2,3]'), ('[4,5,6]');\n\nSELECT * FROM items ORDER BY embedding <-> '[3,1,2]' LIMIT 5;",
+          "snippet_language": "sql",
+          "docs_url": "https://github.com/pgvector/pgvector#getting-started",
+          "generated_by": "human",
+          "reviewed_at": null,
+          "based_on_hash": "seed-ejemplo"
+        },
+        {
+          "id": "seed-pgvector-2",
+          "title": "Búsqueda híbrida: texto completo de PostgreSQL más vectores",
+          "integration_type": "sdk",
+          "summary": "Combinas la búsqueda de texto completo de PostgreSQL con la búsqueda por vectores y unes los dos rankings, por ejemplo con Reciprocal Rank Fusion o un cross-encoder.",
+          "compatible_stack": [
+            "PostgreSQL"
+          ],
+          "dependencies": [
+            "PostgreSQL 13 o superior con la extensión vector",
+            "Columna de texto preparada para búsqueda de texto completo"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Búsqueda del usuario que mezcla palabras exactas y significado"
+          ],
+          "snippet": "SELECT id, content FROM items, plainto_tsquery('hello search') query\n    WHERE textsearch @@ query ORDER BY ts_rank_cd(textsearch, query) DESC LIMIT 5;",
+          "snippet_language": "sql",
+          "docs_url": "https://github.com/pgvector/pgvector#hybrid-search",
+          "generated_by": "human",
+          "reviewed_at": null,
+          "based_on_hash": "seed-ejemplo"
+        }
+      ]
+    },
+    {
+      "github_id": 31288958,
+      "full_name": "hashicorp/vault",
+      "summary_es": "Gestiona secretos como claves de API, contraseñas y certificados con control de acceso estricto y registro de auditoría. Cifra los datos antes de guardarlos, genera credenciales temporales bajo demanda y las revoca al vencer.",
+      "use_cases": [],
+      "categories": [
+        {
+          "category_id": "auth",
+          "assigned_by": "human"
+        },
+        {
+          "category_id": "infrastructure",
+          "assigned_by": "human"
+        }
+      ],
+      "ideas": [
+        {
+          "id": "seed-vault-1",
+          "title": "Credenciales temporales para tu app con secretos dinámicos",
+          "integration_type": "sdk",
+          "summary": "En lugar de guardar claves fijas, tu app le pide a Vault credenciales cuando las necesita; Vault las genera con los permisos justos (por ejemplo, para un bucket de S3 o una base SQL) y las revoca al vencer su plazo.",
+          "compatible_stack": [
+            "AWS",
+            "SQL"
+          ],
+          "dependencies": [
+            "Servidor de Vault en funcionamiento",
+            "Vault configurado para generar credenciales de AWS o de tu base SQL"
+          ],
+          "difficulty": "high",
+          "triggers": [
+            "La app necesita acceder a la base de datos o a un bucket de S3"
+          ],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://github.com/hashicorp/vault-examples",
+          "generated_by": "human",
+          "reviewed_at": null,
+          "based_on_hash": "seed-ejemplo"
+        }
+      ]
+    },
+    {
+      "github_id": 15111821,
+      "full_name": "grafana/grafana",
+      "summary_es": "Plataforma de monitoreo y observabilidad: consulta, visualiza y crea alertas sobre tus métricas y logs, estén donde estén guardados. Arma tableros compartidos con tu equipo y avisa a Slack o PagerDuty cuando se cumple una regla de alerta.",
+      "use_cases": [],
+      "categories": [
+        {
+          "category_id": "observability",
+          "assigned_by": "human"
+        },
+        {
+          "category_id": "analytics",
+          "assigned_by": "human"
+        }
+      ],
+      "ideas": []
+    },
+    {
+      "github_id": 160919119,
+      "full_name": "fastapi/fastapi",
+      "summary_es": "Framework web de Python para construir APIs de alto rendimiento a partir de las anotaciones de tipos. Valida los datos de entrada, convierte las respuestas a JSON y genera documentación interactiva de la API de forma automática.",
+      "use_cases": [],
+      "categories": [
+        {
+          "category_id": "backend",
+          "assigned_by": "human"
+        }
+      ],
+      "ideas": [
+        {
+          "id": "seed-fastapi-1",
+          "title": "Construir la API REST de tu app en Python con validación automática",
+          "integration_type": "sdk",
+          "summary": "Declaras cada ruta como una función de Python con tipos; FastAPI valida los parámetros, responde en JSON y publica la documentación interactiva en /docs para que el frontend la consulte.",
+          "compatible_stack": [
+            "Python",
+            "Pydantic"
+          ],
+          "dependencies": [
+            "Paquete fastapi[standard] (con uv o pip)"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Petición HTTP del frontend o de otro servicio"
+          ],
+          "snippet": "from fastapi import FastAPI\n\napp = FastAPI()\n\n\n@app.get(\"/\")\ndef read_root():\n    return {\"Hello\": \"World\"}\n\n\n@app.get(\"/items/{item_id}\")\ndef read_item(item_id: int, q: str | None = None):\n    return {\"item_id\": item_id, \"q\": q}",
+          "snippet_language": "python",
+          "docs_url": "https://fastapi.tiangolo.com",
+          "generated_by": "human",
+          "reviewed_at": null,
+          "based_on_hash": "seed-ejemplo"
+        },
+        {
+          "id": "seed-fastapi-2",
+          "title": "Proteger las rutas de tu API con OAuth2 y tokens JWT",
+          "integration_type": "sdk",
+          "summary": "FastAPI trae soporte para seguridad y autenticación con OAuth2 y tokens JWT, además de autenticación HTTP básica, para que solo los usuarios autorizados lleguen a ciertas rutas.",
+          "compatible_stack": [
+            "Python",
+            "OAuth2",
+            "JWT"
+          ],
+          "dependencies": [
+            "API construida con FastAPI",
+            "Usuarios y emisión de tokens definidos en tu app"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Petición a una ruta que requiere usuario autenticado"
+          ],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://fastapi.tiangolo.com",
+          "generated_by": "human",
+          "reviewed_at": null,
+          "based_on_hash": "seed-ejemplo"
+        }
+      ]
+    },
+    {
+      "github_id": 53631945,
+      "full_name": "BurntSushi/ripgrep",
+      "summary_es": "Herramienta de línea de comandos que busca recursivamente un patrón (expresión regular) en los archivos de una carpeta. Respeta las reglas de .gitignore y omite archivos ocultos y binarios. Funciona en Windows, macOS y Linux.",
+      "use_cases": [],
+      "categories": [
+        {
+          "category_id": "dev-tools",
+          "assigned_by": "human"
+        }
+      ],
+      "ideas": []
+    }
+  ]
+}

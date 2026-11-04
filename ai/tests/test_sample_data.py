@@ -20,13 +20,13 @@ CATEGORIES_FILE = (
 @pytest.fixture(scope="module")
 def raw_repos() -> list[dict]:
     """Contenido de repos.json tal cual, sin validar."""
-    return load_raw()
+    return load_raw(source="sample")
 
 
 @pytest.fixture(scope="module")
 def repos() -> list[Repo]:
     """Los repos ya validados con su README."""
-    return load_repos()
+    return load_repos(source="sample")
 
 
 @pytest.fixture(scope="module")
@@ -38,7 +38,7 @@ def category_ids() -> set[str]:
 def test_datos_cumplen_el_contrato():
     # Si algún repo no cumple, load_repos lanza ValidationError y el test falla
     # mostrando todos los errores.
-    load_repos()
+    load_repos(source="sample")
 
 
 def test_claves_son_campos_del_contrato(raw_repos):
@@ -75,6 +75,12 @@ def test_categorias_existen(repos, category_ids):
     assert not desconocidas, f"Categorías que no están en categories.json: {sorted(desconocidas)}"
 
 
+def test_todos_tienen_readme(repos):
+    # En los datos de ejemplo todos los repos deben tener su README guardado.
+    sin_readme = [r.full_name for r in repos if not r.readme_text]
+    assert not sin_readme, f"Repos sin README en ai/data/readmes/: {sin_readme}"
+
+
 def test_cubre_las_seis_categorias_del_dataset_original(repos, category_ids):
     presentes = {a.category_id for r in repos for a in r.categories}
     # La taxonomía fija tiene 18 opciones; la muestra original cubre estas seis.
@@ -82,9 +88,3 @@ def test_cubre_las_seis_categorias_del_dataset_original(repos, category_ids):
     assert esperadas <= category_ids
     faltan = esperadas - presentes
     assert not faltan, f"Categorías sin ningún repo: {sorted(faltan)}"
-
-
-def test_todos_tienen_readme(repos):
-    # En los datos de ejemplo todos los repos deben tener su README guardado.
-    sin_readme = [r.full_name for r in repos if not r.readme_text]
-    assert not sin_readme, f"Repos sin README en ai/data/readmes/: {sin_readme}"

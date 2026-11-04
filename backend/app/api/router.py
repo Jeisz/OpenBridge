@@ -23,3 +23,4 @@ api_router.include_router(assistant.router)
 )
 def health() -> HealthResponse:
     return HealthResponse(status="ok")
+

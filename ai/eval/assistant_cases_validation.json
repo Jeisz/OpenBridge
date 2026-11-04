@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "catalog_taken_at": "2026-10-29T20:42:17+00:00",
+  "cases": [
+    {
+      "id": "inmobiliaria-portal",
+      "query": "Estamos construyendo el portal web de una inmobiliaria. Los clientes tienen que poder buscar propiedades escribiendo cosas como 'apartamento con balcón cerca del metro', y los agentes suben las fotos y los planos de cada inmueble.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "search",
+          "acceptable": ["opensearch-project/OpenSearch"],
+          "note": "\"Buscar propiedades escribiendo\": búsqueda de texto libre. pgvector no se acepta: GitHub no identifica su licencia y su README no la menciona."
+        },
+        {
+          "category": "storage",
+          "acceptable": [],
+          "note": "\"Suben las fotos y los planos\": guardar archivos. El catálogo no tiene almacenamiento de objetos."
+        }
+      ],
+      "note": "El usuario describe la app que construye (el portal): es su aplicación, no una necesidad de frontend o backend."
+    },
+    {
+      "id": "agencia-viajes-web",
+      "query": "Somos una agencia de viajes y vamos a rehacer nuestro sitio. Necesitamos un framework web para construir páginas de destinos que carguen muy rápido y se posicionen bien en Google.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "frontend",
+          "acceptable": ["vercel/next.js", "withastro/astro", "nuxt/nuxt"],
+          "note": "\"Un framework web para construir páginas\" rápidas y con buen posicionamiento. Astro: GitHub no identifica la licencia, su README declara licencia MIT."
+        }
+      ],
+      "note": "El usuario pide una herramienta para construir su sitio: el frontend sí es una necesidad."
+    },
+    {
+      "id": "cooperativa-api",
+      "query": "Somos dos desarrolladores de Python en una cooperativa agrícola. Queremos elegir un framework para la API que registra las entregas de café de cada productor, y una base de datos relacional para guardar esos registros.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "backend",
+          "acceptable": ["fastapi/fastapi", "django/django", "pallets/flask"],
+          "note": "\"Un framework para la API\", en Python."
+        },
+        {
+          "category": "database",
+          "acceptable": [],
+          "note": "\"Una base de datos relacional para guardar\": hace falta un motor. El catálogo solo tiene librerías para usar una base desde el código (sqlalchemy, sqlmodel, psycopg) y bases analíticas (duckdb, ClickHouse): parecidas, pero no guardan registros transaccionales."
+        }
+      ],
+      "note": "Pide herramientas para construir (el backend sí es una necesidad) y una necesidad con candidatos parecidos que no sirven: debería quedar sin caja."
+    },
+    {
+      "id": "colegio-avisos",
+      "query": "Un colegio quiere una aplicación donde los profesores registren la asistencia. Cada noche debe calcular el porcentaje de asistencia de cada estudiante y avisar por correo o SMS a los padres cuando baje del 80 %.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "data-processing",
+          "acceptable": ["apache/airflow", "PrefectHQ/prefect", "dagster-io/dagster"],
+          "note": "\"Cada noche debe calcular\": cálculo programado sobre los datos."
+        },
+        {
+          "category": "communication",
+          "acceptable": [],
+          "note": "\"Avisar por correo o SMS a los padres\": mensajes a personas. alertmanager solo envía alertas técnicas de monitoreo."
+        }
+      ],
+      "note": "La aplicación de asistencia es la app del colegio, no una necesidad de frontend o backend."
+    },
+    {
+      "id": "ong-voluntarios",
+      "query": "Una ONG de voluntariado quiere que sus voluntarios entren con su cuenta de Google y guardar los certificados escaneados de cada uno en PDF.",
+      "expected_status": "no_evidence",
+      "needs": [
+        {
+          "category": "auth",
+          "acceptable": [],
+          "note": "\"Entren con su cuenta de Google\": inicio de sesión de usuarios. vault gestiona secretos de sistemas, no el inicio de sesión de personas."
+        },
+        {
+          "category": "storage",
+          "acceptable": [],
+          "note": "\"Guardar los certificados escaneados\": archivos. El catálogo no tiene almacenamiento de objetos."
+        }
+      ],
+      "note": "Ninguna necesidad tiene herramientas en el catálogo: si algún candidato pasa el umbral, el asistente debería descartarlo."
+    }
+  ]
+}

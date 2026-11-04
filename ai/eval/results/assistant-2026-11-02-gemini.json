@@ -1,0 +1,537 @@
+[
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "logistica-flota",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "messaging",
+          "query": "procesamiento de flujos de eventos en tiempo real",
+          "evidence": "quieren procesar esos eventos en tiempo real"
+        },
+        {
+          "category": "database",
+          "query": "almacenamiento de datos geoespaciales",
+          "evidence": "guardarlos"
+        },
+        {
+          "category": "analytics",
+          "query": "creacion de tableros de control y analitica",
+          "evidence": "ver tableros de entregas por ciudad"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "messaging": [
+        [
+          "apache/kafka",
+          0.308
+        ],
+        [
+          "redis/redis",
+          0.296
+        ],
+        [
+          "apache/beam",
+          0.294
+        ],
+        [
+          "ClickHouse/ClickHouse",
+          0.274
+        ],
+        [
+          "apache/flink",
+          0.259
+        ]
+      ],
+      "database": [
+        [
+          "etcd-io/etcd",
+          0.214
+        ]
+      ],
+      "analytics": [
+        [
+          "pandas-dev/pandas",
+          0.248
+        ],
+        [
+          "ansible/ansible",
+          0.229
+        ],
+        [
+          "dbt-labs/dbt",
+          0.222
+        ],
+        [
+          "storybookjs/storybook",
+          0.217
+        ],
+        [
+          "duckdb/duckdb",
+          0.212
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Arquitectura de streaming y almacenamiento para logística",
+      "summary": "Esta propuesta integra herramientas open source para la ingesta en tiempo real de la ubicación de los camiones, su almacenamiento distribuido y la posterior transformación de datos para analítica.",
+      "boxes": [
+        {
+          "need": "messaging",
+          "full_name": "apache/kafka",
+          "label": "Apache Kafka",
+          "role": "Procesamiento de flujos de eventos",
+          "rationale": "Apache Kafka es una plataforma de streaming de eventos distribuida que permite procesar en tiempo real los eventos de ubicación enviados por cada camión de la flota."
+        },
+        {
+          "need": "database",
+          "full_name": "etcd-io/etcd",
+          "label": "etcd",
+          "role": "Almacenamiento de datos",
+          "rationale": "etcd ofrece un almacenamiento de clave-valor distribuido y confiable para guardar los datos generados por el sistema de logística."
+        },
+        {
+          "need": "analytics",
+          "full_name": "dbt-labs/dbt",
+          "label": "dbt",
+          "role": "Transformación y modelado de datos",
+          "rationale": "dbt permite a los analistas transformar los datos para preparar las métricas y los tableros de entregas por ciudad solicitados por el negocio."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "messaging",
+          "to_need": "database",
+          "protocol": "TCP",
+          "description": "Envío de los eventos de ubicación procesados en tiempo real para su persistencia."
+        },
+        {
+          "from_need": "database",
+          "to_need": "analytics",
+          "protocol": "SQL/API",
+          "description": "Extracción de datos almacenados para su transformación y análisis."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la empresa cuenta con infraestructura propia o en la nube para hospedar los servicios distribuidos.",
+        "Se requiere una herramienta de visualización final conectada a las transformaciones para ver los tableros."
+      ],
+      "other_limitations": [
+        "La solución de analítica elegida realiza modelado y transformación, pero no incluye nativamente la interfaz visual o de tableros de control."
+      ]
+    },
+    "response": {
+      "id": "f96c9ecdb297426fb7a34ab45908ce5c",
+      "status": "ok",
+      "title": "Arquitectura de streaming y almacenamiento para logística",
+      "summary": "Esta propuesta integra herramientas open source para la ingesta en tiempo real de la ubicación de los camiones, su almacenamiento distribuido y la posterior transformación de datos para analítica.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Apache Kafka",
+          "role": "Procesamiento de flujos de eventos",
+          "full_name": "apache/kafka",
+          "rationale": "Apache Kafka es una plataforma de streaming de eventos distribuida que permite procesar en tiempo real los eventos de ubicación enviados por cada camión de la flota."
+        },
+        {
+          "key": "c2",
+          "label": "etcd",
+          "role": "Almacenamiento de datos",
+          "full_name": "etcd-io/etcd",
+          "rationale": "etcd ofrece un almacenamiento de clave-valor distribuido y confiable para guardar los datos generados por el sistema de logística."
+        },
+        {
+          "key": "c3",
+          "label": "dbt",
+          "role": "Transformación y modelado de datos",
+          "full_name": "dbt-labs/dbt",
+          "rationale": "dbt permite a los analistas transformar los datos para preparar las métricas y los tableros de entregas por ciudad solicitados por el negocio."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c1",
+          "to_key": "c2",
+          "protocol": "TCP",
+          "description": "Envío de los eventos de ubicación procesados en tiempo real para su persistencia."
+        },
+        {
+          "from_key": "c2",
+          "to_key": "c3",
+          "protocol": "SQL/API",
+          "description": "Extracción de datos almacenados para su transformación y análisis."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la empresa cuenta con infraestructura propia o en la nube para hospedar los servicios distribuidos.",
+        "Se requiere una herramienta de visualización final conectada a las transformaciones para ver los tableros."
+      ],
+      "limitations": [
+        "La solución de analítica elegida realiza modelado y transformación, pero no incluye nativamente la interfaz visual o de tableros de control."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-03T03:45:40.769652Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "pantalla-rag-corto",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "ai",
+          "query": "recuperación de información con modelos generativos",
+          "evidence": "RAG privado"
+        },
+        {
+          "category": "search",
+          "query": "búsqueda semántica vectorial",
+          "evidence": "consultar documentos"
+        },
+        {
+          "category": "auth",
+          "query": "control de acceso y permisos de usuario",
+          "evidence": "permisos de acceso"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "ai": [
+        [
+          "langchain-ai/langchain",
+          0.278
+        ],
+        [
+          "huggingface/transformers",
+          0.27
+        ],
+        [
+          "vllm-project/vllm",
+          0.25
+        ],
+        [
+          "ollama/ollama",
+          0.248
+        ],
+        [
+          "fastapi/sqlmodel",
+          0.226
+        ]
+      ],
+      "search": [
+        [
+          "pgvector/pgvector",
+          0.423
+        ],
+        [
+          "run-llama/llama_index",
+          0.263
+        ],
+        [
+          "opensearch-project/OpenSearch",
+          0.255
+        ],
+        [
+          "BurntSushi/ripgrep",
+          0.247
+        ],
+        [
+          "redis/redis",
+          0.239
+        ]
+      ],
+      "auth": [
+        [
+          "hashicorp/vault",
+          0.294
+        ],
+        [
+          "istio/istio",
+          0.238
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Arquitectura de RAG Privado con Control de Acceso",
+      "summary": "Esta propuesta integra un motor de inferencia de IA para modelos de lenguaje, una plataforma de procesamiento de datos para la búsqueda documental y una herramienta de gestión de secretos y accesos. Con estas soluciones se cubre la consulta privada de documentos y la seguridad requerida.",
+      "boxes": [
+        {
+          "need": "ai",
+          "full_name": "vllm-project/vllm",
+          "label": "vLLM",
+          "role": "Inferencia de modelos de lenguaje",
+          "rationale": "Provee un motor de inferencia eficiente en memoria para ejecutar los modelos generativos necesarios en el RAG privado con licencia Apache-2.0."
+        },
+        {
+          "need": "search",
+          "full_name": "run-llama/llama_index",
+          "label": "LlamaIndex",
+          "role": "Plataforma de datos y búsqueda",
+          "rationale": "Funciona como la plataforma de procesamiento de datos para la búsqueda semántica y la ingesta de los documentos que se van a consultar."
+        },
+        {
+          "need": "auth",
+          "full_name": "hashicorp/vault",
+          "label": "Vault",
+          "role": "Gestión de accesos y secretos",
+          "rationale": "La herramienta gestiona la seguridad y los permisos de acceso solicitados. Su licencia no fue identificada por GitHub."
+        }
+      ],
+      "links": [
+        {
+          "from_need": "search",
+          "to_need": "ai",
+          "protocol": "gRPC/REST",
+          "description": "Envía los fragmentos de documentos recuperados al motor de IA para generar la respuesta."
+        },
+        {
+          "from_need": "auth",
+          "to_need": "search",
+          "protocol": "HTTPS",
+          "description": "Valida los permisos de acceso antes de permitir la consulta de documentos."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la infraestructura cuenta con soporte para aceleración por hardware compatible con vLLM.",
+        "Se requiere un mecanismo de sincronización entre el control de identidades y la plataforma de datos."
+      ],
+      "other_limitations": [
+        "No se incluye una interfaz de usuario web directa en esta arquitectura."
+      ]
+    },
+    "response": {
+      "id": "394185aa65384a918ca6343e7405d5c6",
+      "status": "ok",
+      "title": "Arquitectura de RAG Privado con Control de Acceso",
+      "summary": "Esta propuesta integra un motor de inferencia de IA para modelos de lenguaje, una plataforma de procesamiento de datos para la búsqueda documental y una herramienta de gestión de secretos y accesos. Con estas soluciones se cubre la consulta privada de documentos y la seguridad requerida.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "vLLM",
+          "role": "Inferencia de modelos de lenguaje",
+          "full_name": "vllm-project/vllm",
+          "rationale": "Provee un motor de inferencia eficiente en memoria para ejecutar los modelos generativos necesarios en el RAG privado con licencia Apache-2.0."
+        },
+        {
+          "key": "c2",
+          "label": "LlamaIndex",
+          "role": "Plataforma de datos y búsqueda",
+          "full_name": "run-llama/llama_index",
+          "rationale": "Funciona como la plataforma de procesamiento de datos para la búsqueda semántica y la ingesta de los documentos que se van a consultar."
+        },
+        {
+          "key": "c3",
+          "label": "Vault",
+          "role": "Gestión de accesos y secretos",
+          "full_name": "hashicorp/vault",
+          "rationale": "La herramienta gestiona la seguridad y los permisos de acceso solicitados. Su licencia no fue identificada por GitHub."
+        }
+      ],
+      "connections": [
+        {
+          "from_key": "c2",
+          "to_key": "c1",
+          "protocol": "gRPC/REST",
+          "description": "Envía los fragmentos de documentos recuperados al motor de IA para generar la respuesta."
+        },
+        {
+          "from_key": "c3",
+          "to_key": "c2",
+          "protocol": "HTTPS",
+          "description": "Valida los permisos de acceso antes de permitir la consulta de documentos."
+        }
+      ],
+      "assumptions": [
+        "Se asume que la infraestructura cuenta con soporte para aceleración por hardware compatible con vLLM.",
+        "Se requiere un mecanismo de sincronización entre el control de identidades y la plataforma de datos."
+      ],
+      "limitations": [
+        "No se incluye una interfaz de usuario web directa en esta arquitectura."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-03T03:45:52.982300Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "pantalla-observabilidad",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "observability",
+          "query": "recolección de métricas y trazas distribuidas",
+          "evidence": "Define un stack de observabilidad con métricas, logs y trazas distribuidas para microservicios"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "observability": [
+        [
+          "open-telemetry/opentelemetry-collector",
+          0.372
+        ],
+        [
+          "jaegertracing/jaeger",
+          0.341
+        ],
+        [
+          "grafana/grafana",
+          0.309
+        ],
+        [
+          "prometheus/prometheus",
+          0.295
+        ],
+        [
+          "traefik/traefik",
+          0.215
+        ]
+      ]
+    },
+    "draft": {
+      "title": "Stack de observabilidad integral para Kubernetes",
+      "summary": "Esta propuesta integra herramientas para centralizar la visualización de métricas, logs y trazas distribuidas. Se utiliza una plataforma unificada para el monitoreo y análisis de los microservicios.",
+      "boxes": [
+        {
+          "need": "observability",
+          "full_name": "grafana/grafana",
+          "label": "Grafana",
+          "role": "Visualización de métricas, logs y trazas",
+          "rationale": "Grafana permite visualizar métricas, logs y trazas desde múltiples fuentes en una plataforma composable. Resuelve directamente la necesidad de un stack de observabilidad para los microservicios."
+        }
+      ],
+      "links": [],
+      "assumptions": [
+        "Se cuenta con fuentes de datos existentes como Prometheus o Loki para alimentar los tableros."
+      ],
+      "other_limitations": [
+        "No se incluyeron componentes específicos de recolección de trazas como Jaeger en esta única selección."
+      ]
+    },
+    "response": {
+      "id": "75396e9bea4540928aebfdec91786e00",
+      "status": "ok",
+      "title": "Stack de observabilidad integral para Kubernetes",
+      "summary": "Esta propuesta integra herramientas para centralizar la visualización de métricas, logs y trazas distribuidas. Se utiliza una plataforma unificada para el monitoreo y análisis de los microservicios.",
+      "components": [
+        {
+          "key": "c1",
+          "label": "Grafana",
+          "role": "Visualización de métricas, logs y trazas",
+          "full_name": "grafana/grafana",
+          "rationale": "Grafana permite visualizar métricas, logs y trazas desde múltiples fuentes en una plataforma composable. Resuelve directamente la necesidad de un stack de observabilidad para los microservicios."
+        }
+      ],
+      "connections": [],
+      "assumptions": [
+        "Se cuenta con fuentes de datos existentes como Prometheus o Loki para alimentar los tableros."
+      ],
+      "limitations": [
+        "No se incluyeron componentes específicos de recolección de trazas como Jaeger en esta única selección."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-03T03:46:04.145821Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "una-pagos",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [
+        {
+          "category": "payments",
+          "query": "cobro de suscripciones recurrentes",
+          "evidence": "cobrar suscripciones mensuales a los clientes"
+        }
+      ],
+      "clarification_questions": []
+    },
+    "found": {
+      "payments": []
+    },
+    "draft": null,
+    "response": {
+      "id": "1c1afade3f204c9ab70c37ba4f821642",
+      "status": "no_evidence",
+      "title": null,
+      "summary": "El catálogo todavía no tiene herramientas para lo que pides: pagos.",
+      "components": [],
+      "connections": [],
+      "assumptions": [],
+      "limitations": [
+        "Pagos: el catálogo no tiene herramientas para «cobro de suscripciones recurrentes»."
+      ],
+      "clarification_questions": [],
+      "generated_at": "2026-11-03T03:46:14.005078Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  },
+  {
+    "provider": "gemini",
+    "run": 1,
+    "case": "vago-startup",
+    "error": null,
+    "waited": 0.0,
+    "understood": {
+      "needs": [],
+      "clarification_questions": [
+        "¿De qué trata tu startup y qué problema principal busca resolver?",
+        "¿Qué funcionalidades clave tendrá la primera versión de tu producto?",
+        "¿Qué tecnologías, lenguajes o plataformas prefieres o ya sabes utilizar?"
+      ]
+    },
+    "found": {},
+    "draft": null,
+    "response": {
+      "id": "0c8ab13a592b40479584dbf9d48804b3",
+      "status": "needs_clarification",
+      "title": null,
+      "summary": "Necesito un poco más de contexto para recomendarte herramientas.",
+      "components": [],
+      "connections": [],
+      "assumptions": [],
+      "limitations": [],
+      "clarification_questions": [
+        "¿De qué trata tu startup y qué problema principal busca resolver?",
+        "¿Qué funcionalidades clave tendrá la primera versión de tu producto?",
+        "¿Qué tecnologías, lenguajes o plataformas prefieres o ya sabes utilizar?"
+      ],
+      "generated_at": "2026-11-03T03:46:23.714405Z"
+    },
+    "problems": {
+      "understand": [],
+      "generate": []
+    }
+  }
+]
