@@ -8,6 +8,7 @@ por Pull Request, avisando al equipo ([`CONTRIBUTING.md`](../../CONTRIBUTING.md)
 | `repo.py` | Repo: una herramienta del catálogo y sus categorías | Ingesta + IA → IA, API, frontend | v1.2 · acordado (29-oct-2026) |
 | `categories.json` | Lista de categorías | Equipo → IA, frontend | v1 · 18 categorías, acordado con frontend (30-oct-2026) |
 | `integration_idea.py` | Idea de integración de una herramienta | IA → frontend | v1.1 · acordado (24-oct-2026) |
+| `repo_detail.py` | Ficha de un repositorio: el repo y sus ideas | API → frontend | v1 · propuesto (29-oct-2026) |
 | `assistant.py` | Pregunta, respuesta y errores del asistente | Frontend ↔ IA | v1.1 · acordado (24-oct-2026) |
 
 ## Uso desde Python
@@ -39,6 +40,21 @@ Cada categoría tiene cuatro campos, cada uno pensado para un lector:
 - `llm_notes`: ejemplos y fronteras para que el LLM clasifique (`No incluye: … (id)`). No entra en la búsqueda.
 
 Un repo que no encaja en ninguna queda con la lista de categorías vacía; no hay una categoría "Otros".
+
+## `repo_detail.py`
+
+Cuerpo de `GET /repos/{full_name}`: `{"repo": …, "integration_ideas": […]}`.
+Compone dos contratos ya acordados, sin campos nuevos:
+
+- `repo`: un `Repo` v1.2 completo, con `readme_text` y `topics`.
+- `integration_ideas`: 0–3 `IntegrationIdea` v1.1. Cero ideas es válido
+  (repo archivado, sin README o sin ideas revisadas).
+- Las ideas tienen el mismo `full_name` que el repo; un repo archivado no
+  lleva ideas.
+
+El listado (`GET /repos`) no usa este contrato: entrega `Repo` sin
+`readme_text` ni `topics`, y la paginación va en cabeceras (`X-Total-Count`,
+`X-Total-Pages`, `X-Page`, `X-Page-Size`), así que el cuerpo es el array.
 
 ## Pruebas
 
