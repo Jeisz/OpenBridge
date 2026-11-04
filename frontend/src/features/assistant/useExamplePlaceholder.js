@@ -20,7 +20,7 @@ export function useExamplePlaceholder(paused, input) {
    const current = promptExamples[index];
    length += deleting ? -1 : 1;
    setText(current.slice(0, length));
-   let delay = deleting ? 10 : 48;
+   let delay = deleting ? 10 : 30;
    if (length === 0) {
     index = (index + 1) % promptExamples.length;
     deleting = false;

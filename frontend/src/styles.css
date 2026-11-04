@@ -654,17 +654,17 @@ html.elastic-scrollbar-active::-webkit-scrollbar{display:none}
 
 /* Initial hero headline: locally served Space Grotesk. */
 @font-face{font-family:'Space Grotesk';src:url('/assets/fonts/space-grotesk-variable.ttf') format('truetype');font-weight:300 700;font-style:normal;font-display:swap}
-.prompt-heading-initial .reveal-heading{font-family:'Space Grotesk','Inter Variable',sans-serif;color:#a8adb7}
+.prompt-heading-initial .reveal-heading{font-family:'Space Grotesk','Inter Variable',sans-serif;color:#a8adb7;font-size:clamp(38px,5vw,58px)}
 .hero .intro-initial{color:#989eaa;text-shadow:-.25px -.4px 0 rgb(255 255 255 / 68%)}
-.prompt-heading-initial .reveal-word:not(.gradient-word) .reveal-letter{text-shadow:-.5px -.75px 0 rgb(255 255 255 / 80%)}
+.prompt-heading-initial .reveal-word:not(.gradient-word) .reveal-letter{text-shadow:none}
 @media(forced-colors:active){.hero .intro-initial,.prompt-heading-initial .reveal-word:not(.gradient-word) .reveal-letter{-webkit-text-stroke:0;text-shadow:none}}
 
 /* Slow reflective light, confined to the initial headline's final word. */
 /* Reserve glow space inside the reveal mask without changing word width. */
 .gradient-word .letter-mask{padding-inline:16px;margin-inline:-16px}
 .gradient-word .reveal-letter{position:relative;color:#d8e8f2;background:linear-gradient(110deg,#74bdf0 0%,#8cdbea 17%,#b5e7f7 29%,#acbaf0 38%,#8da9ec 47%,#74bdf0 58%,#96e1ee 73%,#b8c9f5 82%,#b7a0e8 89%,#74bdf0 100%);background-size:250% 100%;background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:stack-word-light 12s ease-in-out infinite alternate;animation-play-state:var(--word-play-state,paused)}
-.gradient-word .reveal-letter::before{content:attr(data-glow);position:absolute;inset:0;pointer-events:none;background:inherit;background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;transform:translate(-.5px,-.75px);opacity:.3}
-.gradient-word .reveal-letter::after{content:attr(data-glow);position:absolute;inset:0;pointer-events:none;background:inherit;background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:blur(5px);opacity:.65}
+.gradient-word .reveal-letter::before{content:none}
+.gradient-word .reveal-letter::after{content:attr(data-glow);position:absolute;inset:0;pointer-events:none;background:inherit;background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:blur(2px);opacity:.45}
 @keyframes stack-word-light{from{background-position:0% 50%}to{background-position:100% 50%}}
 @media(prefers-reduced-motion:reduce){.gradient-word .reveal-letter{animation:none}}
 @media(forced-colors:active){.gradient-word .reveal-letter::before,.gradient-word .reveal-letter::after{display:none}.gradient-word .reveal-letter{filter:none;background:none;-webkit-text-fill-color:CanvasText;color:CanvasText;animation:none}}
