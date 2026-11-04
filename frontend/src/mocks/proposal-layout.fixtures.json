@@ -44,42 +44,6 @@
         "caption": "Latencia y errores",
         "icon": "metrics"
       }
-    ],
-    "steps": [
-      {
-        "title": "Autenticar y resolver la organización",
-        "description": "Next.js inicia sesión con Keycloak mediante OpenID Connect y PKCE. FastAPI verifica el token y consulta la pertenencia del usuario a una organización; no debe confiar únicamente en un identificador enviado por el navegador.",
-        "component_keys": [
-          "c1",
-          "c2",
-          "c3"
-        ]
-      },
-      {
-        "title": "Autorizar cada operación y aislar los datos",
-        "description": "FastAPI comprueba el rol y la organización antes de consultar PostgreSQL. Se propone configurar seguridad por fila y establecer el contexto de organización dentro de cada transacción, usando un rol de base de datos que no omita esas políticas. El equipo debe probar accesos cruzados entre empresas.",
-        "component_keys": [
-          "c3",
-          "c4"
-        ]
-      },
-      {
-        "title": "Servir reportes sin mezclar organizaciones",
-        "description": "La API consulta Valkey con una clave que incluye la organización y los filtros del reporte. En un fallo de caché, consulta PostgreSQL y guarda el resultado con caducidad. Las escrituras deben invalidar los reportes afectados; el caché no sustituye las comprobaciones de permisos.",
-        "component_keys": [
-          "c3",
-          "c4",
-          "c5"
-        ]
-      },
-      {
-        "title": "Medir el comportamiento de la API",
-        "description": "FastAPI expone métricas instrumentadas de duración de solicitudes, errores y volumen. Prometheus las recopila desde un endpoint con acceso restringido. Las etiquetas deben mantenerse acotadas; no incluir tokens, datos personales ni una etiqueta por usuario u organización.",
-        "component_keys": [
-          "c3",
-          "c6"
-        ]
-      }
     ]
   },
   "demo-assistant-extended": {
@@ -126,42 +90,6 @@
         "label": "Observabilidad",
         "caption": "Latencia y errores",
         "icon": "metrics"
-      }
-    ],
-    "steps": [
-      {
-        "title": "Autenticar y resolver la organización",
-        "description": "Next.js inicia sesión con Keycloak mediante OpenID Connect y PKCE. FastAPI verifica el token y consulta la pertenencia del usuario a una organización; no debe confiar únicamente en un identificador enviado por el navegador.",
-        "component_keys": [
-          "c1",
-          "c2",
-          "c3"
-        ]
-      },
-      {
-        "title": "Autorizar cada operación y aislar los datos",
-        "description": "FastAPI comprueba el rol y la organización antes de consultar PostgreSQL. Se propone configurar seguridad por fila y establecer el contexto de organización dentro de cada transacción, usando un rol de base de datos que no omita esas políticas. El equipo debe probar accesos cruzados entre empresas.",
-        "component_keys": [
-          "c3",
-          "c4"
-        ]
-      },
-      {
-        "title": "Servir reportes sin mezclar organizaciones",
-        "description": "La API consulta Valkey con una clave que incluye la organización y los filtros del reporte. En un fallo de caché, consulta PostgreSQL y guarda el resultado con caducidad. Las escrituras deben invalidar los reportes afectados; el caché no sustituye las comprobaciones de permisos.",
-        "component_keys": [
-          "c3",
-          "c4",
-          "c5"
-        ]
-      },
-      {
-        "title": "Medir el comportamiento de la API",
-        "description": "FastAPI expone métricas instrumentadas de duración de solicitudes, errores y volumen. Prometheus las recopila desde un endpoint con acceso restringido. Las etiquetas deben mantenerse acotadas; no incluir tokens, datos personales ni una etiqueta por usuario u organización.",
-        "component_keys": [
-          "c3",
-          "c6"
-        ]
       }
     ]
   }

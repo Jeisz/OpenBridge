@@ -79,3 +79,12 @@ def test_todos_tienen_readme(repos):
     # En los datos de ejemplo todos los repos deben tener su README guardado.
     sin_readme = [r.full_name for r in repos if not r.readme_text]
     assert not sin_readme, f"Repos sin README en ai/data/readmes/: {sin_readme}"
+
+
+def test_cubre_las_seis_categorias_del_dataset_original(repos, category_ids):
+    presentes = {a.category_id for r in repos for a in r.categories}
+    # La taxonomía fija tiene 18 opciones; la muestra original cubre estas seis.
+    esperadas = {"auth", "database", "payments", "ai", "analytics", "search"}
+    assert esperadas <= category_ids
+    faltan = esperadas - presentes
+    assert not faltan, f"Categorías sin ningún repo: {sorted(faltan)}"

@@ -28,7 +28,7 @@ export function useCardTilt() {
   };
   const keyup = event => {if(event.key===pressedKey)finish();};
   let frame = 0;
-  let x = .5, y = .5;
+  let x = .5, y = .5, edgeIntensity = 0;
   const reset = () => {
    shared.deactivate();
    release();
@@ -43,6 +43,8 @@ export function useCardTilt() {
    const bounds = card.getBoundingClientRect();
    x = Math.max(0, Math.min(1, (event.clientX - bounds.left) / bounds.width));
    y = Math.max(0, Math.min(1, (event.clientY - bounds.top) / bounds.height));
+   const edgeDistance = Math.min(x * bounds.width, (1 - x) * bounds.width, y * bounds.height, (1 - y) * bounds.height);
+   edgeIntensity = Math.max(0, 1 - edgeDistance / 100);
    if (frame) return;
    frame = requestAnimationFrame(() => {
     frame = 0;
@@ -50,6 +52,7 @@ export function useCardTilt() {
     surface.style.transform = `perspective(1100px) rotateX(${( .5-y)*4}deg) rotateY(${(x-.5)*4}deg)`;
     surface.style.setProperty('--glare-x', `${x*100}%`);
     surface.style.setProperty('--glare-y', `${y*100}%`);
+    surface.style.setProperty('--edge-intensity', edgeIntensity.toFixed(3));
    });
   };
   const shared=registerCardInteraction({reset,up,keyup});

@@ -10,7 +10,12 @@
     "test:sites": "node --test tests/sites-worker.test.mjs",
     "preview:stable": "node scripts/stable-preview.mjs",
     "preview:lan": "node scripts/lan-preview.mjs",
-    "test": "node --test tests/*.test.mjs"
+    "test": "node --test tests/*.test.mjs",
+    "predev": "node scripts/sync-contracts.mjs",
+    "prebuild": "node scripts/sync-contracts.mjs",
+    "pretest": "node scripts/sync-contracts.mjs",
+    "prepreview:stable": "node scripts/sync-contracts.mjs",
+    "prepreview:lan": "node scripts/sync-contracts.mjs"
   },
   "dependencies": {
     "@fontsource-variable/inter": "^5.3.0",

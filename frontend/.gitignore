@@ -9,3 +9,6 @@ dist/
 
 .next/
 out/
+
+# Derived from shared/contracts at build time
+src/generated/categories.json

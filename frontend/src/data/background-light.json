@@ -1,0 +1,18 @@
+{
+  "color": "#ccebff",
+  "raysOrigin": "top-left",
+  "raysSpeed": 0.5,
+  "lightSpread": 0.14,
+  "rayLength": 1.3,
+  "rayDensity": 1.8,
+  "tilt": -33,
+  "raySharpness": 0.2,
+  "glow": 0.45,
+  "haze": 0,
+  "atmosphere": 0.85,
+  "intensity": 1.4,
+  "fadeDistance": 2,
+  "saturation": 1.85,
+  "mouseInfluence": 0.3,
+  "noiseAmount": 0.06
+}

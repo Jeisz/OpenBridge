@@ -54,11 +54,42 @@
       "El equipo implementará el aislamiento de datos y las reglas de autorización en el backend."
     ],
     "limitations": [
-      "Es un ejemplo fijo de datos mock: todavía no analiza el prompt ni genera una recomendación real.",
       "No incluye facturación, despliegue de alta disponibilidad ni una estimación de capacidad; requieren requisitos adicionales."
     ],
     "clarification_questions": [],
-    "generated_at": "2026-10-20T12:00:00Z"
+    "generated_at": "2026-10-20T12:00:00Z",
+    "connections": [
+      {
+        "from_key": "c2",
+        "to_key": "c1",
+        "protocol": "OIDC",
+        "description": "La interfaz inicia sesión con Keycloak para obtener la identidad del usuario."
+      },
+      {
+        "from_key": "c2",
+        "to_key": "c3",
+        "protocol": "HTTPS / REST",
+        "description": "La interfaz consulta la API con el token de acceso del usuario."
+      },
+      {
+        "from_key": "c3",
+        "to_key": "c4",
+        "protocol": "SQL",
+        "description": "La API consulta y persiste los datos con aislamiento por organización."
+      },
+      {
+        "from_key": "c3",
+        "to_key": "c5",
+        "protocol": "RESP",
+        "description": "La API almacena temporalmente resultados de reportes con claves por organización."
+      },
+      {
+        "from_key": "c6",
+        "to_key": "c3",
+        "protocol": "HTTP / metrics",
+        "description": "Prometheus recoge las métricas expuestas por la API."
+      }
+    ]
   },
   "needs_clarification": {
     "id": "demo-assistant-clarification",
@@ -72,7 +103,8 @@
       "¿Quiénes usarán la aplicación y qué necesitan hacer?",
       "¿Cuántas personas esperas que la usen y dónde se alojará?"
     ],
-    "generated_at": "2026-10-20T12:00:00Z"
+    "generated_at": "2026-10-20T12:00:00Z",
+    "connections": []
   },
   "no_evidence": {
     "id": "demo-assistant-no-evidence",
@@ -85,7 +117,8 @@
       "No se propondrán herramientas sin respaldo en el catálogo."
     ],
     "clarification_questions": [],
-    "generated_at": "2026-10-20T12:00:00Z"
+    "generated_at": "2026-10-20T12:00:00Z",
+    "connections": []
   },
   "ok_extended": {
     "id": "demo-assistant-extended",
@@ -142,10 +175,41 @@
       "El equipo implementará el aislamiento de datos y las reglas de autorización en el backend."
     ],
     "limitations": [
-      "Es un ejemplo fijo de datos mock: todavía no analiza el prompt ni genera una recomendación real.",
       "No incluye facturación, despliegue de alta disponibilidad ni una estimación de capacidad; requieren requisitos adicionales."
     ],
     "clarification_questions": [],
-    "generated_at": "2026-10-20T12:00:00Z"
+    "generated_at": "2026-10-20T12:00:00Z",
+    "connections": [
+      {
+        "from_key": "c2",
+        "to_key": "c1",
+        "protocol": "OIDC",
+        "description": "La interfaz inicia sesión con Keycloak para obtener la identidad del usuario."
+      },
+      {
+        "from_key": "c2",
+        "to_key": "c3",
+        "protocol": "HTTPS / REST",
+        "description": "La interfaz consulta la API con el token de acceso del usuario."
+      },
+      {
+        "from_key": "c3",
+        "to_key": "c4",
+        "protocol": "SQL",
+        "description": "La API consulta y persiste los datos con aislamiento por organización."
+      },
+      {
+        "from_key": "c3",
+        "to_key": "c5",
+        "protocol": "RESP",
+        "description": "La API almacena temporalmente resultados de reportes con claves por organización."
+      },
+      {
+        "from_key": "c6",
+        "to_key": "c3",
+        "protocol": "HTTP / metrics",
+        "description": "Prometheus recoge las métricas expuestas por la API."
+      }
+    ]
   }
 }

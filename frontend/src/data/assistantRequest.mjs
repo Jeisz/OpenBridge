@@ -1,6 +1,6 @@
 import {AssistantError,mockAssistant,validateAssistantQuery,validateAssistantResponse,validateAssistantCatalog} from './assistant.mjs';
 import {catalogRecords} from './catalog.mjs';
-export const assistantRequestTiming=Object.freeze({slowMs:4000,timeoutMs:20000});
+export const assistantRequestTiming=Object.freeze({slowMs:60000,timeoutMs:90000});
 
 // Local request boundary; future HTTP providers plug in without changing the view.
 // Race cancellation/deadline even when a provider ignores AbortSignal.

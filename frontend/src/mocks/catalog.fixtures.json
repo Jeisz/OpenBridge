@@ -20,7 +20,7 @@
       }
     ],
     "use_cases": [],
-    "summary_es": "Una base sólida para los datos de tu aplicación. Relacional, extensible y preparada para consultas complejas."
+    "summary_es": "Base de datos relacional para guardar y consultar información mediante SQL. Ofrece transacciones, relaciones entre tablas y soporte JSONB para aplicaciones que necesitan datos consistentes y consultas flexibles."
   },
   {
     "full_name": "keycloak/keycloak",
@@ -43,7 +43,7 @@
       }
     ],
     "use_cases": [],
-    "summary_es": "Inicio de sesión único, gestión de usuarios y control de acceso para tus aplicaciones."
+    "summary_es": "Centraliza el inicio de sesión y la gestión de usuarios, roles y permisos. Permite conectar aplicaciones mediante OpenID Connect y SAML, integrar proveedores de identidad y compartir el acceso entre servicios."
   },
   {
     "full_name": "meilisearch/meilisearch",
@@ -66,7 +66,7 @@
       }
     ],
     "use_cases": [],
-    "summary_es": "Búsqueda rápida y tolerante a errores para que tus usuarios encuentren lo que necesitan."
+    "summary_es": "Motor de búsqueda para catálogos y aplicaciones. Permite indexar documentos, tolerar errores tipográficos y filtrar resultados. Se integra con la base de datos principal mediante la sincronización de sus registros."
   },
   {
     "full_name": "ollama/ollama",

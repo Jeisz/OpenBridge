@@ -22,7 +22,7 @@ test('malformed nested fields produce controlled validation errors, never incide
  const mutations=[r=>r.id=' ',r=>r.generated_at=123,r=>r.generated_at='not-a-date',r=>r.components=[null],r=>r.components[0].label=' ',r=>r.components[0].rationale=[],r=>r.components[0].full_name='missing-owner',r=>r.assumptions=[3],r=>r.clarification_questions=null,r=>r.summary=' '];
  for(const mutate of mutations){const response=structuredClone(base);mutate(response);assert.throws(()=>validateAssistantResponse(response),e=>e instanceof AssistantError&&e.code==='invalid_response');}
  for(const response of [null,[],true,'unexpected'])assert.throws(()=>validateAssistantResponse(response),{name:'AssistantError'});
- const noEvidence=validateAssistantResponse({id:'empty-optional-text',status:'no_evidence',title:' ',summary:' ',generated_at:base.generated_at});assert.equal(noEvidence.title,null);assert.equal(noEvidence.summary,null);
+ assert.throws(()=>validateAssistantResponse({id:'empty-optional-text',status:'no_evidence',title:' ',summary:' ',generated_at:base.generated_at}),{code:'invalid_response'});
 });
 
 test('deadline aborts transport and rejects even a provider that ignores cancellation',async()=>{
@@ -53,7 +53,7 @@ test('unknown, archived or disabled repositories never enter the accepted propos
   assert.throws(()=>validateAssistantCatalog(response,catalog),{code:'unavailable_tool'});
  }
  await assert.rejects(requestAssistant(request,{...quick,scenario:'unknown_tool'}),{code:'unavailable_tool'});
- await assert.rejects(requestAssistant(request,{...quick,...assistantScenarioOptions('archived_tool',catalogRecords)}),{code:'unavailable_tool'});
+ await assert.rejects(requestAssistant(request,{...assistantScenarioOptions('archived_tool',catalogRecords),...quick}),{code:'unavailable_tool'});
  assert.equal(catalogRecords.find(t=>t.full_name==='keycloak/keycloak').archived,false);
  const appPart=structuredClone(response);appPart.components[0].full_name=null;assert.equal(validateAssistantCatalog(appPart,catalogRecords),appPart);
 });

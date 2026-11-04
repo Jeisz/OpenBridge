@@ -37,7 +37,7 @@ export function captureCover(el){
  return {rect,background:getComputedStyle(backgroundHost).background,backgroundSize:`${bounds(backgroundHost).width}px ${bounds(backgroundHost).height}px`,items,join};
 }
 export function animateCover(start,end,target,{opening,onFinish,outerStart,outerEnd}){
- const duration=opening?560:460,animations=[],nodes=[];
+ const duration=opening?400:460,animations=[],nodes=[];
  document.documentElement.classList.add('cover-in-flight');
  const envelope=document.createElement('div');
  Object.assign(envelope.style,{position:'fixed',inset:'0',zIndex:'110',pointerEvents:'none'});
@@ -70,7 +70,7 @@ export function animateCover(start,end,target,{opening,onFinish,outerStart,outer
     envelope.append(node);nodes.push(node);return node;
    };
    animate(addParagraph(item),[{opacity:1},{opacity:0}],{duration:120});
-   animate(addParagraph(dest),[{opacity:0,transform:'translateY(6px)'},{opacity:1,transform:'translateY(0)'}],{delay:opening?220:180,duration:opening?260:220,fill:'both'});
+   animate(addParagraph(dest),[{opacity:0,transform:'translateY(6px)'},{opacity:1,transform:'translateY(0)'}],{delay:opening?140:180,duration:220,fill:'both'});
    continue;
   }
   const piece=item.node;piece.removeAttribute('id');piece.removeAttribute('class');piece.setAttribute('aria-hidden','true');piece.inert=true;

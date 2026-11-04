@@ -9,9 +9,7 @@
       "Las personas deben iniciar sesión para reservar.",
       "La aplicación se alojará en infraestructura propia."
     ],
-    "limitations": [
-      "Es un ejemplo de datos mock; no analiza la consulta ni representa una recomendación real."
-    ],
+    "limitations": [],
     "clarification_questions": [],
     "generated_at": "2026-10-20T12:00:00Z"
   },
@@ -54,9 +52,7 @@
       "Las personas deben iniciar sesión para reservar.",
       "La aplicación se alojará en infraestructura propia."
     ],
-    "limitations": [
-      "Es un ejemplo de datos mock; no analiza la consulta ni representa una recomendación real."
-    ],
+    "limitations": [],
     "clarification_questions": [],
     "generated_at": "2026-10-20T12:00:00Z"
   },
@@ -99,9 +95,7 @@
       "Las personas deben iniciar sesión para reservar.",
       "La aplicación se alojará en infraestructura propia."
     ],
-    "limitations": [
-      "Es un ejemplo de datos mock; no analiza la consulta ni representa una recomendación real."
-    ],
+    "limitations": [],
     "clarification_questions": [],
     "generated_at": "2026-10-20T12:00:00Z"
   },
@@ -123,9 +117,7 @@
       "Las personas deben iniciar sesión para reservar.",
       "La aplicación se alojará en infraestructura propia."
     ],
-    "limitations": [
-      "Es un ejemplo de datos mock; no analiza la consulta ni representa una recomendación real."
-    ],
+    "limitations": [],
     "clarification_questions": [],
     "generated_at": "2026-10-20T12:00:00Z"
   },
@@ -182,9 +174,7 @@
       "Las personas deben iniciar sesión para reservar.",
       "La aplicación se alojará en infraestructura propia."
     ],
-    "limitations": [
-      "Es un ejemplo de datos mock; no analiza la consulta ni representa una recomendación real."
-    ],
+    "limitations": [],
     "clarification_questions": [],
     "generated_at": "2026-10-20T12:00:00Z"
   }

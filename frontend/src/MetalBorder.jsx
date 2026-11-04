@@ -12,18 +12,25 @@ export const MetalBorder=memo(function MetalBorder(){
   const reflected=reflection.current,light=reflected.getContext('2d');
   const red=document.createElement('canvas'),redCtx=red.getContext('2d');red.width=red.height=256;
   if(!ctx||!mc||!rc||!gc||!light||!redCtx)return;
+  const testMode=['localhost','127.0.0.1'].includes(location.hostname)?new URLSearchParams(location.search).get('borderPerf'):null;
+  const noReflection=testMode==='no-reflection'||testMode==='no-shader';
+  const noShader=testMode==='no-shader';
+  host.dataset.perfMode=testMode||'full';
+  if(noReflection)reflected.style.display='none';
   const motion=matchMedia('(prefers-reduced-motion: reduce)');
   let focused=false,visible=true,failed=false,active=false,running=false,hasError=false,errorMix=0;
   let raf=0,last=0,elapsed=0,progress=0,entry=0,w=1,h=1,dpr=1,geometry,paths=[],maskProgress=-1,disposed=false;
   const pad=64;
   let shader;
   try{
+   if(!noShader){
    const uniforms={u_isImage:false,u_shape:1,u_fit:1,u_scale:1.2,u_rotation:52,u_offsetX:0,u_offsetY:-.04,u_originX:.5,u_originY:.5,u_worldWidth:0,u_worldHeight:0};
    for(const key of ['repetition','softness','shiftRed','shiftBlue','distortion','contour','angle'])uniforms['u_'+key]=liquidMetalMaterial[key];
    // Original liquid-metal palette, with the shared soft chromatic reflections.
    uniforms.u_colorBack=getShaderColorFromString(liquidMetalMaterial.colorBack);
    uniforms.u_colorTint=getShaderColorFromString(liquidMetalMaterial.colorTint);
    shader=new ShaderMount(materialHost,liquidMetalFragmentShader,uniforms,{preserveDrawingBuffer:true,alpha:true},0,12000,1,220000);
+   }
   }catch{failed=true;}
 
   function buildMask(){
@@ -80,8 +87,8 @@ export const MetalBorder=memo(function MetalBorder(){
    }else{ctx.fillStyle=hasError?'#ff625a':'#78caff';ctx.fillRect(0,0,output.width,output.height);}
    ctx.globalCompositeOperation='source-over';
    // Reuse the exact colored border frame, so nearby texture catches its passing reflections.
-   light.clearRect(0,0,reflected.width,reflected.height);
-   if(!motion.matches&&!failed){
+   if(!noReflection)light.clearRect(0,0,reflected.width,reflected.height);
+   if(!noReflection&&!motion.matches&&!failed){
     light.globalCompositeOperation='lighter';
     for(const [dx,dy] of [[0,0],[-5,0],[5,0],[0,-5],[0,5]])light.drawImage(output,dx*dpr,dy*dpr);
     light.globalCompositeOperation='source-over';

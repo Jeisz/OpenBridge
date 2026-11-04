@@ -32,6 +32,7 @@ function copyTree(source, destination) {
 for (const name of ['package.json', 'package-lock.json', 'next.config.mjs', 'postcss.config.mjs', '.openai', 'worker', 'scripts', 'src', 'public']) {
   copyTree(path.join(root, name), path.join(runtime, name));
 }
+copyTree(path.join(root, '../shared/contracts/categories.json'), path.join(runtime, 'categories.contract.json'));
 function run(command, args) {
   const result = spawnSync(command, args, { cwd: runtime, stdio: 'inherit' });
   if (result.error) throw result.error;

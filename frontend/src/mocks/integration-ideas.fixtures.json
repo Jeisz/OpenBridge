@@ -6,10 +6,14 @@
     "integration_type": "sdk",
     "summary": "Inicializa el adaptador con los datos de tu cliente y solicita inicio de sesión. Requiere configurar el servidor, el realm, el cliente público y sus URLs de redirección.",
     "compatible_stack": [
-      "React y API protegida"
+      "React",
+      "Keycloak"
     ],
     "dependencies": [
-      "Realm y cliente público con PKCE; keycloak-js"
+      "Realm",
+      "Cliente público",
+      "PKCE",
+      "keycloak-js"
     ],
     "difficulty": "medium",
     "triggers": [
@@ -27,12 +31,15 @@
     "full_name": "keycloak/keycloak",
     "title": "Descubrimiento para validar tokens",
     "integration_type": "rest_api",
-    "summary": "Ejemplo de integración: descubrimiento para validar tokens.",
+    "summary": "Consulta la configuración OpenID Connect del realm para localizar sus claves públicas. El backend utiliza esa información para comprobar la firma, el emisor y la audiencia de los tokens recibidos.",
     "compatible_stack": [
-      "Backend con middleware JWT"
+      "OpenID Connect"
     ],
     "dependencies": [
-      "Cliente OIDC y validación de issuer, audience y firma"
+      "Cliente OIDC",
+      "Issuer",
+      "Audience",
+      "Firma"
     ],
     "difficulty": "medium",
     "triggers": [
@@ -40,7 +47,7 @@
     ],
     "snippet": null,
     "snippet_language": null,
-    "docs_url": "https://www.keycloak.org/documentation",
+    "docs_url": "https://www.keycloak.org/securing-apps/oidc-layers",
     "generated_by": "human",
     "reviewed_at": null,
     "based_on_hash": "2db49ccc68f0ae219d3ce575518c5e955de1acbb997e4833b101d2f80f3d089c"
@@ -50,12 +57,13 @@
     "full_name": "meilisearch/meilisearch",
     "title": "Indexar un catálogo de productos",
     "integration_type": "rest_api",
-    "summary": "Ejemplo de integración: indexar un catálogo de productos.",
+    "summary": "Envía los productos al índice de búsqueda cuando se crean o actualizan. Así, el catálogo puede ofrecer resultados por nombre y atributos sin consultar directamente todas las tablas de negocio.",
     "compatible_stack": [
-      "Backend de catálogo"
+      "Meilisearch"
     ],
     "dependencies": [
-      "Instancia de Meilisearch y clave privada de indexación"
+      "Meilisearch",
+      "API key de indexación"
     ],
     "difficulty": "low",
     "triggers": [
@@ -63,7 +71,7 @@
     ],
     "snippet": null,
     "snippet_language": null,
-    "docs_url": "https://www.meilisearch.com/docs",
+    "docs_url": "https://www.meilisearch.com/docs/reference/api/documents/add-or-update-documents",
     "generated_by": "human",
     "reviewed_at": null,
     "based_on_hash": "2103fbbd20f9cc7be4001e9e096bc853af2c054b0b7d620c3f4c79a9b90ee767"
@@ -73,12 +81,13 @@
     "full_name": "meilisearch/meilisearch",
     "title": "Buscar desde el backend",
     "integration_type": "rest_api",
-    "summary": "Ejemplo de integración: buscar desde el backend.",
+    "summary": "Recibe la consulta del usuario en tu API y envíala al índice con los filtros permitidos. El backend devuelve los resultados a la interfaz y mantiene la clave privada fuera del navegador.",
     "compatible_stack": [
-      "Web y API de búsqueda"
+      "Meilisearch"
     ],
     "dependencies": [
-      "Índice products y clave con permisos de búsqueda"
+      "Índice products",
+      "API key de búsqueda"
     ],
     "difficulty": "low",
     "triggers": [
@@ -86,7 +95,7 @@
     ],
     "snippet": null,
     "snippet_language": null,
-    "docs_url": "https://www.meilisearch.com/docs",
+    "docs_url": "https://www.meilisearch.com/docs/reference/api/search/search-with-post",
     "generated_by": "human",
     "reviewed_at": null,
     "based_on_hash": "5d28fdb069bb7464f36b96f189277cf0cb2007a2b49f9e3903c2f56916b4d1ff"
@@ -96,12 +105,14 @@
     "full_name": "ollama/ollama",
     "title": "Asistente privado",
     "integration_type": "rest_api",
-    "summary": "Ejemplo de integración: asistente privado.",
+    "summary": "Conecta el backend con un modelo ejecutado en tu infraestructura para generar respuestas. La aplicación controla el acceso, prepara las instrucciones y presenta el resultado al usuario.",
     "compatible_stack": [
-      "Backend Python o Node.js"
+      "Python",
+      "Node.js"
     ],
     "dependencies": [
-      "Ollama y un modelo descargado"
+      "Ollama",
+      "Modelo local"
     ],
     "difficulty": "low",
     "triggers": [
@@ -109,7 +120,7 @@
     ],
     "snippet": null,
     "snippet_language": null,
-    "docs_url": "https://docs.ollama.com/",
+    "docs_url": "https://docs.ollama.com/api/chat",
     "generated_by": "human",
     "reviewed_at": null,
     "based_on_hash": "c769070a41e1f6b290d671b5d08c517a55c86a37862abaf8611ec7ae0f375d6d"
@@ -119,12 +130,15 @@
     "full_name": "ollama/ollama",
     "title": "Responder con contexto recuperado",
     "integration_type": "rest_api",
-    "summary": "Ejemplo de integración: responder con contexto recuperado.",
+    "summary": "Añade a la consulta los fragmentos relevantes obtenidos de tu buscador documental. El modelo recibe ese contexto para elaborar una respuesta vinculada a la información recuperada.",
     "compatible_stack": [
-      "API y buscador vectorial"
+      "Ollama",
+      "Qdrant"
     ],
     "dependencies": [
-      "Modelo local y pipeline de recuperación con permisos"
+      "Modelo local",
+      "Pipeline de recuperación",
+      "Permisos"
     ],
     "difficulty": "high",
     "triggers": [
@@ -132,7 +146,7 @@
     ],
     "snippet": null,
     "snippet_language": null,
-    "docs_url": "https://docs.ollama.com/",
+    "docs_url": "https://docs.ollama.com/api/chat",
     "generated_by": "human",
     "reviewed_at": null,
     "based_on_hash": "b2d8b49d48e799b357821a51c41c5b969bad856d838f4493ea08f0fb806ccd85"
@@ -142,12 +156,13 @@
     "full_name": "plausible/analytics",
     "title": "Registrar un evento desde un servicio",
     "integration_type": "rest_api",
-    "summary": "Ejemplo de integración: registrar un evento desde un servicio.",
+    "summary": "Envía un evento al servicio de analítica cuando el backend completa una operación relevante. Esto permite medir acciones que no dependen de una interacción directa en el navegador.",
     "compatible_stack": [
-      "Backend de producto"
+      "Plausible"
     ],
     "dependencies": [
-      "Endpoint de eventos y dominio configurado"
+      "Endpoint de eventos",
+      "Dominio"
     ],
     "difficulty": "medium",
     "triggers": [
@@ -155,7 +170,7 @@
     ],
     "snippet": null,
     "snippet_language": null,
-    "docs_url": "https://plausible.io/docs",
+    "docs_url": "https://plausible.io/docs/events-api",
     "generated_by": "human",
     "reviewed_at": null,
     "based_on_hash": "76def5f76b8fc4c25d1f4c5ca20e7b32621c68bf0f9a960627904d3881d2c238"
@@ -165,12 +180,14 @@
     "full_name": "getlago/lago",
     "title": "Enviar consumo de una API",
     "integration_type": "rest_api",
-    "summary": "Ejemplo de integración: enviar consumo de una API.",
+    "summary": "Registra las llamadas facturables de cada cliente como eventos de consumo. Lago puede asociarlas a la suscripción y a la métrica configurada para calcular los cargos correspondientes.",
     "compatible_stack": [
-      "Servicio de medición"
+      "Lago"
     ],
     "dependencies": [
-      "Cliente, suscripción y métrica configurados en Lago"
+      "Cliente",
+      "Suscripción",
+      "Métrica"
     ],
     "difficulty": "medium",
     "triggers": [
@@ -178,7 +195,7 @@
     ],
     "snippet": null,
     "snippet_language": null,
-    "docs_url": "https://docs.getlago.com/",
+    "docs_url": "https://getlago.com/docs/api-reference/events/usage",
     "generated_by": "human",
     "reviewed_at": null,
     "based_on_hash": "a5fc68793e4db67056cd2a2e311939819f47c21de9dc91312373f2cdfa750074"
@@ -188,12 +205,13 @@
     "full_name": "getlago/lago",
     "title": "Procesar notificaciones de facturación",
     "integration_type": "webhook",
-    "summary": "Ejemplo de integración: procesar notificaciones de facturación.",
+    "summary": "Recibe los webhooks de facturación en un endpoint del backend. Verifica su autenticidad y procesa cada evento de forma idempotente antes de actualizar el estado local.",
     "compatible_stack": [
-      "Backend y cola de trabajos"
+      "Lago"
     ],
     "dependencies": [
-      "Endpoint HTTPS y validación de autenticidad"
+      "Endpoint HTTPS",
+      "Autenticación"
     ],
     "difficulty": "high",
     "triggers": [
@@ -201,7 +219,7 @@
     ],
     "snippet": null,
     "snippet_language": null,
-    "docs_url": "https://docs.getlago.com/",
+    "docs_url": "https://getlago.com/docs/guide/webhooks",
     "generated_by": "human",
     "reviewed_at": null,
     "based_on_hash": "5ce3dbae61bae7d6a93513f54e57cc9a369875d85ce733b02be9b313a773d97a"
@@ -211,12 +229,14 @@
     "full_name": "qdrant/qdrant",
     "title": "Preparar una colección documental",
     "integration_type": "rest_api",
-    "summary": "Ejemplo de integración: preparar una colección documental.",
+    "summary": "Crea una colección con la dimensión de vectores que utiliza tu modelo de embeddings. Guarda cada fragmento junto con sus metadatos para recuperarlo posteriormente mediante similitud.",
     "compatible_stack": [
-      "Pipeline de embeddings"
+      "Qdrant"
     ],
     "dependencies": [
-      "Qdrant y modelo con vectores de 384 dimensiones"
+      "Qdrant",
+      "Modelo de embeddings",
+      "384 dimensiones"
     ],
     "difficulty": "medium",
     "triggers": [
@@ -224,7 +244,7 @@
     ],
     "snippet": null,
     "snippet_language": null,
-    "docs_url": "https://qdrant.tech/documentation/",
+    "docs_url": "https://qdrant.tech/documentation/manage-data/collections/",
     "generated_by": "human",
     "reviewed_at": null,
     "based_on_hash": "2c2a6f5100b9584355ef7688c10ae5483f67b05083aa912a61150f7ce95c4cbe"
@@ -234,12 +254,14 @@
     "full_name": "qdrant/qdrant",
     "title": "Recuperación con aislamiento por cliente",
     "integration_type": "sdk",
-    "summary": "Ejemplo de integración: recuperación con aislamiento por cliente.",
+    "summary": "Asocia los documentos a un identificador de cliente y aplica ese filtro en cada búsqueda vectorial. El backend obtiene el identificador de la sesión autenticada para limitar la recuperación al contenido autorizado.",
     "compatible_stack": [
-      "Backend RAG"
+      "Python",
+      "Qdrant"
     ],
     "dependencies": [
-      "qdrant-client y metadatos tenant_id"
+      "qdrant-client",
+      "tenant_id"
     ],
     "difficulty": "high",
     "triggers": [
@@ -247,7 +269,7 @@
     ],
     "snippet": null,
     "snippet_language": null,
-    "docs_url": "https://qdrant.tech/documentation/",
+    "docs_url": "https://qdrant.tech/documentation/manage-data/multitenancy/",
     "generated_by": "human",
     "reviewed_at": null,
     "based_on_hash": "ace70c4ba71b3724456e80247dda4882a52e6de2e67900ea6fcb4d0be6393ee7"
@@ -257,12 +279,13 @@
     "full_name": "typesense/typesense",
     "title": "Crear un índice de herramientas",
     "integration_type": "rest_api",
-    "summary": "Ejemplo de integración: crear un índice de herramientas.",
+    "summary": "Define los campos consultables del catálogo y carga los documentos en una colección. La estructura permite buscar herramientas y aplicar filtros sobre sus atributos.",
     "compatible_stack": [
-      "Backend de catálogo"
+      "Typesense"
     ],
     "dependencies": [
-      "Typesense y clave de administración privada"
+      "Typesense",
+      "API key de administración"
     ],
     "difficulty": "low",
     "triggers": [
@@ -270,7 +293,7 @@
     ],
     "snippet": null,
     "snippet_language": null,
-    "docs_url": "https://typesense.org/docs/",
+    "docs_url": "https://typesense.org/docs/29.0/api/collections.html",
     "generated_by": "human",
     "reviewed_at": null,
     "based_on_hash": "f4f74b3548e5c2ea4a72b52c4995aa7ee3d1417bb26252351d7705ef603e06ae"
@@ -280,12 +303,13 @@
     "full_name": "typesense/typesense",
     "title": "Buscar con facetas",
     "integration_type": "rest_api",
-    "summary": "Ejemplo de integración: buscar con facetas.",
+    "summary": "Combina una consulta de texto con filtros y recuentos por categoría. La interfaz utiliza esas facetas para ayudar al usuario a acotar los resultados disponibles.",
     "compatible_stack": [
-      "Frontend y API de búsqueda"
+      "Typesense"
     ],
     "dependencies": [
-      "Colección tools poblada y clave de solo búsqueda"
+      "Colección tools",
+      "API key de búsqueda"
     ],
     "difficulty": "low",
     "triggers": [
@@ -293,9 +317,129 @@
     ],
     "snippet": null,
     "snippet_language": null,
-    "docs_url": "https://typesense.org/docs/",
+    "docs_url": "https://typesense.org/docs/29.0/api/search.html",
     "generated_by": "human",
     "reviewed_at": null,
     "based_on_hash": "b7eb29f48adaf0c758e8339b0d6e04ea07588904fec91a2ec21503b7b88f7934"
+  },
+  {
+    "id": "mock_postgresql_v11_1",
+    "full_name": "postgres/postgres",
+    "title": "Reservas sin duplicados",
+    "summary": "Guarda la reserva dentro de una transacción y aplica una restricción de unicidad sobre el recurso y el horario. Si dos solicitudes compiten por la misma reserva, la base de datos rechaza el duplicado.",
+    "integration_type": "sdk",
+    "compatible_stack": [
+      "Node.js",
+      "Python"
+    ],
+    "dependencies": [
+      "PostgreSQL",
+      "Driver SQL"
+    ],
+    "difficulty": "medium",
+    "triggers": [
+      "Confirmación de una reserva"
+    ],
+    "snippet": null,
+    "snippet_language": null,
+    "docs_url": "https://www.postgresql.org/docs/current/ddl-constraints.html",
+    "generated_by": "human",
+    "reviewed_at": null,
+    "based_on_hash": "2976175185a4d67be769a40b18f963dd56b210df15b8d7dd0ea07f08c9fb4518"
+  },
+  {
+    "id": "mock_postgresql_v11_2",
+    "full_name": "postgres/postgres",
+    "title": "Eventos pendientes de publicación",
+    "summary": "Guarda el cambio de negocio y su evento pendiente dentro de la misma transacción. Un worker publica los eventos después y registra su procesamiento para gestionar reintentos.",
+    "integration_type": "sdk",
+    "compatible_stack": [
+      "PostgreSQL"
+    ],
+    "dependencies": [
+      "PostgreSQL",
+      "Worker de publicación"
+    ],
+    "difficulty": "medium",
+    "triggers": [
+      "Transacción de negocio confirmada"
+    ],
+    "snippet": null,
+    "snippet_language": null,
+    "docs_url": "https://www.postgresql.org/docs/current/tutorial-transactions.html",
+    "generated_by": "human",
+    "reviewed_at": null,
+    "based_on_hash": "721b55ba1bfa66fa49bcbcdfe8b8fc16043ff3ebb4f350f6105442634ebf60ae"
+  },
+  {
+    "id": "mock_plausible_v11_1",
+    "full_name": "plausible/analytics",
+    "title": "Medir una conversión",
+    "summary": "Dispara un evento cuando el usuario completa una acción objetivo, como enviar un formulario. La analítica permite consultar cuántas veces se completó esa conversión.",
+    "integration_type": "sdk",
+    "compatible_stack": [
+      "JavaScript"
+    ],
+    "dependencies": [
+      "Script de Plausible",
+      "Dominio"
+    ],
+    "difficulty": "low",
+    "triggers": [
+      "Propuesta completada"
+    ],
+    "snippet": null,
+    "snippet_language": null,
+    "docs_url": "https://plausible.io/docs/custom-event-goals",
+    "generated_by": "human",
+    "reviewed_at": null,
+    "based_on_hash": "43cfa1b12e3ba13efb140f05a4b764929f6c244e86e0e47555f6031cf1330522"
+  },
+  {
+    "id": "mock_umami_v11_1",
+    "full_name": "umami-software/umami",
+    "title": "Instrumentar un sitio",
+    "summary": "Incorpora el script de seguimiento con el identificador del sitio para registrar visitas. La configuración vincula los eventos recogidos con el proyecto correspondiente en Umami.",
+    "integration_type": "sdk",
+    "compatible_stack": [
+      "JavaScript"
+    ],
+    "dependencies": [
+      "Umami",
+      "Website ID"
+    ],
+    "difficulty": "low",
+    "triggers": [
+      "Visita a una página"
+    ],
+    "snippet": null,
+    "snippet_language": null,
+    "docs_url": "https://docs.umami.is/docs/collect-data",
+    "generated_by": "human",
+    "reviewed_at": null,
+    "based_on_hash": "088691ea4a1d11c1cf0b300afc012591ca04970059b3863fb8b44284997d5429"
+  },
+  {
+    "id": "mock_umami_v11_2",
+    "full_name": "umami-software/umami",
+    "title": "Medir interacción con el catálogo",
+    "summary": "Registra eventos al aplicar filtros o abrir una herramienta del catálogo. Estos eventos permiten observar qué interacciones se utilizan con mayor frecuencia.",
+    "integration_type": "sdk",
+    "compatible_stack": [
+      "React"
+    ],
+    "dependencies": [
+      "Script de seguimiento"
+    ],
+    "difficulty": "low",
+    "triggers": [
+      "Apertura de una ficha"
+    ],
+    "snippet": null,
+    "snippet_language": null,
+    "docs_url": "https://docs.umami.is/docs/tracker-functions",
+    "generated_by": "human",
+    "reviewed_at": null,
+    "based_on_hash": "25bb799c9c633d8fbbdd93542dfc1bda5f0ce20f432f1dde793d4a626ae02de5"
   }
 ]

@@ -18,18 +18,23 @@ export function validateAssistantResponse(value){
  const fail=()=>{throw new AssistantError('invalid_response','La respuesta llegó incompleta o con un formato inesperado. Tu descripción se conserva; puedes reintentar.');};
  if(!value||typeof value!=='object'||Array.isArray(value))fail();
  value={...value};
- for(const field of ['components','assumptions','limitations','clarification_questions'])if(value[field]===undefined)value[field]=[];
+ for(const field of ['components','connections','assumptions','limitations','clarification_questions'])if(value[field]===undefined)value[field]=[];
  if(!nonblank(value.id)||!['ok','needs_clarification','no_evidence'].includes(value.status)||typeof value.generated_at!=='string'||!/^\d{4}-\d{2}-\d{2}T.*(?:Z|[+-]\d{2}:\d{2})$/.test(value.generated_at)||!Number.isFinite(Date.parse(value.generated_at)))fail();
- for(const name of ['components','assumptions','limitations','clarification_questions'])if(!Array.isArray(value[name]))fail();
- if(value.components.length>6||(value.title!=null&&(typeof value.title!=='string'||Array.from(value.title).length>80))||(value.summary!=null&&typeof value.summary!=='string'))fail();
- for(const field of ['title','summary'])if(typeof value[field]==='string'&&!value[field].trim())value[field]=null;
+ for(const name of ['components','connections','assumptions','limitations','clarification_questions'])if(!Array.isArray(value[name]))fail();
+ if(value.components.length>6||(value.title!=null&&(typeof value.title!=='string'||Array.from(value.title.trim()).length>80))||(value.summary!=null&&typeof value.summary!=='string'))fail();
+ for(const field of ['title','summary']){if(value[field]!=null){if(!nonblank(value[field]))fail();value[field]=value[field].trim();}}
  const keys=new Set();
  for(const c of value.components){
   if(!c||typeof c!=='object'||!['key','label','role','rationale'].every(k=>nonblank(c[k]))||(c.full_name!=null&&!repoName(c.full_name))||keys.has(c.key))fail();
   keys.add(c.key);
  }
- for(const field of ['assumptions','limitations','clarification_questions'])if(!value[field].every(nonblank))fail();
+ value.components=value.components.map(c=>({...c,label:c.label.trim(),role:c.role.trim(),rationale:c.rationale.trim()}));
+ for(const conn of value.connections){
+  if(!conn||typeof conn!=='object'||!['from_key','to_key','protocol','description'].every(k=>typeof conn[k]==='string')||!keys.has(conn.from_key)||!keys.has(conn.to_key)||conn.from_key===conn.to_key)fail();
+ }
+ for(const field of ['assumptions','limitations','clarification_questions']){if(!value[field].every(nonblank))fail();value[field]=value[field].map(text=>text.trim());}
  if(value.status==='ok'&&(!nonblank(value.summary)||!value.components.length))fail();
+ if(value.status==='no_evidence'&&!nonblank(value.summary))fail();
  if(value.status==='needs_clarification'&&!value.clarification_questions.length)fail();
  return value;
 }

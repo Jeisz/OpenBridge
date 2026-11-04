@@ -8,8 +8,14 @@ export function resolveProposalExample(response){
  const matches=example.layers.every(layer=>response.components.some(c=>c.key===layer.key&&c.full_name===layer.full_name));
  if(!matches)return null;
  const result=structuredClone(example);
- const keys=new Set(response.components.map(c=>c.key));
- // Integration is optional. A partial or malformed guide must never break the stack.
- if(!Array.isArray(result.steps)||!result.steps.every(step=>typeof step?.title==='string'&&step.title.trim()&&typeof step.description==='string'&&step.description.trim()&&Array.isArray(step.component_keys)&&step.component_keys.length>0&&step.component_keys.every(key=>keys.has(key))))result.steps=[];
  return result;
+}
+
+// Relationships come from the response, independently of curated demo layout.
+export function resolveProposalConnections(response){
+ if(response?.status!=='ok')return [];
+ const labels=new Map(response.components.map(c=>[c.key,c.label]));
+ return (response.connections??[]).map(connection=>({
+  ...connection,title:`${labels.get(connection.from_key)} → ${labels.get(connection.to_key)} · ${connection.protocol}`
+ }));
 }

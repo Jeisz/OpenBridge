@@ -54,7 +54,22 @@ export function useToolNavigation(){
   const duration=opening?560:460;
   animate(overlay,[{backgroundColor:opening?'#0000':'#0009'},{backgroundColor:opening?'#0009':'#0000'}],{duration});
   const canMorph=start&&end&&visible(sourceRect)&&visible(end.rect)&&frame&&card&&(opening||document.querySelector('.tool-modal-scroll').scrollTop<1);
-  if(canMorph){
+  const canReturnScrolled=!opening&&frame&&card&&visible(bounds(card))&&!canMorph;
+  if(canReturnScrolled){
+   // Preserve the scrolled viewport and shrink its rounded shell toward the card.
+   // The cover may be offscreen; bringing it back would visibly reset the scroll.
+   const frameRect=bounds(frame),cardRect=bounds(card);
+   const scaleX=cardRect.width/frameRect.width,scaleY=cardRect.height/frameRect.height;
+   const dx=cardRect.left+cardRect.width/2-frameRect.left-frameRect.width/2;
+   const dy=cardRect.top+cardRect.height/2-frameRect.top-frameRect.height/2;
+   animate(document.querySelector('.tool-modal-rail'),[{opacity:1},{opacity:0}],{duration:110});
+   animate(card,[{opacity:0},{opacity:1}],{duration:200,delay:duration-200});
+   const returning=animate(frame,[
+    {transform:'translate(0,0) scale(1)',opacity:1},
+    {transform:`translate(${dx}px,${dy}px) scale(${scaleX},${scaleY})`,opacity:0}
+   ],{duration});
+   returning.finished.then(finish).catch(()=>{});
+  }else if(canMorph){
    const frameRect=bounds(frame),cardRect=bounds(card),radius=getComputedStyle(frame).borderRadius;
    // Animate the actual rounded bounds, not a mask intersecting a fixed rectangle.
    frame.style.position='fixed';frame.style.left=`${frameRect.left}px`;frame.style.top=`${frameRect.top}px`;

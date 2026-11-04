@@ -23,7 +23,7 @@ test('malformed component responses are rejected without introducing a technical
  assert.equal(resolveComponentTool({full_name:'unknown/repo'},catalogRecords),null);
 });
 test('default lists, isolated responses, cancellation and technical errors',async()=>{
- const minimal=validateAssistantResponse({id:'minimal',status:'no_evidence',generated_at:'2026-10-20T12:00:00Z'});assert.deepEqual(minimal.components,[]);
+ const minimal=validateAssistantResponse({id:'minimal',status:'no_evidence',summary:'No hay evidencia en el catálogo.',generated_at:'2026-10-20T12:00:00Z'});assert.deepEqual(minimal.components,[]);
  const request={query:'Una plataforma de reservas de clases'};
  const first=await mockAssistant.ask(request,{delay:0});const snapshot=structuredClone(first);first.components[0].label='changed';
  const second=await mockAssistant.ask(request,{delay:0});assert.deepEqual(second,snapshot);
@@ -33,7 +33,7 @@ test('default lists, isolated responses, cancellation and technical errors',asyn
 
 test('all recommended components remain available, with optional catalog links',async()=>{
  const response=await mockAssistant.ask({query:'Una plataforma de reservas de clases'},{delay:0});
- assert.equal('connections' in response,false);
+ assert.equal(response.connections.length,5);
  assert.deepEqual(response.components.map(c=>c.label),['Keycloak','Next.js','FastAPI','PostgreSQL','Valkey','Prometheus']);
  assert.equal(response.components.filter(c=>resolveComponentTool(c,catalogRecords)).length,6);
  assert.equal(response.components.filter(c=>c.full_name===null).length,0);

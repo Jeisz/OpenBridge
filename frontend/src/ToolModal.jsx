@@ -1,3 +1,4 @@
+import {useDetailReveal} from './useDetailReveal';
 import {createModalScrollSync} from './modalScrollSync.mjs';
 import {useLayoutEffect,useRef} from 'react';
 import {X} from 'lucide-react';
@@ -5,6 +6,7 @@ import {ToolDetail} from './ToolDetail';
 
 export function ToolModal({id,onClose}){
  const frame=useRef(null),rail=useRef(null);
+ useDetailReveal(frame,id);
  useLayoutEffect(()=>{
   const root=document.documentElement;
   const previousOverflow=root.style.overflow;
@@ -38,7 +40,7 @@ export function ToolModal({id,onClose}){
  },[id]);
  return <div className="tool-modal-overlay" onClick={event=>{if(event.target===event.currentTarget)onClose();}}>
   <div className="tool-modal-shell"><div ref={frame} className="tool-modal-frame" role="dialog" aria-modal="true" aria-labelledby="detail-title" tabIndex={-1}>
-   <button className="tool-modal-close" type="button" onClick={onClose} aria-label="Cerrar ficha técnica"><X size={20}/></button>
+   <button className="tool-modal-close ui-wash" type="button" onClick={onClose} aria-label="Cerrar ficha técnica"><X size={20}/></button>
    <div className="tool-modal-scroll"><ToolDetail id={id} onBack={onClose}/></div>
   </div><div ref={rail} className="tool-modal-rail" aria-hidden="true" tabIndex={-1}><div/></div></div>
  </div>;

@@ -1,0 +1,20 @@
+/* Shared state tokens. Geometry and filled/outline/icon/text variants stay local.
+   ui-wash is opt-in: chips, tabs, accordion and metallic prompt keep their fills. */
+:root{--control-focus:#8ccfff;--control-press-scale:.975;--control-state-duration:160ms;--control-return-duration:180ms;--control-ease:cubic-bezier(.22,1,.36,1)}
+:where(button,.ui-button,.nav nav a,.tool-actions a,.integration-docs,.proposal-tool>a):focus-visible{outline:2px solid var(--control-focus);outline-offset:3px}
+:where(.ui-wash,.ui-button,.new-architecture,.composer-retry,.category-chip,.proposal-tabs [role=tab],.prompt-submit){transition-property:color,background-color,border-color,scale;transition-duration:var(--control-state-duration);transition-timing-function:var(--control-ease)}
+/* Scale is independent of existing entrance transforms. Card actions press the whole card. */
+:is(.ui-wash,.new-architecture,.composer-retry):not(:disabled):not([aria-disabled=true]):not(.tool-actions>*):active{scale:var(--control-press-scale)}
+:where(.ui-wash,.ui-button) svg{color:currentColor}
+.hero button.new-architecture:focus-visible{background:#303743;color:#f3f5f8}
+.hero button.composer-retry:focus-visible{color:#ffe0dc;text-decoration-color:currentColor}
+.proposal-tabs [role=tab]:focus-visible{background:#ffffff12;color:#fff}
+.proposal-tabs [role=tab][aria-selected=true]:focus-visible{background:var(--button-brand);color:#fff}
+.proposal-connection:focus-visible{background:#ffffff05;color:#fff}
+:where(.integration-docs,.proposal-tool>a):focus-visible{color:#c6e5ff;text-decoration:underline;text-underline-offset:3px}
+/* Unavailable and busy are distinct: neither receives a white wash or press. */
+:is(.ui-wash,.ui-button):is(:disabled,[aria-disabled=true]){cursor:not-allowed;opacity:.55;scale:1;color:#fff}
+:is(.ui-wash,.ui-button):is(:disabled,[aria-disabled=true])::before{display:none}
+.hero .prompt-submit[aria-disabled=true]{cursor:wait}
+@media(prefers-reduced-motion:reduce){:is(.ui-wash,.ui-button,.new-architecture,.composer-retry):active{scale:1}}
+@media(forced-colors:active){:is(.ui-wash,.ui-button)::before{display:none}:is(.ui-wash,.ui-button):focus-visible{outline-color:Highlight}:is(.ui-wash,.ui-button):is(:hover,:focus-visible){color:ButtonText}}
