@@ -1,79 +1,864 @@
 {
-  "version": 1,
+  "version": 2,
   "source": "snapshot",
   "catalog_taken_at": "2026-10-29T20:42:17+00:00",
   "queries": [
     {
       "id": "msg-eventos",
       "query": "recibir un flujo continuo de eventos",
-      "expected": ["apache/kafka"],
-      "note": "Necesidad de mensajería de los casos del asistente (logística: ubicación de camiones cada pocos segundos). kafka: 'distributed event streaming platform', topic streaming."
+      "expected": [
+        "apache/kafka"
+      ],
+      "note": "Escrita a mano. Necesidad de mensajería de los casos del asistente (logística: ubicación de camiones cada pocos segundos). kafka: 'distributed event streaming platform', topic streaming."
     },
     {
       "id": "proc-tiempo-real",
       "query": "procesar eventos en tiempo real",
-      "expected": ["apache/flink", "apache/beam"],
-      "note": "Procesamiento de datos de los casos del asistente (logística). flink: 'stream processing framework' en el README. beam: 'unified programming model for Batch and Streaming'. spark fuera: su propósito principal es el análisis por lotes."
+      "expected": [
+        "apache/flink",
+        "apache/beam"
+      ],
+      "note": "Escrita a mano. Procesamiento de datos de los casos del asistente (logística). flink: 'stream processing framework' en el README. beam: 'unified programming model for Batch and Streaming'. spark fuera: su propósito principal es el análisis por lotes."
     },
     {
       "id": "db-analitica",
       "query": "guardar millones de eventos para analizarlos",
-      "expected": ["ClickHouse/ClickHouse", "duckdb/duckdb"],
-      "note": "Base de datos de los casos del asistente (logística). ClickHouse: 'real-time analytics database management system'. duckdb: 'high-performance analytical database system', topics analytics y olap. Los casos del asistente aceptan solo ClickHouse porque allí el pedido son tableros sobre un servidor; esta consulta corta no lo dice, y DuckDB también cumple."
+      "expected": [
+        "ClickHouse/ClickHouse",
+        "duckdb/duckdb"
+      ],
+      "note": "Escrita a mano. Base de datos de los casos del asistente (logística). ClickHouse: 'real-time analytics database management system'. duckdb: 'high-performance analytical database system', topics analytics y olap. Los casos del asistente aceptan solo ClickHouse porque allí el pedido son tableros sobre un servidor; esta consulta corta no lo dice, y DuckDB también cumple."
     },
     {
       "id": "an-tableros",
       "query": "tableros de entregas por ciudad",
-      "expected": ["grafana/grafana"],
-      "note": "Analítica de los casos del asistente (logística). grafana: topics dashboard, data-visualization y business-intelligence."
+      "expected": [
+        "grafana/grafana"
+      ],
+      "note": "Escrita a mano. Analítica de los casos del asistente (logística). grafana: topics dashboard, data-visualization y business-intelligence."
     },
     {
       "id": "ai-rag",
       "query": "asistente que responde con documentos propios",
-      "expected": ["run-llama/llama_index", "langchain-ai/langchain"],
-      "note": "IA de los casos del asistente (RAG, soporte con documentación). llama_index: 'document processing platform for AI'. langchain: 'agent engineering platform', topics ai y ai-agents. ollama y vllm fuera: corren modelos, no arman respuestas con documentos."
+      "expected": [
+        "run-llama/llama_index",
+        "langchain-ai/langchain"
+      ],
+      "note": "Escrita a mano. IA de los casos del asistente (RAG, soporte con documentación). llama_index: 'document processing platform for AI'. langchain: 'agent engineering platform', topics ai y ai-agents. ollama y vllm fuera: corren modelos, no arman respuestas con documentos."
     },
     {
       "id": "obs-stack",
       "query": "métricas, logs y trazas de microservicios",
-      "expected": ["open-telemetry/opentelemetry-collector", "jaegertracing/jaeger", "prometheus/prometheus"],
-      "note": "Observabilidad de los casos del asistente. opentelemetry-collector: topics metrics, observability y telemetry. jaeger: 'Distributed Tracing Platform'. prometheus: topics metrics y monitoring. grafana fuera de esta lista: visualiza, no recoge."
+      "expected": [
+        "open-telemetry/opentelemetry-collector",
+        "prometheus/prometheus",
+        "grafana/grafana"
+      ],
+      "note": "Escrita a mano. Observabilidad de los casos del asistente. opentelemetry-collector: topics metrics, observability y telemetry. prometheus: topics metrics y monitoring. grafana: 'observability … platform. Visualize metrics, logs, and traces' (agregado en la versión 2 con esa evidencia, coherente con los casos del asistente). jaeger pasa a la consulta de trazas."
     },
     {
       "id": "none-pagos",
       "query": "cobrar suscripciones mensuales con tarjeta",
       "expected": [],
-      "note": "El catálogo no tiene repos de pagos ni de facturación."
+      "note": "Escrita a mano. El catálogo no tiene repos de pagos ni de facturación."
     },
     {
       "id": "none-login",
       "query": "inicio de sesión de usuarios con su cuenta",
       "expected": [],
-      "note": "Casi. El catálogo no tiene repos de identidad de usuarios. vault ('privileged access management') guarda secretos de sistemas; no hace login de usuarios finales."
+      "note": "Escrita a mano. Casi. El catálogo no tiene repos de identidad de usuarios. vault ('privileged access management') guarda secretos de sistemas; no hace login de usuarios finales."
     },
     {
       "id": "none-recordatorios",
       "query": "enviar recordatorios por WhatsApp o correo",
       "expected": [],
-      "note": "Casi. Sin repos de mensajería con clientes. alertmanager tiene topics email y notifications, pero envía alertas de monitoreo al equipo técnico."
+      "note": "Escrita a mano. Casi. Sin repos de mensajería con clientes. alertmanager tiene topics email y notifications, pero envía alertas de monitoreo al equipo técnico."
     },
     {
       "id": "none-videos",
       "query": "guardar y servir videos de clases",
       "expected": [],
-      "note": "El catálogo no tiene repos de almacenamiento de archivos ni de video."
+      "note": "Escrita a mano. El catálogo no tiene repos de almacenamiento de archivos ni de video."
     },
     {
       "id": "none-cms",
       "query": "editor para que periodistas publiquen artículos",
       "expected": [],
-      "note": "Casi. Sin gestores de contenido. astro ('framework for content-driven websites') construye el sitio, no el editor de quien publica."
+      "note": "Escrita a mano. Casi. Sin gestores de contenido. astro ('framework for content-driven websites') construye el sitio, no el editor de quien publica."
     },
     {
       "id": "none-analitica-web",
       "query": "medir qué páginas se visitan más",
       "expected": [],
-      "note": "Sin analítica web. grafana visualiza datos que ya existen; no recoge las visitas."
+      "note": "Escrita a mano. Sin analítica web. grafana visualiza datos que ya existen; no recoge las visitas."
+    },
+    {
+      "id": "clinica-auth",
+      "query": "gestion de identidad de usuarios",
+      "expected": [],
+      "pair": "access",
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso clinica-citas. \"Con su cuenta\". El catálogo no tiene repos de inicio de sesión de usuarios (vault guarda secretos)."
+    },
+    {
+      "id": "clinica-auth-v2",
+      "query": "gestion de cuentas de usuario",
+      "expected": [],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 3). Caso clinica-citas. \"Con su cuenta\". El catálogo no tiene repos de inicio de sesión de usuarios (vault guarda secretos)."
+    },
+    {
+      "id": "clinica-communication",
+      "query": "envio de notificaciones por canales digitales",
+      "expected": [],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso clinica-citas. \"Recordatorios por WhatsApp o correo\". Sin repos de mensajería con clientes (alertmanager solo envía alertas de monitoreo)."
+    },
+    {
+      "id": "clinica-communication-v2",
+      "query": "envio de mensajes a usuarios",
+      "expected": [],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso clinica-citas. \"Recordatorios por WhatsApp o correo\". Sin repos de mensajería con clientes (alertmanager solo envía alertas de monitoreo)."
+    },
+    {
+      "id": "clinica-payments",
+      "query": "procesamiento de pagos y cobros",
+      "expected": [],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso clinica-citas. \"Paguen un abono\". El catálogo no tiene repos de pagos."
+    },
+    {
+      "id": "clinica-payments-v2",
+      "query": "procesamiento de cobros en linea",
+      "expected": [],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso clinica-citas. \"Paguen un abono\". El catálogo no tiene repos de pagos."
+    },
+    {
+      "id": "tienda-search",
+      "query": "búsqueda tolerante a errores ortográficos",
+      "expected": [
+        "opensearch-project/OpenSearch"
+      ],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso tienda-ropa. \"Un buscador\". OpenSearch: \"search engine\", topics search y search-engine. Los datos del catálogo no confirman tolerancia a errores de escritura."
+    },
+    {
+      "id": "tienda-search-v2",
+      "query": "búsqueda de texto con tolerancia a errores",
+      "expected": [
+        "opensearch-project/OpenSearch"
+      ],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso tienda-ropa. \"Un buscador\". OpenSearch: \"search engine\", topics search y search-engine. Los datos del catálogo no confirman tolerancia a errores de escritura."
+    },
+    {
+      "id": "tienda-payments",
+      "query": "procesamiento de pagos con tarjeta",
+      "expected": [],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso tienda-ropa. \"Pagos con tarjeta y PSE\". El catálogo no tiene repos de pagos."
+    },
+    {
+      "id": "tienda-payments-v2",
+      "query": "procesamiento de pagos con tarjeta y transferencias",
+      "expected": [],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso tienda-ropa. \"Pagos con tarjeta y PSE\". El catálogo no tiene repos de pagos."
+    },
+    {
+      "id": "tienda-automation",
+      "query": "automatización de registro de ventas en hojas de cálculo",
+      "expected": [],
+      "pair": "automation",
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso tienda-ropa. \"Cada venta pase sola a la hoja de cálculo\": flujo entre aplicaciones. ansible automatiza servidores; airflow y prefect son pipelines de datos."
+    },
+    {
+      "id": "tienda-analytics",
+      "query": "analítica de ventas de productos",
+      "expected": [
+        "grafana/grafana"
+      ],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso tienda-ropa. \"Ver qué productos se venden más\": tableros sobre datos propios. grafana: topics business-intelligence, dashboard, data-visualization, postgres, mysql. dbt, duckdb y pandas trabajan con datos analíticos, pero no muestran tableros a quien vende; grafana sí."
+    },
+    {
+      "id": "tienda-analytics-v2",
+      "query": "analítica de ventas y productos populares",
+      "expected": [
+        "grafana/grafana"
+      ],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso tienda-ropa. \"Ver qué productos se venden más\": tableros sobre datos propios. grafana: topics business-intelligence, dashboard, data-visualization, postgres, mysql. dbt, duckdb y pandas trabajan con datos analíticos, pero no muestran tableros; grafana sí."
+    },
+    {
+      "id": "academia-auth",
+      "query": "inicio de sesión de usuarios",
+      "expected": [],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso academia-online. \"Entran con su cuenta\". Sin repos de inicio de sesión de usuarios en el catálogo."
+    },
+    {
+      "id": "academia-storage",
+      "query": "almacenamiento de archivos de video",
+      "expected": [],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso academia-online. \"Clases grabadas que subimos\": guardar videos. El catálogo no tiene repos de almacenamiento de archivos."
+    },
+    {
+      "id": "academia-storage-v2",
+      "query": "almacenamiento de archivos multimedia",
+      "expected": [],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 3). Caso academia-online. \"Clases grabadas que subimos\": guardar videos. El catálogo no tiene repos de almacenamiento de archivos."
+    },
+    {
+      "id": "academia-payments",
+      "query": "cobros de suscripciones recurrentes",
+      "expected": [],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso academia-online. \"Pagan la mensualidad\". El catálogo no tiene repos de pagos."
+    },
+    {
+      "id": "academia-payments-v2",
+      "query": "cobro de suscripciones mensuales",
+      "expected": [],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso academia-online. \"Pagan la mensualidad\". El catálogo no tiene repos de pagos."
+    },
+    {
+      "id": "academia-ai",
+      "query": "asistente conversacional con inteligencia artificial",
+      "expected": [
+        "langchain-ai/langchain",
+        "run-llama/llama_index"
+      ],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso academia-online. \"Chatbot que responde con nuestro material\": preguntas sobre documentos propios. llama_index: \"document processing platform for AI\". langchain: \"agent engineering platform\", topics ai-agents."
+    },
+    {
+      "id": "academia-ai-v2",
+      "query": "asistente conversacional basado en modelos",
+      "expected": [
+        "langchain-ai/langchain",
+        "run-llama/llama_index"
+      ],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 3). Caso academia-online. \"Chatbot que responde con nuestro material\": preguntas sobre documentos propios. llama_index: \"document processing platform for AI\". langchain: \"agent engineering platform\", topics ai-agents."
+    },
+    {
+      "id": "logistica-messaging",
+      "query": "procesamiento de flujos de eventos",
+      "expected": [
+        "apache/kafka",
+        "apache/flink",
+        "apache/beam"
+      ],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso logistica-flota. Procesar flujos de eventos: kafka ('event streaming platform'), flink ('stream processing' en el README) y beam ('Batch and Streaming'); flink y beam agregados con evidencia porque la consulta pide procesar, no solo transportar."
+    },
+    {
+      "id": "logistica-messaging-v2",
+      "query": "procesamiento de flujos de eventos en tiempo real",
+      "expected": [
+        "apache/kafka",
+        "apache/flink",
+        "apache/beam"
+      ],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso logistica-flota. Igual que la anterior, en tiempo real: kafka, flink y beam."
+    },
+    {
+      "id": "logistica-database",
+      "query": "almacenamiento de datos geoespaciales",
+      "expected": [
+        "ClickHouse/ClickHouse"
+      ],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso logistica-flota. \"Guardarlos\" para analizarlos: muchos eventos que se consultan en tableros. ClickHouse: \"real-time analytics database\", topics olap y self-hosted. Ningún repo del catálogo declara datos geoespaciales: la palabra la agregó el paso de entender. Se mantiene ClickHouse porque es lo que el usuario necesita (guardar eventos para analizarlos); si falla, la causa probable es la consulta, no la búsqueda."
+    },
+    {
+      "id": "logistica-database-v2",
+      "query": "almacenamiento de datos geoespaciales y eventos",
+      "expected": [
+        "ClickHouse/ClickHouse"
+      ],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso logistica-flota. \"Guardarlos\" para analizarlos: muchos eventos que se consultan en tableros. ClickHouse: \"real-time analytics database\", topics olap y self-hosted. Ningún repo declara datos geoespaciales; se mantiene ClickHouse por la parte de eventos. Si falla, la causa probable es la consulta."
+    },
+    {
+      "id": "logistica-analytics",
+      "query": "visualizacion de tableros de negocio",
+      "expected": [
+        "grafana/grafana"
+      ],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso logistica-flota. \"Tableros de entregas por ciudad\". grafana: topics dashboard, data-visualization, business-intelligence."
+    },
+    {
+      "id": "logistica-analytics-v2",
+      "query": "visualización de datos en tableros de control",
+      "expected": [
+        "grafana/grafana"
+      ],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso logistica-flota. \"Tableros de entregas por ciudad\". grafana: topics dashboard, data-visualization, business-intelligence."
+    },
+    {
+      "id": "soporte-ai",
+      "query": "servidor para modelos de lenguaje locales",
+      "expected": [
+        "ollama/ollama",
+        "vllm-project/vllm"
+      ],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso soporte-ia. La consulta pide correr modelos, no armar respuestas con documentos: llama_index fuera. ollama: correr modelos propios. vllm: 'inference and serving engine for LLMs'."
+    },
+    {
+      "id": "soporte-ai-v2",
+      "query": "ejecucion local de modelos de inteligencia artificial",
+      "expected": [
+        "ollama/ollama",
+        "vllm-project/vllm"
+      ],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso soporte-ia. Igual que la anterior: ejecutar modelos localmente. ollama y vllm."
+    },
+    {
+      "id": "soporte-search",
+      "query": "búsqueda de texto en documentos",
+      "expected": [
+        "opensearch-project/OpenSearch"
+      ],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso soporte-ia. \"Buscador para su centro de ayuda\". OpenSearch: \"search engine\", topics search y search-engine."
+    },
+    {
+      "id": "soporte-search-v2",
+      "query": "buscador de texto para centro de ayuda",
+      "expected": [
+        "opensearch-project/OpenSearch"
+      ],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso soporte-ia. \"Buscador para su centro de ayuda\". OpenSearch: \"search engine\", topics search y search-engine."
+    },
+    {
+      "id": "soporte-observability",
+      "query": "monitoreo de rendimiento y errores",
+      "expected": [
+        "grafana/grafana",
+        "open-telemetry/opentelemetry-collector",
+        "prometheus/prometheus"
+      ],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso soporte-ia. \"Cuánto tarda y cuántas veces falla\": métricas del servicio. prometheus: monitoring, metrics. grafana: observabilidad y tableros. opentelemetry-collector: metrics, observability."
+    },
+    {
+      "id": "soporte-observability-v2",
+      "query": "monitoreo de rendimiento y errores de aplicacion",
+      "expected": [
+        "grafana/grafana",
+        "open-telemetry/opentelemetry-collector",
+        "prometheus/prometheus"
+      ],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso soporte-ia. \"Cuánto tarda y cuántas veces falla\": métricas del servicio. prometheus: monitoring, metrics. grafana: observabilidad y tableros. opentelemetry-collector: metrics, observability."
+    },
+    {
+      "id": "periodico-cms",
+      "query": "edición sencilla de contenidos periodísticos",
+      "expected": [],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso periodico-digital. \"Publiquen desde un editor sencillo\". El catálogo no tiene gestores de contenido."
+    },
+    {
+      "id": "periodico-cms-v2",
+      "query": "gestion de contenido editorial",
+      "expected": [],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso periodico-digital. \"Publiquen desde un editor sencillo\". El catálogo no tiene gestores de contenido."
+    },
+    {
+      "id": "periodico-frontend",
+      "query": "construcción de sitio web rápido",
+      "expected": [
+        "nuxt/nuxt",
+        "vercel/next.js",
+        "withastro/astro"
+      ],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso periodico-digital. \"Un sitio web muy rápido\": aquí el sitio es una necesidad en sí. astro: \"framework for content-driven websites\" (licencia: el README indica MIT). next.js y nuxt: frameworks web completos."
+    },
+    {
+      "id": "periodico-frontend-v2",
+      "query": "construccion de interfaz web rapida",
+      "expected": [
+        "nuxt/nuxt",
+        "vercel/next.js",
+        "withastro/astro"
+      ],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso periodico-digital. \"Un sitio web muy rápido\": aquí el sitio es una necesidad en sí. astro: \"framework for content-driven websites\" (licencia: el README indica MIT). next.js y nuxt: frameworks web completos. 'Interfaz web' también describe librerías de interfaz (react, vue, svelte), que no construyen un sitio completo; se mantienen los frameworks de sitios porque el usuario pidió un sitio web rápido."
+    },
+    {
+      "id": "periodico-communication",
+      "query": "envío masivo de correo electrónico",
+      "expected": [],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso periodico-digital. \"Boletín diario por correo\". Sin repos de envío de correo a clientes."
+    },
+    {
+      "id": "periodico-communication-v2",
+      "query": "envio masivo de correos",
+      "expected": [],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso periodico-digital. \"Boletín diario por correo\". Sin repos de envío de correo a clientes."
+    },
+    {
+      "id": "periodico-analytics",
+      "query": "medición de lectura de notas",
+      "expected": [],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso periodico-digital. \"Qué notas se leen más\": medir visitas. grafana muestra datos pero no los recoge; no hay herramientas de analítica web."
+    },
+    {
+      "id": "periodico-analytics-v2",
+      "query": "analitica de uso de contenido",
+      "expected": [],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso periodico-digital. \"Qué notas se leen más\": medir visitas. grafana muestra datos pero no los recoge; no hay herramientas de analítica web."
+    },
+    {
+      "id": "saas-largo-auth",
+      "query": "autenticacion de usuarios mediante OIDC y RBAC",
+      "expected": [],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso pantalla-saas-largo. \"SSO mediante OIDC y RBAC\". Sin repos de identidad y acceso en el catálogo."
+    },
+    {
+      "id": "saas-largo-auth-v2",
+      "query": "autenticación federada y control de acceso basado en roles",
+      "expected": [],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso pantalla-saas-largo. \"SSO mediante OIDC y RBAC\". Sin repos de identidad y acceso en el catálogo."
+    },
+    {
+      "id": "rag-largo-ai",
+      "query": "modelos de lenguaje e inferencia local",
+      "expected": [
+        "ollama/ollama",
+        "vllm-project/vllm"
+      ],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso pantalla-rag-largo. La consulta pide inferencia local de modelos: ollama y vllm ('inference and serving engine for LLMs', agregado con evidencia). langchain y llama_index fuera: arman el RAG, no corren el modelo."
+    },
+    {
+      "id": "rag-largo-ai-v2",
+      "query": "inferencia de modelos de inteligencia artificial",
+      "expected": [
+        "ollama/ollama",
+        "vllm-project/vllm"
+      ],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso pantalla-rag-largo. Inferencia de modelos: ollama y vllm."
+    },
+    {
+      "id": "rag-largo-search",
+      "query": "búsqueda híbrida y vectorial de texto",
+      "expected": [
+        "opensearch-project/OpenSearch",
+        "pgvector/pgvector"
+      ],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso pantalla-rag-largo. Búsqueda híbrida y vectorial: OpenSearch ('search engine') y pgvector ('vector similarity search', agregado con evidencia; la búsqueda no filtra por licencia)."
+    },
+    {
+      "id": "rag-largo-search-v2",
+      "query": "búsqueda híbrida de texto y vectores",
+      "expected": [
+        "opensearch-project/OpenSearch",
+        "pgvector/pgvector"
+      ],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso pantalla-rag-largo. Igual que la anterior: OpenSearch y pgvector."
+    },
+    {
+      "id": "rag-largo-auth",
+      "query": "control de acceso y permisos por documento",
+      "expected": [],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso pantalla-rag-largo. \"Permisos por documento\". Sin repos de control de acceso en el catálogo."
+    },
+    {
+      "id": "rag-largo-auth-v2",
+      "query": "gestión de permisos por documento",
+      "expected": [],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 3). Caso pantalla-rag-largo. \"Permisos por documento\". Sin repos de control de acceso en el catálogo."
+    },
+    {
+      "id": "api-largo-database",
+      "query": "gestión de base de datos relacional",
+      "expected": [],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso pantalla-api-largo. El usuario nombra PostgreSQL, que no está en el catálogo: debería decirlo en limitaciones, sin reemplazarlo en silencio por otra base. Casi: psycopg, sqlalchemy y sqlmodel son de la categoría base de datos (drivers y ORM), pero no son la base relacional que pide el usuario."
+    },
+    {
+      "id": "api-largo-cache",
+      "query": "caché distribuida en memoria",
+      "expected": [
+        "redis/redis"
+      ],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso pantalla-api-largo. \"Caché distribuida\". redis: topics cache, caching, in-memory. Licencia: el README indica que desde la 8.x se puede usar bajo AGPLv3."
+    },
+    {
+      "id": "api-largo-cache-v2",
+      "query": "almacenamiento en caché distribuida en memoria",
+      "expected": [
+        "redis/redis"
+      ],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 3). Caso pantalla-api-largo. \"Caché distribuida\". redis: topics cache, caching, in-memory. Licencia: el README indica que desde la 8.x se puede usar bajo AGPLv3."
+    },
+    {
+      "id": "api-largo-infrastructure",
+      "query": "escalado horizontal y alta disponibilidad",
+      "expected": [
+        "kubernetes/kubernetes",
+        "nginx/nginx",
+        "traefik/traefik"
+      ],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso pantalla-api-largo. \"Alta disponibilidad y escalado horizontal\". kubernetes: \"container scheduling\". nginx: topic load-balancer. traefik: \"application proxy\", topics gateway, ingress."
+    },
+    {
+      "id": "api-largo-infrastructure-v2",
+      "query": "orquestación y escalado de contenedores",
+      "expected": [
+        "kubernetes/kubernetes"
+      ],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso pantalla-api-largo. Orquestación de contenedores: kubernetes ('container scheduling and management'). nginx y traefik fuera: son proxies, no orquestan."
+    },
+    {
+      "id": "saas-corto-auth",
+      "query": "autenticacion y control de acceso por roles",
+      "expected": [],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso pantalla-saas-corto. \"Autenticación y roles\". Sin repos de identidad y acceso en el catálogo."
+    },
+    {
+      "id": "saas-corto-auth-v2",
+      "query": "autenticación y gestión de roles",
+      "expected": [],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso pantalla-saas-corto. \"Autenticación y roles\". Sin repos de identidad y acceso en el catálogo."
+    },
+    {
+      "id": "rag-corto-ai",
+      "query": "recuperacion de informacion y generacion aumentada",
+      "expected": [
+        "langchain-ai/langchain",
+        "run-llama/llama_index"
+      ],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso pantalla-rag-corto. Generación aumentada por recuperación (RAG): llama_index ('document processing platform for AI') y langchain (topic rag). ollama fuera: corre modelos, no arma el RAG."
+    },
+    {
+      "id": "rag-corto-ai-v2",
+      "query": "recuperación de información aumentada por generación",
+      "expected": [
+        "langchain-ai/langchain",
+        "run-llama/llama_index"
+      ],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso pantalla-rag-corto. RAG: llama_index y langchain (topic rag)."
+    },
+    {
+      "id": "rag-corto-auth",
+      "query": "gestion de identidad y control de acceso",
+      "expected": [],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso pantalla-rag-corto. \"Permisos de acceso\". Sin repos de control de acceso en el catálogo."
+    },
+    {
+      "id": "rag-corto-auth-v2",
+      "query": "gestión de permisos de acceso",
+      "expected": [],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso pantalla-rag-corto. \"Permisos de acceso\". Sin repos de control de acceso en el catálogo."
+    },
+    {
+      "id": "api-corto-cache",
+      "query": "almacenamiento temporal en memoria",
+      "expected": [
+        "redis/redis"
+      ],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso pantalla-api-corto. \"Caché\". redis: topics cache, caching. Licencia: el README indica que desde la 8.x se puede usar bajo AGPLv3."
+    },
+    {
+      "id": "api-corto-cache-v2",
+      "query": "almacenamiento en caché en memoria",
+      "expected": [
+        "redis/redis"
+      ],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso pantalla-api-corto. \"Caché\". redis: topics cache, caching. Licencia: el README indica que desde la 8.x se puede usar bajo AGPLv3."
+    },
+    {
+      "id": "api-corto-infrastructure",
+      "query": "escalado horizontal de contenedores",
+      "expected": [
+        "kubernetes/kubernetes"
+      ],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso pantalla-api-corto. Escalado de contenedores: kubernetes. nginx y traefik fuera: son proxies, no escalan contenedores."
+    },
+    {
+      "id": "api-corto-infrastructure-v2",
+      "query": "escalado horizontal de infraestructura",
+      "expected": [
+        "kubernetes/kubernetes",
+        "nginx/nginx",
+        "traefik/traefik"
+      ],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso pantalla-api-corto. \"Alta disponibilidad y escalado horizontal\". kubernetes, nginx (load-balancer), traefik (proxy, ingress)."
+    },
+    {
+      "id": "eventos-messaging",
+      "query": "procesamiento asíncrono basado en eventos",
+      "expected": [
+        "apache/kafka",
+        "celery/celery"
+      ],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso pantalla-eventos. \"Colas y reintentos\". kafka: \"event streaming platform\". celery: \"Distributed Task Queue\", el README menciona reintentos automáticos; licencia: el README indica BSD."
+    },
+    {
+      "id": "eventos-messaging-v2",
+      "query": "procesamiento asíncrono basado en colas",
+      "expected": [
+        "apache/kafka",
+        "celery/celery"
+      ],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso pantalla-eventos. \"Colas y reintentos\". kafka: \"event streaming platform\". celery: \"Distributed Task Queue\", el README menciona reintentos automáticos; licencia: el README indica BSD."
+    },
+    {
+      "id": "observabilidad-observability",
+      "query": "recoleccion y visualizacion de metricas logs y trazas",
+      "expected": [
+        "open-telemetry/opentelemetry-collector",
+        "prometheus/prometheus",
+        "grafana/grafana"
+      ],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso pantalla-observabilidad. Recolección y visualización: opentelemetry-collector (metrics, observability), prometheus (metrics, monitoring) y grafana ('observability … platform. Visualize metrics, logs, and traces'). jaeger fuera: solo trazas, y el máximo es 3."
+    },
+    {
+      "id": "observabilidad-observability-v2",
+      "query": "recolección de métricas, logs y trazas",
+      "expected": [
+        "jaegertracing/jaeger",
+        "open-telemetry/opentelemetry-collector",
+        "prometheus/prometheus"
+      ],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 2). Caso pantalla-observabilidad. \"Métricas, logs y trazas\". opentelemetry-collector: metrics, observability, telemetry. jaeger: \"Distributed Tracing Platform\". prometheus: monitoring, metrics."
+    },
+    {
+      "id": "una-busqueda-search",
+      "query": "búsqueda tolerante a errores de escritura",
+      "expected": [
+        "opensearch-project/OpenSearch"
+      ],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso una-busqueda. OpenSearch: \"search engine\", topics search y search-engine. Los datos del catálogo no confirman tolerancia a errores de escritura."
+    },
+    {
+      "id": "una-pagos-payments",
+      "query": "cobro de suscripciones recurrentes",
+      "expected": [],
+      "pair": null,
+      "note": "Consulta escrita por el paso de entender (Gemini 3.5 Flash-Lite, 3-nov, corrida 1). Caso una-pagos. El catálogo no tiene repos de pagos ni de facturación."
+    },
+    {
+      "id": "back-api",
+      "query": "construcción de APIs web en Python",
+      "expected": [
+        "fastapi/fastapi",
+        "django/django",
+        "pallets/flask"
+      ],
+      "pair": null,
+      "note": "Escrita a mano. fastapi: 'FastAPI framework', topics api, openapi. django: 'Web framework'. flask: 'micro framework for building web applications'."
+    },
+    {
+      "id": "back-asgi",
+      "query": "servidor web asíncrono ligero",
+      "expected": [
+        "Kludex/starlette",
+        "fastapi/fastapi"
+      ],
+      "pair": null,
+      "note": "Escrita a mano. starlette: 'little ASGI framework', topics async, http. fastapi: topics async, asyncio."
+    },
+    {
+      "id": "dev-lint-python",
+      "query": "revisión de estilo de código Python",
+      "expected": [
+        "astral-sh/ruff",
+        "psf/black"
+      ],
+      "pair": "lint",
+      "note": "Escrita a mano. ruff: 'Python linter and code formatter'. black: 'Python code formatter'."
+    },
+    {
+      "id": "dev-lint-javascript",
+      "query": "detección de errores en código JavaScript",
+      "expected": [
+        "eslint/eslint",
+        "biomejs/biome"
+      ],
+      "pair": "lint",
+      "note": "Escrita a mano. eslint: 'Find and fix problems in your JavaScript code'. biome: linter, topics javascript, static-code-analysis."
+    },
+    {
+      "id": "dev-test-navegador",
+      "query": "pruebas automatizadas de interfaz en el navegador",
+      "expected": [
+        "microsoft/playwright",
+        "cypress-io/cypress"
+      ],
+      "pair": "tests",
+      "note": "Escrita a mano. playwright: 'Web Testing and Automation', topic e2e-testing. cypress: 'testing for anything that runs in a browser'."
+    },
+    {
+      "id": "dev-test-unitarias",
+      "query": "pruebas unitarias de código Python",
+      "expected": [
+        "pytest-dev/pytest"
+      ],
+      "pair": "tests",
+      "note": "Escrita a mano. pytest: 'makes it easy to write small tests', topics unit-testing, python."
+    },
+    {
+      "id": "dev-dependencias",
+      "query": "gestión de dependencias de proyectos Python",
+      "expected": [
+        "astral-sh/uv"
+      ],
+      "pair": null,
+      "note": "Escrita a mano. uv: 'Python package and project manager', topics packaging, resolver."
+    },
+    {
+      "id": "infra-despliegue-continuo",
+      "query": "despliegue continuo en clústeres de contenedores",
+      "expected": [
+        "argoproj/argo-cd",
+        "fluxcd/flux2"
+      ],
+      "pair": null,
+      "note": "Escrita a mano. argo-cd: 'Declarative Continuous Deployment for Kubernetes'. flux2: 'continuous delivery solution for Kubernetes', topic gitops."
+    },
+    {
+      "id": "infra-como-codigo",
+      "query": "infraestructura como código en la nube",
+      "expected": [
+        "hashicorp/terraform"
+      ],
+      "pair": null,
+      "note": "Escrita a mano. terraform: topics infrastructure-as-code, cloud."
+    },
+    {
+      "id": "auto-servidores",
+      "query": "automatización de configuración de servidores",
+      "expected": [
+        "ansible/ansible"
+      ],
+      "pair": "automation",
+      "note": "Escrita a mano. ansible: 'IT automation platform … easier to deploy'. Par con la automatización de ventas en hojas de cálculo (sin respuesta)."
+    },
+    {
+      "id": "obs-trazas",
+      "query": "seguimiento de trazas distribuidas entre servicios",
+      "expected": [
+        "jaegertracing/jaeger",
+        "open-telemetry/opentelemetry-collector"
+      ],
+      "pair": null,
+      "note": "Escrita a mano. jaeger: 'Distributed Tracing Platform'. opentelemetry-collector: topics telemetry, observability."
+    },
+    {
+      "id": "seguridad-secretos",
+      "query": "gestión segura de secretos y credenciales",
+      "expected": [
+        "hashicorp/vault"
+      ],
+      "pair": "access",
+      "note": "Escrita a mano. vault: 'secrets management, encryption as a service'. Par con la identidad de usuarios (sin respuesta): vault guarda secretos de sistemas, no hace inicio de sesión."
+    },
+    {
+      "id": "datos-lotes",
+      "query": "procesamiento de grandes volúmenes de datos por lotes",
+      "expected": [
+        "apache/spark",
+        "apache/beam"
+      ],
+      "pair": null,
+      "note": "Escrita a mano. spark: 'unified analytics engine for large-scale data processing'. beam: 'Batch and Streaming'."
+    },
+    {
+      "id": "datos-orquestacion",
+      "query": "orquestación de flujos de datos programados",
+      "expected": [
+        "apache/airflow",
+        "PrefectHQ/prefect",
+        "dagster-io/dagster"
+      ],
+      "pair": null,
+      "note": "Escrita a mano. airflow: 'author, schedule, and monitor workflows'. prefect: 'workflow orchestration framework … data pipelines'. dagster: 'orchestration platform … data assets'."
+    },
+    {
+      "id": "busqueda-vectorial",
+      "query": "búsqueda por similitud de vectores",
+      "expected": [
+        "pgvector/pgvector",
+        "opensearch-project/OpenSearch"
+      ],
+      "pair": null,
+      "note": "Escrita a mano. pgvector: 'vector similarity search for Postgres'. OpenSearch: motor de búsqueda (la búsqueda no filtra por licencia)."
+    },
+    {
+      "id": "none-contabilidad",
+      "query": "contabilidad y nómina de empleados",
+      "expected": [],
+      "pair": null,
+      "note": "Escrita a mano. Sin software contable en el catálogo."
+    },
+    {
+      "id": "none-inventario",
+      "query": "control de inventario de productos",
+      "expected": [],
+      "pair": null,
+      "note": "Escrita a mano. Sin sistemas de inventario o ERP en el catálogo."
+    },
+    {
+      "id": "none-videollamadas",
+      "query": "videollamadas desde el navegador",
+      "expected": [],
+      "pair": null,
+      "note": "Escrita a mano. Sin repos de video en tiempo real."
+    },
+    {
+      "id": "none-factura-electronica",
+      "query": "emisión de facturas electrónicas",
+      "expected": [],
+      "pair": null,
+      "note": "Escrita a mano. Sin repos de facturación."
     }
   ]
 }

@@ -13,17 +13,19 @@ from ai import embeddings
 from ai.eval.golden import (DEFAULT_GOLDEN,
                             EVAL_DIR,
                             GOLDEN_FILES,
+                            REPORT_PREFIX,
                             SearchGoldenSet,
                             SearchQuery,
                             load_search_queries,)
-from ai.eval.metrics import QueryOutcome, expected_ranks, summarize, threshold_errors
+from ai.eval.metrics import (QueryOutcome,
+                             expected_ranks,
+                             suggest_min_score,
+                             summarize,
+                             threshold_errors,)
 from ai.search import SearchIndex, SearchResult
 
 K = 3
 RESULTS_DIR = EVAL_DIR / "results"
-
-# Nombre del reporte por golden set.
-REPORT_PREFIX = {"catalog": "search-catalog", "sample": "search"}
 
 
 def short(full_name: str) -> str:
@@ -52,6 +54,10 @@ def render_report(model: str, min_score: float | None, golden_name: str,
         f"| hit@{K} | {summary['hits']}/{summary['n']} ({summary['hit_rate']:.0%}) |",
         f"| MRR@{K} | {summary['mrr']:.2f} |",
         f"| recall@{K} | {summary['recall']:.0%} |",
+        (
+            f"| hit@5 (con 5 candidatos por necesidad) | "
+            f"{summary['hits_5']}/{summary['n']} ({summary['hit_rate_5']:.0%}) |"
+        ),
         f"| Carga del modelo + primera consulta | {times['load']:.1f} s |",
         f"| Vectores del catálogo ({n_repos} repos) | {times['build']:.1f} s |",
         f"| Consulta (promedio) | {times['query']:.2f} s |",
@@ -82,26 +88,42 @@ def render_report(model: str, min_score: float | None, golden_name: str,
         if not q.answerable:
             lines.append(f"| `{q.id}` | {top_cell(top)} |")
 
-    lines += ["", "## Umbral de `no_evidence`", ""]
-    if min_score is None:
-        lines.append("Sin calibrar para este modelo (`min_score = None`).")
-    else:
-        outcomes = [o for _, _, o in rows]
-        answered = [o.top_score for o in outcomes if o.answerable]
-        unanswered = [o.top_score for o in outcomes if not o.answerable]
-        blocked, leaked = threshold_errors(outcomes, min_score)
-        ids = lambda xs: ", ".join(f"`{x}`" for x in xs) or "—"
+    outcomes = [o for _, _, o in rows]
+    answered = [o for o in outcomes if o.answerable]
+    resolved = [o for o in answered if o.rank is not None and o.rank <= K]
+    unresolved = [o for o in answered if o not in resolved]
+    unanswered = [o for o in outcomes if not o.answerable]
+    suggested = suggest_min_score(outcomes, K)
+    ids = lambda xs: ", ".join(f"`{o.query_id}`" for o in xs) or "—"
+    span = lambda xs: (f"{min(o.top_score for o in xs):.3f} – {max(o.top_score for o in xs):.3f}"
+                       if xs else "—")
+    current = "sin calibrar" if min_score is None else f"{min_score:.2f}"
+    proposal = "—" if suggested is None else f"**{suggested:.2f}**"
+    lines += [
+        "", "## Umbral de `no_evidence`", "",
+        "Si el 1.er resultado de una necesidad puntúa menos que el umbral, se responde como "
+        f"sin evidencia. Para calcularlo solo cuentan las consultas con respuesta que la búsqueda "
+        f"resuelve (algún esperado en el top-{K}); las demás son fallos de búsqueda.",
+        "",
+        "| | Valor |",
+        "|---|---|",
+        f"| 1.er resultado, con respuesta resueltas ({len(resolved)}) | {span(resolved)} |",
+        f"| 1.er resultado, con respuesta no resueltas ({len(unresolved)}) | {span(unresolved)} |",
+        f"| 1.er resultado, sin respuesta ({len(unanswered)}) | {span(unanswered)} |",
+        f"| Umbral actual del modelo | {current} |",
+        f"| Umbral que sugiere la regla | {proposal} |",
+    ]
+    for label, cut in (("actual", min_score), ("sugerido", suggested)):
+        if cut is None or (label == "sugerido" and cut == min_score):
+            continue
+        blocked, leaked = threshold_errors(resolved + unanswered, cut)
         lines += [
-            f"Umbral: **{min_score:.3f}**. Si el 1.er resultado puntúa menos, "
-            "la necesidad se responde como sin evidencia.",
-            "",
-            "| | Valor |",
-            "|---|---|",
-            f"| 1.er resultado, consultas con respuesta | {min(answered):.3f} – {max(answered):.3f} |",
-            f"| 1.er resultado, consultas sin respuesta | {min(unanswered):.3f} – {max(unanswered):.3f} |",
-            f"| Con respuesta bloqueadas (error grave) | {len(blocked)}/{len(answered)}: {ids(blocked)} |",
-            f"| Sin respuesta que pasan (las puede frenar el LLM) | {len(leaked)}/{len(unanswered)}: {ids(leaked)} |",
+            f"| Umbral {label}: resueltas bloqueadas (error grave) | "
+            f"{len(blocked)}/{len(resolved)}: {', '.join(f'`{x}`' for x in blocked) or '—'} |",
+            f"| Umbral {label}: sin respuesta que pasan | "
+            f"{len(leaked)}/{len(unanswered)}: {', '.join(f'`{x}`' for x in leaked) or '—'} |",
         ]
+    lines += ["", f"Fallos de búsqueda (no cuentan para el umbral): {ids(unresolved)}"]
 
     return "\n".join(lines) + "\n"
 
@@ -137,6 +159,8 @@ def main(argv: list[str] | None = None) -> None:
         outcomes.append(outcome)
 
     summary = summarize(outcomes, K)
+    at_5 = summarize(outcomes, 5)
+    summary["hits_5"], summary["hit_rate_5"] = at_5["hits"], at_5["hit_rate"]
     times = {"load": load_s, "build": build_s, "query": sum(query_s) / len(query_s)}
 
     RESULTS_DIR.mkdir(exist_ok=True)
@@ -148,6 +172,8 @@ def main(argv: list[str] | None = None) -> None:
     print(f"Modelo: {model} · golden set: {args.golden} · catálogo: {golden.source} ({n_repos} repos)")
     print(f"hit@{K}: {summary['hits']}/{summary['n']}  MRR@{K}: {summary['mrr']:.2f}  "
           f"recall@{K}: {summary['recall']:.0%}")
+    suggested = suggest_min_score(outcomes, K)
+    print(f"Umbral actual: {spec.min_score}  ·  sugerido por la regla: {suggested}")
     print(f"Reporte: {path}")
 
 

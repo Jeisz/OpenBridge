@@ -1,5 +1,6 @@
 """Métricas de la búsqueda contra el golden set: hit@k, MRR@k, recall@k y umbral."""
 
+import math
 from dataclasses import dataclass
 
 
@@ -60,3 +61,24 @@ def threshold_errors(outcomes: list[QueryOutcome],
     blocked = [o.query_id for o in outcomes if o.answerable and o.top_score < min_score]
     leaked = [o.query_id for o in outcomes if not o.answerable and o.top_score >= min_score]
     return blocked, leaked
+
+
+def suggest_min_score(outcomes: list[QueryOutcome], k: int) -> float | None:
+    """Umbral de no_evidence según la regla de ai/eval/README.md.
+
+    Solo cuentan las consultas con respuesta que la búsqueda resuelve (algún
+    esperado en el top-k). Si se separan de las sin respuesta, el corte es el
+    menor valor de dos decimales por encima de la mejor sin respuesta; si no,
+    la peor resuelta redondeada hacia abajo. None si no hay ninguna resuelta.
+    """
+    resolved = [o.top_score for o in outcomes
+                if o.answerable and o.rank is not None and o.rank <= k]
+    if not resolved:
+        return None
+    worst = min(resolved)
+    below_worst = math.floor(round(worst * 100, 6)) / 100
+    unanswered = [o.top_score for o in outcomes if not o.answerable]
+    if not unanswered:
+        return round(below_worst, 2)
+    above_best = (math.floor(round(max(unanswered) * 100, 6)) + 1) / 100
+    return round(above_best if above_best <= worst else below_worst, 2)

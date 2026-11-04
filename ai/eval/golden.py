@@ -22,6 +22,9 @@ GOLDEN_FILES: dict[str, Path] = {
     "catalog": EVAL_DIR / "search_queries_catalog.json",
     "sample": EVAL_DIR / "search_queries.json",
 }
+# Nombre del reporte de cada golden set. El de los datos de ejemplo conserva su
+# nombre original para regenerarse en el mismo archivo.
+REPORT_PREFIX: dict[str, str] = {"catalog": "search-catalog", "sample": "search"}
 
 
 class SearchQuery(BaseModel):

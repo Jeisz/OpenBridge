@@ -7,7 +7,7 @@ from datetime import datetime
 import pytest
 
 from ai.catalog import load_raw
-from ai.eval.golden import GOLDEN_FILES, SearchGoldenSet, load_search_queries
+from ai.eval.golden import GOLDEN_FILES, REPORT_PREFIX, SearchGoldenSet, load_search_queries
 from ai.scripts.export_catalog_snapshot import META_FILE
 
 
@@ -68,3 +68,8 @@ def test_golden_del_catalogo_lleva_la_fecha_del_snapshot_actual():
 def test_golden_desconocido_es_error():
     with pytest.raises(ValueError, match="no existe"):
         load_search_queries("snapshop")
+
+
+def test_cada_golden_set_tiene_nombre_de_reporte():
+    # Sin esto, un golden set nuevo fallaría al final de la evaluación, al escribir el reporte.
+    assert set(REPORT_PREFIX) == set(GOLDEN_FILES)

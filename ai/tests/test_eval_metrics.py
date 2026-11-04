@@ -2,7 +2,11 @@
 
 import pytest
 
-from ai.eval.metrics import QueryOutcome, expected_ranks, summarize, threshold_errors
+from ai.eval.metrics import (QueryOutcome,
+                             expected_ranks,
+                             suggest_min_score,
+                             summarize,
+                             threshold_errors,)
 
 
 def test_posicion_de_cada_esperado():
@@ -56,3 +60,39 @@ def test_umbral_separa_los_dos_errores():
 
 def test_puntaje_igual_al_umbral_pasa():
     assert threshold_errors([QueryOutcome("borde", (1,), 0.20)], 0.20) == ([], [])
+
+
+def test_umbral_sugerido_con_los_numeros_medidos():
+    # Primera medición sobre el catálogo real: el corte calculado a mano fue 0.20.
+    outcomes = [
+        QueryOutcome("msg", (2,), 0.307),
+        QueryOutcome("db", (2, 3), 0.241),
+        QueryOutcome("ia", (1, 15), 0.242),
+        QueryOutcome("obs", (3, 5, 4), 0.415),
+        QueryOutcome("proc", (14, 4), 0.298),    # no resuelta: no cuenta
+        QueryOutcome("tableros", (9,), 0.146),   # no resuelta: no cuenta
+        QueryOutcome("n1", (), 0.194),
+        QueryOutcome("n2", (), 0.121),
+    ]
+    assert suggest_min_score(outcomes, k=3) == 0.20
+
+
+def test_umbral_sugerido_si_se_solapan_es_la_peor_resuelta():
+    outcomes = [QueryOutcome("ok", (1,), 0.247), QueryOutcome("n", (), 0.30)]
+    assert suggest_min_score(outcomes, k=3) == 0.24
+
+
+def test_umbral_sugerido_con_margen_menor_a_un_centesimo():
+    # 0.25 bloquearía la válida (0.249): se baja a 0.24 y la sin respuesta pasa.
+    outcomes = [QueryOutcome("ok", (1,), 0.249), QueryOutcome("n", (), 0.243)]
+    assert suggest_min_score(outcomes, k=3) == 0.24
+
+
+def test_umbral_sugerido_si_la_mejor_sin_respuesta_cae_justo_en_el_corte():
+    # Un puntaje igual al umbral pasa: con 0.20 exacto, el corte sube a 0.21.
+    outcomes = [QueryOutcome("ok", (1,), 0.30), QueryOutcome("n", (), 0.20)]
+    assert suggest_min_score(outcomes, k=3) == 0.21
+
+
+def test_sin_resueltas_no_hay_umbral_sugerido():
+    assert suggest_min_score([QueryOutcome("x", (5,), 0.30)], k=3) is None

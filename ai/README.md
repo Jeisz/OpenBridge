@@ -19,9 +19,9 @@ modelo de embeddings: `load_repos(source="sample")`.
 devuelve los repos del catálogo más parecidos por significado, con filtros por licencia,
 health score y categoría.
 
-**Evaluación de la búsqueda.** Dos golden sets (catálogo real (Snapshot) y datos de ejemplo), métricas
+**Evaluación de la búsqueda.** Dos golden sets (catálogo real y datos de ejemplo), métricas
 (hit@3, MRR, recall) y umbral de "sin evidencia", con un solo comando. Resultados y
-decisiones en [`eval/README.md`](eval/README.md).
+decisiones en [`eval/SEARCH_DECISION.md`](eval/SEARCH_DECISION.md).
 
 **Casos de prueba del asistente.** 18 pedidos de negocio con el status, las necesidades y
 los repos aceptables esperados, escritos contra el snapshot del catálogo real. Detalle en
@@ -58,7 +58,8 @@ ai/
 │   ├── catalog/                # Snapshot del catálogo real: repos.json, readmes/, meta.json
 │   └── seed/                   # Datos de ejemplo para las tablas de la IA (8 repos)
 ├── eval/
-│   ├── README.md               # Evaluación de la búsqueda: método, resultados y decisiones
+│   ├── README.md               # Evaluación de la búsqueda: cómo correrla y leerla
+│   ├── SEARCH_DECISION.md      # Modelo de embeddings y umbral: decisión y evidencia
 │   ├── ASSISTANT_CASES.md      # Información de casos de prueba del asistente
 │   ├── LLM_DECISION.md         # Elección del modelo de lenguaje: criterios, resultados y descartados
 │   ├── assistant_cases.json    # Casos de prueba del asistente
@@ -105,7 +106,7 @@ uv pip install -r ai/requirements.txt
 ### Modelo de embeddings
 
 El modelo por defecto es `google/embeddinggemma-300m`. Por qué este modelo:
-[`eval/README.md`](eval/README.md).
+[`eval/SEARCH_DECISION.md`](eval/SEARCH_DECISION.md).
 
 **Requisito, una vez por máquina:** el modelo pide aceptar su licencia en
 Hugging Face.
@@ -120,8 +121,8 @@ Después:
 
 - La primera vez se descargan ~1,2 GB a la caché de Hugging Face; luego se
   leen de ahí. Para trabajar sin internet: `export HF_HUB_OFFLINE=1`.
-- Corre en CPU, con ~1,2 GB de RAM aproximadamente. Construir el índice de
-  20 repos tarda ~5 s; cada consulta, menos de 0,1 s.
+- Corre en CPU, con ~1,2 GB de RAM aproximadamente. Construir el índice del
+  catálogo (100 repos) tarda ~9 s; cada consulta, menos de 0,1 s.
 - Otro modelo del registro: `AI_EMBEDDING_MODEL=qwen3` (Qwen3-Embedding-0.6B,
   sin licencia que aceptar, ~2,4 GB de RAM, sin umbral calibrado).
 - En Windows puede aparecer una advertencia de Hugging Face sobre *symlinks*:
