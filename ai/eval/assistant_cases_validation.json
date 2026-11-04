@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "catalog_taken_at": "2026-10-29T20:42:17+00:00",
   "cases": [
     {
@@ -86,6 +86,106 @@
         }
       ],
       "note": "Ninguna necesidad tiene herramientas en el catálogo: si algún candidato pasa el umbral, el asistente debería descartarlo."
+    },
+    {
+      "id": "gimnasio-cobros",
+      "query": "Un gimnasio con tres sedes quiere cobrar las mensualidades en línea, avisar por WhatsApp a los socios que se atrasan en el pago y guardar el historial de pagos en una base de datos relacional.",
+      "expected_status": "no_evidence",
+      "needs": [
+        {
+          "category": "payments",
+          "acceptable": [],
+          "note": "\"Cobrar las mensualidades en línea\": cobros. El catálogo no tiene pasarelas ni facturación."
+        },
+        {
+          "category": "communication",
+          "acceptable": [],
+          "note": "\"Avisar por WhatsApp a los socios\": mensajes a personas. alertmanager solo envía alertas técnicas de monitoreo."
+        },
+        {
+          "category": "database",
+          "acceptable": [],
+          "note": "\"Una base de datos relacional para guardar\": hace falta un motor. El catálogo solo tiene librerías para usar una base desde el código y bases analíticas."
+        }
+      ],
+      "note": "Tres necesidades sin herramientas: la respuesta debe informar cada una una sola vez."
+    },
+    {
+      "id": "repuestos-buscador",
+      "query": "Tenemos una tienda en línea de repuestos para motos con la API hecha en Django. Queremos agregar un buscador de productos por nombre o referencia (el equipo pensaba en Elasticsearch) y medir la latencia y los errores de la API.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "search",
+          "acceptable": ["opensearch-project/OpenSearch"],
+          "note": "\"Un buscador de productos\": motor de búsqueda (\"distributed and RESTful search engine\"). Elasticsearch no está en el catálogo."
+        },
+        {
+          "category": "observability",
+          "acceptable": ["prometheus/prometheus"],
+          "note": "\"Medir la latencia y los errores\": métricas (\"monitoring system and time series database\")."
+        }
+      ],
+      "note": "El usuario nombra una tecnología que no está entre los candidatos (Elasticsearch); Django es contexto, no necesidad."
+    },
+    {
+      "id": "restaurantes-reportes",
+      "query": "Una cadena de doce restaurantes quiere procesar cada noche las ventas del día de todos sus locales para recalcular el inventario de cada uno, y mandar por correo el reporte a cada gerente a primera hora.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "data-processing",
+          "acceptable": ["apache/airflow", "PrefectHQ/prefect", "dagster-io/dagster"],
+          "note": "\"Procesar cada noche las ventas\": proceso programado sobre los datos (orquestación de flujos de datos)."
+        },
+        {
+          "category": "communication",
+          "acceptable": [],
+          "note": "\"Mandar por correo el reporte\": mensajes a personas. El catálogo no tiene envío de correo."
+        }
+      ],
+      "note": "Una necesidad con herramienta y otra sin ella: la de comunicación debe aparecer una sola vez."
+    },
+    {
+      "id": "energia-medidores",
+      "query": "Una empresa de energía recibe lecturas de 50.000 medidores cada 15 minutos. Quiere recibirlas en streaming con Kafka, guardarlas en una base de datos para series de tiempo como InfluxDB y mostrar tableros de consumo en Grafana.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "messaging",
+          "acceptable": ["apache/kafka"],
+          "note": "\"Recibirlas en streaming con Kafka\": plataforma de eventos (\"distributed event streaming platform\")."
+        },
+        {
+          "category": "database",
+          "acceptable": ["ClickHouse/ClickHouse"],
+          "note": "\"Guardarlas en una base de datos para series de tiempo\": ClickHouse es una base analítica en tiempo real (\"real-time analytics database\"). InfluxDB no está en el catálogo."
+        },
+        {
+          "category": "analytics",
+          "acceptable": ["grafana/grafana"],
+          "note": "\"Tableros de consumo\": visualización de datos (topics dashboard, data-visualization, business-intelligence)."
+        }
+      ],
+      "note": "El usuario nombra tecnologías que están (Kafka, Grafana) y una que no (InfluxDB)."
+    },
+    {
+      "id": "contable-chatbot",
+      "query": "Un estudio contable quiere un chatbot interno que responda preguntas sobre sus manuales de procedimientos usando un modelo de lenguaje que corra en sus propios servidores, y que solo puedan entrar los empleados con cuenta.",
+      "expected_status": "ok",
+      "needs": [
+        {
+          "category": "ai",
+          "acceptable": ["ollama/ollama", "vllm-project/vllm"],
+          "note": "\"Un modelo de lenguaje que corra en sus propios servidores\": ejecutar modelos localmente (ollama: \"get up and running with ... models\"; vllm: \"inference and serving engine for LLMs\")."
+        },
+        {
+          "category": "auth",
+          "acceptable": [],
+          "note": "\"Que solo puedan entrar los empleados con cuenta\": inicio de sesión de usuarios. vault gestiona secretos de sistemas, no el inicio de sesión de personas."
+        }
+      ],
+      "note": "Una necesidad sin herramienta que tiene candidatos parecidos (vault): si el modelo los descarta, también debe aparecer una sola vez."
     }
   ]
 }

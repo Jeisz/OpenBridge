@@ -34,7 +34,7 @@ mapa (modelo de lenguaje: una herramienta por necesidad, solo entre sus 5 primer
 o ninguna si no sirven). El modelo escribe con salida estructurada; el código valida contra el
 contrato `AssistantResponse` y reintenta una vez si no cumple. Todo el pedido tiene un
 presupuesto de 15 s, y si el proveedor principal falla por algo temporal, la llamada pasa al
-respaldo sin esperar. Todavía es una función de Python, no un servicio.
+respaldo sin esperar. Se expone como servicio HTTP (`POST /assistant`, ver [Servicio del asistente](#servicio-del-asistente)).
 
 **Modelo de lenguaje.** Principal: Gemini 3.5 Flash-Lite. Respaldo: gpt-oss-120b en Groq, con
 razonamiento bajo. Criterios, comparación y descartados en
@@ -144,12 +144,16 @@ clave en `.env` (nombres en `.env.example`); **las claves nunca van al repo, al 
 | `ollama` | — | Ollama instalado y abierto en la máquina | Local |
 
 **Respaldo y presupuesto.** Si no se pide un proveedor concreto, `generar()` usa el principal
-y, si falla por algo temporal (límite de uso, caída, tiempo agotado), repite la llamada con el
-de `AI_LLM_FALLBACK` (por defecto, `groq-low`; vacío = sin respaldo), **sin esperar**.
-`asistir()` le da a todo el pedido 15 s (`BUDGET_SECONDS`): cada llamada usa solo el tiempo
-que queda, el principal tiene un tope de 7 s para que al respaldo le quede tiempo, y si no
-alcanza para otra llamada se corta con `LLMTimeout`. `error_response()` traduce cada error
-al código HTTP y al cuerpo del contrato (502, 503, 504).
+y, si falla por algo temporal (límite de uso, caída, tiempo agotado), repite la llamada con los
+respaldos de `AI_LLM_FALLBACK`, en orden y **sin esperar** (por defecto `groq-low,claude-haiku`;
+un respaldo sin clave se omite; vacío = sin respaldo). Si la falla fue lenta (tiempo agotado o
+sin conexión), ese proveedor queda **desconectado 60 s** (disyuntor): mientras tanto, las
+llamadas van directo al siguiente, así que solo el primer pedido después de una caída paga la
+espera. Un límite de uso (429) o un error del servidor (5xx) no desconectan: responden al
+instante y probarlos otra vez casi no cuesta. `asistir()` le da a todo el pedido 15 s
+(`BUDGET_SECONDS`): cada llamada usa solo el tiempo que queda, el que tiene un respaldo detrás
+tiene un tope de 7 s, y si no alcanza para otra llamada se corta con `LLMTimeout`.
+`error_response()` traduce cada error al código HTTP y al cuerpo del contrato (502, 503, 504).
 
 - Un flujo usa unos 5.000 tokens: el límite diario de Groq alcanza para unos 40 pedidos y se
   comparte con las evaluaciones. **No correr evaluaciones con Groq el día de una demo.**
@@ -173,6 +177,40 @@ try:
     print(assisted.response or error_response(None))   # None = sin respuesta válida → 502
 except LLMError as err:
     print(error_response(err))                          # (503 o 504, ErrorResponse)
+```
+
+### Servicio del asistente
+
+Capa HTTP delgada sobre el núcleo, en `ai/service/`: el servicio importa del núcleo y el núcleo
+nunca del servicio (lo comprueba un test). Se levanta desde la raíz del repo:
+
+```bash
+python -m uvicorn ai.service.app:create_app --factory --port 8001
+```
+
+Al arrancar carga el modelo de embeddings y el índice del catálogo (unos segundos) y muestra la
+cadena de proveedores (`listo: 100 repos, proveedores gemini → groq-low → claude-haiku`). No
+acepta pedidos hasta terminar.
+
+| Ruta | Qué hace |
+|---|---|
+| `POST /assistant` | Cuerpo `AssistantRequest` (`{"query": "…"}`, 20–2000 caracteres) → `AssistantResponse`, o `ErrorResponse` con 422 `invalid_query`, 502 `invalid_response`, 503 `provider_unavailable` o 504 `timeout` |
+| `GET /health` | Repos cargados, modelo de embeddings, umbral y, por proveedor, si tiene clave y cuántos segundos le quedan desconectado (nunca muestra claves) |
+| `GET /docs` | Documentación interactiva generada desde el contrato |
+
+- **CORS:** acepta los orígenes de `AI_CORS_ORIGINS` (separados por comas; por defecto
+  `http://localhost:4173,http://127.0.0.1:4173`, el frontend en local).
+- **Frontend:** `NEXT_PUBLIC_ASSISTANT_API_BASE_URL=http://127.0.0.1:8001/` (este servicio).
+  El backend del catálogo tiene su propio `POST /assistant`, que hoy responde siempre 503: el
+  frontend debe apuntar al puerto 8001, no al del catálogo.
+- Las causas de los errores (proveedor, límite, tiempo) quedan en la terminal del servicio,
+  no en la respuesta.
+- Probar desde Git Bash: escribir las tildes como escapes de JSON (`\u00ed` = í), porque la
+  terminal de Windows puede no enviarlas en UTF-8:
+
+```bash
+curl -s -X POST http://127.0.0.1:8001/assistant -H "Content-Type: application/json" \
+  -d '{"query": "Una librer\u00eda quiere que sus clientes busquen libros por tema."}'
 ```
 
 ## Comandos

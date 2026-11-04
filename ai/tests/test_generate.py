@@ -116,6 +116,36 @@ def test_caja_descartada_conexion_invalida_y_necesidad_sin_candidatos():
     assert response.limitations[-1] == "Otra limitación."
 
 
+def test_limitaciones_del_modelo_que_repiten_una_necesidad_sin_herramienta_se_quitan():
+    d = draft([box(), box(None, need="cache")],
+              other=["Falta una caché para las respuestas.",        # repite la descartada
+                     "La AUTENTICACION de usuarios no está cubierta.",  # repite la sin candidatos
+                     "LangChain podría complementar a LlamaIndex."])
+    response = assistant.to_response(d, needs("ai", "cache", "auth"), CANDIDATES)
+    assert response.limitations == [
+        response.limitations[0],                  # "Caché: ninguna herramienta…" (sistema)
+        response.limitations[1],                  # "Autenticación: el catálogo no tiene…" (sistema)
+        "LangChain podría complementar a LlamaIndex.",
+    ]
+    assert response.limitations[0].startswith("Caché:")
+    assert response.limitations[1].startswith("Autenticación:")
+
+
+def test_el_filtro_compara_palabras_completas():
+    d = draft([box("redis/redis", need="cache")],
+              other=["Gestionar la materia prima queda fuera.",   # "materia" no es "IA"
+                     "La IA del sistema no está cubierta."])        # repite la necesidad de IA
+    response = assistant.to_response(d, needs("ai", "cache"), {"cache": CANDIDATES["cache"]})
+    assert response.limitations[-1] == "Gestionar la materia prima queda fuera."
+    assert not any("La IA del sistema" in text for text in response.limitations)
+
+
+def test_sin_necesidades_sin_herramienta_no_se_quita_nada():
+    d = draft(VALID, other=["La caché necesita memoria suficiente.", "Otra limitación."])
+    response = assistant.to_response(d, needs("ai", "cache"), CANDIDATES)
+    assert response.limitations == ["La caché necesita memoria suficiente.", "Otra limitación."]
+
+
 def test_si_descarta_todo_queda_sin_evidencia():
     response = assistant.to_response(draft([box(None), box(None, need="cache")]),
                                      needs("ai", "cache"), CANDIDATES)

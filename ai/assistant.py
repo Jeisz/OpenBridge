@@ -8,7 +8,9 @@ por necesidad y explica la propuesta. El código arma la respuesta del contrato.
 La búsqueda queda fuera de este archivo.
 """
 
+import re
 import time
+import unicodedata
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from functools import lru_cache
@@ -339,14 +341,32 @@ def _missing_line(need) -> str:
     return f"{name}: el catálogo no tiene herramientas para «{need.query}»."
 
 
+def _plain(text: str) -> str:
+    """Minúsculas y sin tildes."""
+    decomposed = unicodedata.normalize("NFKD", text.lower())
+    return "".join(ch for ch in decomposed if not unicodedata.combining(ch))
+
+
+def _names(text: str, category_name: str) -> bool:
+    """El texto nombra la categoría como palabras completas ("IA" sí en "la IA", no en "materia")."""
+    return re.search(rf"\b{re.escape(_plain(category_name))}\b", _plain(text)) is not None
+
+
 def to_response(draft: BaseModel, needs, candidates: dict[str, list[SearchResult]]) -> AssistantResponse:
-    """Arma la respuesta del contrato a partir del borrador. Lanza ValidationError si no cumple."""
+    """Arma la respuesta del contrato a partir del borrador. Lanza ValidationError si no cumple.
+
+    Cada necesidad sin herramienta (sin candidatos, o con todos descartados por el
+    modelo) aparece una sola vez en las limitaciones: con la línea del sistema. Las
+    limitaciones del modelo que la nombran se quitan, porque la repetirían.
+    """
     names = load_categories()
     components, keys, limitations = [], {}, []
+    uncovered = [names[n.category].name for n in needs if not candidates.get(n.category)]
     for box in draft.boxes:
         if box.full_name is None:  # el modelo descartó todos los candidatos
             limitations.append(f"{names[box.need].name}: ninguna herramienta del catálogo "
                                f"encaja. {box.rationale}")
+            uncovered.append(names[box.need].name)
             continue
         key = f"c{len(components) + 1}"
         keys[box.need] = key
@@ -358,7 +378,8 @@ def to_response(draft: BaseModel, needs, candidates: dict[str, list[SearchResult
                    if link.from_need in keys and link.to_need in keys
                    and link.from_need != link.to_need]
     limitations += [_missing_line(n) for n in needs if not candidates.get(n.category)]
-    limitations += draft.other_limitations
+    limitations += [text for text in draft.other_limitations
+                    if not any(_names(text, name) for name in uncovered)]
     return AssistantResponse(
         id=uuid4().hex,
         status="ok" if components else "no_evidence",

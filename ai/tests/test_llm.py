@@ -162,7 +162,7 @@ def test_esquema_rechazado_por_el_proveedor_es_respuesta_invalida(fake, message)
 
 @pytest.fixture
 def fakes(monkeypatch):
-    """Un cliente falso por proveedor, creado al pedirlo; sin variables de entorno."""
+    """Un cliente falso por proveedor; Gemini y Groq con clave, Claude sin ella; disyuntor limpio."""
     made = {}
 
     def client(key):
@@ -170,8 +170,11 @@ def fakes(monkeypatch):
         return SimpleNamespace(chat=SimpleNamespace(completions=made[key]))
 
     monkeypatch.setattr(llm, "_client", client)
-    monkeypatch.delenv("AI_LLM_PROVIDER", raising=False)
-    monkeypatch.delenv("AI_LLM_FALLBACK", raising=False)
+    monkeypatch.setattr(llm, "_open_until", {})
+    for var in ("AI_LLM_PROVIDER", "AI_LLM_FALLBACK", "ANTHROPIC_API_KEY"):
+        monkeypatch.delenv(var, raising=False)
+    monkeypatch.setenv("GEMINI_API_KEY", "falsa")
+    monkeypatch.setenv("GROQ_API_KEY", "falsa")
     return made
 
 
@@ -180,13 +183,19 @@ def fails(fakes, key, error):
     fakes.setdefault(key, FakeCompletions()).error = error
 
 
-def test_cadena_de_proveedores(monkeypatch):
-    monkeypatch.delenv("AI_LLM_PROVIDER", raising=False)
-    monkeypatch.delenv("AI_LLM_FALLBACK", raising=False)
-    assert llm.provider_chain() == ["gemini", "groq-low"]
-    assert llm.provider_chain("groq") == ["groq"]          # explícito: sin respaldo
+def test_cadena_de_proveedores(fakes, monkeypatch):
+    assert llm.provider_chain() == ["gemini", "groq-low"]                 # Claude sin clave: se omite
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "falsa")
+    assert llm.provider_chain() == ["gemini", "groq-low", "claude-haiku"]
+    assert llm.provider_chain("groq") == ["groq"]                         # explícito: sin respaldo
     monkeypatch.setenv("AI_LLM_FALLBACK", "")
-    assert llm.provider_chain() == ["gemini"]               # vacío: respaldo apagado
+    assert llm.provider_chain() == ["gemini"]                             # vacío: sin respaldo
+
+
+def test_respaldo_con_nombre_inexistente_es_error_de_configuracion(fakes, monkeypatch):
+    monkeypatch.setenv("AI_LLM_FALLBACK", "groq-low,no-existe")
+    with pytest.raises(llm.LLMConfigError):
+        llm.provider_chain()
 
 
 def test_pasa_al_respaldo_ante_limite_de_uso(fakes):
@@ -234,3 +243,56 @@ def test_el_limite_de_uso_guarda_el_mensaje_del_proveedor(fakes):
     with pytest.raises(llm.LLMRateLimited) as caught:
         llm.generar(MESSAGES, provider="groq")
     assert "error simulado" in str(caught.value)
+
+
+# --- Disyuntor ---
+
+def test_el_disyuntor_salta_al_proveedor_que_no_responde(fakes):
+    fails(fakes, "gemini", openai.APITimeoutError(request=REQUEST))
+    assert llm.generar(MESSAGES).provider == "groq-low"      # descubre que no responde
+    fakes["gemini"].error, fakes["gemini"].sent = None, {}
+    assert llm.generar(MESSAGES).provider == "groq-low"      # ya no espera a Gemini
+    assert fakes["gemini"].sent == {}                         # ni siquiera lo llamó
+    assert "gemini" in llm.disconnected()
+
+
+def test_el_disyuntor_se_cierra_al_vencer_el_tiempo(fakes, monkeypatch):
+    monkeypatch.setattr(llm, "COOLDOWN_SECONDS", 0.0)
+    fails(fakes, "gemini", openai.APITimeoutError(request=REQUEST))
+    llm.generar(MESSAGES)
+    fakes["gemini"].error = None
+    assert llm.generar(MESSAGES).provider == "gemini"        # volvió a probarlo y respondió
+    assert llm.disconnected() == {}
+
+
+@pytest.mark.parametrize("error", [
+    status_error(openai.RateLimitError, 429),                # límite de uso: responde al instante
+    status_error(openai.InternalServerError, 503),           # servidor ocupado: también
+])
+def test_fallas_rapidas_no_desconectan(fakes, error):
+    fails(fakes, "gemini", error)
+    assert llm.generar(MESSAGES).provider == "groq-low"      # pasa al respaldo en este pedido
+    assert llm.disconnected() == {}                           # pero no castiga a Gemini
+
+
+def test_sin_conexion_desconecta(fakes):
+    fails(fakes, "gemini", openai.APIConnectionError(request=REQUEST))
+    llm.generar(MESSAGES)
+    assert "gemini" in llm.disconnected()
+
+
+def test_con_proveedor_explicito_no_hay_disyuntor(fakes):
+    llm._open_until["gemini"] = float("inf")
+    assert llm.generar(MESSAGES, provider="gemini").provider == "gemini"
+
+
+def test_si_todos_estan_desconectados_se_intentan_igual(fakes):
+    llm._open_until.update({"gemini": float("inf"), "groq-low": float("inf")})
+    assert llm.generar(MESSAGES).provider == "gemini"
+
+
+def test_respuesta_invalida_no_desconecta(fakes):
+    fakes.setdefault("gemini", FakeCompletions()).reply = "no es json"
+    with pytest.raises(llm.LLMInvalidResponse):
+        llm.generar(MESSAGES, schema=Answer)
+    assert llm.disconnected() == {}

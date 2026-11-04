@@ -57,7 +57,7 @@ Resultado esperado: 12 `ok`, 4 `no_evidence`, 2 `needs_clarification`.
 En los pares corto/largo, las necesidades del pedido largo contienen las del
 corto: el asistente debería responder de forma coherente a los dos.
 
-## Casos de validación (5 casos)
+## Casos de validación (10 casos)
 
 Los 18 casos de arriba se usan para mirar fallos y ajustar los prompts: mejorar en ellos no
 prueba que una regla nueva sirva. Para eso hay un archivo aparte,
@@ -71,9 +71,11 @@ prueba que una regla nueva sirva. Para eso hay un archivo aparte,
   los números; después, una sola ronda con el cambio.
 - No comparten ids ni pedidos con la base (lo comprueba un test).
 
-Hoy prueban dos reglas: que la aplicación que el usuario describe no se convierta en una
+Los 5 primeros prueban que la aplicación que el usuario describe no se convierta en una
 necesidad de frontend o backend, y que el asistente no proponga un candidato que solo se
-parece a lo pedido.
+parece a lo pedido. Los 5 siguientes prueban las limitaciones: necesidades sin herramientas
+(que deben aparecer una sola vez) y tecnologías que el usuario nombra y no están entre los
+candidatos (el asistente no puede afirmar qué hay en el catálogo completo).
 
 ```bash
 python -m ai.eval.run_understand_eval gemini --cases validation
@@ -84,8 +86,10 @@ python -m ai.eval.run_assistant_eval gemini --cases validation
 
 Los textos (título, resumen, roles, razones) y las conexiones: hay muchas
 respuestas buenas distintas. Lo verificable es el `status`, qué necesidades
-detectó y si cada repo elegido está entre los aceptables. La calidad del texto
-se revisa a mano.
+detectó y si cada repo elegido está entre los aceptables. De los textos solo se
+cuentan, de forma automática, dos cosas: las necesidades sin herramienta que se
+repiten en las limitaciones y los textos del modelo que hablan del catálogo. El
+resto de la calidad del texto se revisa a mano.
 
 ## Cuando cambie el catálogo
 

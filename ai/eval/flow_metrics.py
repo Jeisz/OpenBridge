@@ -4,6 +4,8 @@ Por cada necesidad esperada separa tres causas de fallo: entender no la detectó
 la búsqueda no trajo un repo aceptable (techo) o el modelo no lo eligió.
 """
 
+import re
+import unicodedata
 from collections import defaultdict
 from dataclasses import dataclass
 from statistics import median
@@ -41,7 +43,9 @@ class FlowOutcome:
     needs: tuple[NeedOutcome, ...]
     understand_first_ok: bool
     generate_first_ok: bool | None    # None = no hizo falta generar
-    repeated_limitations: int         # del modelo, que repiten una necesidad sin herramientas
+    repeated_draft: int               # limitaciones del modelo que repiten una necesidad sin herramienta
+    repeated_final: int               # repeticiones que llegan al usuario en la respuesta final
+    catalog_claims: int               # textos del modelo que hablan del catálogo
     ids_in_text: bool                 # algún texto para el usuario trae un id entre corchetes
     understand_seconds: float
     search_seconds: float
@@ -66,6 +70,33 @@ def _chosen(assisted: Assisted) -> dict[str, str | None]:
     if generated is None or generated.data is None or generated.problems_final:
         return {}
     return {box.need: box.full_name for box in generated.data.boxes}
+
+
+def _plain(text: str) -> str:
+    """Minúsculas y sin tildes, para comparar palabras."""
+    decomposed = unicodedata.normalize("NFKD", text.lower())
+    return "".join(ch for ch in decomposed if not unicodedata.combining(ch))
+
+
+def mentions(text: str, phrase: str) -> bool:
+    """`phrase` aparece en `text` como palabras completas, sin importar tildes ni mayúsculas.
+
+    "IA" cuenta en "la IA del sistema", pero no en "materia".
+    """
+    return re.search(rf"\b{re.escape(_plain(phrase))}\b", _plain(text)) is not None
+
+
+def _uncovered(assisted: Assisted) -> list[str]:
+    """Necesidades sin herramienta: sin candidatos o con todos descartados por el modelo."""
+    empty = [c for c, results in assisted.found.items() if not results]
+    declined = [c for c, pick in _chosen(assisted).items() if pick is None]
+    return sorted(set(empty) | set(declined))
+
+
+def _model_texts(draft) -> list[str]:
+    """Textos que escribió el modelo en el borrador (los del sistema no cuentan)."""
+    return [draft.summary, *draft.assumptions, *draft.other_limitations,
+            *(box.rationale for box in draft.boxes)]
 
 
 def _user_texts(response) -> list[str]:
@@ -103,8 +134,10 @@ def flow_outcome(case: AssistantCase, provider: str, run: int, assisted: Assiste
         ))
 
     categories = load_categories()
-    missing = [categories[c].name.lower() for c, f in found.items() if not f]
-    other = generated.data.other_limitations if generated and generated.data else []
+    missing = [categories[c].name for c in _uncovered(assisted)] if assisted else []
+    draft = generated.data if generated and generated.data else None
+    other = draft.other_limitations if draft else []
+    final = response.limitations if response else []
     return FlowOutcome(
         case_id=case.id,
         provider=provider,
@@ -114,7 +147,10 @@ def flow_outcome(case: AssistantCase, provider: str, run: int, assisted: Assiste
         needs=tuple(needs),
         understand_first_ok=bool(understood and not understood.problems_first),
         generate_first_ok=None if generated is None else not generated.problems_first,
-        repeated_limitations=sum(any(m in lim.lower() for m in missing) for lim in other),
+        repeated_draft=sum(any(mentions(lim, m) for m in missing) for lim in other),
+        # En la respuesta final, cada necesidad sin herramienta debe aparecer una sola vez.
+        repeated_final=sum(max(0, sum(mentions(lim, m) for lim in final) - 1) for m in missing),
+        catalog_claims=sum(mentions(t, "catálogo") for t in _model_texts(draft)) if draft else 0,
         ids_in_text=response is not None and any(
             f"[{c}]" in text for text in _user_texts(response) for c in categories),
         understand_seconds=understood.seconds if understood else 0.0,
@@ -177,7 +213,9 @@ def summarize(outcomes: list[FlowOutcome]) -> dict:
         "declined_no_tool": ratio(sum(n.chosen is None for n in no_tool_needs),
                                   len(no_tool_needs)),
         "first_rank": ratio(sum(n.chosen_rank == 1 for n in chosen), len(chosen)),
-        "repeated_limitations": sum(o.repeated_limitations for o in ok),
+        "repeated_draft": sum(o.repeated_draft for o in ok),
+        "repeated_final": sum(o.repeated_final for o in ok),
+        "catalog_claims": sum(o.catalog_claims for o in ok),
         "ids_in_text": sum(o.ids_in_text for o in ok),
         "consistency": consistency(ok),
         "median_seconds": med(o.seconds for o in ok),

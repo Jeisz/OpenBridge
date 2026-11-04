@@ -83,7 +83,9 @@ PROVIDERS = {
     ),
 }
 DEFAULT_PROVIDER = "gemini"
-DEFAULT_FALLBACK = "groq-low"  # respaldo si el principal falla por algo temporal
+# Respaldos en orden, separados por comas; uno sin clave se omite. Vacío = sin respaldo.
+DEFAULT_FALLBACK = "groq-low,claude-haiku"
+COOLDOWN_SECONDS = 60.0  # un proveedor que falla por algo temporal queda desconectado este tiempo
 TIMEOUT_SECONDS = 15.0  # tiempo máximo de una llamada sin fecha límite (evaluaciones, pruebas)
 # Con fecha límite (el servicio). Valores iniciales, de las evaluaciones del asistente (nov. 2026):
 FIRST_TRY_SECONDS = 7.0  # tope del principal si hay respaldo: su peor llamada medida fue ~4,5 s
@@ -170,15 +172,39 @@ def provider_key(provider: str | None = None) -> str:
     return key
 
 
+# Disyuntor: proveedor -> momento (time.monotonic) hasta el que queda desconectado.
+# Compartido por todos los pedidos del proceso: el primero que descubre una caída
+# evita que los siguientes la paguen.
+_open_until: dict[str, float] = {}
+
+
+def key_configured(key: str) -> bool:
+    """True si el proveedor tiene su clave en el entorno (o no la necesita)."""
+    env = PROVIDERS[key].api_key_env
+    return env is None or bool(os.environ.get(env))
+
+
 def provider_chain(provider: str | None = None) -> list[str]:
-    """Proveedores a intentar, en orden. Con uno pedido explícitamente, solo ese."""
+    """Proveedores a intentar, en orden. Con uno pedido explícitamente, solo ese.
+
+    Sin él: el principal y los respaldos de AI_LLM_FALLBACK que tengan clave.
+    """
     if provider is not None:
         return [provider_key(provider)]
     chain = [provider_key()]
-    fallback = os.environ.get("AI_LLM_FALLBACK", DEFAULT_FALLBACK).strip()
-    if fallback and fallback != chain[0]:
-        chain.append(provider_key(fallback))
+    raw = os.environ.get("AI_LLM_FALLBACK", DEFAULT_FALLBACK)
+    for name in (n.strip() for n in raw.split(",")):
+        if name and name not in chain:
+            key = provider_key(name)          # un nombre que no existe es un error de configuración
+            if key_configured(key):
+                chain.append(key)             # respaldo sin clave: se omite
     return chain
+
+
+def disconnected() -> dict[str, float]:
+    """Proveedores desconectados por el disyuntor y los segundos que les faltan."""
+    now = time.monotonic()
+    return {k: round(t - now, 1) for k, t in _open_until.items() if t > now}
 
 
 @lru_cache(maxsize=None)
@@ -283,28 +309,40 @@ def generar(messages: list[dict], *,
     """Envía los mensajes al modelo y devuelve su texto con tiempo y tokens.
 
     Con `schema`, pide la respuesta en ese formato y la valida.
-    Con `provider`, usa solo ese proveedor; sin él, el principal y, si falla
-    por algo temporal, el respaldo. Con `deadline`, nunca se pasa de ella:
-    si no alcanza el tiempo para una llamada, lanza LLMTimeout sin hacerla.
+    Con `provider`, usa solo ese proveedor; sin él, la cadena de respaldos,
+    saltando los desconectados por el disyuntor. Con `deadline`, nunca se pasa
+    de ella: si no alcanza el tiempo para una llamada, lanza LLMTimeout sin hacerla.
     """
     chain = provider_chain(provider)
+    breaker = len(chain) > 1          # con un solo proveedor no hay a quién saltar
+    connected = [k for k in chain if not (breaker and k in disconnected())]
+    candidates = connected or chain   # si todos están desconectados, se intentan igual
     last_error: LLMError | None = None
-    for position, key in enumerate(chain):
+    for position, key in enumerate(candidates):
         timeout = TIMEOUT_SECONDS
         if deadline is not None:
             left = deadline.remaining()
             if left < MIN_CALL_SECONDS:
                 raise LLMTimeout(f"{key}: quedan {max(left, 0):.1f} s; "
                                  "no alcanza para otra llamada") from last_error
-            has_next = position < len(chain) - 1
-            # El principal tiene tope si hay respaldo, para que al respaldo le quede tiempo.
+            has_next = position < len(candidates) - 1
+            # Con alguien detrás, tope por intento para que al siguiente le quede tiempo.
             timeout = min(left, FIRST_TRY_SECONDS) if has_next else left
         try:
-            return _generar_uno(key, messages, schema, timeout)
+            result = _generar_uno(key, messages, schema, timeout)
         except (LLMRateLimited, LLMTimeout) as err:
             last_error = err  # temporal: se prueba el siguiente, sin esperar
         except LLMUnavailable as err:
             if not err.transient:
                 raise  # permanente (por ejemplo, un 400): otro proveedor no lo arregla
             last_error = err
+        else:
+            _open_until.pop(key, None)        # respondió: queda conectado
+            return result
+        # Solo las fallas lentas desconectan: un tiempo agotado o sin conexión cuestan segundos;
+        # un 429 o un 5xx responden al instante, así que probarlos otra vez casi no cuesta.
+        slow = isinstance(last_error, LLMTimeout) or (
+            isinstance(last_error, LLMUnavailable) and last_error.status_code is None)
+        if breaker and slow:
+            _open_until[key] = time.monotonic() + COOLDOWN_SECONDS
     raise last_error
