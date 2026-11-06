@@ -1,5 +1,6 @@
 import {AssistantError} from './assistant.mjs';
 import {getAssistantError} from '../errorPresentation.mjs';
+export const httpAssistantTimeoutMs=20000;
 const codes=new Set(['invalid_query','invalid_response','provider_unavailable','timeout']);
 // The assistant has its own service origin. Server diagnostics are never displayed.
 export function createHttpAssistantProvider({baseUrl,fetchImpl=globalThis.fetch}){

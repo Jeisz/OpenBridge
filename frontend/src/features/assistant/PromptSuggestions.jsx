@@ -7,10 +7,11 @@ const suggestions=[
  'Quiero organizar los pedidos y hacer seguimiento de las entregas de mi negocio.'
 ];
 
-export function PromptSuggestions({flow}){
- const hidden=flow.expanded||flow.isDetail;
+export function PromptSuggestions({flow,onSelect}){
+ const hidden=flow.expanded;
  const select=text=>{
   flow.setQuery(text);
+  onSelect?.(text);
   flow.setError('');
   flow.setCanRetry(false);
   flow.input.current?.focus({preventScroll:true});

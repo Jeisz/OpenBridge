@@ -323,6 +323,7 @@ const LightRays = ({
     let visible = true;
     let pageVisible = document.visibilityState !== 'hidden';
     let lost = false;
+    let needsResize = true;
 
     const resize = () => {
       const s = settingsRef.current;
@@ -351,6 +352,7 @@ const LightRays = ({
     const frame = now => {
       raf = 0;
       if (lost) return;
+      if (needsResize) { resize(); needsResize = false; }
       const s = settingsRef.current;
       const dt = clamp((now - last) / 1000 || 0, 0, 0.05);
       last = Math.max(last, now);
@@ -450,7 +452,7 @@ const LightRays = ({
       raf = requestAnimationFrame(frame);
     };
     wakeRef.current = () => {
-      resize();
+      needsResize = true;
       wake();
     };
 
@@ -512,7 +514,7 @@ const LightRays = ({
     canvas.addEventListener('webglcontextrestored', onRestored);
 
     const resizeObserver = new ResizeObserver(() => {
-      resize();
+      needsResize = true;
       wake();
     });
     resizeObserver.observe(container);
@@ -529,7 +531,6 @@ const LightRays = ({
     };
     document.addEventListener('visibilitychange', onVisibility);
 
-    resize();
     wake();
 
     return () => {

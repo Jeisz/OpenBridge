@@ -1,18 +1,26 @@
-import {useRef,useState} from 'react';
-import {ArrowRight,ArrowUpRight,Box,ChevronDown,Layers3,Workflow} from 'lucide-react';
+import {useId,useRef,useState} from 'react';
+import {ArrowRight,ArrowUpRight,Box,TriangleAlert,Layers3,Workflow} from 'lucide-react';
 import {useCatalogData} from '../../data/CatalogProvider';
-import {resolveComponentTool} from '../../data/assistant.mjs';
+import {resolveComponentTool,recommendationLicenseWarning} from '../../data/assistant.mjs';
 import {BrandIcon} from '../../AssistantBrandIcon';
 import {useBrandIdentity} from '../../brandIdentity';
 
 function ToolRecommendation({component}){
+ const [expanded,setExpanded]=useState(false);
+ const rationaleId=useId();
  const {tools}=useCatalogData();
  const tool=resolveComponentTool(component,tools);
  const identity=useBrandIdentity(tool??{name:component.label});
- return <li className="proposal-tool" style={{'--proposal-brand':identity.palette.start}}>
+ const licenseWarning=recommendationLicenseWarning(tool);
+ return <li className="proposal-tool" style={{'--proposal-brand':identity.palette.start,'--proposal-brand-end':identity.palette.end}}>
+  {identity.watermark&&<img className="proposal-watermark" src={identity.watermark} alt="" aria-hidden="true"/>}
   <div className="proposal-tool-heading"><span className="proposal-brand" aria-hidden="true">{tool?<BrandIcon tool={tool}/>:<Box/>}</span><div><h3>{component.label}</h3><p>{component.role}</p></div></div>
-  <details className="proposal-rationale"><summary>Por qué se recomienda</summary><p>{component.rationale}</p></details>
-  {tool&&<a href={'#herramienta/'+tool.id}>Ver ficha <ArrowUpRight size={14} aria-hidden="true"/></a>}
+  {licenseWarning&&<span className="proposal-license-warning"><TriangleAlert size={14} aria-hidden="true"/>{licenseWarning}</span>}
+  <div className={'proposal-rationale'+(expanded?' is-expanded':'')} id={rationaleId}><p>{component.rationale}</p></div>
+  <div className="proposal-tool-actions">
+   {component.rationale&&<button type="button" className="proposal-reason-toggle" aria-expanded={expanded} aria-controls={rationaleId} onClick={()=>setExpanded(value=>!value)}>{expanded?'Ver menos':'Ver motivo'}</button>}
+   {tool&&<a className="ui-wash" href={'#herramienta/'+tool.id}>Ver ficha <ArrowUpRight size={14} aria-hidden="true"/></a>}
+  </div>
  </li>;
 }
 function Endpoint({component}){
@@ -20,9 +28,22 @@ function Endpoint({component}){
  const tool=resolveComponentTool(component,tools);
  return <span className="proposal-endpoint"><span className="proposal-brand" aria-hidden="true">{tool?<BrandIcon tool={tool}/>:<Box/>}</span><span>{component.label}</span></span>;
 }
+function ConnectionCard({connection,from,to}){
+ const {tools}=useCatalogData();
+ const fromIdentity=useBrandIdentity(resolveComponentTool(from,tools)??{name:from.label});
+ const toIdentity=useBrandIdentity(resolveComponentTool(to,tools)??{name:to.label});
+ return <li className="connection-tile" style={{'--connection-from':fromIdentity.palette.start,'--connection-to':toIdentity.palette.end}}>
+  <div className="connection-tile-route" aria-label={`${from.label} hacia ${to.label}, ${connection.protocol}`}>
+   <Endpoint component={from}/>
+   <span className="connection-tile-direction"><ArrowRight size={22} strokeWidth={1.5} aria-hidden="true"/></span>
+   <Endpoint component={to}/>
+  </div>
+  {connection.protocol&&<span className="connection-protocol">{connection.protocol}</span>}
+  <p>{connection.description}</p>
+ </li>;
+}
 export function ProposalTabs({response}){
  const [tab,setTab]=useState('tools');
- const [opened,setOpened]=useState(null);
  const tabs=useRef([]);
  const connections=response.connections??[];
  const components=new Map(response.components.map(c=>[c.key,c]));
@@ -37,12 +58,7 @@ export function ProposalTabs({response}){
     <ul className="proposal-tools">{response.components.map(component=><ToolRecommendation key={component.key} component={component}/>)}</ul>
    </section>
    <section id="proposal-panel-connections" role="tabpanel" aria-labelledby="proposal-tab-connections" hidden={tab!=='connections'} tabIndex={0}>
-    {connections.length===0?<p className="proposal-empty">Esta propuesta no incluye conexiones.</p>:<ul className="proposal-connections">{connections.map((connection,index)=><li key={`${connection.from_key}-${connection.to_key}-${index}`}>
-     <button className="proposal-connection" type="button" aria-label={`${components.get(connection.from_key).label} hacia ${components.get(connection.to_key).label}, ${connection.protocol}`} aria-expanded={opened===index} aria-controls={'proposal-connection-'+index} onClick={()=>setOpened(opened===index?null:index)}>
-      <Endpoint component={components.get(connection.from_key)}/><ArrowRight className="connection-arrow" size={20} aria-hidden="true"/><Endpoint component={components.get(connection.to_key)}/><span className="proposal-protocol">{connection.protocol}</span><ChevronDown className="connection-chevron" size={20} aria-hidden="true"/>
-     </button>
-     <div id={'proposal-connection-'+index} className={'proposal-explanation'+(opened===index?' is-open':'')} aria-hidden={opened!==index}><div><p>{connection.description}</p></div></div>
-    </li>)}</ul>}
+    {connections.length===0?<p className="proposal-empty">Esta propuesta no incluye conexiones.</p>:<ul className="connection-tiles">{connections.map((connection,index)=><ConnectionCard key={`${connection.from_key}-${connection.to_key}-${index}`} connection={connection} from={components.get(connection.from_key)} to={components.get(connection.to_key)}/>)}</ul>}
    </section>
   </div>
  </div>;

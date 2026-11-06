@@ -33,7 +33,7 @@ def build_engine(settings: Settings) -> Engine | None:
         connect_args={
             "connect_timeout": settings.db_connect_timeout,
             "application_name": "openbridge-api",
-            "options": f"-c statement_timeout={settings.db_statement_timeout_ms}",
+            "options": f"-c statement_timeout={settings.db_statement_timeout_ms} -c default_transaction_read_only=on",
         },
     )
 

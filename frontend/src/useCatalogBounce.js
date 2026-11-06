@@ -8,7 +8,7 @@ export function useCatalogBounce(isDetail){
   if(!shell)return;
   const motion=matchMedia('(prefers-reduced-motion: no-preference)');
   let frame=0,last=0,offset=0,velocity=0,pull=0,previous=Math.max(0,window.scrollY),lastWheel=-Infinity;
-  const eligible=()=>{if(shell.closest('[data-layout-moving="true"]'))return false;const top=shell.getBoundingClientRect().top-offset;return top>=-56&&top<window.innerHeight;};
+  const eligible=()=>{if(document.documentElement.classList.contains('tool-modal-open')||shell.closest('[data-layout-moving="true"]'))return false;const top=shell.getBoundingClientRect().top-offset;return top>=-56&&top<window.innerHeight;};
   const reset=()=>{cancelAnimationFrame(frame);frame=0;last=0;offset=velocity=pull=0;previous=Math.max(0,window.scrollY);shell.style.removeProperty('--catalog-pull-y');shell.removeAttribute('data-bouncing');};
   const tick=now=>{
    frame=0;

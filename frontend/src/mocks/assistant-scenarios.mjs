@@ -1,7 +1,7 @@
 import {AssistantError} from '../data/assistant.mjs';
 // Explicit local QA scenarios; never modify the published catalog to simulate bad data.
 export function assistantScenarioOptions(scenario,catalog){
- const options={scenario,delay:10000,slowMs:60000};
+ const options={scenario:scenario==='six_tools'?'ok':scenario,delay:scenario==='six_tools'?1200:10000,slowMs:60000};
  const previewCodes=['invalid_query','invalid_response','provider_unavailable','connection_error','unavailable_tool','unverified_license','technical_error'];
  if(scenario.startsWith('error_')&&previewCodes.includes(scenario.slice(6)))return {provider:{async ask(){throw new AssistantError(scenario.slice(6),'');}}};
  if(scenario==='slow')options.delay=15000;

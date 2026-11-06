@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {createHttpAssistantProvider} from '../src/data/assistantHttp.mjs';
+import {createHttpAssistantProvider,httpAssistantTimeoutMs} from '../src/data/assistantHttp.mjs';
 import {createCatalogHttp} from '../src/data/catalogHttp.mjs';
 
 test('known codes choose local messages without remote text or status pairing',async()=>{
@@ -33,4 +33,18 @@ test('assistant failure on its own origin leaves catalog list and detail usable'
  assert.deepEqual((await catalog.list()).tools,before.tools);
  assert.ok(urls.includes('https://ai.example/assistant'));
  assert.ok(urls.includes('https://catalog.example/repos/example/tool'));
+});
+
+test('real assistant uses the twenty-second HTTP contract budget',()=>{
+ assert.equal(httpAssistantTimeoutMs,20000);
+});
+test('assistant sends the query to its independent HTTP service',async()=>{
+ const expected={status:'needs_clarification',clarifying_questions:['¿Qué necesitas construir?']};
+ const provider=createHttpAssistantProvider({baseUrl:'http://127.0.0.1:8001/',fetchImpl:async(url,options)=>{
+  assert.equal(String(url),'http://127.0.0.1:8001/assistant');
+  assert.equal(options.method,'POST');
+  assert.deepEqual(JSON.parse(options.body),{query:'Una aplicación para mi equipo'});
+  return {ok:true,json:async()=>expected};
+ }});
+ assert.deepEqual(await provider.ask({query:'Una aplicación para mi equipo'}),expected);
 });

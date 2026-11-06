@@ -3,11 +3,11 @@ import vm from 'node:vm';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 const source=readFileSync(new URL('../src/useCatalogBounce.js',import.meta.url),'utf8').replace(/import .*?;\n/,'').replace('export function','function');
-function run(hz,tail){
+function run(hz,tail,modalOpen=false){
  let now=0,id=0,offset=0,peak=0,queue=new Map(),events={};
  const shell={closest:()=>null,getBoundingClientRect:()=>({top:500+offset}),style:{setProperty:(_,v)=>{offset=parseFloat(v);peak=Math.max(peak,offset)},removeProperty:()=>{offset=0}},dataset:{},removeAttribute:()=>{}};
  const noop=()=>{};const window={scrollY:0,innerHeight:900,addEventListener:(k,v)=>events[k]=v,removeEventListener:noop};
- const context={performance:{now:()=>now},useEffect:fn=>fn(),window,document:{querySelector:()=>shell,hidden:false,addEventListener:noop,removeEventListener:noop},matchMedia:()=>({matches:true,addEventListener:noop,removeEventListener:noop}),requestAnimationFrame:fn=>{queue.set(++id,fn);return id},cancelAnimationFrame:i=>queue.delete(i)};
+ const context={performance:{now:()=>now},useEffect:fn=>fn(),window,document:{documentElement:{classList:{contains:()=>modalOpen}},querySelector:()=>shell,hidden:false,addEventListener:noop,removeEventListener:noop},matchMedia:()=>({matches:true,addEventListener:noop,removeEventListener:noop}),requestAnimationFrame:fn=>{queue.set(++id,fn);return id},cancelAnimationFrame:i=>queue.delete(i)};
  vm.createContext(context);vm.runInContext(source+';useCatalogBounce(false);',context);
  events.wheel({deltaY:-100,deltaMode:0,target:{closest:()=>null}});
  let lastInput=0,lastVisible=0,settled=0;
@@ -33,3 +33,5 @@ test('wheel inertia at the top does not prolong or restart the bounce',()=>{
  assert.equal(tail.settled,baseline.settled);
  assert.equal(tail.visibleUntil,baseline.visibleUntil);
 });
+
+test('drawer scrolling does not excite the catalog bounce',()=>{assert.equal(run(60,true,true).peak,0);});

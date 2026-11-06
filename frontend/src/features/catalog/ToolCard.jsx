@@ -1,4 +1,5 @@
 import React from 'react';
+import {toolCategoryNames} from '../../data/catalog.mjs';
 import {CardDescription} from './CardDescription';
 import {useCatalogData} from '../../data/CatalogProvider';
 import {useBrandIdentity,markBrandFailed} from '../../brandIdentity';
@@ -10,6 +11,8 @@ export function ToolCard({ tool, onOpen }) {
  const description=profiles[tool.id]?.summary;
  const identity=useBrandIdentity(tool);
  const logo=identity.logo;
+ const categoryNames=toolCategoryNames(tool);
+ const extraCategories=categoryNames.slice(2);
  const detail = tool;
  const hasHealth=Number.isFinite(detail.healthScore);
  const healthTone = !hasHealth?'unknown':detail.healthScore >= 80 ? 'good' : detail.healthScore >= 60 ? 'moderate' : 'low';
@@ -33,7 +36,8 @@ export function ToolCard({ tool, onOpen }) {
     <h3 className={identity.wordmark ? 'sr-only' : undefined}>{tool.name}</h3>
    </div>
    <div className="tool-tags">
-    <span>{tool.category}</span>
+    {categoryNames.slice(0,2).map(category=><span key={category}>{category}</span>)}
+    {extraCategories.length>0&&<span className="category-overflow" aria-label={`${extraCategories.length} categorías más: ${extraCategories.join(", ")}`} title={extraCategories.join(", ")}>+{extraCategories.length}</span>}
 
    </div>
    {description&&<CardDescription description={description} tool={tool} onOpen={onOpen}/>}
