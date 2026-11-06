@@ -1,4 +1,5 @@
-import {createHttpAssistantProvider} from '../../data/assistantHttp.mjs';
+import {sixToolPreview} from '../../mocks/errorPreview.mjs';
+import {createHttpAssistantProvider,httpAssistantTimeoutMs} from '../../data/assistantHttp.mjs';
 import {useMemo,useState,useRef,useEffect,useReducer} from 'react';
 import {useCatalogData} from '../../data/CatalogProvider';
 import {promptPresentation,initialPresentation} from '../../promptPresentation.mjs';
@@ -10,7 +11,7 @@ export function useAssistantFlow(isDetail){
  const {tools}=useCatalogData();
  const baseUrl=process.env.NEXT_PUBLIC_ASSISTANT_API_BASE_URL||'';
  const provider=useMemo(()=>baseUrl?createHttpAssistantProvider({baseUrl}):null,[baseUrl]);
- const [query,setQuery]=useState(''),[error,setError]=useState('');
+ const [query,setQuery]=useState(()=>sixToolPreview()?'Quiero una plataforma para gestionar varias empresas, con acceso por roles, datos separados por organización, reportes rápidos y seguimiento del rendimiento.':''),[error,setError]=useState('');
  const [assistantResponse,setAssistantResponse]=useState(null);
  const [originalPrompt,setOriginalPrompt]=useState('');
  const [slow,setSlow]=useState(false),[canRetry,setCanRetry]=useState(false);
@@ -22,8 +23,13 @@ export function useAssistantFlow(isDetail){
  const phase=pending?'loading':hasResult?'done':'idle';
  const input=useRef(null), request=useRef(null);useEffect(()=>()=>request.current?.abort(),[]);
  const preparePromptLayout=usePromptLayout(expanded,input,isDetail);
- useEffect(()=>{if(isDetail){request.current?.abort();setSlow(false);dispatchPresentation({type:'cancel'});}},[isDetail]);
  useEffect(()=>{if(finished&&!isDetail)resultHeading.current?.focus({preventScroll:true});},[finished,isDetail]);
+ function stop(){
+  request.current?.abort();request.current=null;
+  setSlow(false);setError('');setCanRetry(false);
+  dispatchPresentation({type:'cancel'});
+  requestAnimationFrame(()=>input.current?.focus({preventScroll:true}));
+ }
  function newArchitecture(){
   request.current?.abort();request.current=null;attempts.current=0;setSlow(false);setCanRetry(false);setAssistantResponse(null);setOriginalPrompt('');setQuery('');setError('');
   dispatchPresentation({type:'reset'});
@@ -38,13 +44,13 @@ export function useAssistantFlow(isDetail){
   try{
    const scenario=new URLSearchParams(window.location.search).get('assistantMock')||'ok';
    const localScenario=process.env.NEXT_PUBLIC_ERROR_PREVIEW==='true'&&['localhost','127.0.0.1'].includes(window.location.hostname)&&new URLSearchParams(window.location.search).has('assistantMock');
-   const response=await requestAssistant({query:submitted},{...(provider&&!localScenario?{provider,catalog:tools}:assistantScenarioOptions(scenario,tools)),signal:controller.signal,attempt:++attempts.current,onSlow:()=>{if(request.current===controller&&!controller.signal.aborted)setSlow(true);}});
+   const response=await requestAssistant({query:submitted},{...(provider&&!localScenario?{provider,catalog:tools,timeoutMs:httpAssistantTimeoutMs}:assistantScenarioOptions(scenario,tools)),signal:controller.signal,attempt:++attempts.current,onSlow:()=>{if(request.current===controller&&!controller.signal.aborted)setSlow(true);}});
    if(controller.signal.aborted)return;
    setOriginalPrompt(submitted);setAssistantResponse(response);dispatchPresentation({type:'success'});
-   setQuery(response.status==='needs_clarification'?submitted:'');
+   setQuery(submitted);
   }catch(error){if(controller.signal.aborted||error.name==='AbortError')return;dispatchPresentation({type:'failure'});setError(error.code||'technical_error');setCanRetry(getAssistantError(error.code).retry);}
   finally{if(request.current===controller){request.current=null;if(!controller.signal.aborted)setSlow(false);}}
  }
 
- return {query,setQuery,error,setError,assistantResponse,originalPrompt,slow,canRetry,setCanRetry,resultHeading,finished,pending,expanded,hasResult,phase,isDetail,input,newArchitecture,submit};
+ return {query,setQuery,error,setError,assistantResponse,originalPrompt,slow,canRetry,setCanRetry,resultHeading,finished,pending,expanded,hasResult,phase,isDetail,input,newArchitecture,submit,stop};
 }

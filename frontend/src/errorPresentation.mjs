@@ -13,7 +13,7 @@ export const assistantErrors=Object.freeze({
  technical_error:entry('No pudimos generar la propuesta','Ocurrió un problema inesperado. Vuelve a intentarlo.')
 });
 export const errorActions=Object.freeze({retry:'Reintentar',close:'Cerrar ficha'});
-export const interfaceErrors=Object.freeze({catalog:'No pudimos cargar las herramientas.',detail:'No pudimos cargar la ficha de esta herramienta.',missing:'Esta herramienta no está disponible en el catálogo.',copy:'No pudimos copiar el código. Puedes seleccionarlo y copiarlo manualmente.'});
+export const interfaceErrors=Object.freeze({catalog:'Esta vez no pudimos traer las herramientas.',detail:'No pudimos cargar la ficha de esta herramienta.',missing:'Esta herramienta no está disponible en el catálogo.',copy:'No pudimos copiar el código. Puedes seleccionarlo y copiarlo manualmente.'});
 export const getAssistantError=code=>Object.hasOwn(assistantErrors,code)?assistantErrors[code]:assistantErrors.technical_error;
 export function queryErrorCode(query){
  if(typeof query!=='string'||!query.trim())return 'empty_query';

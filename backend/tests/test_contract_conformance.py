@@ -121,19 +121,20 @@ def test_archived_is_never_invented_when_the_row_brings_null():
     assert response.json()["error"]["code"] == "catalog_unavailable"
 
 
+def test_six_categories_are_preserved_in_the_catalog():
+    categories = [{"category_id": name, "assigned_by": "rule"} for name in
+                  ["database", "auth", "backend", "cache", "search", "infrastructure"]]
+    with build_client(FakeRepository([list_row(categories=categories)])) as client:
+        response = client.get("/repos")
+    assert response.status_code == 200
+    assert response.json()[0]["categories"] == categories
+
+
 def test_categories_over_the_contract_limit_break_the_response():
-    """Comportamiento actual sin decidir: 4 categorías → 503 en todo el listado.
-
-    `Repo.categories` admite 3 (`max_length=3`) y el servicio no recorta, a
-    diferencia de `summary_es` y de las ideas. Si el equipo aprueba recortar en
-    el borde, este test debe pasar a esperar 200 con tres asignaciones.
-    """
-    cuarta = {"category_id": "database", "assigned_by": "rule"}
-    row = list_row(categories=[*list_row()["categories"], cuarta, cuarta])
-
+    """Más de seis categorías exceden el contrato; no se descartan asignaciones."""
+    row = list_row(categories=[{"category_id": "database", "assigned_by": "rule"}] * 7)
     with build_client(FakeRepository([row])) as client:
         response = client.get("/repos")
-
     assert response.status_code == 503
     assert response.json()["error"]["code"] == "catalog_unavailable"
 

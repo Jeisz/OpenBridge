@@ -180,11 +180,10 @@ el equipo de contratos.
    respuesta (19 → 16 claves en el listado), así que la decisión entre añadirlas
    al contrato o eliminarlas es la propuesta B de
    [`docs/propuestas-contrato.md`](docs/propuestas-contrato.md).
-4. **Más de tres categorías en la base ⇒ 503.** `Repo.categories` admite tres
-   (`max_length=3`) y el servicio no recorta, a diferencia de `summary_es` y de
-   las ideas: una cuarta asignación tumba la página entera. Recortar en el borde
-   necesita una decisión explícita (ver
-   `test_categories_over_the_contract_limit_break_the_response`).
+4. **Hasta seis categorías por herramienta.** `Repo.categories` admite seis
+   (`max_length=6`). Se conservan todas en la API y la ficha; la card muestra
+   dos y un contador de las restantes. Más de seis sigue siendo un error de
+   validación, sin descartar asignaciones silenciosamente.
 5. **Un `404` de ruta desconocida no usa el cuerpo de error de la API.**
    Responde `{"detail": "Not Found"}` del framework. Los códigos
    `repo_not_found`, `invalid_request` y `catalog_unavailable` son sólo para los

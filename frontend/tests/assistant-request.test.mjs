@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {requestAssistant} from '../src/data/assistantRequest.mjs';
-import {AssistantError,mockAssistant,validateAssistantResponse,validateAssistantCatalog} from '../src/data/assistant.mjs';
+import {AssistantError,mockAssistant,validateAssistantResponse,validateAssistantCatalog,recommendationLicenseWarning} from '../src/data/assistant.mjs';
 import {catalogRecords} from '../src/data/catalog.mjs';
 import {resolveProposalExample} from '../src/data/proposal.mjs';
 import {assistantScenarioOptions} from '../src/mocks/assistant-scenarios.mjs';
@@ -81,9 +81,18 @@ test('unexpected provider aborts/errors become recoverable failures instead of s
  }
 });
 
-test('unverified SPDX licenses cannot be recommended, including adapted records',async()=>{
- const response=await valid();const catalog=structuredClone(catalogRecords);
- catalog.find(t=>t.full_name==='postgres/postgres').license_spdx_id='NOASSERTION';
- assert.throws(()=>validateAssistantCatalog(response,catalog),{code:'unverified_license'});
- assert.equal(validateAssistantCatalog(response,catalogRecords),response);
+test('unknown licenses preserve the complete proposal and expose a card warning',async()=>{
+ const response=await valid();
+ for(const license of ['NOASSERTION',null,undefined,'']){
+  const catalog=structuredClone(catalogRecords);
+  const tool=catalog.find(t=>t.full_name==='postgres/postgres');
+  tool.license_spdx_id=license;
+  assert.equal(validateAssistantCatalog(response,catalog),response);
+  assert.equal(recommendationLicenseWarning(tool),'Licencia sin verificar');
+  const result=await requestAssistant(request,{...quick,catalog,provider:{ask:async()=>response}});
+  assert.deepEqual(result.components,response.components);
+  assert.deepEqual(result.connections,response.connections);
+ }
+ assert.equal(recommendationLicenseWarning({license_spdx_id:'MIT'}),null);
+ assert.equal(recommendationLicenseWarning(null),null);
 });

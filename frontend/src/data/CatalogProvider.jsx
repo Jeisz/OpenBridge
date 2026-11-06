@@ -1,4 +1,4 @@
-import {errorPreview} from '../mocks/errorPreview.mjs';
+import {errorPreview,sixToolPreview} from '../mocks/errorPreview.mjs';
 import {createContext,useContext,useEffect,useMemo,useState} from 'react';
 import {tools as mockTools} from '../tools';
 import {profiles as mockProfiles} from '../toolProfiles';
@@ -7,12 +7,13 @@ import {createCatalogCache} from './catalogCache.mjs';
 import {createCatalogHttp} from './catalogHttp.mjs';
 
 const baseUrl=process.env.NEXT_PUBLIC_CATALOG_API_BASE_URL||process.env.NEXT_PUBLIC_API_BASE_URL||'';
-const http=baseUrl?createCatalogCache(createCatalogHttp({baseUrl})):null;
+const http=baseUrl&&!sixToolPreview()?createCatalogCache(createCatalogHttp({baseUrl})):null;
 const initial={tools:http?[]:mockTools,profiles:http?{}:mockProfiles,categories:catalogCategories,status:http?'loading':'ready',error:null};
 const Context=createContext({...initial,http,baseUrl});
 export function CatalogProvider({children}){
  const [data,setData]=useState(()=>http?.peekList()?{...http.peekList(),status:'ready',error:null}:initial),[attempt,setAttempt]=useState(0);
  useEffect(()=>{
+  if(errorPreview('license')){setData({tools:mockTools.map(tool=>tool.full_name==='keycloak/keycloak'?{...tool,license_spdx_id:'NOASSERTION'}:tool),profiles:mockProfiles,categories:catalogCategories,status:'ready',error:null});return;}
   if(errorPreview('catalog')){setData(d=>({...d,status:'error',tools:[]}));return;}
   if(!http)return;
   const controller=new AbortController();

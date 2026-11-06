@@ -7,6 +7,8 @@ export function usePromptLayout(expanded,inputRef,isDetail){
  const prepare=useCallback(()=>{
   const form=inputRef.current?.closest('form');if(!form||previous.current)return;
   formRef.current=form;
+  const slot=form.closest('.prompt-form-slot');
+  if(slot){const rect=slot.getBoundingClientRect();slot.dataset.dockOrigin=JSON.stringify({left:rect.left,top:rect.top,height:rect.height});}
   form.style.setProperty('--composer-height',`${form.getBoundingClientRect().height}px`);
   document.querySelector('#landing-view')?.setAttribute('data-layout-moving','true');
  },[inputRef]);

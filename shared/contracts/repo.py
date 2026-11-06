@@ -39,7 +39,7 @@ class Repo(BaseModel):
 
     # ---------- Mitad de abajo: la escribe la IA ----------
     # Opcional hasta que la IA procesa; la primera es la principal.
-    categories: list[CategoryAssignment] = Field(default_factory=list, max_length=3)
+    categories: list[CategoryAssignment] = Field(default_factory=list, max_length=6)
     use_cases: list[str] = Field(default_factory=list, max_length=4)
     summary_es: str | None = Field(default=None, max_length=250)  # resumen en español para la ficha
 

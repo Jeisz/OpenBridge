@@ -1,5 +1,4 @@
 import {memo,useCallback,useEffect,useRef,useState} from 'react';
-import {SlidersHorizontal,X} from 'lucide-react';
 import LightRays from './components/LightRays/LightRays';
 
 import defaults from './data/background-light.json';
@@ -23,9 +22,9 @@ function load(){
  }catch{return {...defaults};}
 }
 export const HeroLights=memo(function HeroLights(){
- const root=useRef(null),dialog=useRef(null),trigger=useRef(null);
- const [local,setLocal]=useState(false),[settings,setSettings]=useState(defaults),[saved,setSaved]=useState(defaults),[saveError,setSaveError]=useState(false);
- useEffect(()=>{setLocal(['localhost','127.0.0.1'].includes(location.hostname));const value=load();setSettings(value);setSaved(value);},[]);
+ const root=useRef(null);
+ const [settings,setSettings]=useState(defaults);
+ useEffect(()=>{setSettings(load());},[]);
  const lighting=useRef({gradient:null,x:null,y:null,intensity:null});
  const syncBorderLight=useCallback((x,y,intensity)=>{
   const state=lighting.current;
@@ -43,19 +42,5 @@ export const HeroLights=memo(function HeroLights(){
   state.gradient.firstElementChild.setAttribute('stop-opacity',Math.min(.7,.16+power*.36));
   state.gradient.lastElementChild.setAttribute('stop-opacity',Math.min(.22,.08+power*.06));
  },[]);
- function close(){dialog.current.close();trigger.current?.focus({preventScroll:true});}
- function cancel(){setSettings(saved);setSaveError(false);close();}
- function save(){try{localStorage.setItem(storageKey,JSON.stringify(settings));setSaved(settings);setSaveError(false);close();}catch{setSaveError(true);}}
- function change(key,value){setSettings(current=>({...current,[key]:value}));setSaveError(false);}
- return <><div ref={root} className="hero-directional-light hero-light-rays" aria-hidden="true"><LightRays {...settings} raysColor={settings.color} cursorShadow={false} clickPulse={false} maxDevicePixelRatio={1} onLightDirection={syncBorderLight}/></div>
- {local&&<><button ref={trigger} type="button" className="light-settings-trigger ui-button" aria-label="Configurar luz del fondo" onClick={()=>dialog.current.showModal()}><SlidersHorizontal size={16}/></button>
- <dialog ref={dialog} className="submit-appearance-dialog light-settings-dialog" aria-labelledby="light-settings-title" onCancel={e=>{e.preventDefault();cancel();}} onClick={e=>{if(e.target===e.currentTarget)cancel();}}>
- <div className="submit-appearance-heading"><h2 id="light-settings-title">Luz del fondo</h2><button type="button" aria-label="Cerrar configuración de luz" onClick={cancel}><X size={20}/></button></div>
- <div className="light-settings-body"><label className="light-color-control">Color de la luz<input type="color" value={settings.color} onChange={e=>change('color',e.target.value)}/><span>{settings.color.toUpperCase()}</span></label>
- <label className="light-color-control">Origen<select aria-label="Origen" value={settings.raysOrigin} onChange={e=>change('raysOrigin',e.target.value)}>{Object.entries(origins).map(([value,label])=><option key={value} value={value}>{label}</option>)}</select></label>
- {groups.map(([title,fields])=><fieldset key={title} className="light-settings-group"><legend>{title}</legend><div className="submit-appearance-controls">{fields.map(([key,label,min,max,unit,step])=><label key={key}><span>{label}<output>{settings[key]}{unit}</output></span><input aria-label={label} type="range" min={min} max={max} step={step} value={settings[key]} onChange={e=>change(key,Number(e.target.value))}/></label>)}</div></fieldset>)}
- </div>{saveError&&<p role="alert">No pudimos guardar la configuración en este navegador.</p>}
- <div className="submit-appearance-actions"><button type="button" className="ui-button" onClick={()=>setSettings({...defaults})}>Restablecer</button><button type="button" className="ui-button ui-button--primary" onClick={save}>Guardar</button></div>
- </dialog></>}
- </>;
+ return <div ref={root} className="hero-directional-light hero-light-rays" aria-hidden="true"><LightRays {...settings} raysColor={settings.color} cursorShadow={false} clickPulse={false} maxDevicePixelRatio={1} onLightDirection={syncBorderLight}/></div>;
 });
