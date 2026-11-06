@@ -40,6 +40,14 @@ respaldo sin esperar. Se expone como servicio HTTP (`POST /assistant`, ver [Serv
 razonamiento bajo. Criterios, comparación y descartados en
 [`eval/LLM_DECISION.md`](eval/LLM_DECISION.md).
 
+**Enriquecimiento del catálogo.** Los 100 repos tienen categorías (1 a 3 de
+`categories.json`, la primera es la principal), un resumen en español (`summary_es`, hasta
+250 caracteres) y casos de uso (0 a 4, cada uno respaldado por una cita del README que el
+código comprueba). Los genera Gemini 3.5 Flash-Lite; se guardan en
+`data/catalog/enrichment.json` y en las tablas `ai.*`. Ver
+[Enriquecimiento del catálogo](#enriquecimiento-del-catálogo); elección del modelo en
+[`eval/ENRICH_DECISION.md`](eval/ENRICH_DECISION.md).
+
 ## Estructura
 
 ```
@@ -224,6 +232,10 @@ python -m ai.scripts.build_sample_data           # regenera ai/data/ (requiere `
 python -m ai.scripts.export_catalog_snapshot     # regenera ai/data/catalog/ (requiere AI_READER_DATABASE_URL en .env)
 python -m ai.scripts.load_seed_example           # carga los datos de ejemplo en ai.* (requiere AI_DATABASE_URL en .env)
 python -m ai.scripts.load_seed_example --limpiar # borra los datos de ejemplo
+python -m ai.scripts.enrich_catalog              # genera categorías, resumen y casos de uso (requiere GEMINI_API_KEY)
+python -m ai.scripts.write_enrichment            # valida enrichment.json sin tocar la base
+python -m ai.scripts.write_enrichment --escribir # lo escribe en ai.* (requiere AI_DATABASE_URL)
+python -m ai.eval.compare_enrichment ARCHIVOS --out reporte.md  # compara corridas de distintos modelos
 python -m ai.eval.run_search_eval                # evalúa la búsqueda sobre el catálogo real (--golden sample: datos de ejemplo)
 python -m ai.scripts.check_llm gemini groq-low   # prueba de humo de los proveedores de LLM (requiere las claves)
 python -m ai.eval.run_understand_eval gemini     # compara modelos en el paso de entender (--cases validation: casos de validación)
@@ -256,32 +268,61 @@ snapshot anterior. Regenerarlo reescribe `readmes/` completo; el diff muestra qu
 ## Datos de ejemplo en las tablas de la IA
 
 `ai/data/seed/ejemplo_ia.json` tiene resumen, categorías e ideas de integración para 8 repos
-del catálogo, para probar la API y la ficha antes de que la IA genere los datos reales. Están
-escritos desde el README de cada repo y revisados de forma manual. No son salida del LLM.
+del catálogo, escritos a mano desde el README de cada uno. Sirvieron para probar la API y la
+ficha antes de que la IA generara los datos reales. **Ya no están en la base:** el escritor
+del enriquecimiento los borra antes de escribir.
 
-Los repos se eligieron para cubrir los casos de la ficha:
+`ai/scripts/load_seed_example.py` los vuelve a cargar si hace falta para pruebas
+(`--limpiar` solo los borra). Se reconocen por `ai_input_hash` y `based_on_hash` =
+`seed-ejemplo`; la limpieza borra solo esas filas, nunca datos reales.
 
-| Caso | Repos |
+## Enriquecimiento del catálogo
+
+Para cada repo, el modelo recibe la descripción, los topics y el README (sin HTML, imágenes
+ni URLs, recortado a 8.000 caracteres en un final de párrafo) y devuelve categorías,
+`summary_es` y casos de uso. El código valida la respuesta antes de guardarla:
+
+| Regla | Si no se cumple |
 |---|---|
-| 3, 2, 1 y 0 ideas | ollama · redis, pgvector, fastapi · duckdb, vault · grafana, ripgrep |
-| Idea con fragmento de código | ollama, redis, duckdb, pgvector, fastapi |
-| Idea sin fragmento («Código no disponible») | vault, y una idea de ollama, redis y fastapi |
-| Sin sitio web (`homepage` vacío) | pgvector, ripgrep |
-| Licencia sin confirmar (`NOASSERTION`) | redis, pgvector, vault |
-| Sin datos de la IA | los demás repos del catálogo |
+| Categorías: 1 a 3 ids de `categories.json`, sin repetir | Un reintento; si sigue mal, se guarda lo que cumple |
+| `summary_es`: 1 a 250 caracteres, sin palabras de venta | Un reintento; si sigue mal, `null` (la ficha muestra la descripción) |
+| Cada caso de uso trae una cita del README que existe en el texto que vio el modelo (al menos 15 caracteres y 2 palabras) | Se descarta ese caso de uso, sin reintento |
+| README casi vacío (menos de 200 caracteres) | Sin casos de uso |
 
-`ai/scripts/load_seed_example.py` los valida contra los contratos y los escribe con el usuario
-escritor (`AI_DATABASE_URL` en `.env`, con la contraseña codificada como en la sección anterior).
-Todo va en una sola transacción: si algo falla, la base queda como estaba. Se puede correr las
-veces que haga falta: borra los datos de ejemplo y los vuelve a insertar.
+Cada registro guarda el proveedor, el modelo, la versión de las reglas (`PROMPT_VERSION`) y
+un hash de la entrada. Si nada de eso cambió, el repo no se vuelve a pedir al modelo.
 
-**Antes de generar los datos reales de la IA, hay que borrarlos:**
+**Regenerar** (por ejemplo, cuando cambie el catálogo):
 
-    python -m ai.scripts.load_seed_example --limpiar
+    python -m ai.scripts.enrich_catalog
+    python -m ai.scripts.write_enrichment             # revisar que sea válido
+    python -m ai.scripts.write_enrichment --escribir
 
-Las filas de ejemplo se reconocen por `ai_input_hash` y `based_on_hash` = `seed-ejemplo`.
-La limpieza borra solo esas filas (y las categorías de esos repos), nunca datos reales. Si ya
-hay datos reales para alguno de estos repos, la carga falla sin cambiar nada.
+Medido el 6-nov-2026: unos 320 mil tokens de entrada y 17 mil de salida para 100 repos, en el
+nivel gratuito de Gemini; entre 5 y 10 minutos con las esperas por límite de uso. Guarda cada
+repo apenas llega: si se corta, el mismo comando sigue donde quedó. `enrichment.json` se
+generó con la versión 4 de las reglas; el código ya está en la 5 (más palabras de venta), así
+que la próxima corrida regenera los 100.
+
+**Escribir en la base** es una sola transacción (todo o nada) y repetible. Las categorías con
+`assigned_by = 'human'` nunca se sobrescriben.
+
+**Qué lee la API del catálogo:** `summary_es` y `use_cases` de `ai.ai_repo_enrichment`;
+`category_id` y `assigned_by` de `ai.ai_repo_categories`, ordenadas por `rank` (1 = principal).
+`ai_input_hash` y `processed_at` son internas de la IA.
+
+**Limitaciones conocidas:**
+- Entre corridas, Gemini cambia la categoría principal en 1 de cada 16 repos aproximadamente.
+- En la corrida actual, 6 repos tienen una categoría dudosa frente a las notas de
+  `categories.json`: deno y linux con `dev-tools` como principal (deno es un runtime como
+  Node.js; un kernel no es una herramienta de desarrollo), flink y pytorch con `backend`,
+  celery con `backend` y alertmanager con `communication` como secundarias. No se corrigen a
+  mano: un archivo de correcciones no escala. Si hace falta más calidad: generar las
+  categorías con un modelo más capaz o revisar solo los repos que cambian entre dos corridas.
+- La cita prueba que el texto existe en el README, no que respalde el caso de uso (por ejemplo,
+  un título de sección).
+- 8 resúmenes de la versión 4 tienen expresiones de venta ("extremadamente", "moderno") que la
+  versión 5 ya rechaza.
 
 ## Cómo leer los datos
 

@@ -1,0 +1,527 @@
+{
+  "prompt_version": "4",
+  "repos": [
+    {
+      "github_id": 50904245,
+      "full_name": "apache/beam",
+      "categories": [
+        "data-processing"
+      ],
+      "summary_es": "Modelo de programación unificado para procesar datos en lote y en streaming, con SDKs para Java, Python y Go que ejecutan los pipelines en distintos motores de procesamiento distribuido.",
+      "use_cases": [
+        "Procesar datos en lote y en streaming con un mismo modelo de pipelines"
+      ],
+      "evidence": [
+        "Apache Beam is a unified model for defining both batch and streaming data-parallel processing pipelines, as well as a set of language-specific SDKs for constructing pipelines and Runners for executing them on distributed processing backends, including Apache Flink, Apache Spark, Google Cloud Dataflow, and Hazelcast Jet."
+      ],
+      "provider": "claude-haiku-razona",
+      "model": "claude-haiku-5-5",
+      "prompt_version": "4",
+      "ai_input_hash": "072a5c6cef1bf2cfdb0a62b19a2777e5fc77824af8b84c4b4d0e763d17f4e507",
+      "review": {
+        "readme_chars": 4554,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 5850,
+        "output_tokens": 972,
+        "seconds": 4.09
+      }
+    },
+    {
+      "github_id": 120896210,
+      "full_name": "argoproj/argo-cd",
+      "categories": [
+        "infrastructure"
+      ],
+      "summary_es": "Herramienta de entrega continua GitOps para Kubernetes: sincroniza las aplicaciones desplegadas con sus definiciones declarativas guardadas en control de versiones.",
+      "use_cases": [
+        "Automatizar el despliegue y el ciclo de vida de aplicaciones en Kubernetes",
+        "Gestionar definiciones, configuraciones y entornos de forma declarativa y versionada"
+      ],
+      "evidence": [
+        "Application deployment and lifecycle management should be automated, auditable, and easy to understand.",
+        "Application definitions, configurations, and environments should be declarative and version controlled."
+      ],
+      "provider": "claude-haiku-razona",
+      "model": "claude-haiku-5-5",
+      "prompt_version": "4",
+      "ai_input_hash": "c829d386d8987100e006934b83ee817bcafbf1e18c113d9de33b00c0499294b0",
+      "review": {
+        "readme_chars": 3106,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 5564,
+        "output_tokens": 752,
+        "seconds": 3.59
+      }
+    },
+    {
+      "github_id": 53631945,
+      "full_name": "BurntSushi/ripgrep",
+      "categories": [
+        "dev-tools"
+      ],
+      "summary_es": "Herramienta de línea de comandos que busca recursivamente un patrón de expresión regular en directorios y respeta las reglas de .gitignore.",
+      "use_cases": [
+        "Limitar la búsqueda a tipos de archivo concretos, como Python o JavaScript"
+      ],
+      "evidence": [
+        "ripgrep can search specific types of files."
+      ],
+      "provider": "claude-haiku-razona",
+      "model": "claude-haiku-5-5",
+      "prompt_version": "4",
+      "ai_input_hash": "9426a1ab9dc0dc7f563b903e05a70e07578f03b713bb0ec074d0413dc27a26c7",
+      "review": {
+        "readme_chars": 7554,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [
+          {
+            "use_case": "Buscar un patrón de expresión regular en directorios sin revisar los archivos ignorados por gitignore",
+            "evidence": "ripgrep recursively searches directories for a regex pattern while respecting your gitignore",
+            "reason": "caso de uso vacío o de más de 100 caracteres"
+          }
+        ],
+        "input_tokens": 7583,
+        "output_tokens": 1115,
+        "seconds": 6.8
+      }
+    },
+    {
+      "github_id": 48109239,
+      "full_name": "cilium/cilium",
+      "categories": [
+        "infrastructure",
+        "observability"
+      ],
+      "summary_es": "Plataforma de redes, seguridad y observabilidad para Kubernetes basada en eBPF. Ofrece CNI, balanceo de carga que puede reemplazar a kube-proxy y políticas de red L3-L7 por identidad.",
+      "use_cases": [
+        "Conectar pods de clústeres Kubernetes mediante una red CNI basada en eBPF",
+        "Reemplazar kube-proxy para balancear la carga del tráfico entre pods",
+        "Aplicar políticas de red basadas en identidad en lugar de direcciones IP",
+        "Monitorear la visibilidad de red y seguridad del tráfico entre cargas de trabajo"
+      ],
+      "evidence": [
+        "fast, scalable, and secure networking layer for Kubernetes clusters. Built",
+        "and is able to fully replace kube-proxy, using efficient",
+        "can enforce network policies on L3-L7 using an identity-based security",
+        "provides deep network and security visibility and monitoring."
+      ],
+      "provider": "claude-haiku-razona",
+      "model": "claude-haiku-5-5",
+      "prompt_version": "4",
+      "ai_input_hash": "2ff0d5b471e7a37c0a1e7079ad86e665ddc5a307d6e13d54d4f7af8b6da4e8d9",
+      "review": {
+        "readme_chars": 7880,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 6803,
+        "output_tokens": 1317,
+        "seconds": 5.72
+      }
+    },
+    {
+      "github_id": 60246359,
+      "full_name": "ClickHouse/ClickHouse",
+      "categories": [
+        "database",
+        "analytics"
+      ],
+      "summary_es": "Sistema de gestión de bases de datos columnar de código abierto para análisis de datos en tiempo real y generación de informes analíticos.",
+      "use_cases": [
+        "Generar informes analíticos de datos en tiempo real"
+      ],
+      "evidence": [
+        "allows generating analytical data reports in real-time."
+      ],
+      "provider": "claude-haiku-razona",
+      "model": "claude-haiku-5-5",
+      "prompt_version": "4",
+      "ai_input_hash": "4a1b02d39edbf884a1717e29bfdc3068a231238127eefc0cfde3e2e89fa79a39",
+      "review": {
+        "readme_chars": 3146,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 5440,
+        "output_tokens": 124,
+        "seconds": 1.52
+      }
+    },
+    {
+      "github_id": 131619646,
+      "full_name": "dagster-io/dagster",
+      "categories": [
+        "data-processing"
+      ],
+      "summary_es": "Orquestador de pipelines de datos para desarrollar, ejecutar y observar activos de datos como tablas, modelos de machine learning y reportes, con linaje y pruebas integradas.",
+      "use_cases": [
+        "Centralizar metadatos, linaje y observabilidad de datos en una sola herramienta",
+        "Poner pipelines de datos en producción con un motor de orquestación multi-tenant"
+      ],
+      "evidence": [
+        "Centralize your metadata in one tool with built-in observability, diagnostics, cataloging, and lineage.",
+        "Put your pipelines into production with a robust multi-tenant, multi-tool engine that scales technically and organizationally."
+      ],
+      "provider": "claude-haiku-razona",
+      "model": "claude-haiku-5-5",
+      "prompt_version": "4",
+      "ai_input_hash": "102223ea6e379de74b84d1dabbf79e2b2dc2c5abcecfa341aac22b5717fbfc1c",
+      "review": {
+        "readme_chars": 3613,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [
+          {
+            "use_case": "Mantener actualizados activos de datos como tablas, conjuntos de datos, modelos de machine learning y reportes",
+            "evidence": "It is designed for **developing and maintaining data assets**, such as tables, data sets, machine learning models, and reports.",
+            "reason": "caso de uso vacío o de más de 100 caracteres"
+          }
+        ],
+        "input_tokens": 5507,
+        "output_tokens": 1038,
+        "seconds": 4.21
+      }
+    },
+    {
+      "github_id": 138754790,
+      "full_name": "duckdb/duckdb",
+      "categories": [
+        "database"
+      ],
+      "summary_es": "Base de datos analítica embebida en el proceso de la aplicación, sin servidor aparte, con SQL avanzado para consultar archivos como CSV, Parquet y JSON, y otras bases de datos.",
+      "use_cases": [
+        "Ejecutar análisis SQL dentro de la aplicación, sin servidor que administrar",
+        "Consultar archivos CSV, Parquet, JSON o Excel en disco local o en almacenamiento remoto",
+        "Consultar otras bases de datos en su lugar, sin un paso ETL aparte"
+      ],
+      "evidence": [
+        "DuckDB runs in-process inside your application, so there is no separate server to manage and no external dependencies.",
+        "DuckDB reads and writes a wide range of file formats, including CSV, Parquet, JSON, and Excel, directly from local disk or from remote endpoints such as S3, HTTP(S), Azure, and Google Cloud Storage.",
+        "DuckDB can attach to other database systems and query them in place, so you can read, join, and move data across engines without a separate ETL step."
+      ],
+      "provider": "claude-haiku-razona",
+      "model": "claude-haiku-5-5",
+      "prompt_version": "4",
+      "ai_input_hash": "10c3e3a065acd520147f1594cb4f7061303ff2f0f0f858ce935b1123d759ac85",
+      "review": {
+        "readme_chars": 3284,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 5277,
+        "output_tokens": 1163,
+        "seconds": 5.3
+      }
+    },
+    {
+      "github_id": 179492861,
+      "full_name": "encode/httpx",
+      "categories": [
+        "backend"
+      ],
+      "summary_es": "Cliente HTTP para Python con API compatible con requests, soporte para HTTP/1.1 y HTTP/2, y uso síncrono o asíncrono.",
+      "use_cases": [
+        "Hacer peticiones HTTP síncronas o asíncronas desde Python",
+        "Migrar código que usa requests con cambios mínimos",
+        "Hacer peticiones directamente a aplicaciones WSGI o ASGI"
+      ],
+      "evidence": [
+        "Standard synchronous interface, but with async support if you need it.",
+        "A broadly requests-compatible API.",
+        "Ability to make requests directly to WSGI applications or ASGI applications."
+      ],
+      "provider": "claude-haiku-razona",
+      "model": "claude-haiku-5-5",
+      "prompt_version": "4",
+      "ai_input_hash": "78d29640a7b1febb9d98f3368c03f4665bf13d8407789d6ec94f77df267e973a",
+      "review": {
+        "readme_chars": 3363,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 5516,
+        "output_tokens": 858,
+        "seconds": 3.98
+      }
+    },
+    {
+      "github_id": 160919119,
+      "full_name": "fastapi/fastapi",
+      "categories": [
+        "backend"
+      ],
+      "summary_es": "Framework web de Python para construir APIs a partir de type hints estándar, con validación de datos y documentación OpenAPI interactiva generada automáticamente.",
+      "use_cases": [
+        "Construir APIs web en Python a partir de type hints estándar",
+        "Generar documentación interactiva de la API de forma automática",
+        "Validar automáticamente los datos de entrada de las peticiones"
+      ],
+      "evidence": [
+        "FastAPI is a modern, fast (high-performance), web framework for building APIs with Python based on standard Python type hints.",
+        "Get production-ready code. With automatic interactive documentation.",
+        "Automatic and clear errors when the data is invalid."
+      ],
+      "provider": "claude-haiku-razona",
+      "model": "claude-haiku-5-5",
+      "prompt_version": "4",
+      "ai_input_hash": "a0d3871118ddefed16d08d3dfda022a03c52847d809eb421b839912e7bd9cdce",
+      "review": {
+        "readme_chars": 7940,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 7274,
+        "output_tokens": 1324,
+        "seconds": 6.04
+      }
+    },
+    {
+      "github_id": 15111821,
+      "full_name": "grafana/grafana",
+      "categories": [
+        "observability",
+        "analytics"
+      ],
+      "summary_es": "Plataforma de código abierto para visualizar, explorar y alertar sobre métricas, logs y trazas almacenados en múltiples fuentes de datos, como Prometheus, Loki, Elasticsearch, InfluxDB y PostgreSQL.",
+      "use_cases": [
+        "Crear dashboards de monitoreo con métricas de múltiples fuentes de datos",
+        "Definir reglas de alerta sobre métricas y enviar notificaciones a Slack o PagerDuty",
+        "Explorar logs y pasar de métricas a logs manteniendo los filtros de etiquetas"
+      ],
+      "evidence": [
+        "Visualize metrics, logs, and traces from multiple sources like Prometheus, Loki, Elasticsearch, InfluxDB, Postgres and many more.",
+        "Visually define alert rules for your most important metrics. Grafana will continuously evaluate and send notifications to systems like Slack, PagerDuty, VictorOps, OpsGenie.",
+        "Experience the magic of switching from metrics to logs with preserved label filters."
+      ],
+      "provider": "claude-haiku-razona",
+      "model": "claude-haiku-5-5",
+      "prompt_version": "4",
+      "ai_input_hash": "eec85f4b6269907a4f99de8ba5491de84782d424873c81fbfc80305df05e0341",
+      "review": {
+        "readme_chars": 2194,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 5026,
+        "output_tokens": 397,
+        "seconds": 1.85
+      }
+    },
+    {
+      "github_id": 31288958,
+      "full_name": "hashicorp/vault",
+      "categories": [
+        "auth"
+      ],
+      "summary_es": "Herramienta de gestión de secretos que almacena claves, contraseñas y certificados con control de acceso y registro de auditoría. Genera credenciales dinámicas, revoca secretos y ofrece cifrado como servicio.",
+      "use_cases": [
+        "Almacenar claves, contraseñas y certificados con cifrado antes de escribirlos en disco",
+        "Generar credenciales temporales para AWS o bases de datos SQL bajo demanda",
+        "Cifrar y descifrar datos sin que Vault los almacene",
+        "Revocar secretos para rotar claves o bloquear sistemas tras una intrusión"
+      ],
+      "evidence": [
+        "Vault can store arbitrary key/value pairs.",
+        "systems, such as AWS or SQL databases.",
+        "Vault can encrypt and decrypt data without storing",
+        "Revocation assists in key rolling as well as locking down systems in the"
+      ],
+      "provider": "claude-haiku-razona",
+      "model": "claude-haiku-5-5",
+      "prompt_version": "4",
+      "ai_input_hash": "7a58bfb0dd2ef937bba2c7e6e7b3a0ca1c8988b574567fd9a8c657b5225877f0",
+      "review": {
+        "readme_chars": 7822,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 6848,
+        "output_tokens": 1301,
+        "seconds": 5.61
+      }
+    },
+    {
+      "github_id": 71995937,
+      "full_name": "nuxt/nuxt",
+      "categories": [
+        "frontend",
+        "backend"
+      ],
+      "summary_es": "Framework full-stack de Vue para crear aplicaciones y sitios web con renderizado en servidor, generación estática y renderizado híbrido.",
+      "use_cases": [
+        "Construir aplicaciones web full-stack con Vue.js, con renderizado en servidor y generación estática",
+        "Crear sitios web optimizados para buscadores con metaetiquetas y renderizado en servidor"
+      ],
+      "evidence": [
+        "Nuxt is a free and open-source framework with an intuitive and extendable way to create type-safe, performant and production-grade full-stack web applications and websites with Vue.js.",
+        "It provides a number of features that make it easy to build fast, SEO-friendly, and scalable web applications, including:"
+      ],
+      "provider": "claude-haiku-razona",
+      "model": "claude-haiku-5-5",
+      "prompt_version": "4",
+      "ai_input_hash": "45c7cf2dabe73694e8347a945baf48ca2844c0392ee0b2893c6d6c022de4a963",
+      "review": {
+        "readme_chars": 2884,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 5314,
+        "output_tokens": 269,
+        "seconds": 2.15
+      }
+    },
+    {
+      "github_id": 658928958,
+      "full_name": "ollama/ollama",
+      "categories": [
+        "ai"
+      ],
+      "summary_es": "Herramienta para ejecutar modelos de IA abiertos, como Gemma, Qwen, DeepSeek o GLM, en local o en la nube, con una API REST y librerías para Python y JavaScript.",
+      "use_cases": [
+        "Ejecutar modelos de lenguaje abiertos en local",
+        "Integrar modelos en aplicaciones mediante una API REST",
+        "Conectar agentes de programación como Claude Code o Codex",
+        "Crear un asistente de IA personal en WhatsApp o Telegram"
+      ],
+      "evidence": [
+        "Access the latest releases locally or in the cloud with complete privacy.",
+        "Ollama has a REST API for running and managing models.",
+        "Supported integrations include Claude Code, Codex, Copilot CLI, DeepSeek Harness, Droid, and OpenCode.",
+        "Use OpenClaw to turn Ollama into a personal AI assistant across WhatsApp, Telegram, Slack, Discord, and more:"
+      ],
+      "provider": "claude-haiku-razona",
+      "model": "claude-haiku-5-5",
+      "prompt_version": "4",
+      "ai_input_hash": "f96cd995afc30f82eb9dbd26d89cb15d9f27541c0b5076e7e900b09c7ef59017",
+      "review": {
+        "readme_chars": 7624,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 7532,
+        "output_tokens": 1054,
+        "seconds": 4.39
+      }
+    },
+    {
+      "github_id": 359952601,
+      "full_name": "pgvector/pgvector",
+      "categories": [
+        "search",
+        "database"
+      ],
+      "summary_es": "Extensión de código abierto para PostgreSQL que almacena vectores y permite buscar los más similares, de forma exacta o aproximada, con índices HNSW e IVFFlat.",
+      "use_cases": [
+        "Guardar vectores junto con el resto de los datos de una base PostgreSQL",
+        "Buscar vecinos más cercanos entre vectores con búsqueda aproximada",
+        "Escalar la búsqueda de vectores numerosos con cuantización"
+      ],
+      "evidence": [
+        "Store your vectors with the rest of your data.",
+        "exact and approximate nearest neighbor search",
+        "Have a lot of vectors? Use quantization to scale"
+      ],
+      "provider": "claude-haiku-razona",
+      "model": "claude-haiku-5-5",
+      "prompt_version": "4",
+      "ai_input_hash": "5cba1bf7556eb87d920c9cfbd70e514612bdfec675e7e08d280a927027a33d46",
+      "review": {
+        "readme_chars": 7793,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 7395,
+        "output_tokens": 979,
+        "seconds": 4.91
+      }
+    },
+    {
+      "github_id": 156018,
+      "full_name": "redis/redis",
+      "categories": [
+        "cache",
+        "database",
+        "search"
+      ],
+      "summary_es": "Base de datos en memoria y servidor de estructuras de datos, usado como caché, con motor de consultas sobre documentos JSON y búsqueda vectorial.",
+      "use_cases": [
+        "Cachear datos de acceso frecuente para responder más rápido",
+        "Guardar sesiones de usuario distribuidas",
+        "Indexar documentos para buscar por texto completo y vectores",
+        "Implementar colas y comunicación entre servicios"
+      ],
+      "evidence": [
+        "**Caching:** Supports multiple eviction policies, key expiration, and hash-field expiration.",
+        "**Distributed Session Store:** Offers flexible session data modeling (string, JSON, hash).",
+        "**Search and Query Engine:** Indexing for hash/JSON documents, supporting vector search, full-text search, geospatial queries, ranking, and aggregations via Redis Search.",
+        "**Event Store & Message Broker:** Implements queues (lists), priority queues (sorted sets), event deduplication (sets), streams, and pub/sub with probabilistic stream processing capabilities."
+      ],
+      "provider": "claude-haiku-razona",
+      "model": "claude-haiku-5-5",
+      "prompt_version": "4",
+      "ai_input_hash": "5dcef93989711526ce004ec6bd87ff28c9cd629ef7ed6007f1e7764f8caecb70",
+      "review": {
+        "readme_chars": 7339,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 6859,
+        "output_tokens": 1253,
+        "seconds": 5.62
+      }
+    },
+    {
+      "github_id": 54173593,
+      "full_name": "storybookjs/storybook",
+      "categories": [
+        "dev-tools",
+        "frontend"
+      ],
+      "summary_es": "Workshop de frontend para construir, documentar y probar componentes de interfaz de forma aislada, con soporte para React, Vue, Angular, Svelte y web components.",
+      "use_cases": [
+        "Construir componentes de interfaz de forma aislada",
+        "Documentar componentes de interfaz",
+        "Probar componentes de interfaz"
+      ],
+      "evidence": [
+        "Storybook is a frontend workshop for building UI components and pages in isolation.",
+        "Thousands of teams use it for UI development, testing, and documentation.",
+        "Test components for user accessibility in Storybook"
+      ],
+      "provider": "claude-haiku-razona",
+      "model": "claude-haiku-5-5",
+      "prompt_version": "4",
+      "ai_input_hash": "e8c425ec8124698b806760f9d829486857a6d00c7c8194dc3858f0e5982b0ed1",
+      "review": {
+        "readme_chars": 5311,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 6042,
+        "output_tokens": 235,
+        "seconds": 1.48
+      }
+    }
+  ]
+}

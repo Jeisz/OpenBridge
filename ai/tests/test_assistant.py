@@ -3,7 +3,7 @@
 import pytest
 from pydantic import ValidationError
 
-from ai import assistant
+from ai import assistant, llm
 from ai.catalog import load_categories
 from ai.llm import Generation, LLMInvalidResponse
 
@@ -69,7 +69,7 @@ def test_reglas(needs, questions, problems):
 def test_reintenta_una_vez_con_los_problemas(monkeypatch):
     generar, calls = fake_generar([understanding(["auth", "auth"]),
                                    understanding(["auth"])])
-    monkeypatch.setattr(assistant, "generar", generar)
+    monkeypatch.setattr(llm, "generar", generar)
 
     result = assistant.entender("Quiero que mis clientes entren con Google.")
 
@@ -83,7 +83,7 @@ def test_reintenta_una_vez_con_los_problemas(monkeypatch):
 def test_sin_respuesta_valida_tras_el_reintento(monkeypatch):
     invalid = LLMInvalidResponse("no cumple", raw_text="{", detail="JSON incompleto")
     generar, calls = fake_generar([invalid, invalid])
-    monkeypatch.setattr(assistant, "generar", generar)
+    monkeypatch.setattr(llm, "generar", generar)
 
     result = assistant.entender("Quiero que mis clientes entren con Google.")
 
@@ -96,7 +96,7 @@ def test_sin_respuesta_valida_tras_el_reintento(monkeypatch):
 def test_reintento_sin_texto_no_manda_un_mensaje_vacio(monkeypatch):
     error = LLMInvalidResponse("no cumple", raw_text="", detail="detalle")
     generar, calls = fake_generar([error, error])
-    monkeypatch.setattr(assistant, "generar", generar)
+    monkeypatch.setattr(llm, "generar", generar)
 
     assistant.entender("Necesito cobrar suscripciones mensuales a mis clientes.")
 

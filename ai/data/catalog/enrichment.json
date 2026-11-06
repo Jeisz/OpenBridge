@@ -1,0 +1,3095 @@
+{
+  "prompt_version": "4",
+  "repos": [
+    {
+      "github_id": 24195339,
+      "full_name": "angular/angular",
+      "categories": [
+        "frontend"
+      ],
+      "summary_es": "Plataforma de desarrollo para construir aplicaciones web móviles y de escritorio usando TypeScript y JavaScript.",
+      "use_cases": [
+        "Construir aplicaciones web móviles y de escritorio"
+      ],
+      "evidence": [
+        "Angular is a development platform for building mobile and desktop web applications using TypeScript/JavaScript and other languages."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "5bcf0de29feaca069c9521c83a2e1c5a6f4770cb27d3c5cc08ecdd0b3ce71350",
+      "review": {
+        "readme_chars": 1982,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2487,
+        "output_tokens": 69,
+        "seconds": 0.9
+      }
+    },
+    {
+      "github_id": 3638964,
+      "full_name": "ansible/ansible",
+      "categories": [
+        "automation",
+        "infrastructure"
+      ],
+      "summary_es": "Plataforma de automatización de TI que facilita el despliegue y mantenimiento de aplicaciones y sistemas mediante SSH y sin agentes.",
+      "use_cases": [
+        "Gestionar la configuración de sistemas",
+        "Desplegar aplicaciones",
+        "Aprovisionar recursos en la nube",
+        "Automatizar redes"
+      ],
+      "evidence": [
+        "It handles configuration management, application deployment, cloud provisioning, ad-hoc task execution, network automation, and multi-node orchestration.",
+        "It handles configuration management, application deployment, cloud provisioning, ad-hoc task execution, network automation, and multi-node orchestration.",
+        "It handles configuration management, application deployment, cloud provisioning, ad-hoc task execution, network automation, and multi-node orchestration.",
+        "It handles configuration management, application deployment, cloud provisioning, ad-hoc task execution, network automation, and multi-node orchestration."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "1002427b1b85c991e5b046e4b773c40b842e22c7dee5883bfaccee7b612e215a",
+      "review": {
+        "readme_chars": 3702,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2884,
+        "output_tokens": 275,
+        "seconds": 1.32
+      }
+    },
+    {
+      "github_id": 590187800,
+      "full_name": "anthropics/anthropic-sdk-python",
+      "categories": [
+        "ai",
+        "dev-tools"
+      ],
+      "summary_es": "Librería de Python para acceder a la API de Claude desde aplicaciones.",
+      "use_cases": [
+        "Acceder a la API de Claude desde aplicaciones de Python",
+        "Reportar llamadas a la API como trazas de OpenTelemetry"
+      ],
+      "evidence": [
+        "The Claude SDK for Python provides access to the Claude API from Python applications.",
+        "The SDK reports each API call as an OpenTelemetry span when your application has registered a tracer provider."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "7ee2d1eebd9d4d467e468fcd1ead8e4068b3c24e062dcfaf37d6a4244c427d80",
+      "review": {
+        "readme_chars": 3142,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2858,
+        "output_tokens": 158,
+        "seconds": 1.19
+      }
+    },
+    {
+      "github_id": 33884891,
+      "full_name": "apache/airflow",
+      "categories": [
+        "data-processing",
+        "automation"
+      ],
+      "summary_es": "Plataforma para programar, planificar y monitorear flujos de trabajo mediante código.",
+      "use_cases": [
+        "Orquestar flujos de trabajo y tareas mediante código",
+        "Orquestar flujos de trabajo de aprendizaje automático",
+        "Coordinar pasos de cargas de trabajo basadas en LLM y agentes de IA",
+        "Procesar datos en tiempo real extrayéndolos de flujos por lotes"
+      ],
+      "evidence": [
+        "Use Airflow to author workflows (Dags) that orchestrate tasks.",
+        "Beyond traditional data pipelines, Airflow is widely used to orchestrate machine learning workflows — training, retraining, evaluation, and deployment",
+        "and increasingly to orchestrate agentic and LLM-based workloads, coordinating the steps of an AI pipeline (data prep, tool calls, model invocation, evaluation) rather than acting as the agent itself.",
+        "Airflow is not a streaming solution, but it is often used to process real-time data, pulling data off streams in batches."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "f01cc4439d7238e1257265bf178f1ed9a9047b010f06b58dfdc81906a97fd927",
+      "review": {
+        "readme_chars": 7992,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 4021,
+        "output_tokens": 310,
+        "seconds": 1.4
+      }
+    },
+    {
+      "github_id": 50904245,
+      "full_name": "apache/beam",
+      "categories": [
+        "data-processing"
+      ],
+      "summary_es": "Modelo de programación unificado para procesamiento de datos por lotes y en flujo (batch y streaming).",
+      "use_cases": [
+        "Definir pipelines de procesamiento de datos paralelos por lotes y en streaming",
+        "Construir pipelines utilizando SDKs específicos de lenguajes de programación",
+        "Ejecutar programas en múltiples backends de procesamiento distribuido"
+      ],
+      "evidence": [
+        "Apache Beam is a unified model for defining both batch and streaming data-parallel processing pipelines",
+        "as well as a set of language-specific SDKs for constructing pipelines and Runners for executing them on distributed processing backends",
+        "Runners for executing them on distributed processing backends, including Apache Flink, Apache Spark, Google Cloud Dataflow, and Hazelcast Jet."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "756b9cf0c16e3111e1f76ef407de0ba215de42c93157a01f97f70e3b12b0cf16",
+      "review": {
+        "readme_chars": 4554,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 3067,
+        "output_tokens": 236,
+        "seconds": 1.24
+      }
+    },
+    {
+      "github_id": 20587599,
+      "full_name": "apache/flink",
+      "categories": [
+        "data-processing",
+        "backend"
+      ],
+      "summary_es": "Framework de procesamiento de flujos open source con capacidades de procesamiento de flujos y por lotes.",
+      "use_cases": [
+        "Procesar flujos de datos en tiempo real y por lotes con un runtime orientado a streaming",
+        "Obtener tolerancia a fallos con garantías de procesamiento exactas"
+      ],
+      "evidence": [
+        "A streaming-first runtime that supports both batch processing and data streaming programs",
+        "Fault-tolerance with *exactly-once* processing guarantees"
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "6ad914e5df380d7b43c3fbb468e8edbd6f610746b327fbb2cc0a92a77c926fad",
+      "review": {
+        "readme_chars": 6147,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 3595,
+        "output_tokens": 164,
+        "seconds": 1.56
+      }
+    },
+    {
+      "github_id": 2211243,
+      "full_name": "apache/kafka",
+      "categories": [
+        "messaging",
+        "data-processing"
+      ],
+      "summary_es": "Plataforma de streaming de eventos distribuida utilizada para pipelines de datos de alto rendimiento, analítica en streaming, integración de datos y aplicaciones críticas.",
+      "use_cases": [
+        "Construir pipelines de datos de alto rendimiento",
+        "Implementar analítica en streaming",
+        "Realizar integración de datos",
+        "Desarrollar aplicaciones de misión crítica"
+      ],
+      "evidence": [
+        "high-performance data pipelines",
+        "streaming analytics",
+        "data integration",
+        "mission-critical applications"
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "f5a24934edf1f23fc5a65b63a3c4b4c1d56ce71060f1b7daa9bda4058fe97b1d",
+      "review": {
+        "readme_chars": 7791,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 4031,
+        "output_tokens": 202,
+        "seconds": 2.04
+      }
+    },
+    {
+      "github_id": 17165658,
+      "full_name": "apache/spark",
+      "categories": [
+        "data-processing",
+        "ai"
+      ],
+      "summary_es": "Motor de analítica unificado para el procesamiento de datos a gran escala que soporta análisis, SQL, aprendizaje automático, procesamiento de grafos y streaming.",
+      "use_cases": [
+        "Ejecutar análisis de datos mediante Spark SQL y DataFrames",
+        "Procesar cargas de trabajo de pandas en Spark",
+        "Aplicar aprendizaje automático con MLlib",
+        "Procesar flujos de datos en tiempo real mediante Structured Streaming"
+      ],
+      "evidence": [
+        "Spark SQL for SQL and DataFrames",
+        "pandas API on Spark for pandas workloads",
+        "MLlib for machine learning",
+        "Structured Streaming for stream processing"
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "7830e97e00b4d9ae9a9c6c439bbeb8dd117e710b18b09a336370a44eef943f77",
+      "review": {
+        "readme_chars": 4227,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 3231,
+        "output_tokens": 228,
+        "seconds": 6.29
+      }
+    },
+    {
+      "github_id": 120896210,
+      "full_name": "argoproj/argo-cd",
+      "categories": [
+        "infrastructure"
+      ],
+      "summary_es": "Herramienta declarativa de entrega continua GitOps para Kubernetes.",
+      "use_cases": [
+        "Gestionar el ciclo de vida y despliegue de aplicaciones"
+      ],
+      "evidence": [
+        "Application deployment and lifecycle management should be automated, auditable, and easy to understand."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "29e9f788b8026da2b2dbb4e8be108766b20b1e12ff0944c68e5d1fb85046fdb8",
+      "review": {
+        "readme_chars": 3106,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2791,
+        "output_tokens": 99,
+        "seconds": 1.23
+      }
+    },
+    {
+      "github_id": 523043277,
+      "full_name": "astral-sh/ruff",
+      "categories": [
+        "dev-tools"
+      ],
+      "summary_es": "Linter y formateador de código para Python extremadamente rápido, escrito en Rust.",
+      "use_cases": [
+        "Analizar código en busca de errores y problemas de estilo de forma estática",
+        "Formatear archivos de código fuente en proyectos de Python",
+        "Corregir automáticamente errores detectados en el código"
+      ],
+      "evidence": [
+        "ruff check # Lint all files in the current directory (and any subdirectories).",
+        "ruff format # Format all files in the current directory (and any subdirectories).",
+        "Fix support, for automatic error correction (e.g., automatically remove unused imports)"
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "11c667c20c5742135fecafc42b5a81f99019c7fce2d17f3e0b5aa416d28f7dc1",
+      "review": {
+        "readme_chars": 7816,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 4314,
+        "output_tokens": 202,
+        "seconds": 1.2
+      }
+    },
+    {
+      "github_id": 699532645,
+      "full_name": "astral-sh/uv",
+      "categories": [
+        "dev-tools"
+      ],
+      "summary_es": "Gestor de paquetes y proyectos de Python extremadamente rápido, escrito en Rust.",
+      "use_cases": [
+        "Gestionar dependencias y entornos de proyectos",
+        "Gestionar dependencias y entornos para scripts de un solo archivo",
+        "Ejecutar e instalar herramientas de línea de comandos proporcionadas por paquetes de Python",
+        "Instalar y cambiar rápidamente entre versiones de Python"
+      ],
+      "evidence": [
+        "uv manages project dependencies and environments, with support for lockfiles, workspaces, and more, similar to rye or poetry",
+        "uv manages dependencies and environments for single-file scripts.",
+        "uv executes and installs command-line tools provided by Python packages, similar to pipx.",
+        "uv installs Python and allows quickly switching between versions."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "36b275404c4757db700d1a3449d3c46e21a5d04273c3e8c75ff027734904832d",
+      "review": {
+        "readme_chars": 6875,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 4002,
+        "output_tokens": 245,
+        "seconds": 1.33
+      }
+    },
+    {
+      "github_id": 24560307,
+      "full_name": "babel/babel",
+      "categories": [
+        "dev-tools"
+      ],
+      "summary_es": "Compilador que permite escribir código en las versiones más recientes de JavaScript y transformarlo a versiones compatibles con entornos actuales.",
+      "use_cases": [
+        "Compilar características modernas de JavaScript a versiones compatibles"
+      ],
+      "evidence": [
+        "Babel is a tool that helps you write code in the latest version of JavaScript. When your supported environments don't support certain features natively, Babel will help you compile those features down to a supported version."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "ec98d98e9f75e68a2559e981f62edad77b006bd29189cddc9e185a61463a8cd4",
+      "review": {
+        "readme_chars": 2435,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2634,
+        "output_tokens": 134,
+        "seconds": 1.86
+      }
+    },
+    {
+      "github_id": 671654508,
+      "full_name": "biomejs/biome",
+      "categories": [
+        "dev-tools"
+      ],
+      "summary_es": "Toolchain para proyectos web que ofrece un formateador y un linter rápidos para JavaScript, TypeScript y otros lenguajes.",
+      "use_cases": [
+        "Analizar código con un linter"
+      ],
+      "evidence": [
+        "lint files and apply the safe fixes"
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "2209e5382e64052e6cb8d28fb565a252c2be8fcee91720af7d8e6614e27f4544",
+      "review": {
+        "readme_chars": 2915,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [
+          {
+            "use_case": "Formatear archivos de código",
+            "evidence": "format files",
+            "reason": "cita demasiado corta"
+          }
+        ],
+        "input_tokens": 2738,
+        "output_tokens": 129,
+        "seconds": 1.35
+      }
+    },
+    {
+      "github_id": 53631945,
+      "full_name": "BurntSushi/ripgrep",
+      "categories": [
+        "dev-tools",
+        "search"
+      ],
+      "summary_es": "Herramienta de búsqueda orientada a líneas que busca de forma recursiva en directorios un patrón de expresión regular respetando las reglas de gitignore.",
+      "use_cases": [
+        "Buscar recursivamente patrones de expresiones regulares en directorios",
+        "Omitir automáticamente archivos ocultos, binarios y aquellos ignorados por git",
+        "Limitar la búsqueda a tipos de archivos específicos"
+      ],
+      "evidence": [
+        "ripgrep is a line-oriented search tool that recursively searches the current directory for a regex pattern.",
+        "By default, ripgrep will respect gitignore rules and automatically skip hidden files/directories and binary files.",
+        "ripgrep can search specific types of files."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "0fae170840a53844421152499247258f2577839d34d07e040fbbfbc0c1d8fb68",
+      "review": {
+        "readme_chars": 7554,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 4588,
+        "output_tokens": 225,
+        "seconds": 2.53
+      }
+    },
+    {
+      "github_id": 29207621,
+      "full_name": "caddyserver/caddy",
+      "categories": [
+        "infrastructure"
+      ],
+      "summary_es": "Servidor web HTTP/1-2-3 rápido y extensible con HTTPS automático, diseñado con una arquitectura modular para simplificar la gestión de certificados TLS y sitios web.",
+      "use_cases": [
+        "Gestionar certificados TLS y HTTPS de forma automática",
+        "Configurar servidores web de manera sencilla utilizando el Caddyfile",
+        "Modificar la configuración de forma dinámica mediante la API JSON",
+        "Extender las capacidades del servidor mediante una arquitectura modular"
+      ],
+      "evidence": [
+        "Automatic HTTPS by default",
+        "Easy configuration with the Caddyfile",
+        "Dynamic configuration with the JSON API",
+        "Highly extensible modular architecture lets Caddy do anything without bloat"
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "763b4f0428eda1afcbdb86ef08043ca2eb5caa5dd4630f45b88ae47bebdce3b7",
+      "review": {
+        "readme_chars": 7768,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 3908,
+        "output_tokens": 229,
+        "seconds": 1.89
+      }
+    },
+    {
+      "github_id": 184460,
+      "full_name": "celery/celery",
+      "categories": [
+        "messaging",
+        "backend"
+      ],
+      "summary_es": "Sistema de cola de tareas distribuido basado en paso de mensajes, enfocado en la ejecución asíncrona y el procesamiento en segundo plano.",
+      "use_cases": [
+        "Distribuir trabajo a través de hilos o máquinas",
+        "Procesar tareas en segundo plano mediante procesos de trabajadores dedicados"
+      ],
+      "evidence": [
+        "Task queues are used as a mechanism to distribute work across threads or machines.",
+        "A task queue's input is a unit of work, called a task, dedicated worker processes then constantly monitor the queue for new work to perform."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "b1706d5e72fb54a6473dc388c5d6efb60d2f601bed9e636d1bd74c7a0d10fdc6",
+      "review": {
+        "readme_chars": 7976,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 4231,
+        "output_tokens": 181,
+        "seconds": 1.4
+      }
+    },
+    {
+      "github_id": 92313258,
+      "full_name": "cert-manager/cert-manager",
+      "categories": [
+        "infrastructure"
+      ],
+      "summary_es": "Herramienta que añade certificados y emisores de certificados como recursos en clusters de Kubernetes, simplificando su obtención, renovación y uso.",
+      "use_cases": [
+        "Obtener, renovar y usar certificados automáticamente en Kubernetes",
+        "Emitir certificados desde diversas fuentes como Let's Encrypt, HashiCorp Vault y CyberArk",
+        "Garantizar que los certificados se mantengan válidos y actualizados antes de su expiración",
+        "Emitir automáticamente certificados TLS para recursos Ingress"
+      ],
+      "evidence": [
+        "cert-manager adds certificates and certificate issuers as resource types in Kubernetes clusters, and simplifies the process of obtaining, renewing and using those certificates.",
+        "It supports issuing certificates from a variety of sources, including Let's Encrypt (ACME), HashiCorp Vault, and CyberArk Certificate Manager, as well as local in-cluster issuance.",
+        "cert-manager also ensures certificates remain valid and up to date, attempting to renew certificates at an appropriate time before expiry to reduce the risk of outages and remove toil.",
+        "For the common use-case of automatically issuing TLS certificates for Ingress resources, see the cert-manager nginx-ingress quick start guide."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "ba91fc6e2496ed6b551ced0da8dd55c14bf9bcdd5571be26b3ca32545e666d13",
+      "review": {
+        "readme_chars": 4014,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2891,
+        "output_tokens": 336,
+        "seconds": 1.5
+      }
+    },
+    {
+      "github_id": 48109239,
+      "full_name": "cilium/cilium",
+      "categories": [
+        "infrastructure",
+        "observability"
+      ],
+      "summary_es": "Solución de redes, observabilidad y seguridad basada en eBPF para contenedores y entornos de Kubernetes.",
+      "use_cases": [
+        "Gestionar redes para clústeres de Kubernetes mediante un complemento CNI basado en eBPF",
+        "Implementar balanceo de carga distribuido para el tráfico entre contenedores y servicios externos",
+        "Conectar de manera segura múltiples clústeres de Kubernetes",
+        "Aplicar políticas de red conscientes de la identidad en las capas L3 a L7"
+      ],
+      "evidence": [
+        "Cilium as a CNI plugin provides a fast, scalable, and secure networking layer for Kubernetes clusters.",
+        "Cilium implements distributed load balancing for traffic between pods and to external services, and is able to fully replace kube-proxy, using efficient hash tables in eBPF, allowing for almost unlimited scale.",
+        "Cilium Cluster Mesh enables secure, seamless connectivity across multiple Kubernetes clusters.",
+        "Cilium Network Policy provides identity-aware enforcement across L3-L7."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "f8656c86702df2e204e6a32b8562ca94840fab76830d4056fb65d933e5dfe514",
+      "review": {
+        "readme_chars": 7880,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 3726,
+        "output_tokens": 305,
+        "seconds": 1.69
+      }
+    },
+    {
+      "github_id": 212613049,
+      "full_name": "cli/cli",
+      "categories": [
+        "dev-tools"
+      ],
+      "summary_es": "Herramienta de línea de comandos oficial de GitHub que lleva pull requests, issues y otras funcionalidades de la plataforma a la terminal.",
+      "use_cases": [
+        "Gestionar pull requests e issues desde la terminal"
+      ],
+      "evidence": [
+        "It brings pull requests, issues, and other GitHub concepts to the terminal next to where you are already working with `git` and your code."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "34a77d216a2212fa06593f73591b062868fee1dbd8262030fe2c1b5d4f9a6800",
+      "review": {
+        "readme_chars": 4374,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 3177,
+        "output_tokens": 123,
+        "seconds": 1.12
+      }
+    },
+    {
+      "github_id": 60246359,
+      "full_name": "ClickHouse/ClickHouse",
+      "categories": [
+        "database",
+        "analytics"
+      ],
+      "summary_es": "Sistema de gestión de bases de datos analíticas orientado a columnas de código abierto que permite generar informes de datos en tiempo real.",
+      "use_cases": [
+        "Generar informes de datos analíticos en tiempo real"
+      ],
+      "evidence": [
+        "ClickHouse® is an open-source column-oriented database management system that allows generating analytical data reports in real-time."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "15ddf0317544dd0b23edc017639dc6d83c3a5128e99338677eea003e1cb865fb",
+      "review": {
+        "readme_chars": 3146,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2917,
+        "output_tokens": 122,
+        "seconds": 1.84
+      }
+    },
+    {
+      "github_id": 46089560,
+      "full_name": "containerd/containerd",
+      "categories": [
+        "infrastructure"
+      ],
+      "summary_es": "Runtime de contenedores estándar de la industria que gestiona el ciclo de vida completo de los contenedores en un sistema host.",
+      "use_cases": [
+        "Gestionar el ciclo de vida completo de los contenedores",
+        "Ejecutar contenedores en clústeres de Kubernetes"
+      ],
+      "evidence": [
+        "manage the complete container lifecycle of its host system: image transfer and storage, container execution and supervision, low-level storage and network attachments, etc.",
+        "`cri` is a containerd plugin implementation of the Kubernetes container runtime interface (CRI). With it, you are able to use containerd as the container runtime for a Kubernetes cluster."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "d329521b3e338913ffa8cb4389168b87d6b8953dcd2f3763c144a1347fbd0e13",
+      "review": {
+        "readme_chars": 7850,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 3773,
+        "output_tokens": 193,
+        "seconds": 1.28
+      }
+    },
+    {
+      "github_id": 31629751,
+      "full_name": "cypress-io/cypress",
+      "categories": [
+        "dev-tools"
+      ],
+      "summary_es": "Framework de pruebas diseñado para ejecutar tests rápidos, sencillos y confiables en cualquier aplicación que corra en un navegador.",
+      "use_cases": [
+        "Realizar pruebas para cualquier aplicación que se ejecute en un navegador"
+      ],
+      "evidence": [
+        "Fast, easy and reliable testing for anything that runs in a browser."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "e803b3d6037edf97c0ed2b7ebd0b2a491b789437db2cff2783ed7bb8f597cd5f",
+      "review": {
+        "readme_chars": 822,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2298,
+        "output_tokens": 110,
+        "seconds": 1.15
+      }
+    },
+    {
+      "github_id": 131619646,
+      "full_name": "dagster-io/dagster",
+      "categories": [
+        "data-processing",
+        "observability"
+      ],
+      "summary_es": "Orquestador de pipelines de datos nativo de la nube para todo el ciclo de desarrollo, con linaje y observabilidad integrados.",
+      "use_cases": [
+        "Centralizar metadatos con observabilidad, diagnósticos, catalogación y linaje integrados"
+      ],
+      "evidence": [
+        "Centralize your metadata in one tool with built-in observability, diagnostics, cataloging, and lineage."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "5d0c949617e6ef668ee8a74a63f72b06a7a52fcce5cee0d9d5eb8adaf1d59426",
+      "review": {
+        "readme_chars": 3613,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [
+          {
+            "use_case": "Desarrollar y mantener activos de datos como tablas, conjuntos de datos, modelos de aprendizaje automático y informes",
+            "evidence": "It is designed for developing and maintaining data assets, such as tables, data sets, machine learning models, and reports.",
+            "reason": "caso de uso vacío o de más de 100 caracteres"
+          }
+        ],
+        "input_tokens": 2927,
+        "output_tokens": 200,
+        "seconds": 1.24
+      }
+    },
+    {
+      "github_id": 53548867,
+      "full_name": "dbt-labs/dbt",
+      "categories": [
+        "data-processing"
+      ],
+      "summary_es": "Herramienta que permite a ingenieros y analistas de datos transformar información aplicando prácticas de ingeniería de software.",
+      "use_cases": [
+        "Transformar datos mediante sentencias select",
+        "Gestionar relaciones entre modelos de datos"
+      ],
+      "evidence": [
+        "Analysts using dbt can transform their data by simply writing select statements, while dbt handles turning these statements into tables and views in a data warehouse.",
+        "Models frequently build on top of one another – dbt makes it easy to manage relationships between models, and visualize these relationships, as well as assure the quality of your transformations through testing."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "40db8bd9c61f224fa17f4ff59323a15ef61bd82c148803831fdd9c5c35405f6a",
+      "review": {
+        "readme_chars": 3041,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2764,
+        "output_tokens": 183,
+        "seconds": 1.17
+      }
+    },
+    {
+      "github_id": 133442384,
+      "full_name": "denoland/deno",
+      "categories": [
+        "dev-tools",
+        "backend"
+      ],
+      "summary_es": "Runtime de JavaScript, TypeScript y WebAssembly con seguridad predeterminada, construido sobre V8, Rust y Tokio.",
+      "use_cases": [
+        "Construir servidores web"
+      ],
+      "evidence": [
+        "Deno can be used for many different applications, but is most commonly used to build web servers."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "acc19b0b824d0103360df5417378bf429ce83fa110ce2803466156620f818677",
+      "review": {
+        "readme_chars": 1855,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2511,
+        "output_tokens": 112,
+        "seconds": 1.24
+      }
+    },
+    {
+      "github_id": 4164482,
+      "full_name": "django/django",
+      "categories": [
+        "backend"
+      ],
+      "summary_es": "Framework de desarrollo web en Python diseñado para fomentar un desarrollo rápido y un diseño limpio y pragmático.",
+      "use_cases": [
+        "Fomentar un desarrollo rápido y un diseño limpio y pragmático"
+      ],
+      "evidence": [
+        "Django is a high-level Python web framework that encourages rapid development and clean, pragmatic design."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "86df6772d6d3ea734c963f91e030f84f55602463abe5a37d3b09e7301104d7d8",
+      "review": {
+        "readme_chars": 1799,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2485,
+        "output_tokens": 111,
+        "seconds": 1.49
+      }
+    },
+    {
+      "github_id": 15045751,
+      "full_name": "docker/compose",
+      "categories": [
+        "infrastructure"
+      ],
+      "summary_es": "Herramienta para definir y ejecutar aplicaciones de múltiples contenedores en Docker utilizando un archivo de configuración Compose.",
+      "use_cases": [
+        "Definir aplicaciones de múltiples contenedores con Docker",
+        "Crear y iniciar una aplicación con un solo comando"
+      ],
+      "evidence": [
+        "Docker Compose is a tool for running multi-container applications on Docker defined using the Compose file format.",
+        "Once you have a Compose file, you can create and start your application with a single command: `docker compose up`."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "0852aeea98ae1d280e5e4bcd40cdc0a3ac650ada46918f2a425531bf9332bdb1",
+      "review": {
+        "readme_chars": 2201,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2581,
+        "output_tokens": 164,
+        "seconds": 1.79
+      }
+    },
+    {
+      "github_id": 138754790,
+      "full_name": "duckdb/duckdb",
+      "categories": [
+        "database"
+      ],
+      "summary_es": "Sistema de base de datos analítica de alto rendimiento diseñado para ejecutarse en el proceso dentro de aplicaciones, sin necesidad de un servidor separado.",
+      "use_cases": [
+        "Leer y escribir formatos de archivo como CSV, Parquet, JSON y Excel",
+        "Conectarse a otros sistemas de base de datos y consultarlos en el lugar"
+      ],
+      "evidence": [
+        "DuckDB reads and writes a wide range of file formats, including CSV, Parquet, JSON, and Excel, directly from local disk or from remote endpoints such as S3, HTTP(S), Azure, and Google Cloud Storage.",
+        "DuckDB can attach to other database systems and query them in place, so you can read, join, and move data across engines without a separate ETL step."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "d07b1ef7bc72cd069f7d67e85252af5b8862f212ae081fc3cb4919e4d15c6260",
+      "review": {
+        "readme_chars": 3284,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2744,
+        "output_tokens": 216,
+        "seconds": 1.45
+      }
+    },
+    {
+      "github_id": 179492861,
+      "full_name": "encode/httpx",
+      "categories": [
+        "backend",
+        "dev-tools"
+      ],
+      "summary_es": "Librería cliente HTTP completa para Python 3 que soporta HTTP/1.1 y HTTP/2, con APIs síncronas y asíncronas y un cliente de línea de comandos integrado.",
+      "use_cases": [
+        "Realizar peticiones HTTP usando una API síncrona o asíncrona",
+        "Conectar directamente con aplicaciones WSGI o ASGI",
+        "Establecer conexiones utilizando HTTP/2",
+        "Utilizar un cliente de línea de comandos integrado"
+      ],
+      "evidence": [
+        "Standard synchronous interface, but with async support if you need it.",
+        "Ability to make requests directly to WSGI applications or ASGI applications.",
+        "HTTP/1.1 and HTTP/2 support.",
+        "An integrated command-line client."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "4f61a0369651b3b8d4fbfd9ca93f861f0bbe15563325a88ccda687ed83a43e36",
+      "review": {
+        "readme_chars": 3363,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2929,
+        "output_tokens": 257,
+        "seconds": 1.38
+      }
+    },
+    {
+      "github_id": 65214191,
+      "full_name": "envoyproxy/envoy",
+      "categories": [
+        "infrastructure"
+      ],
+      "summary_es": "Proxy de borde, intermediario y de servicio nativo de la nube de alto rendimiento.",
+      "use_cases": [],
+      "evidence": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "f6232d49d45a3962e2390707f0d6bf51ecb4e0b232624c2044aa427a3889bd19",
+      "review": {
+        "readme_chars": 3532,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2847,
+        "output_tokens": 51,
+        "seconds": 1.03
+      }
+    },
+    {
+      "github_id": 11061773,
+      "full_name": "eslint/eslint",
+      "categories": [
+        "dev-tools"
+      ],
+      "summary_es": "Herramienta para identificar y reportar patrones problemáticos en código ECMAScript y JavaScript.",
+      "use_cases": [
+        "Analizar código JavaScript para identificar y reportar problemas"
+      ],
+      "evidence": [
+        "ESLint is a tool for identifying and reporting on patterns found in ECMAScript/JavaScript code."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "c879faece075fc71c5ab86b2996a41fa0d8650307077c55deb6946b9c4de4d63",
+      "review": {
+        "readme_chars": 7275,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 3743,
+        "output_tokens": 108,
+        "seconds": 0.96
+      }
+    },
+    {
+      "github_id": 11225014,
+      "full_name": "etcd-io/etcd",
+      "categories": [
+        "database"
+      ],
+      "summary_es": "Base de datos clave-valor distribuida y confiable para almacenar los datos críticos de un sistema distribuido.",
+      "use_cases": [
+        "Almacenar datos críticos de sistemas distribuidos",
+        "Gestionar registros replicados de alta disponibilidad usando el algoritmo Raft"
+      ],
+      "evidence": [
+        "etcd is a distributed reliable key-value store for the most critical data of a distributed system",
+        "uses the Raft consensus algorithm to manage a highly-available replicated log"
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "f167155d55ef6cc52b5bdcfddafad2d4c4b546c884e197e77367d1ddf49822fa",
+      "review": {
+        "readme_chars": 5828,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 3489,
+        "output_tokens": 157,
+        "seconds": 1.33
+      }
+    },
+    {
+      "github_id": 160919119,
+      "full_name": "fastapi/fastapi",
+      "categories": [
+        "backend"
+      ],
+      "summary_es": "Framework web moderno y de alto rendimiento para construir APIs con Python basado en tipos estándar.",
+      "use_cases": [
+        "Construir APIs web con Python"
+      ],
+      "evidence": [
+        "FastAPI is a modern, fast (high-performance), web framework for building APIs with Python based on standard Python type hints."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "2d37ab8a0da44a0e7f696b782f6f27da4ba783cc243aa24267843c8e43a5c829",
+      "review": {
+        "readme_chars": 7940,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 4215,
+        "output_tokens": 107,
+        "seconds": 1.13
+      }
+    },
+    {
+      "github_id": 399495186,
+      "full_name": "fastapi/sqlmodel",
+      "categories": [
+        "database"
+      ],
+      "summary_es": "Librería para interactuar con bases de datos SQL desde Python usando objetos Python, basada en anotaciones de tipo y potenciada por Pydantic y SQLAlchemy.",
+      "use_cases": [
+        "Minimizar la duplicación de código entre modelos de SQLAlchemy y Pydantic",
+        "Simplificar la interacción con bases de datos SQL en aplicaciones FastAPI"
+      ],
+      "evidence": [
+        "Short: Minimize code duplication. A single type annotation does a lot of work. No need to duplicate models in SQLAlchemy and Pydantic.",
+        "SQLModel is designed to simplify interacting with SQL databases in FastAPI applications, it was created by the same author. 😁"
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "2e75ca7d98477d41ab9cb1e90980472020e1c3aec4cd43e28533ef91d2805d51",
+      "review": {
+        "readme_chars": 5750,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 3541,
+        "output_tokens": 191,
+        "seconds": 1.34
+      }
+    },
+    {
+      "github_id": 258469100,
+      "full_name": "fluxcd/flux2",
+      "categories": [
+        "infrastructure",
+        "automation"
+      ],
+      "summary_es": "Solución de entrega continua abierta y extensible para Kubernetes, impulsada por GitOps Toolkit, que mantiene los clústeres sincronizados con repositorios de configuración.",
+      "use_cases": [
+        "Sincronizar clústeres de Kubernetes con fuentes de configuración como repositorios Git",
+        "Gestionar lanzamientos de Helm en clústeres",
+        "Automatizar actualizaciones de imágenes en Git",
+        "Gestionar secretos de Kubernetes con Flux y SOPS"
+      ],
+      "evidence": [
+        "Flux is a tool for keeping Kubernetes clusters in sync with sources of configuration (like Git repositories and OCI artifacts)",
+        "Manage Helm Releases",
+        "Automate image updates to Git",
+        "Manage Kubernetes secrets with Flux and SOPS"
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "f4e0923b708e0cc98bd1e361783e83b2172af2149ab3097896fd5ea7f2c83319",
+      "review": {
+        "readme_chars": 3153,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2761,
+        "output_tokens": 248,
+        "seconds": 1.78
+      }
+    },
+    {
+      "github_id": 36502,
+      "full_name": "git/git",
+      "categories": [
+        "dev-tools"
+      ],
+      "summary_es": "Sistema de control de versiones distribuido, rápido y escalable con un conjunto de comandos avanzado.",
+      "use_cases": [
+        "Gestionar el control de revisiones de código de manera distribuida"
+      ],
+      "evidence": [
+        "Git is a fast, scalable, distributed revision control system"
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "1d6154702acc393c22b916e3235181a7c495fe19c0418d33678a183c988fe088",
+      "review": {
+        "readme_chars": 2861,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2717,
+        "output_tokens": 103,
+        "seconds": 1.01
+      }
+    },
+    {
+      "github_id": 23096959,
+      "full_name": "golang/go",
+      "categories": [
+        "dev-tools"
+      ],
+      "summary_es": "Lenguaje de programación de código abierto diseñado para construir software simple, confiable y eficiente.",
+      "use_cases": [
+        "Construir software simple, confiable y eficiente"
+      ],
+      "evidence": [
+        "Go is an open source programming language that makes it easy to build simple, reliable, and efficient software."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "5fbff1fe1088d6304c368c5a9afe9a3263bea75ff141e22fb3c7559ed55dc1c3",
+      "review": {
+        "readme_chars": 1077,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2241,
+        "output_tokens": 108,
+        "seconds": 1.11
+      }
+    },
+    {
+      "github_id": 15111821,
+      "full_name": "grafana/grafana",
+      "categories": [
+        "observability"
+      ],
+      "summary_es": "Plataforma de observabilidad y visualización de datos que permite consultar, visualizar y alertar sobre métricas, logs y trazas de múltiples fuentes.",
+      "use_cases": [
+        "Visualizar métricas y logs con diferentes opciones y plugins de paneles",
+        "Crear dashboards dinámicos y reutilizables con variables de plantilla",
+        "Explorar datos mediante consultas ad-hoc y desglose dinámico",
+        "Definir reglas de alerta visualmente y enviar notificaciones"
+      ],
+      "evidence": [
+        "Panel plugins offer many different ways to visualize metrics and logs.",
+        "Create dynamic & reusable dashboards with template variables that appear as dropdowns at the top of the dashboard.",
+        "Explore your data through ad-hoc queries and dynamic drilldown.",
+        "Visually define alert rules for your most important metrics. Grafana will continuously evaluate and send notifications to systems like Slack, PagerDuty, VictorOps, OpsGenie."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "82a621e02df9302cd02b0c14c214b90ec5718660190007ab5eb5fc1435d74222",
+      "review": {
+        "readme_chars": 2194,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2573,
+        "output_tokens": 284,
+        "seconds": 2.81
+      }
+    },
+    {
+      "github_id": 17728164,
+      "full_name": "hashicorp/terraform",
+      "categories": [
+        "infrastructure"
+      ],
+      "summary_es": "Herramienta para construir, cambiar y versionar infraestructura de forma segura y eficiente mediante código declarativo.",
+      "use_cases": [
+        "Construir infraestructura usando sintaxis de configuración de alto nivel",
+        "Generar un plan de ejecución antes de aplicar cambios",
+        "Construir infraestructura eficientemente mediante la paralelización de recursos",
+        "Aplicar cambios complejos con mínima intervención humana"
+      ],
+      "evidence": [
+        "Infrastructure is described using a high-level configuration syntax.",
+        "Terraform has a \"planning\" step where it generates an execution plan.",
+        "Terraform builds a graph of all your resources, and parallelizes the creation and modification of any non-dependent resources.",
+        "Complex changesets can be applied to your infrastructure with minimal human interaction."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "c937a426ea00e3f79777b1ca31bf672f25f2a342152a6f6777b1888a8bd5b4eb",
+      "review": {
+        "readme_chars": 2832,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2613,
+        "output_tokens": 248,
+        "seconds": 1.79
+      }
+    },
+    {
+      "github_id": 31288958,
+      "full_name": "hashicorp/vault",
+      "categories": [
+        "auth"
+      ],
+      "summary_es": "Herramienta para acceder de forma segura a secretos, proporcionando un control de acceso estricto y un registro de auditoría detallado.",
+      "use_cases": [
+        "Almacenar claves, contraseñas, certificados y otros secretos de forma segura con cifrado",
+        "Generar secretos dinámicos bajo demanda para sistemas como AWS o bases de datos SQL",
+        "Cifrar y descifrar datos sin necesidad de almacenarlos directamente",
+        "Revocar automáticamente secretos y gestionar su ciclo de vida mediante concesiones y renovaciones"
+      ],
+      "evidence": [
+        "Vault can store arbitrary key/value pairs. Vault encrypts data before writing it to persistent storage",
+        "Vault can generate secrets on-demand for some systems, such as AWS or SQL databases.",
+        "Vault can encrypt and decrypt data without storing it.",
+        "Vault has built-in support for secret revocation."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "b93a5f25df3e728b12199c4fe4737d45715445f40a320cb2d1bdf376937f8e6b",
+      "review": {
+        "readme_chars": 7822,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 3874,
+        "output_tokens": 273,
+        "seconds": 1.61
+      }
+    },
+    {
+      "github_id": 43723161,
+      "full_name": "helm/helm",
+      "categories": [
+        "infrastructure",
+        "dev-tools"
+      ],
+      "summary_es": "Gestor de paquetes para Kubernetes que permite empaquetar, configurar y desplegar aplicaciones y recursos mediante Helm Charts.",
+      "use_cases": [
+        "Buscar y utilizar software popular empaquetado como Helm Charts para ejecutar en Kubernetes",
+        "Compartir aplicaciones propias como Helm Charts",
+        "Crear compilaciones reproducibles de aplicaciones de Kubernetes",
+        "Gestionar de manera inteligente archivos de manifiesto de Kubernetes"
+      ],
+      "evidence": [
+        "Find and use popular software packaged as Helm Charts to run in Kubernetes",
+        "Share your own applications as Helm Charts",
+        "Create reproducible builds of your Kubernetes applications",
+        "Intelligently manage your Kubernetes manifest files"
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "2ac52b5fcec79eaa7e336b641da3c491ca2f95ee38cfbc2ae92594020ddd8314",
+      "review": {
+        "readme_chars": 2763,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2683,
+        "output_tokens": 234,
+        "seconds": 1.5
+      }
+    },
+    {
+      "github_id": 250213286,
+      "full_name": "huggingface/datasets",
+      "categories": [
+        "ai",
+        "data-processing"
+      ],
+      "summary_es": "Librería ligera que ofrece cargadores de datos de una línea para datasets públicos y herramientas eficientes de preprocesamiento para modelos de IA.",
+      "use_cases": [
+        "Cargar datasets públicos desde Hugging Face Hub",
+        "Preprocesar datasets de forma rápida y reproducible",
+        "Transmitir datasets sin necesidad de descargarlos por completo"
+      ],
+      "evidence": [
+        "one-line dataloaders for many public datasets: one-liners to download and pre-process any of the major public datasets",
+        "efficient data pre-processing: simple, fast and reproducible data pre-processing for the public datasets as well as your own local datasets",
+        "Stream datasets without downloading — iterate over data on-the-fly with streaming=True"
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "69cc041c8c1d878fa86d7592f226b839c760f1cf40c4606677f45fc708258c5e",
+      "review": {
+        "readme_chars": 7780,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 4149,
+        "output_tokens": 236,
+        "seconds": 1.41
+      }
+    },
+    {
+      "github_id": 155220641,
+      "full_name": "huggingface/transformers",
+      "categories": [
+        "ai"
+      ],
+      "summary_es": "Framework de definición de modelos de machine learning de última generación para texto, visión, audio y modelos multimodales, para inferencia y entrenamiento.",
+      "use_cases": [
+        "Generar texto utilizando modelos de lenguaje mediante la API de Pipeline",
+        "Realizar reconocimiento automático de voz con modelos preentrenados",
+        "Ejecutar clasificación de imágenes usando modelos de visión",
+        "Implementar tareas de preguntas y respuestas visuales con modelos multimodales"
+      ],
+      "evidence": [
+        "pipeline = pipeline(task=\"text-generation\", model=\"Qwen/Qwen2.5-1.5B\")",
+        "pipeline = pipeline(task=\"automatic-speech-recognition\", model=\"openai/whisper-large-v3\")",
+        "pipeline = pipeline(task=\"image-classification\", model=\"facebook/dinov2-small-imagenet1k-1-layer\")",
+        "pipeline = pipeline(task=\"visual-question-answering\", model=\"Salesforce/blip-vqa-base\")"
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "dfc6128ec971eead1f2fbe00579d537c7609794796cac8a9ddb998b846a6eeb9",
+      "review": {
+        "readme_chars": 7689,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 4134,
+        "output_tokens": 306,
+        "seconds": 2.29
+      }
+    },
+    {
+      "github_id": 74175805,
+      "full_name": "istio/istio",
+      "categories": [
+        "infrastructure"
+      ],
+      "summary_es": "Istio es un service mesh de código abierto que se integra de forma transparente en aplicaciones distribuidas para asegurar, conectar y monitorizar servicios.",
+      "use_cases": [
+        "Gestionar el flujo de tráfico entre microservicios",
+        "Aplicar políticas",
+        "Recopilar datos de telemetría agregados"
+      ],
+      "evidence": [
+        "manage traffic flow across microservices",
+        "enforce policies",
+        "aggregate telemetry data"
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "ca2d43178d49faa06b84acfd9b5e519633502baee542ef15639e87b97eddd4a2",
+      "review": {
+        "readme_chars": 4597,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 3075,
+        "output_tokens": 165,
+        "seconds": 1.22
+      }
+    },
+    {
+      "github_id": 56342508,
+      "full_name": "jaegertracing/jaeger",
+      "categories": [
+        "observability"
+      ],
+      "summary_es": "Plataforma de rastreo distribuido para monitororear y solucionar problemas de transacciones en sistemas basados en microservicios.",
+      "use_cases": [],
+      "evidence": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "59c8869a62422377f61b8b0165c78be8a529377014a7391166cb18e28f5be5ee",
+      "review": {
+        "readme_chars": 7979,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 3809,
+        "output_tokens": 60,
+        "seconds": 1.26
+      }
+    },
+    {
+      "github_id": 15062869,
+      "full_name": "jestjs/jest",
+      "categories": [
+        "dev-tools"
+      ],
+      "summary_es": "Solución de pruebas en JavaScript diseñada para funcionar sin configuración previa, ofreciendo retroalimentación instantánea y pruebas de instantáneas.",
+      "use_cases": [],
+      "evidence": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "9bdb4989178afdb5c9c74415b46592301f5c4eae240026bebeaea78b2cc114e9",
+      "review": {
+        "readme_chars": 6977,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [
+          {
+            "use_case": "Capturar instantáneas de objetos grandes para simplificar las pruebas y analizar cambios a lo largo del tiempo",
+            "evidence": "Capture snapshots of large objects to simplify testing and to analyze how they change over time.",
+            "reason": "caso de uso vacío o de más de 100 caracteres"
+          }
+        ],
+        "input_tokens": 3733,
+        "output_tokens": 122,
+        "seconds": 1.17
+      }
+    },
+    {
+      "github_id": 138597372,
+      "full_name": "Kludex/starlette",
+      "categories": [
+        "backend"
+      ],
+      "summary_es": "Framework y toolkit ASGI ligero para construir servicios web asíncronos en Python.",
+      "use_cases": [
+        "Construir servicios web asíncronos",
+        "Desarrollar aplicaciones con soporte para WebSocket",
+        "Gestionar tareas en segundo plano dentro del proceso"
+      ],
+      "evidence": [
+        "Starlette is a lightweight ASGI framework/toolkit, which is ideal for building async web services in Python.",
+        "WebSocket support.",
+        "In-process background tasks."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "7cdd85b7d708a2dc1ed341deb7173eaaa64bbc2787c0bbc226546d85b5f56cff",
+      "review": {
+        "readme_chars": 2869,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2770,
+        "output_tokens": 172,
+        "seconds": 1.64
+      }
+    },
+    {
+      "github_id": 20580498,
+      "full_name": "kubernetes/kubernetes",
+      "categories": [
+        "infrastructure"
+      ],
+      "summary_es": "Sistema open source para la gestión de aplicaciones en contenedores en múltiples hosts, que provee mecanismos de despliegue, mantenimiento y escalado.",
+      "use_cases": [
+        "Desplegar aplicaciones en contenedores",
+        "Mandar y escalar aplicaciones en múltiples hosts"
+      ],
+      "evidence": [
+        "It provides basic mechanisms for the deployment, maintenance, and scaling of applications.",
+        "Kubernetes, also known as K8s, is an open source system for managing [containerized applications] across multiple hosts."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "5ef49ae420193f4dec37902bbdd8ef81905e237cd42bada6c12e909537e10b64",
+      "review": {
+        "readme_chars": 2645,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2603,
+        "output_tokens": 163,
+        "seconds": 1.28
+      }
+    },
+    {
+      "github_id": 552661142,
+      "full_name": "langchain-ai/langchain",
+      "categories": [
+        "ai"
+      ],
+      "summary_es": "Framework para construir agentes y aplicaciones impulsadas por LLM mediante componentes interoperables e integraciones.",
+      "use_cases": [
+        "Conectar modelos de lenguaje a fuentes de datos y sistemas externos",
+        "Intercambiar modelos de lenguaje de manera sencilla",
+        "Construir e iterar rápidamente en aplicaciones de inteligencia artificial"
+      ],
+      "evidence": [
+        "Real-time data augmentation — Easily connect LLMs to diverse data sources and external/internal systems, drawing from LangChain's vast library of integrations with model providers, tools, vector stores, retrievers, and more",
+        "Model interoperability — Swap models in and out as your engineering team experiments to find the best choice for your application's needs.",
+        "Rapid prototyping — Quickly build and iterate on LLM applications with LangChain's modular, component-based architecture."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "af58673f0d89029b97e4d867cd2722af5fefdccf5a9af3f6395ae2b84ca2be88",
+      "review": {
+        "readme_chars": 3915,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2877,
+        "output_tokens": 245,
+        "seconds": 1.34
+      }
+    },
+    {
+      "github_id": 221981891,
+      "full_name": "microsoft/playwright",
+      "categories": [
+        "dev-tools",
+        "automation"
+      ],
+      "summary_es": "Framework para pruebas web y automatización de navegadores que permite controlar Chromium, Firefox y WebKit con una única API.",
+      "use_cases": [
+        "Realizar pruebas end-to-end",
+        "Ejecutar scripts de automatización de navegadores",
+        "Integrar agentes de IA y automatización impulsada por LLM"
+      ],
+      "evidence": [
+        "Playwright Test is a full-featured test runner built for end-to-end testing.",
+        "Use playwright as a library for browser automation scripts — web scraping, PDF generation, screenshot capture, and any workflow that needs programmatic browser control without a test runner.",
+        "The Playwright MCP server gives AI agents full browser control through the Model Context Protocol."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "1af4b867cc34b4a086f6449cafdffdfd4993c0844b0c349c5176edaa9af703bc",
+      "review": {
+        "readme_chars": 7869,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 4083,
+        "output_tokens": 229,
+        "seconds": 1.73
+      }
+    },
+    {
+      "github_id": 20929025,
+      "full_name": "microsoft/TypeScript",
+      "categories": [
+        "dev-tools"
+      ],
+      "summary_es": "Lenguaje para JavaScript a escala de aplicaciones que añade tipos opcionales y compila a JavaScript legible basado en estándares.",
+      "use_cases": [
+        "Añadir tipos opcionales a JavaScript",
+        "Compilar código a JavaScript estándar"
+      ],
+      "evidence": [
+        "TypeScript adds optional types to JavaScript that support tools for large-scale JavaScript applications for any browser, for any host, on any OS.",
+        "TypeScript compiles to readable, standards-based JavaScript."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "95b28299ba2e56cfbee93dae4811956170a1646edbe97f36067541c79377622d",
+      "review": {
+        "readme_chars": 1310,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2311,
+        "output_tokens": 156,
+        "seconds": 1.14
+      }
+    },
+    {
+      "github_id": 41881900,
+      "full_name": "microsoft/vscode",
+      "categories": [
+        "dev-tools"
+      ],
+      "summary_es": "Editor de código fuente que combina la simplicidad de la edición con soporte para depuración ligera y un modelo de extensibilidad.",
+      "use_cases": [
+        "Editar y navegar código fuente",
+        "Depurar aplicaciones con herramientas ligeras"
+      ],
+      "evidence": [
+        "It provides comprehensive code editing, navigation, and understanding support along with lightweight debugging, a rich extensibility model, and lightweight integration with existing tools.",
+        "It provides comprehensive code editing, navigation, and understanding support along with lightweight debugging, a rich extensibility model, and lightweight integration with existing tools."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "dfd648c55e3606d982ebba0732f66b512997622fee834752031d17a16e895f2e",
+      "review": {
+        "readme_chars": 4083,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2850,
+        "output_tokens": 175,
+        "seconds": 1.17
+      }
+    },
+    {
+      "github_id": 7691631,
+      "full_name": "moby/moby",
+      "categories": [
+        "infrastructure"
+      ],
+      "summary_es": "Proyecto de código abierto para habilitar y acelerar la contenerización de software, ofreciendo componentes modulares y un marco para ensamblar sistemas basados en contenedores.",
+      "use_cases": [
+        "Construir sistemas personalizados basados en contenedores",
+        "Experimentar e intercambiar ideas sobre contenedores"
+      ],
+      "evidence": [
+        "the framework for assembling them into custom container-based systems",
+        "a place for all container enthusiasts and professionals to experiment and exchange ideas."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "1f142031a8b5fb73bdf79b01faabd232e9cfc918b6f6ce80d2a5fe16593e06bd",
+      "review": {
+        "readme_chars": 4637,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 3108,
+        "output_tokens": 155,
+        "seconds": 1.19
+      }
+    },
+    {
+      "github_id": 16408992,
+      "full_name": "neovim/neovim",
+      "categories": [
+        "dev-tools"
+      ],
+      "summary_es": "Editor de texto basado en Vim enfocado en la extensibilidad y la usabilidad.",
+      "use_cases": [
+        "Maximizar la extensibilidad",
+        "Permitir interfaces de usuario avanzadas sin modificar el núcleo",
+        "Simplificar el mantenimiento y fomentar las contribuciones"
+      ],
+      "evidence": [
+        "Maximize extensibility",
+        "Enable [advanced UIs] without modifications to the core",
+        "Simplify maintenance and encourage contributions"
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "d44cab0a1ca9328f3da13f9fc04f1e66ac0602f975f47fa85b234cf6abc6eee7",
+      "review": {
+        "readme_chars": 2706,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2759,
+        "output_tokens": 166,
+        "seconds": 1.23
+      }
+    },
+    {
+      "github_id": 37912398,
+      "full_name": "nginx/nginx",
+      "categories": [
+        "infrastructure",
+        "cache"
+      ],
+      "summary_es": "Servidor web, balanceador de carga, proxy inverso, pasarela de API y caché de contenido de alto rendimiento.",
+      "use_cases": [
+        "Habilitar el cifrado TLS instalando certificados SSL",
+        "Almacenar contenido en caché para acelerar la entrega"
+      ],
+      "evidence": [
+        "Installing SSL certificates and enabling TLS encryption",
+        "Content caching"
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "9494cc99035ff17c07557ec8130a103ddb6d2af278d3780915009bc81e8adacb",
+      "review": {
+        "readme_chars": 7957,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [
+          {
+            "use_case": "Distribuir el tráfico de red como balanceador de carga",
+            "evidence": "Load Balancing",
+            "reason": "cita demasiado corta"
+          },
+          {
+            "use_case": "Limitar la tasa de solicitudes como pasarela de API",
+            "evidence": "Rate limiting",
+            "reason": "cita demasiado corta"
+          }
+        ],
+        "input_tokens": 3726,
+        "output_tokens": 211,
+        "seconds": 1.41
+      }
+    },
+    {
+      "github_id": 27193779,
+      "full_name": "nodejs/node",
+      "categories": [
+        "backend"
+      ],
+      "summary_es": "Entorno de ejecución de JavaScript de código abierto y multiplataforma.",
+      "use_cases": [],
+      "evidence": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "b57f9f9d9950f90346d0e3e2bb32b8848a386a85e84c30a98b656688b7102a54",
+      "review": {
+        "readme_chars": 6632,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 4095,
+        "output_tokens": 48,
+        "seconds": 1.39
+      }
+    },
+    {
+      "github_id": 139910229,
+      "full_name": "npm/cli",
+      "categories": [
+        "dev-tools"
+      ],
+      "summary_es": "Gestor de paquetes para JavaScript.",
+      "use_cases": [
+        "Gestionar múltiples versiones de Node.js o npm"
+      ],
+      "evidence": [
+        "If you're looking to manage multiple versions of **`Node.js`** &/or **`npm`**, consider using a node version manager"
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "80a550bacbb67b6fd552f8232718f06d455e580b0d7b077ad316fd2100ffd778",
+      "review": {
+        "readme_chars": 2511,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2645,
+        "output_tokens": 107,
+        "seconds": 1.22
+      }
+    },
+    {
+      "github_id": 908607,
+      "full_name": "numpy/numpy",
+      "categories": [
+        "data-processing"
+      ],
+      "summary_es": "Librería para computación científica con Python que provee un objeto de array N-dimensional y capacidades de álgebra lineal, transformadas de Fourier y números aleatorios.",
+      "use_cases": [
+        "Gestionar un objeto de array N-dimensional",
+        "Aplicar funciones de broadcasting",
+        "Integrar código C, C++ y Fortran",
+        "Ejecutar operaciones de álgebra lineal, transformada de Fourier y números aleatorios"
+      ],
+      "evidence": [
+        "a powerful N-dimensional array object",
+        "sophisticated (broadcasting) functions",
+        "tools for integrating C/C++ and Fortran code",
+        "useful linear algebra, Fourier transform, and random number capabilities"
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "3d46d5584e849987483cf4a1086b21e8ec1fa60f813d978956dd29d610b0a768",
+      "review": {
+        "readme_chars": 2673,
+        "attempts": 2,
+        "problems_first": [
+          "summary_es usa palabras de marketing (potente): describe la herramienta sin ellas"
+        ],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 5504,
+        "output_tokens": 467,
+        "seconds": 3.51
+      }
+    },
+    {
+      "github_id": 71995937,
+      "full_name": "nuxt/nuxt",
+      "categories": [
+        "frontend"
+      ],
+      "summary_es": "Framework open-source para crear aplicaciones web y sitios full-stack con Vue.js de forma intuitiva, con soporte para renderizado en servidor y estático.",
+      "use_cases": [
+        "Crear aplicaciones web y sitios full-stack con Vue.js",
+        "Desarrollar aplicaciones con renderizado en servidor, generación estática, híbrido y en el edge",
+        "Implementar enrutamiento automático con división de código y precarga"
+      ],
+      "evidence": [
+        "Nuxt is a free and open-source framework with an intuitive and extendable way to create type-safe, performant and production-grade full-stack web applications and websites with Vue.js.",
+        "Server-side rendering, static site generation, hybrid rendering and edge-side rendering",
+        "Automatic routing with code-splitting and pre-fetching"
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "52a7ae926816ae295f5993c0e74920d539c394eb01545dbad0c14020b571b769",
+      "review": {
+        "readme_chars": 2884,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2762,
+        "output_tokens": 248,
+        "seconds": 1.71
+      }
+    },
+    {
+      "github_id": 658928958,
+      "full_name": "ollama/ollama",
+      "categories": [
+        "ai"
+      ],
+      "summary_es": "Servidor de inferencia y herramientas para ejecutar y gestionar modelos de lenguaje grandes de forma local o en la nube.",
+      "use_cases": [
+        "Ejecutar y chatear con modelos de lenguaje localmente",
+        "Gestionar y ejecutar modelos mediante una API REST"
+      ],
+      "evidence": [
+        "Run and chat with Gemma 4",
+        "Ollama has a REST API for running and managing models."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "07f2b53bc2b44f8b8b9e9318a08eadf947592daad1b159d73f9fa119413494a5",
+      "review": {
+        "readme_chars": 7624,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 4100,
+        "output_tokens": 143,
+        "seconds": 1.55
+      }
+    },
+    {
+      "github_id": 185861173,
+      "full_name": "open-telemetry/opentelemetry-collector",
+      "categories": [
+        "observability"
+      ],
+      "summary_es": "Implementación agnóstica de proveedores para recibir, procesar y exportar datos de telemetría.",
+      "use_cases": [
+        "Recibir datos de telemetría",
+        "Procesar datos de telemetría",
+        "Exportar datos de telemetría"
+      ],
+      "evidence": [
+        "receive, process and export telemetry data",
+        "receive, process and export telemetry data",
+        "receive, process and export telemetry data"
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "1293c597f132fe0932e4837961ea77521e9757fcec128c805b0ca65be9cb65ca",
+      "review": {
+        "readme_chars": 5019,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 3178,
+        "output_tokens": 168,
+        "seconds": 1.56
+      }
+    },
+    {
+      "github_id": 307213173,
+      "full_name": "openai/openai-python",
+      "categories": [
+        "ai"
+      ],
+      "summary_es": "Librería oficial de Python para acceder a la API REST de OpenAI desde aplicaciones de Python 3.10+, con clientes síncronos y asíncronos.",
+      "use_cases": [
+        "Generar texto utilizando los modelos de OpenAI",
+        "Procesar imágenes mediante las capacidades de visión"
+      ],
+      "evidence": [
+        "You can generate text from the model with the code below.",
+        "With an image URL:"
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "4b07d2499a8df4ba3b9cd20b0192b6eb463fef1516e41ca836378c12b381770c",
+      "review": {
+        "readme_chars": 7881,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 4284,
+        "output_tokens": 148,
+        "seconds": 1.19
+      }
+    },
+    {
+      "github_id": 36960321,
+      "full_name": "opencontainers/runc",
+      "categories": [
+        "infrastructure"
+      ],
+      "summary_es": "Herramienta CLI para crear y ejecutar contenedores en Linux según la especificación OCI.",
+      "use_cases": [
+        "Crear un paquete OCI para contenedores",
+        "Ejecutar contenedores utilizando la especificación OCI"
+      ],
+      "evidence": [
+        "In order to use runc you must have your container in the format of an OCI bundle.",
+        "runc is a CLI tool for spawning and running containers on Linux according to the OCI specification."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "a8a3c661241cd6ea9358684739d1ad95ce1f91e9dba1c8f09746068a69bf850e",
+      "review": {
+        "readme_chars": 7948,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 4072,
+        "output_tokens": 157,
+        "seconds": 1.39
+      }
+    },
+    {
+      "github_id": 334274271,
+      "full_name": "opensearch-project/OpenSearch",
+      "categories": [
+        "search",
+        "observability"
+      ],
+      "summary_es": "Motor de búsqueda y observabilidad distribuido y RESTful de código abierto que organiza datos no estructurados a escala.",
+      "use_cases": [
+        "Buscar datos no estructurados a escala"
+      ],
+      "evidence": [
+        "OpenSearch is an open-source, enterprise-grade search and observability suite that brings order to unstructured data at scale."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "1e72c4c39dcb2f8dfb4f0f53ecc607c08b4975971a1ccc0c5d18ab6630b2ad0f",
+      "review": {
+        "readme_chars": 1370,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2333,
+        "output_tokens": 117,
+        "seconds": 1.07
+      }
+    },
+    {
+      "github_id": 596892,
+      "full_name": "pallets/flask",
+      "categories": [
+        "backend"
+      ],
+      "summary_es": "Framework de aplicaciones web WSGI ligero para Python.",
+      "use_cases": [
+        "Construir aplicaciones web",
+        "Escalar a aplicaciones complejas"
+      ],
+      "evidence": [
+        "The Python micro framework for building web applications.",
+        "It is designed to make getting started quick and easy, with the ability to scale up to complex applications."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "bc335155774df9acf0222a4ee3dbe50d884e2ddb6167bee6a7a4f67837583b1a",
+      "review": {
+        "readme_chars": 1200,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2315,
+        "output_tokens": 129,
+        "seconds": 1.4
+      }
+    },
+    {
+      "github_id": 858127,
+      "full_name": "pandas-dev/pandas",
+      "categories": [
+        "data-processing"
+      ],
+      "summary_es": "Librería de análisis y manipulación de datos para Python que proporciona estructuras de datos etiquetadas y funciones estadísticas.",
+      "use_cases": [
+        "Gestionar datos faltantes",
+        "Realizar operaciones de agrupación",
+        "Combinar y unir conjuntos de datos",
+        "Cargar datos desde múltiples formatos de archivo y bases de datos"
+      ],
+      "evidence": [
+        "Easy handling of missing data (represented as NaN, NA, or NaT) in floating point as well as non-floating point data",
+        "Powerful, flexible group by functionality to perform split-apply-combine operations on data sets, for both aggregating and transforming data",
+        "Intuitive merging and joining data sets",
+        "Robust I/O tools for loading data from flat files (CSV and delimited), Excel files, databases, and saving/loading data from the ultrafast HDF5 format"
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "c6337be3628841b998533c00322bfbf4da04a23b9680df4a8edfb9c564568f84",
+      "review": {
+        "readme_chars": 5473,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 3272,
+        "output_tokens": 271,
+        "seconds": 1.37
+      }
+    },
+    {
+      "github_id": 359952601,
+      "full_name": "pgvector/pgvector",
+      "categories": [
+        "search",
+        "database"
+      ],
+      "summary_es": "Extensión open-source para la búsqueda de similitud de vectores en PostgreSQL.",
+      "use_cases": [
+        "Realizar búsquedas de vecinos más cercanos exactas y aproximadas",
+        "Almacenar vectores junto con el resto de los datos",
+        "Escalar grandes volúmenes de vectores mediante cuantización"
+      ],
+      "evidence": [
+        "exact and approximate nearest neighbor search",
+        "Store your vectors with the rest of your data.",
+        "Have a lot of vectors? Use quantization to scale"
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "5cf7ceb66ca047c1efef1da454e29eed1a9bcab9530d001116209c9344440133",
+      "review": {
+        "readme_chars": 7793,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 4128,
+        "output_tokens": 183,
+        "seconds": 1.44
+      }
+    },
+    {
+      "github_id": 50565430,
+      "full_name": "pnpm/pnpm",
+      "categories": [
+        "dev-tools"
+      ],
+      "summary_es": "Gestor de paquetes rápido y eficiente en espacio en disco para Node.js y JavaScript.",
+      "use_cases": [
+        "Gestionar dependencias en monorepos"
+      ],
+      "evidence": [
+        "Great for monorepos."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "8bca4968f0e38fcdca3cb9f6f959399dab78c04a592c33620cee5b916079c144",
+      "review": {
+        "readme_chars": 2539,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2685,
+        "output_tokens": 91,
+        "seconds": 4.36
+      }
+    },
+    {
+      "github_id": 139199684,
+      "full_name": "PrefectHQ/prefect",
+      "categories": [
+        "data-processing",
+        "automation"
+      ],
+      "summary_es": "Framework de orquestación de flujos de trabajo en Python para construir pipelines de datos resilientes y dinámicos.",
+      "use_cases": [
+        "Elevar un script en un flujo de trabajo de producción",
+        "Ejecutar flujos de trabajo bajo un calendario mediante despliegues"
+      ],
+      "evidence": [
+        "It's the simplest way to elevate a script into a production workflow.",
+        "To run your workflow on a schedule, turn it into a deployment and schedule it to run every minute by changing the last line of your script to the following:"
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "8a3917ac0b61c68c3549f91fa8b3eaffc9579f1eee39edc5322623c1f952e400",
+      "review": {
+        "readme_chars": 4521,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [
+          {
+            "use_case": "Automatizar procesos de datos con características como programación, caché, reintentos y automatizaciones basadas en eventos",
+            "evidence": "With just a few lines of code, data teams can confidently automate any data process with features such as scheduling, caching, retries, and event-based automations.",
+            "reason": "caso de uso vacío o de más de 100 caracteres"
+          }
+        ],
+        "input_tokens": 3110,
+        "output_tokens": 257,
+        "seconds": 2.76
+      }
+    },
+    {
+      "github_id": 75104123,
+      "full_name": "prettier/prettier",
+      "categories": [
+        "dev-tools"
+      ],
+      "summary_es": "Formateador de código que aplica un estilo consistente analizando el código y reimprimiéndolo según sus propias reglas.",
+      "use_cases": [
+        "Formatear código automáticamente en el editor al guardar"
+      ],
+      "evidence": [
+        "Prettier can be run in your editor on-save, in a pre-commit hook, or in CI environments to ensure your codebase has a consistent style without devs ever having to post a nit-picky comment on a code review ever again!"
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "33bc1ecb796073068a4a7b9710b946004f9e856b41f4a6bf56076dd2e654e5c4",
+      "review": {
+        "readme_chars": 1027,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2333,
+        "output_tokens": 144,
+        "seconds": 1.08
+      }
+    },
+    {
+      "github_id": 11452538,
+      "full_name": "prometheus/alertmanager",
+      "categories": [
+        "observability",
+        "communication"
+      ],
+      "summary_es": "Herramienta que gestiona alertas enviadas por aplicaciones cliente como Prometheus, encargándose de la deduplicación, agrupación, silenciamiento, inhibición y enrutamiento hacia receptores.",
+      "use_cases": [
+        "Gestionar alertas enviadas por aplicaciones cliente como el servidor de Prometheus",
+        "Enrutar alertas hacia integraciones receptoras correctas",
+        "Silenciar e inhibir alertas"
+      ],
+      "evidence": [
+        "The Alertmanager handles alerts sent by client applications such as the Prometheus server.",
+        "It takes care of deduplicating, grouping, and routing them to the correct receiver integrations such as email, PagerDuty, OpsGenie, or many other mechanisms thanks to the webhook receiver.",
+        "It also takes care of silencing and inhibition of alerts."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "7f001b1ed6be504405cd7dc5cab2ac4fa5eb7aedb04f14653aae5fabd4dac6e8",
+      "review": {
+        "readme_chars": 7874,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 4380,
+        "output_tokens": 239,
+        "seconds": 2.65
+      }
+    },
+    {
+      "github_id": 6838921,
+      "full_name": "prometheus/prometheus",
+      "categories": [
+        "observability",
+        "database"
+      ],
+      "summary_es": "Sistema de monitoreo de sistemas y servicios y base de datos de series temporales que recolecta métricas y evalúa reglas de alerta.",
+      "use_cases": [
+        "Recolectar métricas de objetivos configurados a intervalos dados",
+        "Disparar alertas cuando se observan condiciones especificadas"
+      ],
+      "evidence": [
+        "It collects metrics from configured targets at given intervals, evaluates rule expressions, displays the results, and can trigger alerts when specified conditions are observed.",
+        "It collects metrics from configured targets at given intervals, evaluates rule expressions, displays the results, and can trigger alerts when specified conditions are observed."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "6fc527af20bdd387687836cae5801d569f9860245b802c08cf65fd1e388bbcd9",
+      "review": {
+        "readme_chars": 6989,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 3772,
+        "output_tokens": 192,
+        "seconds": 1.77
+      }
+    },
+    {
+      "github_id": 125266328,
+      "full_name": "psf/black",
+      "categories": [
+        "dev-tools"
+      ],
+      "summary_es": "Formateador de código Python inflexible que aplica un estilo uniforme con valores predeterminados sensatos y pocas opciones de configuración.",
+      "use_cases": [
+        "Formatear código fuente en Python automáticamente",
+        "Formatear Jupyter Notebooks"
+      ],
+      "evidence": [
+        "Black is the uncompromising Python code formatter.",
+        "If you want to format Jupyter Notebooks, install with pip install \"black[jupyter]\"."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "69ca86f12c29ff239015ce9307bbd924b360444b67183c4ef6dba930d8c11282",
+      "review": {
+        "readme_chars": 6508,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 3598,
+        "output_tokens": 147,
+        "seconds": 1.36
+      }
+    },
+    {
+      "github_id": 247399816,
+      "full_name": "psycopg/psycopg",
+      "categories": [
+        "database"
+      ],
+      "summary_es": "Adaptador de base de datos PostgreSQL para el lenguaje de programación Python.",
+      "use_cases": [],
+      "evidence": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "27ee5d00f817d10aded6525dac84fef86b541e85875267a3e839add5eacbefe1",
+      "review": {
+        "readme_chars": 3182,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2798,
+        "output_tokens": 48,
+        "seconds": 0.87
+      }
+    },
+    {
+      "github_id": 90194616,
+      "full_name": "pydantic/pydantic",
+      "categories": [
+        "backend",
+        "dev-tools"
+      ],
+      "summary_es": "Librería para validación de datos y análisis sintáctico usando anotaciones de tipo de Python.",
+      "use_cases": [
+        "Validar datos utilizando anotaciones de tipo de Python"
+      ],
+      "evidence": [
+        "Data validation using Python type hints"
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "a24fe9802107429bee3c523bfbf310438f119db82ae568b17fc6ccf8951db68b",
+      "review": {
+        "readme_chars": 1936,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2613,
+        "output_tokens": 102,
+        "seconds": 1.1
+      }
+    },
+    {
+      "github_id": 37489525,
+      "full_name": "pytest-dev/pytest",
+      "categories": [
+        "dev-tools"
+      ],
+      "summary_es": "Framework de testing en Python que facilita la escritura de pruebas pequeñas y escala para soportar pruebas funcionales complejas.",
+      "use_cases": [
+        "Escribir pruebas pequeñas y pruebas funcionales complejas",
+        "Ejecutar suites de pruebas unittest existentes"
+      ],
+      "evidence": [
+        "The pytest framework makes it easy to write small tests, yet scales to support complex functional testing for applications and libraries.",
+        "Can run unittest (or trial) test suites out of the box"
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "de383d3b2298517739e087d54e86f57740c373e2e4e69f1000511f1ccbec0c8a",
+      "review": {
+        "readme_chars": 3266,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2851,
+        "output_tokens": 160,
+        "seconds": 1.17
+      }
+    },
+    {
+      "github_id": 81598961,
+      "full_name": "python/cpython",
+      "categories": [
+        "dev-tools"
+      ],
+      "summary_es": "Lenguaje de programación de código abierto que enfatiza la legibilidad del código y soporta múltiples paradigmas de programación.",
+      "use_cases": [],
+      "evidence": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "a78eaa4e6135057512ac8dedcf7dadd2a401cca77fa10910c5fbba79b1a6e48f",
+      "review": {
+        "readme_chars": 7501,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 3759,
+        "output_tokens": 59,
+        "seconds": 1.62
+      }
+    },
+    {
+      "github_id": 65600975,
+      "full_name": "pytorch/pytorch",
+      "categories": [
+        "ai",
+        "backend"
+      ],
+      "summary_es": "Librería de Python para computación de tensores con aceleración por GPU y redes neuronales profundas basadas en un sistema de autogradación.",
+      "use_cases": [
+        "Reemplazar a NumPy para utilizar la potencia de las GPU.",
+        "Construir redes neuronales profundas con máxima flexibilidad y velocidad."
+      ],
+      "evidence": [
+        "A replacement for NumPy to use the power of GPUs.",
+        "A deep learning research platform that provides maximum flexibility and speed."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "07708f55040521da3841dd5f13d6507443b5676cdc8e526e807b095949e4713c",
+      "review": {
+        "readme_chars": 7960,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 3893,
+        "output_tokens": 162,
+        "seconds": 1.32
+      }
+    },
+    {
+      "github_id": 10270250,
+      "full_name": "react/react",
+      "categories": [
+        "frontend"
+      ],
+      "summary_es": "Librería de JavaScript para construir interfaces de usuario web y nativas mediante componentes declarativos.",
+      "use_cases": [
+        "Crear interfaces de usuario interactivas de forma declarativa",
+        "Construir componentes encapsulados que gestionen su propio estado",
+        "Desarrollar aplicaciones móviles usando React Native"
+      ],
+      "evidence": [
+        "React makes it painless to create interactive UIs.",
+        "Build encapsulated components that manage their own state, then compose them to make complex UIs.",
+        "React can also render on the server using Node and power mobile apps using React Native."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "8be6691a848ce48fc7232a010f56937e4eb7300fadd99159bdf13705cf505671",
+      "review": {
+        "readme_chars": 3286,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2736,
+        "output_tokens": 197,
+        "seconds": 1.92
+      }
+    },
+    {
+      "github_id": 156018,
+      "full_name": "redis/redis",
+      "categories": [
+        "cache",
+        "database",
+        "search"
+      ],
+      "summary_es": "Servidor de estructura de datos en memoria, motor de consultas de documentos y vectores, y caché de alto rendimiento para aplicaciones en tiempo real.",
+      "use_cases": [
+        "Implementar almacenamiento en caché con múltiples políticas de desalojo y expiración de claves",
+        "Almacenar sesiones de usuario distribuidas utilizando varios modelos de datos",
+        "Realizar búsquedas vectoriales y de texto completo sobre documentos indexados",
+        "Gestionar colas de mensajes y eventos mediante estructuras de datos especializadas"
+      ],
+      "evidence": [
+        "Caching: Supports multiple eviction policies, key expiration, and hash-field expiration.",
+        "Distributed Session Store: Offers flexible session data modeling (string, JSON, hash).",
+        "Search and Query Engine: Indexing for hash/JSON documents, supporting vector search, full-text search, geospatial queries, ranking, and aggregations via Redis Search.",
+        "Event Store & Message Broker: Implements queues (lists), priority queues (sorted sets), event deduplication (sets), streams, and pub/sub with probabilistic stream processing capabilities."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "c5004abe057dcb9c146a86ca0d2d30cde1bfa062f02216d1ff14abf28d551750",
+      "review": {
+        "readme_chars": 7339,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 3788,
+        "output_tokens": 317,
+        "seconds": 2.19
+      }
+    },
+    {
+      "github_id": 560704231,
+      "full_name": "run-llama/llama_index",
+      "categories": [
+        "ai",
+        "data-processing"
+      ],
+      "summary_es": "Framework de datos para conectar fuentes de información privadas con modelos de lenguaje y construir aplicaciones basadas en inteligencia artificial.",
+      "use_cases": [
+        "Ingestar datos desde múltiples fuentes y formatos existentes",
+        "Estructurar información mediante índices y grafos para su uso con modelos de lenguaje",
+        "Implementar interfaces avanzadas de recuperación y consulta sobre datos privados"
+      ],
+      "evidence": [
+        "Offers data connectors to ingest your existing data sources and data formats (APIs, PDFs, docs, SQL, etc.).",
+        "Provides ways to structure your data (indices, graphs) so that this data can be easily used with LLMs.",
+        "Provides an advanced retrieval/query interface over your data: Feed in any LLM input prompt, get back retrieved context and knowledge-augmented output."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "63399318715efd4cd3f8721f2de66f6b834b9209f9079966cf8ce9729809887c",
+      "review": {
+        "readme_chars": 7849,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 3938,
+        "output_tokens": 241,
+        "seconds": 1.31
+      }
+    },
+    {
+      "github_id": 724712,
+      "full_name": "rust-lang/rust",
+      "categories": [
+        "dev-tools"
+      ],
+      "summary_es": "Lenguaje de programación de sistemas que ayuda a construir software confiable y eficiente con seguridad de memoria.",
+      "use_cases": [
+        "Desarrollar servicios críticos de alto rendimiento"
+      ],
+      "evidence": [
+        "Performance: Fast and memory-efficient, suitable for critical services, embedded devices, and easily integrated with other languages."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "4e5acdbb92d581c28c0e57d772a044fb8743368f2a3ce6fc82e3591cdb85e69d",
+      "review": {
+        "readme_chars": 1666,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2399,
+        "output_tokens": 111,
+        "seconds": 1.29
+      }
+    },
+    {
+      "github_id": 843222,
+      "full_name": "scikit-learn/scikit-learn",
+      "categories": [
+        "ai"
+      ],
+      "summary_es": "Librería de Python para machine learning construida sobre SciPy.",
+      "use_cases": [],
+      "evidence": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "f501e72bb9694601156cd7f2685a99042546b73d036f22da2814cdb9348eac9e",
+      "review": {
+        "readme_chars": 4701,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 3326,
+        "output_tokens": 48,
+        "seconds": 1.3
+      }
+    },
+    {
+      "github_id": 1460385,
+      "full_name": "scipy/scipy",
+      "categories": [
+        "data-processing"
+      ],
+      "summary_es": "Librería de código abierto para matemáticas, ciencia e ingeniería que incluye módulos para estadística, optimización, integración y álgebra lineal.",
+      "use_cases": [
+        "Realizar integración numérica"
+      ],
+      "evidence": [
+        "such as routines for numerical integration and optimization."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "be1494d44d4d315361237fdddf5bbee7346073821682bc532677977db2ce312f",
+      "review": {
+        "readme_chars": 2345,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2600,
+        "output_tokens": 98,
+        "seconds": 1.13
+      }
+    },
+    {
+      "github_id": 159271175,
+      "full_name": "sqlalchemy/sqlalchemy",
+      "categories": [
+        "database"
+      ],
+      "summary_es": "Toolkit de SQL y mapeador objeto-relacional (ORM) para Python que ofrece acceso a bases de datos eficiente y de alto rendimiento.",
+      "use_cases": [
+        "Mapear objetos a bases de datos relacionales mediante configuración declarativa",
+        "Construir consultas SQL de forma relacional utilizando el modelo de objetos",
+        "Reflejar esquemas de bases de datos existentes en estructuras de metadatos en Python"
+      ],
+      "evidence": [
+        "An industrial strength ORM, built from the core on the identity map, unit of work, and data mapper patterns. These patterns allow transparent persistence of objects using a declarative configuration system.",
+        "A relationally-oriented query system, exposing the full range of SQL's capabilities explicitly, including joins, subqueries, correlation, and most everything else, in terms of the object model.",
+        "Database introspection and generation. Database schemas can be \"reflected\" in one step into Python structures representing database metadata"
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "5ed06412538a4eb047e9e4d838a4b25ad6439adda1e374f5819ecd4459091461",
+      "review": {
+        "readme_chars": 5027,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [
+          {
+            "use_case": "Abstraer bases de datos mediante una capa central con lenguaje de expresiones SQL y manejo de conexiones",
+            "evidence": "The SQLAlchemy Core is separate from the ORM and is a full database abstraction layer in its own right, and includes an extensible Python-based SQL expression language, schema metadata, connection pooling, type coercion, and custom types.",
+            "reason": "caso de uso vacío o de más de 100 caracteres"
+          }
+        ],
+        "input_tokens": 3098,
+        "output_tokens": 356,
+        "seconds": 1.65
+      }
+    },
+    {
+      "github_id": 54173593,
+      "full_name": "storybookjs/storybook",
+      "categories": [
+        "frontend",
+        "dev-tools"
+      ],
+      "summary_es": "Taller de frontend para construir, documentar y probar componentes de interfaz de usuario de forma aislada.",
+      "use_cases": [
+        "Construir componentes de interfaz de usuario y páginas en aislamiento",
+        "Documentar componentes de interfaz de usuario",
+        "Probar componentes para comprobar la accesibilidad de los usuarios"
+      ],
+      "evidence": [
+        "Storybook is a frontend workshop for building UI components and pages in isolation.",
+        "Thousands of teams use it for UI development, testing, and documentation.",
+        "Test components for user accessibility in Storybook"
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "e9858265d7ff5faf38e080e3c5efa24cc3dde4723c32df65c4b64edec4f26efb",
+      "review": {
+        "readme_chars": 5311,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 3289,
+        "output_tokens": 196,
+        "seconds": 1.5
+      }
+    },
+    {
+      "github_id": 74293321,
+      "full_name": "sveltejs/svelte",
+      "categories": [
+        "frontend"
+      ],
+      "summary_es": "Compilador que toma componentes declarativos y los convierte en JavaScript eficiente que actualiza el DOM.",
+      "use_cases": [
+        "Construir aplicaciones web con componentes declarativos"
+      ],
+      "evidence": [
+        "It's a compiler that takes your declarative components and converts them into efficient JavaScript that surgically updates the DOM."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "d3b815a363111f9a04ef0fc6cedd27d03e5462d38f16a4cdd9ecddb4219f60dc",
+      "review": {
+        "readme_chars": 1126,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2275,
+        "output_tokens": 108,
+        "seconds": 1.1
+      }
+    },
+    {
+      "github_id": 106017343,
+      "full_name": "tailwindlabs/tailwindcss",
+      "categories": [
+        "frontend"
+      ],
+      "summary_es": "Framework de CSS enfocado en clases utilitarias para construir interfaces de usuario personalizadas de forma rápida.",
+      "use_cases": [
+        "Construir interfaces de usuario personalizadas de forma rápida"
+      ],
+      "evidence": [
+        "A utility-first CSS framework for rapidly building custom user interfaces."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "5f024423e7146b88ccd95550321a06009957547f8b74ea4075e82620a3e83a0a",
+      "review": {
+        "readme_chars": 397,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2127,
+        "output_tokens": 102,
+        "seconds": 1.03
+      }
+    },
+    {
+      "github_id": 18609427,
+      "full_name": "tc39/ecma262",
+      "categories": [
+        "dev-tools"
+      ],
+      "summary_es": "Especificación del lenguaje ECMAScript y fuente para el borrador actual de ECMA-262.",
+      "use_cases": [
+        "Desarrollar la especificación"
+      ],
+      "evidence": [
+        "Developing the Specification"
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "810917014f7d843a4f83a48a13fbc339cc0a8437a73221ba0d0658d6d37403dc",
+      "review": {
+        "readme_chars": 1080,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2281,
+        "output_tokens": 92,
+        "seconds": 1.0
+      }
+    },
+    {
+      "github_id": 45717250,
+      "full_name": "tensorflow/tensorflow",
+      "categories": [
+        "ai"
+      ],
+      "summary_es": "Plataforma de código abierto de extremo a extremo para aprendizaje automático.",
+      "use_cases": [
+        "Desarrollar aplicaciones impulsadas por aprendizaje automático",
+        "Conducir investigación en aprendizaje automático y redes neuronales"
+      ],
+      "evidence": [
+        "developers easily build and deploy ML-powered applications.",
+        "to conduct research in machine learning and neural networks."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "a734e816d7db681dbba535e4176ac0eabac2dee21f9f903d81d06ecd60aadd49",
+      "review": {
+        "readme_chars": 3669,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2916,
+        "output_tokens": 133,
+        "seconds": 1.38
+      }
+    },
+    {
+      "github_id": 125863507,
+      "full_name": "testing-library/react-testing-library",
+      "categories": [
+        "dev-tools"
+      ],
+      "summary_es": "Librería ligera para probar componentes de React que proporciona utilidades sobre react-dom fomentando buenas prácticas de testing.",
+      "use_cases": [
+        "Escribir tests mantenibles para componentes de React",
+        "Evitar incluir detalles de implementación en los tests"
+      ],
+      "evidence": [
+        "You want to write maintainable tests for your React components.",
+        "As a part of this goal, you want your tests to avoid including implementation details of your components and rather focus on making your tests give you the confidence for which they are intended."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "637d1371c97930edff34e39665abf98d6aaf62d9745ada0507531b15b3902bde",
+      "review": {
+        "readme_chars": 7902,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 4160,
+        "output_tokens": 171,
+        "seconds": 1.17
+      }
+    },
+    {
+      "github_id": 2325298,
+      "full_name": "torvalds/linux",
+      "categories": [
+        "dev-tools",
+        "infrastructure"
+      ],
+      "summary_es": "El núcleo del sistema operativo Linux que gestiona el hardware, los recursos del sistema y proporciona los servicios fundamentales para todo el software.",
+      "use_cases": [
+        "Estudiar la arquitectura y los elementos internos del kernel",
+        "Realizar análisis de vulnerabilidades y endurecimiento de la seguridad",
+        "Configurar y solucionar problemas en sistemas operativos",
+        "Escribir controladores para hardware nuevo"
+      ],
+      "evidence": [
+        "Academic Researcher: Studying kernel internals and architecture",
+        "Security Expert: Hardening and vulnerability analysis",
+        "System Administrator: Configuring and troubleshooting",
+        "Hardware Vendor: Writing drivers for new hardware"
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "ad7748280e9775b7dcc79618212f2731fb1739d3e0b24e218a81528445b103c7",
+      "review": {
+        "readme_chars": 5892,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 3370,
+        "output_tokens": 225,
+        "seconds": 1.36
+      }
+    },
+    {
+      "github_id": 42408804,
+      "full_name": "traefik/traefik",
+      "categories": [
+        "infrastructure"
+      ],
+      "summary_es": "Proxy inverso HTTP y balanceador de carga moderno diseñado para facilitar el despliegue de microservicios con configuración automática.",
+      "use_cases": [
+        "Balancear carga mediante múltiples algoritmos",
+        "Proporcionar HTTPS mediante la integración con Let's Encrypt"
+      ],
+      "evidence": [
+        "Supports multiple load balancing algorithms",
+        "Provides HTTPS to your microservices by leveraging Let's Encrypt (wildcard certificates support)"
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "b17379231c87ae12af2af2ae0c298b5c65e853c1715765bb51d85c709f11e6a5",
+      "review": {
+        "readme_chars": 4987,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 3373,
+        "output_tokens": 147,
+        "seconds": 1.36
+      }
+    },
+    {
+      "github_id": 70107786,
+      "full_name": "vercel/next.js",
+      "categories": [
+        "frontend",
+        "backend"
+      ],
+      "summary_es": "Framework de React para crear aplicaciones web full-stack con renderizado del lado del servidor y herramientas basadas en Rust.",
+      "use_cases": [
+        "Crear aplicaciones web full-stack"
+      ],
+      "evidence": [
+        "Next.js enables you to create full-stack web applications by extending the latest React features"
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "ba7923b13e26df3cd0f012e442eb5dcb2df1062fc8d6b318c1e212a0d8672f72",
+      "review": {
+        "readme_chars": 1578,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2387,
+        "output_tokens": 111,
+        "seconds": 1.03
+      }
+    },
+    {
+      "github_id": 257485422,
+      "full_name": "vitejs/vite",
+      "categories": [
+        "frontend",
+        "dev-tools"
+      ],
+      "summary_es": "Herramienta de compilación y desarrollo frontend diseñada para ofrecer una experiencia rápida y eficiente en proyectos web modernos.",
+      "use_cases": [
+        "Iniciar un servidor de desarrollo de manera instantánea",
+        "Empaquetar código optimizado para producción"
+      ],
+      "evidence": [
+        "Instant Server Start",
+        "Optimized Build"
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "66cd00c4b4a0a94b7b67d4eb5ad60fb06b6ebfe7d89a224d376005cb8dfc1d9f",
+      "review": {
+        "readme_chars": 1161,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2295,
+        "output_tokens": 133,
+        "seconds": 1.03
+      }
+    },
+    {
+      "github_id": 434708679,
+      "full_name": "vitest-dev/vitest",
+      "categories": [
+        "dev-tools"
+      ],
+      "summary_es": "Framework de pruebas unitarias y de componentes de próxima generación impulsado por Vite.",
+      "use_cases": [
+        "Ejecutar pruebas de componentes en el navegador",
+        "Soportar pruebas a nivel de tipos",
+        "Ejecutar pruebas de rendimiento con Tinybench"
+      ],
+      "evidence": [
+        "Browser Mode for running component tests in the browser",
+        "expect-type for type-level testing",
+        "Benchmarking support with Tinybench"
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "92527b23e8b7d9388bd26aa79b4af704a685666cf9cdf67a2c459d6663da1ad7",
+      "review": {
+        "readme_chars": 1783,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2522,
+        "output_tokens": 169,
+        "seconds": 1.71
+      }
+    },
+    {
+      "github_id": 599547518,
+      "full_name": "vllm-project/vllm",
+      "categories": [
+        "ai"
+      ],
+      "summary_es": "Librería rápida y eficiente en memoria para la inferencia y servicio de modelos de lenguaje grandes (LLMs).",
+      "use_cases": [
+        "Obtener un alto rendimiento en el servicio de modelos de lenguaje",
+        "Gestionar eficientemente la memoria de atención con PagedAttention",
+        "Desplegar un servidor de API compatible con OpenAI",
+        "Servir múltiples adaptadores LoRA de forma eficiente"
+      ],
+      "evidence": [
+        "State-of-the-art serving throughput",
+        "Efficient management of attention key and value memory with **PagedAttention**",
+        "OpenAI-compatible API server, plus Anthropic Messages API and gRPC support",
+        "Efficient multi-LoRA support for dense and MoE layers"
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "bdff03960ca8109c42521f26280eba5f5d336d852ac5d78fda598b898e03f08a",
+      "review": {
+        "readme_chars": 4034,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 3131,
+        "output_tokens": 243,
+        "seconds": 1.83
+      }
+    },
+    {
+      "github_id": 137078487,
+      "full_name": "vuejs/core",
+      "categories": [
+        "frontend"
+      ],
+      "summary_es": "Framework de JavaScript progresivo y adoptable incrementalmente para construir interfaces de usuario en la web.",
+      "use_cases": [
+        "Construir interfaces de usuario en la web"
+      ],
+      "evidence": [
+        "Vue.js is a progressive, incrementally-adoptable JavaScript framework for building UI on the web."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "9347c7e7723a75d256ad21dc4b7a213bcc233caf9490ce98b16a4a9a5cec8f9c",
+      "review": {
+        "readme_chars": 1266,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2324,
+        "output_tokens": 106,
+        "seconds": 2.05
+      }
+    },
+    {
+      "github_id": 348060227,
+      "full_name": "withastro/astro",
+      "categories": [
+        "frontend",
+        "dev-tools"
+      ],
+      "summary_es": "Framework web para construir sitios web orientados a contenido con una salida ligera y una gran experiencia de desarrollo.",
+      "use_cases": [
+        "Construir sitios web orientados a contenido"
+      ],
+      "evidence": [
+        "The web framework for content-driven websites."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "de51803682fd5a269ff53aa15d3d24db7d6474cfc28e1c720cb741afb319ab49",
+      "review": {
+        "readme_chars": 2078,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2552,
+        "output_tokens": 103,
+        "seconds": 1.06
+      }
+    },
+    {
+      "github_id": 40276274,
+      "full_name": "ziglang/zig",
+      "categories": [
+        "dev-tools"
+      ],
+      "summary_es": "Compilador y lenguaje de programación Zig.",
+      "use_cases": [],
+      "evidence": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "e983709afd8ef491ce9093c42a2172b487cd6ecc57309b3f5b47b11659c163c2",
+      "review": {
+        "readme_chars": 55,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2038,
+        "output_tokens": 44,
+        "seconds": 1.06
+      }
+    }
+  ]
+}
