@@ -1,0 +1,3502 @@
+{
+  "prompt_version": "5",
+  "repos": [
+    {
+      "github_id": 24195339,
+      "full_name": "angular/angular",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "f3549f866830c7051072ccbec29c4355c086cbc818f1475b31926785cc8de7ae",
+      "review": {
+        "readme_chars": 2036,
+        "blocks": 3,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1481,
+        "output_tokens": 9,
+        "seconds": 0.88
+      }
+    },
+    {
+      "github_id": 3638964,
+      "full_name": "ansible/ansible",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "9ba3203345fa103b3ad8b25620121b50d86bc84a4f503486a426ae196cb1cb5c",
+      "review": {
+        "readme_chars": 3702,
+        "blocks": 0,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1851,
+        "output_tokens": 5,
+        "seconds": 0.92
+      }
+    },
+    {
+      "github_id": 590187800,
+      "full_name": "anthropics/anthropic-sdk-python",
+      "ideas": [
+        {
+          "id": "llm-590187800-1",
+          "full_name": "anthropics/anthropic-sdk-python",
+          "title": "Integrar el SDK de Claude en tu aplicación Python",
+          "integration_type": "sdk",
+          "summary": "Conecta tu aplicación al API de Claude instalando la librería cliente para enviar mensajes y procesar respuestas con modelos de lenguaje.",
+          "compatible_stack": [
+            "Python"
+          ],
+          "dependencies": [
+            "ANTHROPIC_API_KEY"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Mensaje del usuario en el chat"
+          ],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://github.com/anthropics/anthropic-sdk-python#claude-sdk-for-python",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "0e4caf7924bac0d54698601a0ef2d1a381abd5c1ece6d61aebf9ac1cf1b5726c",
+          "evidence": "The Claude SDK for Python provides access to the Claude API from Python applications."
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "0e4caf7924bac0d54698601a0ef2d1a381abd5c1ece6d61aebf9ac1cf1b5726c",
+      "review": {
+        "readme_chars": 3253,
+        "blocks": 3,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1861,
+        "output_tokens": 144,
+        "seconds": 1.27
+      }
+    },
+    {
+      "github_id": 33884891,
+      "full_name": "apache/airflow",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "f35e69d8c70caf42155272facf9338add47e779ccf1e3a5ee2c94fa35e08d8b7",
+      "review": {
+        "readme_chars": 8000,
+        "blocks": 2,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 3029,
+        "output_tokens": 9,
+        "seconds": 0.9
+      }
+    },
+    {
+      "github_id": 50904245,
+      "full_name": "apache/beam",
+      "ideas": [
+        {
+          "id": "llm-50904245-1",
+          "full_name": "apache/beam",
+          "title": "Construir pipelines de datos con el SDK",
+          "integration_type": "sdk",
+          "summary": "Procesa datos en lote o en flujo dentro de tu aplicación utilizando los SDKs de Apache Beam para definir transformaciones y colecciones.",
+          "compatible_stack": [
+            "Java",
+            "Python",
+            "Go"
+          ],
+          "dependencies": [
+            "Apache Beam SDK"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Ejecución de un trabajo de procesamiento de datos"
+          ],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://github.com/apache/beam#apache-beam",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "87c65540aa01ebe6d292b29ce0b659417f8ba3c10b59f6691c84009e7562612c",
+          "evidence": "Apache Beam is a unified model for defining both batch and streaming data-parallel processing pipelines, as well as a set of language-specific SDKs for constructing pipelines and Runners for executing them on distributed processing backends"
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "87c65540aa01ebe6d292b29ce0b659417f8ba3c10b59f6691c84009e7562612c",
+      "review": {
+        "readme_chars": 4554,
+        "blocks": 0,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 2034,
+        "output_tokens": 154,
+        "seconds": 1.15
+      }
+    },
+    {
+      "github_id": 20587599,
+      "full_name": "apache/flink",
+      "ideas": [
+        {
+          "id": "llm-20587599-1",
+          "full_name": "apache/flink",
+          "title": "Procesar flujos de datos en tiempo real",
+          "integration_type": "sdk",
+          "summary": "Analiza y transforma flujos de datos y eventos en tiempo real usando el entorno de ejecución de Flink integrado en tu aplicación de Java.",
+          "compatible_stack": [
+            "Java"
+          ],
+          "dependencies": [
+            "Apache Flink"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Recepción de datos por socket"
+          ],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://github.com/apache/flink#streaming-example",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "3799b1b4ac2abc4e693feab0871b37c7f85cd030ea59c0a2ab90f6718fed2ac3",
+          "evidence": "StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();"
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "3799b1b4ac2abc4e693feab0871b37c7f85cd030ea59c0a2ab90f6718fed2ac3",
+      "review": {
+        "readme_chars": 6556,
+        "blocks": 6,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 2683,
+        "output_tokens": 168,
+        "seconds": 1.24
+      }
+    },
+    {
+      "github_id": 2211243,
+      "full_name": "apache/kafka",
+      "ideas": [
+        {
+          "id": "llm-2211243-1",
+          "full_name": "apache/kafka",
+          "title": "Desplegar un broker de Kafka con Docker",
+          "integration_type": "docker",
+          "summary": "Despliega un contenedor de Apache Kafka para gestionar eventos y flujos de datos en tiempo real en tu arquitectura.",
+          "compatible_stack": [
+            "Docker",
+            "Java"
+          ],
+          "dependencies": [
+            "Docker instalado"
+          ],
+          "difficulty": "medium",
+          "triggers": [],
+          "snippet": "docker run -p 9092:9092 apache/kafka:latest",
+          "snippet_language": "bash",
+          "docs_url": "https://github.com/apache/kafka#running-a-kafka-broker",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "630d657fa55114b0aab73a93113ee7a4c46b7ead7fda1b7d7e7be4fc022aac18",
+          "evidence": "docker run -p 9092:9092 apache/kafka:latest"
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "630d657fa55114b0aab73a93113ee7a4c46b7ead7fda1b7d7e7be4fc022aac18",
+      "review": {
+        "readme_chars": 7863,
+        "blocks": 27,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 3144,
+        "output_tokens": 160,
+        "seconds": 1.28
+      }
+    },
+    {
+      "github_id": 17165658,
+      "full_name": "apache/spark",
+      "ideas": [
+        {
+          "id": "llm-17165658-1",
+          "full_name": "apache/spark",
+          "title": "Procesar grandes volúmenes de datos usando Spark",
+          "integration_type": "sdk",
+          "summary": "Analiza y procesa grandes conjuntos de datos en tu aplicación instalando y utilizando las librerías oficiales de la herramienta.",
+          "compatible_stack": [
+            "Python",
+            "Java",
+            "Scala"
+          ],
+          "dependencies": [
+            "Apache Spark instalado"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Ejecución de un proceso por lotes"
+          ],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://github.com/apache/spark#apache-spark",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "a4b26ba3f0e9e902f2c42ce4290dd4eaa699f978a49897ead76dedf44536a0e8",
+          "evidence": "It provides high-level APIs in Scala, Java, Python, and R (Deprecated), and an optimized engine that supports general computation graphs for data analysis."
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "a4b26ba3f0e9e902f2c42ce4290dd4eaa699f978a49897ead76dedf44536a0e8",
+      "review": {
+        "readme_chars": 4339,
+        "blocks": 8,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 2262,
+        "output_tokens": 196,
+        "seconds": 1.3
+      }
+    },
+    {
+      "github_id": 120896210,
+      "full_name": "argoproj/argo-cd",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "0dc8a7d39087923a5e414a443910b30140b552f3d767360903f3811f957325ab",
+      "review": {
+        "readme_chars": 3106,
+        "blocks": 0,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1758,
+        "output_tokens": 4,
+        "seconds": 0.85
+      }
+    },
+    {
+      "github_id": 523043277,
+      "full_name": "astral-sh/ruff",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "b39b8004f9f2b6643d44dc88390fb19b778fcfc89716a894041c0e1ea8603f18",
+      "review": {
+        "readme_chars": 8000,
+        "blocks": 10,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 3385,
+        "output_tokens": 9,
+        "seconds": 0.93
+      }
+    },
+    {
+      "github_id": 699532645,
+      "full_name": "astral-sh/uv",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "776b0f0d6e6d033629ace0c48163771b143fdacd92ada8d1ea44f5133d73f73c",
+      "review": {
+        "readme_chars": 7298,
+        "blocks": 16,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 3166,
+        "output_tokens": 9,
+        "seconds": 0.91
+      }
+    },
+    {
+      "github_id": 24560307,
+      "full_name": "babel/babel",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "c5677bc3d1f81af0013f2ec007f852af916bab22d6dff4fad6fc2c58db25e443",
+      "review": {
+        "readme_chars": 2467,
+        "blocks": 2,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1619,
+        "output_tokens": 9,
+        "seconds": 0.86
+      }
+    },
+    {
+      "github_id": 671654508,
+      "full_name": "biomejs/biome",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "8a2bbd2779428fe9964d989131d6764ccff02e0df6ea05db9889209c718f59c5",
+      "review": {
+        "readme_chars": 2943,
+        "blocks": 2,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1721,
+        "output_tokens": 9,
+        "seconds": 1.08
+      }
+    },
+    {
+      "github_id": 53631945,
+      "full_name": "BurntSushi/ripgrep",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "7d13961211e1ac1be4b3e4f6a710e717fbced0417a5f5aaf9547dfeed49e6766",
+      "review": {
+        "readme_chars": 7554,
+        "blocks": 0,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 3555,
+        "output_tokens": 9,
+        "seconds": 1.9
+      }
+    },
+    {
+      "github_id": 29207621,
+      "full_name": "caddyserver/caddy",
+      "ideas": [
+        {
+          "id": "llm-29207621-1",
+          "full_name": "caddyserver/caddy",
+          "title": "Controlar Caddy de forma dinámica mediante su API",
+          "integration_type": "rest_api",
+          "summary": "Configura y modifica tu servidor Caddy en caliente desde tu aplicación llamando a su API JSON para realizar cambios de configuración de manera dinámica.",
+          "compatible_stack": [
+            "HTTP",
+            "JSON"
+          ],
+          "dependencies": [
+            "Caddy corriendo con la API habilitada"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Actualización de la configuración de dominios o rutas"
+          ],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://github.com/caddyserver/caddy#features",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "0f7cb72fb9a62ca4c9a8a99a6f03d15d3040ac5312811cab6b6f7f301c15380b",
+          "evidence": "Dynamic configuration with the JSON API"
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "0f7cb72fb9a62ca4c9a8a99a6f03d15d3040ac5312811cab6b6f7f301c15380b",
+      "review": {
+        "readme_chars": 7883,
+        "blocks": 5,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 2932,
+        "output_tokens": 176,
+        "seconds": 1.46
+      }
+    },
+    {
+      "github_id": 184460,
+      "full_name": "celery/celery",
+      "ideas": [
+        {
+          "id": "llm-184460-1",
+          "full_name": "celery/celery",
+          "title": "Procesar tareas en segundo plano usando Celery",
+          "integration_type": "sdk",
+          "summary": "Distribuye cargas de trabajo pesadas de la aplicación en procesos trabajadores asíncronos mediante colas de mensajes y brokers como RabbitMQ o Redis.",
+          "compatible_stack": [
+            "Python",
+            "RabbitMQ",
+            "Redis"
+          ],
+          "dependencies": [
+            "Un broker de mensajes como RabbitMQ o Redis",
+            "El paquete celery"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Envío de un formulario pesado",
+            "Generación de un reporte grande"
+          ],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://github.com/celery/celery#celery-is",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "a21edd39993b6988d18c4bc45a5058daafe65efc1b8f1754af32e6213b2728ec",
+          "evidence": "from celery import Celery"
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "a21edd39993b6988d18c4bc45a5058daafe65efc1b8f1754af32e6213b2728ec",
+      "review": {
+        "readme_chars": 7976,
+        "blocks": 0,
+        "skipped": null,
+        "failed": false,
+        "attempts": 2,
+        "problems_first": [
+          "idea 1: el bloque 1 no existe; válidos: ninguno (usa null)"
+        ],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 6636,
+        "output_tokens": 313,
+        "seconds": 3.02
+      }
+    },
+    {
+      "github_id": 92313258,
+      "full_name": "cert-manager/cert-manager",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "d735c8415e74098e95a9c4d0d3dd65a13db54a6d21206967b9b52696be979fa0",
+      "review": {
+        "readme_chars": 4014,
+        "blocks": 0,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1858,
+        "output_tokens": 9,
+        "seconds": 0.84
+      }
+    },
+    {
+      "github_id": 48109239,
+      "full_name": "cilium/cilium",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "25e5e67156206124219b312f869da19a97affafaf46a1cb766c0f477b95f7684",
+      "review": {
+        "readme_chars": 7880,
+        "blocks": 0,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [
+          {
+            "title": "Desplegar Cilium como contenedor en Kubernetes",
+            "integration_type": "docker",
+            "summary": "Despliega Cilium como un contenedor con imagen publicada para proveer la capa de red y seguridad basada en eBPF en tu clúster.",
+            "evidence": "quay.io/cilium/cilium:v1.20.3",
+            "code_block": null,
+            "compatible_stack": [
+              "Kubernetes",
+              "Linux"
+            ],
+            "dependencies": [
+              "Linux kernel con soporte eBPF",
+              "Clúster de Kubernetes"
+            ],
+            "difficulty": "high",
+            "triggers": [],
+            "reason": "cita demasiado corta"
+          }
+        ],
+        "input_tokens": 2693,
+        "output_tokens": 179,
+        "seconds": 1.1
+      }
+    },
+    {
+      "github_id": 212613049,
+      "full_name": "cli/cli",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "b0a614c99ba872953d35639ef813c91b7c109c2bcc55c614bddb0d7a940b714d",
+      "review": {
+        "readme_chars": 4657,
+        "blocks": 4,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 2240,
+        "output_tokens": 9,
+        "seconds": 1.02
+      }
+    },
+    {
+      "github_id": 60246359,
+      "full_name": "ClickHouse/ClickHouse",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "23e113e48edd992db34902cc88c467fb675a211102b10b7a4311f23a3407bdcd",
+      "review": {
+        "readme_chars": 3189,
+        "blocks": 1,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1900,
+        "output_tokens": 5,
+        "seconds": 0.93
+      }
+    },
+    {
+      "github_id": 46089560,
+      "full_name": "containerd/containerd",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "d37daa34af975b085080e47c73165c70c02c9d3b36c63c3d057c1f5f19774cbc",
+      "review": {
+        "readme_chars": 7868,
+        "blocks": 1,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 2749,
+        "output_tokens": 4,
+        "seconds": 0.91
+      }
+    },
+    {
+      "github_id": 31629751,
+      "full_name": "cypress-io/cypress",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "e59144959ffa2822688e1866bd6df391b8ad2c6a1dfa9d1a2360a441df8e3d22",
+      "review": {
+        "readme_chars": 989,
+        "blocks": 4,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1341,
+        "output_tokens": 5,
+        "seconds": 0.75
+      }
+    },
+    {
+      "github_id": 131619646,
+      "full_name": "dagster-io/dagster",
+      "ideas": [
+        {
+          "id": "llm-131619646-1",
+          "full_name": "dagster-io/dagster",
+          "title": "Instalar Dagster para la orquestación de pipelines",
+          "integration_type": "sdk",
+          "summary": "Usa Dagster en tu aplicación para declarar y ejecutar funciones como activos de datos mediante su SDK de Python.",
+          "compatible_stack": [
+            "Python",
+            "PyPI"
+          ],
+          "dependencies": [
+            "Paquete dagster instalado"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Ejecución programada de pipelines de datos"
+          ],
+          "snippet": "uv add dagster dagster-webserver dagster-dg-cli",
+          "snippet_language": "bash",
+          "docs_url": "https://github.com/dagster-io/dagster#quick-start",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "ed54dafaa1419ea13bf53ec72a3ec7f74098cd41d9ea543f2eb9965c8f78b548",
+          "evidence": "Dagster is available on PyPI and officially supports Python 3.9 through Python 3.14."
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "ed54dafaa1419ea13bf53ec72a3ec7f74098cd41d9ea543f2eb9965c8f78b548",
+      "review": {
+        "readme_chars": 3717,
+        "blocks": 2,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1936,
+        "output_tokens": 114,
+        "seconds": 1.08
+      }
+    },
+    {
+      "github_id": 53548867,
+      "full_name": "dbt-labs/dbt",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "55890de6afcbcd72c4fb3da193930195df7e809bbf26153b7c76a5e41b73c159",
+      "review": {
+        "readme_chars": 3041,
+        "blocks": 0,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1731,
+        "output_tokens": 5,
+        "seconds": 0.81
+      }
+    },
+    {
+      "github_id": 133442384,
+      "full_name": "denoland/deno",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "374867e94690f7c73320fcb1fecc1b16a853c03b719ac7ca40c62c235c9a74fb",
+      "review": {
+        "readme_chars": 2028,
+        "blocks": 8,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1564,
+        "output_tokens": 9,
+        "seconds": 0.92
+      }
+    },
+    {
+      "github_id": 4164482,
+      "full_name": "django/django",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "b32b70da121f8ed2f172f937206b3bc2fd25f145c920f9eef4df28e3292c16a6",
+      "review": {
+        "readme_chars": 1799,
+        "blocks": 0,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1452,
+        "output_tokens": 5,
+        "seconds": 1.12
+      }
+    },
+    {
+      "github_id": 15045751,
+      "full_name": "docker/compose",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "ca5a7e907d54ca174ff766f55264f1b3b120f79b36f76bf770d425f3004b8dd4",
+      "review": {
+        "readme_chars": 2247,
+        "blocks": 1,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1564,
+        "output_tokens": 4,
+        "seconds": 0.91
+      }
+    },
+    {
+      "github_id": 138754790,
+      "full_name": "duckdb/duckdb",
+      "ideas": [
+        {
+          "id": "llm-138754790-1",
+          "full_name": "duckdb/duckdb",
+          "title": "Consultar datos desde tu codigo",
+          "integration_type": "sdk",
+          "summary": "Ejecuta consultas analiticas embebidas directamente en tu aplicacion utilizando los clientes oficiales para consultar ficheros y bases de datos.",
+          "compatible_stack": [
+            "Python",
+            "Java",
+            "Rust",
+            "Go"
+          ],
+          "dependencies": [
+            "Libreria cliente de DuckDB"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Inicio de la aplicacion",
+            "Peticion de datos analiticos"
+          ],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://github.com/duckdb/duckdb#duckdb",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "fe7f006cc38fbe8b40eeff4c417839ecae682909e1b6974bef663453722532a4",
+          "evidence": "has clients for Python, R, Java, Rust, Go, Wasm, and many more, with deep integrations with packages such as pandas."
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "fe7f006cc38fbe8b40eeff4c417839ecae682909e1b6974bef663453722532a4",
+      "review": {
+        "readme_chars": 3298,
+        "blocks": 1,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1719,
+        "output_tokens": 150,
+        "seconds": 1.46
+      }
+    },
+    {
+      "github_id": 179492861,
+      "full_name": "encode/httpx",
+      "ideas": [
+        {
+          "id": "llm-179492861-1",
+          "full_name": "encode/httpx",
+          "title": "Consumir APIs externas desde tu aplicación con HTTPX",
+          "integration_type": "sdk",
+          "summary": "Realiza peticiones HTTP/1.1 y HTTP/2 de forma síncrona o asíncrona importando la librería en el código de tu aplicación.",
+          "compatible_stack": [
+            "Python"
+          ],
+          "dependencies": [
+            "Python 3"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Petición de datos a un servicio externo",
+            "Envío de información a una API"
+          ],
+          "snippet": ">>> import httpx\n>>> r = httpx.get('https://www.example.org/')\n>>> r\n<Response [200 OK]>\n>>> r.status_code\n200\n>>> r.headers['content-type']\n'text/html; charset=UTF-8'\n>>> r.text\n'<!doctype html>\\n<html>\\n<head>\\n<title>Example Domain</title>...'",
+          "snippet_language": "pycon",
+          "docs_url": "https://www.python-httpx.org/",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "9ce254dbd59fc908e9f4f947a97543d8b68b22de76125183d3526adb205e9365",
+          "evidence": "HTTPX is a fully featured HTTP client library for Python 3."
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "9ce254dbd59fc908e9f4f947a97543d8b68b22de76125183d3526adb205e9365",
+      "review": {
+        "readme_chars": 3521,
+        "blocks": 5,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1967,
+        "output_tokens": 202,
+        "seconds": 1.28
+      }
+    },
+    {
+      "github_id": 65214191,
+      "full_name": "envoyproxy/envoy",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "6b71dfaf241cb475953b0e27e6c366a7c4f3c7d4ae109257927c1d351db05e39",
+      "review": {
+        "readme_chars": 3532,
+        "blocks": 0,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1814,
+        "output_tokens": 5,
+        "seconds": 0.89
+      }
+    },
+    {
+      "github_id": 11061773,
+      "full_name": "eslint/eslint",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "0de2ca7fea975a1a4853e7aef20194ce08036f03e29cb0e2618566c4d7cbb132",
+      "review": {
+        "readme_chars": 7345,
+        "blocks": 4,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 2749,
+        "output_tokens": 9,
+        "seconds": 1.54
+      }
+    },
+    {
+      "github_id": 11225014,
+      "full_name": "etcd-io/etcd",
+      "ideas": [
+        {
+          "id": "llm-11225014-1",
+          "full_name": "etcd-io/etcd",
+          "title": "Instalar el cliente de etcd",
+          "integration_type": "sdk",
+          "summary": "Conecta tu aplicación a etcd instalando el paquete cliente para realizar operaciones de almacenamiento clave-valor mediante código.",
+          "compatible_stack": [
+            "Go"
+          ],
+          "dependencies": [
+            "Servidor etcd en ejecución"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Inicio de la aplicación",
+            "Guardado de configuración"
+          ],
+          "snippet": "go get go.etcd.io/etcd/client/v3",
+          "snippet_language": "bash",
+          "docs_url": "https://github.com/etcd-io/etcd#install-etcd-client-v3",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "95f6a953e20b6a55e880ee4107e040f65d62cb742f168f09f3f811ae06a88c93",
+          "evidence": "go get go.etcd.io/etcd/client/v3"
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "95f6a953e20b6a55e880ee4107e040f65d62cb742f168f09f3f811ae06a88c93",
+      "review": {
+        "readme_chars": 5898,
+        "blocks": 5,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 2496,
+        "output_tokens": 102,
+        "seconds": 1.53
+      }
+    },
+    {
+      "github_id": 160919119,
+      "full_name": "fastapi/fastapi",
+      "ideas": [
+        {
+          "id": "llm-160919119-1",
+          "full_name": "fastapi/fastapi",
+          "title": "Construir APIs de la aplicación con FastAPI",
+          "integration_type": "sdk",
+          "summary": "Usa FastAPI para desarrollar y exponer los endpoints REST y la documentación interactiva de tu aplicación mediante rutas en Python y tipos de Pydantic.",
+          "compatible_stack": [
+            "Python",
+            "Starlette",
+            "Pydantic"
+          ],
+          "dependencies": [
+            "Python",
+            "uv o pip"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Petición HTTP entrante en la API"
+          ],
+          "snippet": "from fastapi import FastAPI\n\napp = FastAPI()\n\n\n@app.get(\"/\")\ndef read_root():\n    return {\"Hello\": \"World\"}\n\n\n@app.get(\"/items/{item_id}\")\ndef read_item(item_id: int, q: str | None = None):\n    return {\"item_id\": item_id, \"q\": q}",
+          "snippet_language": "python",
+          "docs_url": "https://fastapi.tiangolo.com/",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "124f541ea380f9946be2cb4cc6fda5efb8ee44f6c8465d200bd43ca379ab74ea",
+          "evidence": "FastAPI is a modern, fast (high-performance), web framework for building APIs with Python based on standard Python type hints."
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "124f541ea380f9946be2cb4cc6fda5efb8ee44f6c8465d200bd43ca379ab74ea",
+      "review": {
+        "readme_chars": 8000,
+        "blocks": 8,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 3172,
+        "output_tokens": 201,
+        "seconds": 1.29
+      }
+    },
+    {
+      "github_id": 399495186,
+      "full_name": "fastapi/sqlmodel",
+      "ideas": [
+        {
+          "id": "llm-399495186-1",
+          "full_name": "fastapi/sqlmodel",
+          "title": "Usar SQLModel para interactuar con bases de datos SQL",
+          "integration_type": "sdk",
+          "summary": "Conecta tu aplicación Python a una base de datos SQL usando modelos basados en anotaciones de tipos que combinan Pydantic y SQLAlchemy mediante la librería sqlmodel.",
+          "compatible_stack": [
+            "Python",
+            "SQLAlchemy",
+            "Pydantic",
+            "FastAPI"
+          ],
+          "dependencies": [
+            "Python",
+            "Base de datos SQL"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Guardar datos en la base de datos",
+            "Consultar registros de la base de datos"
+          ],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://sqlmodel.tiangolo.com/",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "30601e514d71c4ce3a998e552c9a23e6ab683f136abb7efcc7d59212fb2a2906",
+          "evidence": "SQLModel is a library for interacting with SQL databases from Python code, with Python objects."
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "30601e514d71c4ce3a998e552c9a23e6ab683f136abb7efcc7d59212fb2a2906",
+      "review": {
+        "readme_chars": 5863,
+        "blocks": 5,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 2541,
+        "output_tokens": 218,
+        "seconds": 1.19
+      }
+    },
+    {
+      "github_id": 258469100,
+      "full_name": "fluxcd/flux2",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "400ffb4a0d2f8b5b7e4c4773a407901d1bc55de9ee1707ad0c59647e26a53710",
+      "review": {
+        "readme_chars": 3153,
+        "blocks": 0,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1728,
+        "output_tokens": 4,
+        "seconds": 0.87
+      }
+    },
+    {
+      "github_id": 36502,
+      "full_name": "git/git",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "1a1d525ca7f3ddd4083e6e58a673c8bc486e4a9c75e42c80f76b5d04a66ade6b",
+      "review": {
+        "readme_chars": 2861,
+        "blocks": 0,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1684,
+        "output_tokens": 9,
+        "seconds": 0.83
+      }
+    },
+    {
+      "github_id": 23096959,
+      "full_name": "golang/go",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "7af4ee48f7a13e7a846b9022cd53fa37df705c7f3125ca95d1dc897963017c6f",
+      "review": {
+        "readme_chars": 1077,
+        "blocks": 0,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1208,
+        "output_tokens": 9,
+        "seconds": 0.75
+      }
+    },
+    {
+      "github_id": 15111821,
+      "full_name": "grafana/grafana",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "138d3f3e87332f813b3117d4140767d26c50aecb20162ed2ec26784d6565b729",
+      "review": {
+        "readme_chars": 2194,
+        "blocks": 0,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1540,
+        "output_tokens": 4,
+        "seconds": 0.85
+      }
+    },
+    {
+      "github_id": 17728164,
+      "full_name": "hashicorp/terraform",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "5c28004a4ad8824fd32d38f963bd5b6285343b986ebd8027c333a09c1e90116e",
+      "review": {
+        "readme_chars": 2832,
+        "blocks": 0,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1580,
+        "output_tokens": 9,
+        "seconds": 0.73
+      }
+    },
+    {
+      "github_id": 31288958,
+      "full_name": "hashicorp/vault",
+      "ideas": [
+        {
+          "id": "llm-31288958-1",
+          "full_name": "hashicorp/vault",
+          "title": "Importar el SDK de Vault en la aplicación",
+          "integration_type": "sdk",
+          "summary": "Conecta tu aplicación con Vault para gestionar secretos de forma segura y acceder a credenciales dinámicas mediante sus librerías cliente en Go.",
+          "compatible_stack": [
+            "Go"
+          ],
+          "dependencies": [
+            "Instancia de Vault en ejecución"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Inicio de la aplicación",
+            "Conexión a base de datos"
+          ],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://github.com/hashicorp/vault#importing-vault",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "5a2de4e3cdd4a78582d1fd5687010fa92aaa72100a5b05aaed3bc79001a4af12",
+          "evidence": "This repository publishes two libraries that may be imported by other projects: `github.com/hashicorp/vault/api` and `github.com/hashicorp/vault/sdk`."
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "5a2de4e3cdd4a78582d1fd5687010fa92aaa72100a5b05aaed3bc79001a4af12",
+      "review": {
+        "readme_chars": 7902,
+        "blocks": 8,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 2893,
+        "output_tokens": 153,
+        "seconds": 1.18
+      }
+    },
+    {
+      "github_id": 43723161,
+      "full_name": "helm/helm",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "58aca2cbd334120b707af1baf74803700c40147c02b2354f1c337a55a4cb6514",
+      "review": {
+        "readme_chars": 2763,
+        "blocks": 0,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1650,
+        "output_tokens": 4,
+        "seconds": 0.91
+      }
+    },
+    {
+      "github_id": 250213286,
+      "full_name": "huggingface/datasets",
+      "ideas": [
+        {
+          "id": "llm-250213286-1",
+          "full_name": "huggingface/datasets",
+          "title": "Cargar datasets públicos en la aplicación",
+          "integration_type": "sdk",
+          "summary": "Usa la librería para descargar y procesar conjuntos de datos públicos desde el Hugging Face Hub directamente en tu código.",
+          "compatible_stack": [
+            "Python",
+            "PyTorch",
+            "TensorFlow",
+            "Pandas",
+            "NumPy"
+          ],
+          "dependencies": [
+            "Librería datasets"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Inicialización de la aplicación de machine learning"
+          ],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://huggingface.co/docs/datasets",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "a76bfcb2c3d95cc304909268f907650ac5587597f380ae02d15f2dc8bcdddb05",
+          "evidence": "With a simple command like `squad_dataset = load_dataset(\"rajpurkar/squad\")`, get any of these datasets ready to use in a dataloader for training/evaluating a ML model (Numpy/Pandas/PyTorch/TensorFlow/JAX/Polars)"
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "a76bfcb2c3d95cc304909268f907650ac5587597f380ae02d15f2dc8bcdddb05",
+      "review": {
+        "readme_chars": 7982,
+        "blocks": 9,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 3210,
+        "output_tokens": 238,
+        "seconds": 1.29
+      }
+    },
+    {
+      "github_id": 155220641,
+      "full_name": "huggingface/transformers",
+      "ideas": [
+        {
+          "id": "llm-155220641-1",
+          "full_name": "huggingface/transformers",
+          "title": "Usar la librería Transformers para generación de texto",
+          "integration_type": "sdk",
+          "summary": "Integra la librería en tu aplicación Python para instanciar un pipeline y generar respuestas de texto con modelos de lenguaje preentrenados.",
+          "compatible_stack": [
+            "Python",
+            "PyTorch"
+          ],
+          "dependencies": [
+            "Python",
+            "PyTorch"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Prompt de texto enviado por un usuario"
+          ],
+          "snippet": "from transformers import pipeline\n\npipeline = pipeline(task=\"text-generation\", model=\"Qwen/Qwen2.5-1.5B\")\npipeline(\"the secret to baking a really good cake is \")\n[{'generated_text': 'the secret to baking a really good cake is 1) to use the right ingredients and 2) to follow the recipe exactly. the recipe for the cake is as follows: 1 cup of sugar, 1 cup of flour, 1 cup of milk, 1 cup of butter, 1 cup of eggs, 1 cup of chocolate chips. if you want to make 2 cakes, how much sugar do you need? To make 2 cakes, you will need 2 cups of sugar.'}]",
+          "snippet_language": "py",
+          "docs_url": "https://github.com/huggingface/transformers#quickstart",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "e9678595ecfc4c7fdc2de7e2e7ec6563f5856400926505b5326c6e06f14ac305",
+          "evidence": "from transformers import pipeline"
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "e9678595ecfc4c7fdc2de7e2e7ec6563f5856400926505b5326c6e06f14ac305",
+      "review": {
+        "readme_chars": 7902,
+        "blocks": 8,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [
+          {
+            "title": "Implementar reconocimiento automático de voz en la aplicación",
+            "integration_type": "sdk",
+            "summary": "Agrega capacidades de transcripción de audio utilizando modelos de reconocimiento de voz dentro del código de tu aplicación.",
+            "evidence": "pipeline = pipeline(task=\"automatic-speech-recognition\", model=\"openai/whisper-large-v3\")",
+            "code_block": 6,
+            "compatible_stack": [
+              "Python",
+              "PyTorch"
+            ],
+            "dependencies": [
+              "Python",
+              "PyTorch"
+            ],
+            "difficulty": "medium",
+            "triggers": [
+              "Subida de un archivo de audio por el usuario"
+            ],
+            "reason": "tipo repetido"
+          },
+          {
+            "title": "Añadir clasificación de imágenes a la aplicación",
+            "integration_type": "sdk",
+            "summary": "Procesa y clasifica imágenes utilizando la API de pipeline de la librería en el código de tu proyecto.",
+            "evidence": "pipeline = pipeline(task=\"image-classification\", model=\"facebook/dinov2-small-imagenet1k-1-layer\")",
+            "code_block": 7,
+            "compatible_stack": [
+              "Python",
+              "PyTorch"
+            ],
+            "dependencies": [
+              "Python",
+              "PyTorch"
+            ],
+            "difficulty": "medium",
+            "triggers": [
+              "Subida de una imagen por el usuario"
+            ],
+            "reason": "tipo repetido"
+          }
+        ],
+        "input_tokens": 3218,
+        "output_tokens": 518,
+        "seconds": 1.8
+      }
+    },
+    {
+      "github_id": 74175805,
+      "full_name": "istio/istio",
+      "ideas": [
+        {
+          "id": "llm-74175805-1",
+          "full_name": "istio/istio",
+          "title": "Interactuar con recursos de Istio mediante Go",
+          "integration_type": "sdk",
+          "summary": "Conecta tu aplicación en Go con Istio utilizando los clientes generados para interactuar de forma programática con los recursos.",
+          "compatible_stack": [
+            "Go",
+            "Kubernetes"
+          ],
+          "dependencies": [
+            "Go",
+            "Kubernetes"
+          ],
+          "difficulty": "medium",
+          "triggers": [],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://github.com/istio/istio#repositories",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "2a9735613182cd980e0cffe16ba260c2e93f4d35cc5cc46d5ed65b3b25dea4a9",
+          "evidence": "istio/client-go. This repository defines auto-generated Kubernetes clients for interacting with Istio resources programmatically."
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "2a9735613182cd980e0cffe16ba260c2e93f4d35cc5cc46d5ed65b3b25dea4a9",
+      "review": {
+        "readme_chars": 4597,
+        "blocks": 0,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 2042,
+        "output_tokens": 170,
+        "seconds": 1.35
+      }
+    },
+    {
+      "github_id": 56342508,
+      "full_name": "jaegertracing/jaeger",
+      "ideas": [
+        {
+          "id": "llm-56342508-1",
+          "full_name": "jaegertracing/jaeger",
+          "title": "Desplegar Jaeger con Docker",
+          "integration_type": "docker",
+          "summary": "Ejecuta Jaeger como contenedor para recopilar trazas distribuidas y acceder a su interfaz web desde tu aplicación.",
+          "compatible_stack": [
+            "Docker"
+          ],
+          "dependencies": [
+            "Docker instalado"
+          ],
+          "difficulty": "low",
+          "triggers": [],
+          "snippet": "# Run Jaeger all-in-one (includes UI, collector, query, and in-memory storage)\ndocker run --rm --name jaeger \\\n  -p 16686:16686 \\\n  -p 4317:4317 \\\n  -p 4318:4318 \\\n  jaegertracing/jaeger:latest\n\n# Access the UI at http://localhost:16686\n# Send traces via OTLP: gRPC on port 4317, HTTP on port 4318",
+          "snippet_language": "bash",
+          "docs_url": "https://github.com/jaegertracing/jaeger#quick-start",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "442b45a748f1afda0263bba50001547f340982bc370719c972fc2377ca1e4892",
+          "evidence": "docker run --rm --name jaeger \\"
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "442b45a748f1afda0263bba50001547f340982bc370719c972fc2377ca1e4892",
+      "review": {
+        "readme_chars": 7973,
+        "blocks": 3,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 2794,
+        "output_tokens": 141,
+        "seconds": 1.06
+      }
+    },
+    {
+      "github_id": 15062869,
+      "full_name": "jestjs/jest",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "67ef73227fa5c5fa5dde16d0961748345a495d795b625e6731186af1893825a5",
+      "review": {
+        "readme_chars": 7561,
+        "blocks": 15,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 2967,
+        "output_tokens": 9,
+        "seconds": 0.95
+      }
+    },
+    {
+      "github_id": 138597372,
+      "full_name": "Kludex/starlette",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "63538c5271496564ffd0b6ce92c4970523648ee0b2df40721b079fb21e905566",
+      "review": {
+        "readme_chars": 2981,
+        "blocks": 6,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1800,
+        "output_tokens": 5,
+        "seconds": 1.39
+      }
+    },
+    {
+      "github_id": 20580498,
+      "full_name": "kubernetes/kubernetes",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "4e97707081b2f3490b2e225e492571e94b2866c51c5360ff766a0ff100a18c28",
+      "review": {
+        "readme_chars": 2763,
+        "blocks": 2,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1606,
+        "output_tokens": 9,
+        "seconds": 0.87
+      }
+    },
+    {
+      "github_id": 552661142,
+      "full_name": "langchain-ai/langchain",
+      "ideas": [
+        {
+          "id": "llm-552661142-1",
+          "full_name": "langchain-ai/langchain",
+          "title": "Usar LangChain para integrar modelos de lenguaje en la aplicación",
+          "integration_type": "sdk",
+          "summary": "Conecta tu código a diferentes proveedores de LLM usando la librería cliente de LangChain para inicializar modelos y procesar texto.",
+          "compatible_stack": [
+            "Python",
+            "OpenAI"
+          ],
+          "dependencies": [
+            "Paquete langchain instalado",
+            "Clave de API del modelo correspondiente"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Petición HTTP entrante",
+            "Mensaje del usuario en el chat"
+          ],
+          "snippet": "from langchain.chat_models import init_chat_model\n\nmodel = init_chat_model(\"openai:gpt-5.5\")\nresult = model.invoke(\"Hello, world!\")",
+          "snippet_language": "python",
+          "docs_url": "https://github.com/langchain-ai/langchain#quickstart",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "9f002d42e5b8d0ac6a1240079f3a4eb688bed24b979a151884f09d0a04063d23",
+          "evidence": "from langchain.chat_models import init_chat_model"
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "9f002d42e5b8d0ac6a1240079f3a4eb688bed24b979a151884f09d0a04063d23",
+      "review": {
+        "readme_chars": 3943,
+        "blocks": 2,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1860,
+        "output_tokens": 196,
+        "seconds": 1.21
+      }
+    },
+    {
+      "github_id": 221981891,
+      "full_name": "microsoft/playwright",
+      "ideas": [
+        {
+          "id": "llm-221981891-1",
+          "full_name": "microsoft/playwright",
+          "title": "Instalar Playwright Library para automatización de navegador",
+          "integration_type": "sdk",
+          "summary": "Automatiza la navegación web, realiza scraping o genera capturas y PDFs desde el código de tu aplicación instalando el paquete npm de Playwright.",
+          "compatible_stack": [
+            "TypeScript"
+          ],
+          "dependencies": [
+            "Paquete npm playwright"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Solicitud de captura de pantalla",
+            "Generación de PDF"
+          ],
+          "snippet": "npm i playwright",
+          "snippet_language": "bash",
+          "docs_url": "https://github.com/microsoft/playwright#get-started",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "f5463d532a50eb89b2749e6a0a0e44dc536cc113f12141526bda871e6f3ac57c",
+          "evidence": "npm i playwright"
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "f5463d532a50eb89b2749e6a0a0e44dc536cc113f12141526bda871e6f3ac57c",
+      "review": {
+        "readme_chars": 7994,
+        "blocks": 22,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 3154,
+        "output_tokens": 181,
+        "seconds": 1.6
+      }
+    },
+    {
+      "github_id": 20929025,
+      "full_name": "microsoft/TypeScript",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "3da7897c4b2d2590b8d346becbec32e8342b2c0c0a9d79bc1f70b0aba5d3ebd5",
+      "review": {
+        "readme_chars": 1338,
+        "blocks": 2,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1294,
+        "output_tokens": 5,
+        "seconds": 1.62
+      }
+    },
+    {
+      "github_id": 41881900,
+      "full_name": "microsoft/vscode",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "932c5b3bf8df9ece1e0e3a6bbb5d5d71343dba94d8a0b2aedd07724fca0b95ac",
+      "review": {
+        "readme_chars": 4083,
+        "blocks": 0,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1817,
+        "output_tokens": 5,
+        "seconds": 0.9
+      }
+    },
+    {
+      "github_id": 7691631,
+      "full_name": "moby/moby",
+      "ideas": [
+        {
+          "id": "llm-7691631-1",
+          "full_name": "moby/moby",
+          "title": "Usar el cliente de Go para interactuar con Docker Engine API",
+          "integration_type": "sdk",
+          "summary": "Conecta tu aplicación en Go con Docker Engine API instalando el módulo cliente para gestionar contenedores y sistemas basados en ellos.",
+          "compatible_stack": [
+            "Go",
+            "Docker Engine"
+          ],
+          "dependencies": [
+            "Módulo de Go github.com/moby/moby/client",
+            "Docker Engine ejecutándose"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Inicio del servicio en Go",
+            "Solicitud de gestión de contenedores"
+          ],
+          "snippet": "- import \"github.com/docker/docker/client\"\n+ import \"github.com/moby/moby/client\"\n\n- import \"github.com/docker/docker/api/types\"\n+ import \"github.com/moby/moby/api/types\"",
+          "snippet_language": "diff",
+          "docs_url": "https://github.com/moby/moby#go-modules",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "403f8ec6001463797322c8b2706c4baefc675ae91409124a58efe6523eafddbf",
+          "evidence": "github.com/moby/moby/client | Go client for the Docker Engine API"
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "403f8ec6001463797322c8b2706c4baefc675ae91409124a58efe6523eafddbf",
+      "review": {
+        "readme_chars": 4651,
+        "blocks": 1,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 2083,
+        "output_tokens": 210,
+        "seconds": 1.81
+      }
+    },
+    {
+      "github_id": 16408992,
+      "full_name": "neovim/neovim",
+      "ideas": [
+        {
+          "id": "llm-16408992-1",
+          "full_name": "neovim/neovim",
+          "title": "Conectar la aplicación mediante API",
+          "integration_type": "sdk",
+          "summary": "Permite a tu aplicación controlar el editor y acceder a sus funcionalidades de forma remota o embebida usando los clientes disponibles para múltiples lenguajes.",
+          "compatible_stack": [
+            "Python",
+            "JavaScript",
+            "Go",
+            "Ruby",
+            "Rust"
+          ],
+          "dependencies": [
+            "Librería o cliente compatible para el lenguaje elegido"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Inicio de una sesión de edición",
+            "Comando ejecutado en la aplicación"
+          ],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://github.com/neovim/neovim#features",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "89d853c9268ed0eb7073efb069d4b36fc589a433f643bb7c372db9a6211398b8",
+          "evidence": "API access from any language including C/C++, C#, Clojure, D, Elixir, Go, Haskell, Java/Kotlin, JavaScript/Node.js, Julia, Lisp, Lua, Perl, Python, Racket, Ruby, Rust"
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "89d853c9268ed0eb7073efb069d4b36fc589a433f643bb7c372db9a6211398b8",
+      "review": {
+        "readme_chars": 2736,
+        "blocks": 2,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1742,
+        "output_tokens": 162,
+        "seconds": 1.25
+      }
+    },
+    {
+      "github_id": 37912398,
+      "full_name": "nginx/nginx",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "2b12961b44004caac9b6e030e52d1231bc807a458b51f1af6fa3f60704140f9c",
+      "review": {
+        "readme_chars": 7933,
+        "blocks": 2,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 2688,
+        "output_tokens": 9,
+        "seconds": 0.87
+      }
+    },
+    {
+      "github_id": 27193779,
+      "full_name": "nodejs/node",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "8185d20766722e7ba54dd06f6528d06605d3256117c2e967cebc56e59e822451",
+      "review": {
+        "readme_chars": 7428,
+        "blocks": 2,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 3288,
+        "output_tokens": 9,
+        "seconds": 0.81
+      }
+    },
+    {
+      "github_id": 139910229,
+      "full_name": "npm/cli",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "98775ed31959f20a1eb0ef0ab1efc01b1e36766acae098ba75d8b1b4d58dd078",
+      "review": {
+        "readme_chars": 2582,
+        "blocks": 2,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1642,
+        "output_tokens": 9,
+        "seconds": 0.81
+      }
+    },
+    {
+      "github_id": 908607,
+      "full_name": "numpy/numpy",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "39190f725739dbceae2345e2507496dec6bc86fc52060206214d0da78ee7fbad",
+      "review": {
+        "readme_chars": 2673,
+        "blocks": 0,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1583,
+        "output_tokens": 9,
+        "seconds": 0.75
+      }
+    },
+    {
+      "github_id": 71995937,
+      "full_name": "nuxt/nuxt",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "c8e09ad1d73304c2ea250ab153807b203b62492458625ca30ec7ba0bf0db2c36",
+      "review": {
+        "readme_chars": 3093,
+        "blocks": 2,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1813,
+        "output_tokens": 4,
+        "seconds": 0.84
+      }
+    },
+    {
+      "github_id": 658928958,
+      "full_name": "ollama/ollama",
+      "ideas": [
+        {
+          "id": "llm-658928958-1",
+          "full_name": "ollama/ollama",
+          "title": "Desplegar Ollama con Docker",
+          "integration_type": "docker",
+          "summary": "Ejecuta Ollama como un contenedor Docker en tu infraestructura usando la imagen oficial para gestionar y correr modelos de IA.",
+          "compatible_stack": [
+            "Docker"
+          ],
+          "dependencies": [
+            "Docker instalado y ejecutándose"
+          ],
+          "difficulty": "medium",
+          "triggers": [],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://github.com/ollama/ollama#docker",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "2b51c212c5b5780b229b730e5201df05d9c4b645b68c8484c86d98e5dc6de824",
+          "evidence": "The official Ollama Docker image `ollama/ollama` is available on Docker Hub."
+        },
+        {
+          "id": "llm-658928958-2",
+          "full_name": "ollama/ollama",
+          "title": "Consultar la API REST de Ollama",
+          "integration_type": "rest_api",
+          "summary": "Conecta tu aplicación mediante peticiones HTTP a la API REST de Ollama para enviar mensajes, generar texto y gestionar modelos.",
+          "compatible_stack": [
+            "HTTP"
+          ],
+          "dependencies": [
+            "Servicio de Ollama corriendo"
+          ],
+          "difficulty": "high",
+          "triggers": [
+            "Mensaje del usuario en el chat"
+          ],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://github.com/ollama/ollama#rest-api",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "2b51c212c5b5780b229b730e5201df05d9c4b645b68c8484c86d98e5dc6de824",
+          "evidence": "Ollama has a REST API for running and managing models."
+        },
+        {
+          "id": "llm-658928958-3",
+          "full_name": "ollama/ollama",
+          "title": "Usar el SDK de Python para interactuar con modelos",
+          "integration_type": "sdk",
+          "summary": "Instala el paquete cliente de Python para enviar prompts y recibir respuestas de los modelos de IA desde el código de tu aplicación.",
+          "compatible_stack": [
+            "Python"
+          ],
+          "dependencies": [
+            "Librería ollama",
+            "Servicio de Ollama corriendo"
+          ],
+          "difficulty": "high",
+          "triggers": [
+            "Mensaje del usuario en el chat"
+          ],
+          "snippet": "from ollama import chat\n\nresponse = chat(model='gemma4', messages=[\n  {\n    'role': 'user',\n    'content': 'Why is the sky blue?',\n  },\n])\nprint(response.message.content)",
+          "snippet_language": "python",
+          "docs_url": "https://github.com/ollama/ollama#libraries",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "2b51c212c5b5780b229b730e5201df05d9c4b645b68c8484c86d98e5dc6de824",
+          "evidence": "- ollama-python"
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "2b51c212c5b5780b229b730e5201df05d9c4b645b68c8484c86d98e5dc6de824",
+      "review": {
+        "readme_chars": 7978,
+        "blocks": 12,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 3229,
+        "output_tokens": 467,
+        "seconds": 1.86
+      }
+    },
+    {
+      "github_id": 185861173,
+      "full_name": "open-telemetry/opentelemetry-collector",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "35880e386fd9efd7ed3fcaca879972ee13a970935a3f59cb31af3671728c6c64",
+      "review": {
+        "readme_chars": 4676,
+        "blocks": 1,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [
+          {
+            "title": "Desplegar OpenTelemetry Collector con Docker",
+            "integration_type": "docker",
+            "summary": "Despliega la herramienta como un contenedor para recopilar, procesar y exportar trazas, métricas y registros en tu infraestructura.",
+            "evidence": "We are signing the images `otel/opentelemetry-collector` and `otel/opentelemetry-collector-contrib` using sigstore cosign tool and to verify the signatures you can run the following command:",
+            "code_block": 1,
+            "compatible_stack": [
+              "Docker"
+            ],
+            "dependencies": [
+              "Docker",
+              "Cosign"
+            ],
+            "difficulty": "medium",
+            "triggers": [],
+            "reason": "ningún nombre del stack aparece en la entrada"
+          }
+        ],
+        "input_tokens": 2075,
+        "output_tokens": 189,
+        "seconds": 1.32
+      }
+    },
+    {
+      "github_id": 307213173,
+      "full_name": "openai/openai-python",
+      "ideas": [
+        {
+          "id": "llm-307213173-1",
+          "full_name": "openai/openai-python",
+          "title": "Generar texto y respuestas con IA en tu aplicación",
+          "integration_type": "sdk",
+          "summary": "Conecta tu aplicación a OpenAI para generar respuestas de texto y procesar imágenes usando la librería oficial y el cliente de Python.",
+          "compatible_stack": [
+            "Python"
+          ],
+          "dependencies": [
+            "Clave de API de OpenAI o identidad de carga de trabajo"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Mensaje del usuario en el chat",
+            "Petición de análisis de imagen"
+          ],
+          "snippet": "import os\nfrom openai import OpenAI\n\nclient = OpenAI(\n    # This is the default and can be omitted\n    api_key=os.environ.get(\"OPENAI_API_KEY\"),\n)\n\nresponse = client.responses.create(\n    model=\"gpt-5.5\",\n    instructions=\"You are a coding assistant that talks like a pirate.\",\n    input=\"How do I check if a Python object is an instance of a class?\",\n)\n\nprint(response.output_text)",
+          "snippet_language": "python",
+          "docs_url": "https://github.com/openai/openai-python#openai-python-api-library",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "c22c36c14098a9a1c896f57f2a4ec2fd8b45dad233e6259fdfd129573eddac0e",
+          "evidence": "The OpenAI Python library provides convenient access to the OpenAI REST API from any Python 3.10+ application."
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "c22c36c14098a9a1c896f57f2a4ec2fd8b45dad233e6259fdfd129573eddac0e",
+      "review": {
+        "readme_chars": 7839,
+        "blocks": 11,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 3257,
+        "output_tokens": 196,
+        "seconds": 1.14
+      }
+    },
+    {
+      "github_id": 36960321,
+      "full_name": "opencontainers/runc",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "87fc40ff7239114a0c001b42c235dd123ebf92a0bced31cd8c14421b2c748399",
+      "review": {
+        "readme_chars": 8000,
+        "blocks": 16,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 3147,
+        "output_tokens": 9,
+        "seconds": 0.87
+      }
+    },
+    {
+      "github_id": 334274271,
+      "full_name": "opensearch-project/OpenSearch",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "379475e0a3b8481cf8df9325e24409514f1b3ee65a9068b0755a7c8729ba3284",
+      "review": {
+        "readme_chars": 1370,
+        "blocks": 0,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1300,
+        "output_tokens": 5,
+        "seconds": 0.73
+      }
+    },
+    {
+      "github_id": 596892,
+      "full_name": "pallets/flask",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "0ea9a28ffe1acd4eefad5ef9076ef1388092afd283165abf1a5e3f5dbca35765",
+      "review": {
+        "readme_chars": 1261,
+        "blocks": 2,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1318,
+        "output_tokens": 9,
+        "seconds": 1.13
+      }
+    },
+    {
+      "github_id": 858127,
+      "full_name": "pandas-dev/pandas",
+      "ideas": [
+        {
+          "id": "llm-858127-1",
+          "full_name": "pandas-dev/pandas",
+          "title": "Instalar pandas en la aplicación",
+          "integration_type": "sdk",
+          "summary": "Analiza y manipula datos tabulares o series temporales dentro de tu código importando las estructuras y funciones de pandas.",
+          "compatible_stack": [
+            "Python",
+            "NumPy"
+          ],
+          "dependencies": [
+            "NumPy",
+            "python-dateutil"
+          ],
+          "difficulty": "medium",
+          "triggers": [],
+          "snippet": "# or PyPI\npip install pandas",
+          "snippet_language": "sh",
+          "docs_url": "https://github.com/pandas-dev/pandas#what-is-it",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "4126aa22c07be2d67227e3234efe4bc7671d7bd6102a2a3935be842a2f388feb",
+          "evidence": "pandas is a Python package that provides fast, flexible, and expressive data structures designed to make working with \"relational\" or \"labeled\" data both easy and intuitive."
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "4126aa22c07be2d67227e3234efe4bc7671d7bd6102a2a3935be842a2f388feb",
+      "review": {
+        "readme_chars": 5543,
+        "blocks": 5,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 2279,
+        "output_tokens": 181,
+        "seconds": 1.33
+      }
+    },
+    {
+      "github_id": 359952601,
+      "full_name": "pgvector/pgvector",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "350c39dcd7416a3455ed10d3bf6b8086514ed4d80c739ad99c7a69a29fc0a6a5",
+      "review": {
+        "readme_chars": 7978,
+        "blocks": 33,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 3317,
+        "output_tokens": 9,
+        "seconds": 0.93
+      }
+    },
+    {
+      "github_id": 50565430,
+      "full_name": "pnpm/pnpm",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "1b655be99d9beb8b216edfa77d03d5fdfdab7c481c6a63ff13644b5ef36a48b5",
+      "review": {
+        "readme_chars": 2539,
+        "blocks": 0,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1652,
+        "output_tokens": 4,
+        "seconds": 0.79
+      }
+    },
+    {
+      "github_id": 139199684,
+      "full_name": "PrefectHQ/prefect",
+      "ideas": [
+        {
+          "id": "llm-139199684-1",
+          "full_name": "PrefectHQ/prefect",
+          "title": "Usar Prefect en tu aplicación para orquestar pipelines de datos",
+          "integration_type": "sdk",
+          "summary": "Orquesta pipelines de datos y automatiza procesos en tu aplicación instalando el paquete de Prefect e importando sus decoradores de flujo y tareas.",
+          "compatible_stack": [
+            "Python"
+          ],
+          "dependencies": [
+            "Paquete prefect instalado",
+            "Python 3.11+"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Ejecución de un proceso de datos programado",
+            "Llamada a un flujo de trabajo desde la aplicación"
+          ],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://github.com/PrefectHQ/prefect#getting-started",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "8486cfc820cc28757ce339e948723c03247ad3bac2229fdb48d3fef373029730",
+          "evidence": "pip install -U prefect"
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "8486cfc820cc28757ce339e948723c03247ad3bac2229fdb48d3fef373029730",
+      "review": {
+        "readme_chars": 4690,
+        "blocks": 5,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 2140,
+        "output_tokens": 196,
+        "seconds": 1.25
+      }
+    },
+    {
+      "github_id": 75104123,
+      "full_name": "prettier/prettier",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "70f3a2a6fc94fc0742d3cf4895e564bb96712df82c2bf8c6f36f9d0a22073af0",
+      "review": {
+        "readme_chars": 1219,
+        "blocks": 3,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1375,
+        "output_tokens": 4,
+        "seconds": 0.87
+      }
+    },
+    {
+      "github_id": 11452538,
+      "full_name": "prometheus/alertmanager",
+      "ideas": [
+        {
+          "id": "llm-11452538-1",
+          "full_name": "prometheus/alertmanager",
+          "title": "Desplegar Alertmanager con Docker",
+          "integration_type": "docker",
+          "summary": "Ejecuta Alertmanager como un contenedor en tu infraestructura para gestionar y enrutar las alertas de tus aplicaciones.",
+          "compatible_stack": [
+            "Docker"
+          ],
+          "dependencies": [
+            "Docker"
+          ],
+          "difficulty": "low",
+          "triggers": [],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://github.com/prometheus/alertmanager#docker-images",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "07c40740a9aa6a60fcc0fa0ba15823dbf3a68458915027a818025ad4d3ac6116",
+          "evidence": "You can launch an Alertmanager container for trying it out with"
+        },
+        {
+          "id": "llm-11452538-2",
+          "full_name": "prometheus/alertmanager",
+          "title": "Conectar la API REST de Alertmanager",
+          "integration_type": "rest_api",
+          "summary": "Consulta el estado de las alertas y gestiona la herramienta desde tu aplicación usando su API HTTP.",
+          "compatible_stack": [
+            "HTTP",
+            "OpenAPI"
+          ],
+          "dependencies": [
+            "Alertmanager corriendo"
+          ],
+          "difficulty": "medium",
+          "triggers": [],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://github.com/prometheus/alertmanager#api",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "07c40740a9aa6a60fcc0fa0ba15823dbf3a68458915027a818025ad4d3ac6116",
+          "evidence": "APIv2 is accessed via the `/api/v2` prefix."
+        },
+        {
+          "id": "llm-11452538-3",
+          "full_name": "prometheus/alertmanager",
+          "title": "Generar un cliente SDK para Alertmanager",
+          "integration_type": "sdk",
+          "summary": "Integra llamadas a Alertmanager en tu código utilizando clientes generados mediante OpenAPI.",
+          "compatible_stack": [
+            "OpenAPI",
+            "Go"
+          ],
+          "dependencies": [
+            "Alertmanager API"
+          ],
+          "difficulty": "medium",
+          "triggers": [],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://github.com/prometheus/alertmanager#api",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "07c40740a9aa6a60fcc0fa0ba15823dbf3a68458915027a818025ad4d3ac6116",
+          "evidence": "Clients can be easily generated via any OpenAPI generator for all major languages."
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "07c40740a9aa6a60fcc0fa0ba15823dbf3a68458915027a818025ad4d3ac6116",
+      "review": {
+        "readme_chars": 7278,
+        "blocks": 5,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 3061,
+        "output_tokens": 417,
+        "seconds": 1.7
+      }
+    },
+    {
+      "github_id": 6838921,
+      "full_name": "prometheus/prometheus",
+      "ideas": [
+        {
+          "id": "llm-6838921-1",
+          "full_name": "prometheus/prometheus",
+          "title": "Desplegar Prometheus con Docker",
+          "integration_type": "docker",
+          "summary": "Ejecuta Prometheus como contenedor en tu infraestructura para monitorizar servicios y recopilar métricas.",
+          "compatible_stack": [
+            "Docker"
+          ],
+          "dependencies": [
+            "Docker instalado"
+          ],
+          "difficulty": "low",
+          "triggers": [],
+          "snippet": "docker run --name prometheus -d -p 127.0.0.1:9090:9090 prom/prometheus",
+          "snippet_language": "bash",
+          "docs_url": "https://github.com/prometheus/prometheus#docker-images",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "be147222b70cdd503962f4b372ecc36dc51bc35d8b4e7c03b757f76af7d34069",
+          "evidence": "docker run --name prometheus -d -p 127.0.0.1:9090:9090 prom/prometheus"
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "be147222b70cdd503962f4b372ecc36dc51bc35d8b4e7c03b757f76af7d34069",
+      "review": {
+        "readme_chars": 7248,
+        "blocks": 10,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 2839,
+        "output_tokens": 161,
+        "seconds": 1.12
+      }
+    },
+    {
+      "github_id": 125266328,
+      "full_name": "psf/black",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "f7550808de7e08604992bcdb6ca4205788ab2b206fd7628d51394325f014c6c9",
+      "review": {
+        "readme_chars": 6768,
+        "blocks": 4,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 2680,
+        "output_tokens": 9,
+        "seconds": 0.79
+      }
+    },
+    {
+      "github_id": 247399816,
+      "full_name": "psycopg/psycopg",
+      "ideas": [
+        {
+          "id": "llm-247399816-1",
+          "full_name": "psycopg/psycopg",
+          "title": "Conectar tu aplicación a una base de datos PostgreSQL",
+          "integration_type": "sdk",
+          "summary": "Permite a tu aplicación consultar y gestionar datos en una base de datos PostgreSQL importando y utilizando el adaptador Psycopg desde tu código.",
+          "compatible_stack": [
+            "Python",
+            "PostgreSQL"
+          ],
+          "dependencies": [
+            "PostgreSQL",
+            "libpq"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Inicio de la aplicación",
+            "Consulta de datos del usuario"
+          ],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://github.com/psycopg/psycopg#installation",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "d76a4ec917fb4f73cfcf17e748566222afd45a99b2091efb051e3e3a778ad553",
+          "evidence": "pip install \"psycopg[binary,pool]\""
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "d76a4ec917fb4f73cfcf17e748566222afd45a99b2091efb051e3e3a778ad553",
+      "review": {
+        "readme_chars": 3182,
+        "blocks": 0,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1765,
+        "output_tokens": 181,
+        "seconds": 1.19
+      }
+    },
+    {
+      "github_id": 90194616,
+      "full_name": "pydantic/pydantic",
+      "ideas": [
+        {
+          "id": "llm-90194616-1",
+          "full_name": "pydantic/pydantic",
+          "title": "Usar Pydantic para validar datos con type hints",
+          "integration_type": "sdk",
+          "summary": "Valida y parsea datos externos en tu aplicación definiendo modelos con clases de Python y type hints.",
+          "compatible_stack": [
+            "Python"
+          ],
+          "dependencies": [
+            "pydantic"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Recepción de datos externos en la aplicación"
+          ],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://github.com/pydantic/pydantic#pydantic-validation",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "41b9a9a4128a5125ec0c6f8b030e31aa7af33425f8610dca3b7b342e2bd5cf99",
+          "evidence": "Define how data should be in pure, canonical Python 3.10+; validate it with Pydantic."
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "41b9a9a4128a5125ec0c6f8b030e31aa7af33425f8610dca3b7b342e2bd5cf99",
+      "review": {
+        "readme_chars": 1966,
+        "blocks": 1,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1592,
+        "output_tokens": 124,
+        "seconds": 1.05
+      }
+    },
+    {
+      "github_id": 37489525,
+      "full_name": "pytest-dev/pytest",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "a8279134148d149e605b5180656d9852a4cc5ec92b1d01c9465d9310057c3fc6",
+      "review": {
+        "readme_chars": 3266,
+        "blocks": 0,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1818,
+        "output_tokens": 9,
+        "seconds": 1.24
+      }
+    },
+    {
+      "github_id": 81598961,
+      "full_name": "python/cpython",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "a4380f08eb93ed6b601d96c1f83209ca0ae0ffdbe6848e805577421878c9743c",
+      "review": {
+        "readme_chars": 7501,
+        "blocks": 0,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 2726,
+        "output_tokens": 9,
+        "seconds": 0.84
+      }
+    },
+    {
+      "github_id": 65600975,
+      "full_name": "pytorch/pytorch",
+      "ideas": [
+        {
+          "id": "llm-65600975-1",
+          "full_name": "pytorch/pytorch",
+          "title": "Instalar la librería de tensores en la aplicación",
+          "integration_type": "sdk",
+          "summary": "Usa PyTorch como paquete en tu código para realizar cálculos de tensores acelerados por GPU y construir redes neuronales profundas.",
+          "compatible_stack": [
+            "Python",
+            "NumPy"
+          ],
+          "dependencies": [
+            "Python"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Procesamiento de datos con tensores",
+            "Entrenamiento de modelos de aprendizaje automático"
+          ],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://pytorch.org/",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "3a455fb3fcc9927e3fe6ec0a085d7384d4807d3a727dfd4dd5d3c7863fa3e565",
+          "evidence": "PyTorch is a Python package that provides two high-level features:"
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "3a455fb3fcc9927e3fe6ec0a085d7384d4807d3a727dfd4dd5d3c7863fa3e565",
+      "review": {
+        "readme_chars": 7922,
+        "blocks": 2,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [
+          {
+            "title": "Desplegar el contenedor Docker de la aplicación",
+            "integration_type": "docker",
+            "summary": "Ejecuta la herramienta empaquetada como un contenedor para aislar el entorno de ejecución y aprovechar las imágenes preconstruidas.",
+            "evidence": "Docker Image",
+            "code_block": null,
+            "compatible_stack": [
+              "Docker"
+            ],
+            "dependencies": [
+              "Docker"
+            ],
+            "difficulty": "low",
+            "triggers": [],
+            "reason": "cita demasiado corta"
+          }
+        ],
+        "input_tokens": 2874,
+        "output_tokens": 310,
+        "seconds": 1.82
+      }
+    },
+    {
+      "github_id": 10270250,
+      "full_name": "react/react",
+      "ideas": [
+        {
+          "id": "llm-10270250-1",
+          "full_name": "react/react",
+          "title": "Instalar la librería para construir interfaces de usuario",
+          "integration_type": "sdk",
+          "summary": "Construye interfaces de usuario interactivas y basadas en componentes en tu aplicación mediante la importación de la librería y el renderizado con createRoot.",
+          "compatible_stack": [
+            "JavaScript",
+            "React"
+          ],
+          "dependencies": [
+            "react-dom"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Renderizado de la vista de la aplicación"
+          ],
+          "snippet": "import { createRoot } from 'react-dom/client';\n\nfunction HelloMessage({ name }) {\n  return <div>Hello {name}</div>;\n}\n\nconst root = createRoot(document.getElementById('container'));\nroot.render(<HelloMessage name=\"Taylor\" />);",
+          "snippet_language": "jsx",
+          "docs_url": "https://github.com/react/react#examples",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "1cf35cb647147638c6a68ef422795aa13da2db68a1b35bf8a7da702a42389d6b",
+          "evidence": "import { createRoot } from 'react-dom/client';"
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "1cf35cb647147638c6a68ef422795aa13da2db68a1b35bf8a7da702a42389d6b",
+      "review": {
+        "readme_chars": 3343,
+        "blocks": 1,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1723,
+        "output_tokens": 176,
+        "seconds": 1.12
+      }
+    },
+    {
+      "github_id": 156018,
+      "full_name": "redis/redis",
+      "ideas": [
+        {
+          "id": "llm-156018-1",
+          "full_name": "redis/redis",
+          "title": "Desplegar Redis con Docker",
+          "integration_type": "docker",
+          "summary": "Ejecuta una instancia de Redis como contenedor en tu entorno de desarrollo o producción para almacenar datos en memoria.",
+          "compatible_stack": [
+            "Docker"
+          ],
+          "dependencies": [
+            "Docker corriendo"
+          ],
+          "difficulty": "low",
+          "triggers": [],
+          "snippet": "  docker run -d -p 6379:6379 redis:latest",
+          "snippet_language": "sh",
+          "docs_url": "https://github.com/redis/redis#getting-started",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "bc75ccbc1041c281137a200c237284250a06a1a1383f64df4165ad9b50b305a7",
+          "evidence": "docker run -d -p 6379:6379 redis:latest"
+        },
+        {
+          "id": "llm-156018-2",
+          "full_name": "redis/redis",
+          "title": "Conectar tu aplicación con una librería cliente",
+          "integration_type": "sdk",
+          "summary": "Integra Redis en el código de tu aplicación usando librerías cliente oficiales para Python, Go, Java, C# o JavaScript.",
+          "compatible_stack": [
+            "Python",
+            "Go",
+            "Java",
+            "JavaScript",
+            "C#"
+          ],
+          "dependencies": [
+            "Servidor Redis accesible"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Inicio de la aplicación"
+          ],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://github.com/redis/redis#redis-starter-projects",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "bc75ccbc1041c281137a200c237284250a06a1a1383f64df4165ad9b50b305a7",
+          "evidence": "- Python (redis-py)"
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "bc75ccbc1041c281137a200c237284250a06a1a1383f64df4165ad9b50b305a7",
+      "review": {
+        "readme_chars": 7385,
+        "blocks": 3,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 2780,
+        "output_tokens": 313,
+        "seconds": 1.43
+      }
+    },
+    {
+      "github_id": 560704231,
+      "full_name": "run-llama/llama_index",
+      "ideas": [
+        {
+          "id": "llm-560704231-1",
+          "full_name": "run-llama/llama_index",
+          "title": "Instalar y usar LlamaIndex para procesar documentos y realizar RAG en Python",
+          "integration_type": "sdk",
+          "summary": "Incorpora LlamaIndex en tu aplicación en Python para ingerir documentos, indexarlos y realizar consultas con modelos de lenguaje.",
+          "compatible_stack": [
+            "Python"
+          ],
+          "dependencies": [
+            "Clave de API de OpenAI o un proveedor de LLM local como Ollama"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Consulta de un usuario en la aplicación",
+            "Subida de un nuevo documento al sistema"
+          ],
+          "snippet": "import os\n\nos.environ[\"OPENAI_API_KEY\"] = \"YOUR_OPENAI_API_KEY\"\n\nfrom llama_index.core import VectorStoreIndex, SimpleDirectoryReader\n\ndocuments = SimpleDirectoryReader(\"YOUR_DATA_DIRECTORY\").load_data()\nindex = VectorStoreIndex.from_documents(documents)",
+          "snippet_language": "python",
+          "docs_url": "https://github.com/run-llama/llama_index#-example-usage",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "5070c2836fbf9fdcc32a92890b511331f88b8aa033dfa4d24ecc7432e1a03ab7",
+          "evidence": "from llama_index.core import VectorStoreIndex, SimpleDirectoryReader"
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "5070c2836fbf9fdcc32a92890b511331f88b8aa033dfa4d24ecc7432e1a03ab7",
+      "review": {
+        "readme_chars": 7973,
+        "blocks": 7,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 2969,
+        "output_tokens": 199,
+        "seconds": 1.5
+      }
+    },
+    {
+      "github_id": 724712,
+      "full_name": "rust-lang/rust",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "058ef96fc978cdc9ed877357e67303af5b7cdf64023841c0bb9c8be57e702740",
+      "review": {
+        "readme_chars": 1666,
+        "blocks": 0,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1366,
+        "output_tokens": 9,
+        "seconds": 0.85
+      }
+    },
+    {
+      "github_id": 843222,
+      "full_name": "scikit-learn/scikit-learn",
+      "ideas": [
+        {
+          "id": "llm-843222-1",
+          "full_name": "scikit-learn/scikit-learn",
+          "title": "Usar scikit-learn para machine learning en Python",
+          "integration_type": "sdk",
+          "summary": "Incorpora capacidades de machine learning y análisis de datos en tu aplicación importando el módulo de scikit-learn en tu código.",
+          "compatible_stack": [
+            "Python",
+            "NumPy",
+            "SciPy"
+          ],
+          "dependencies": [
+            "Python",
+            "NumPy",
+            "SciPy",
+            "Narwhals",
+            "joblib",
+            "threadpoolctl"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Ejecución de un modelo de machine learning",
+            "Procesamiento de datos estadísticos"
+          ],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://scikit-learn.org/",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "5497499c71331f17444022c81391f66efcbc3970bfc466a8224baac66c802020",
+          "evidence": "**scikit-learn** is a Python module for machine learning built on top of"
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "5497499c71331f17444022c81391f66efcbc3970bfc466a8224baac66c802020",
+      "review": {
+        "readme_chars": 5278,
+        "blocks": 4,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 2509,
+        "output_tokens": 160,
+        "seconds": 1.68
+      }
+    },
+    {
+      "github_id": 1460385,
+      "full_name": "scipy/scipy",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "c41a4eab2330a649ea83ce748041c80359d6b6ade48bd3ec2ff41bf30d135247",
+      "review": {
+        "readme_chars": 2345,
+        "blocks": 0,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1567,
+        "output_tokens": 5,
+        "seconds": 1.29
+      }
+    },
+    {
+      "github_id": 159271175,
+      "full_name": "sqlalchemy/sqlalchemy",
+      "ideas": [
+        {
+          "id": "llm-159271175-1",
+          "full_name": "sqlalchemy/sqlalchemy",
+          "title": "Instalar el toolkit de base de datos y ORM en la aplicación",
+          "integration_type": "sdk",
+          "summary": "Usa SQLAlchemy en tu aplicación para mapear objetos a tablas relacionales, construir consultas con una interfaz orientada a relaciones y gestionar la persistencia de datos mediante Python.",
+          "compatible_stack": [
+            "Python",
+            "SQL"
+          ],
+          "dependencies": [
+            "Base de datos SQL compatible con DBAPI"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Guardar un objeto en la base de datos",
+            "Consultar registros con SQL"
+          ],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://github.com/sqlalchemy/sqlalchemy#introduction",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "e9849b8e4adfefff71cdb91114e00efb0c3ea4b9f9eacdc9527489b9d1132b5e",
+          "evidence": "SQLAlchemy is the Python SQL toolkit and Object Relational Mapper"
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "e9849b8e4adfefff71cdb91114e00efb0c3ea4b9f9eacdc9527489b9d1132b5e",
+      "review": {
+        "readme_chars": 5027,
+        "blocks": 0,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 2065,
+        "output_tokens": 198,
+        "seconds": 1.78
+      }
+    },
+    {
+      "github_id": 54173593,
+      "full_name": "storybookjs/storybook",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "4807769d16345886a9cd114c94dd92263298920774ba4a28001092f893597902",
+      "review": {
+        "readme_chars": 5431,
+        "blocks": 1,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 2298,
+        "output_tokens": 4,
+        "seconds": 0.91
+      }
+    },
+    {
+      "github_id": 74293321,
+      "full_name": "sveltejs/svelte",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "8aa22d48e5c09257ea8e524b05fe02e6539fa2ba37bf92ddc7d71d60f21c0892",
+      "review": {
+        "readme_chars": 1126,
+        "blocks": 0,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1242,
+        "output_tokens": 9,
+        "seconds": 1.08
+      }
+    },
+    {
+      "github_id": 106017343,
+      "full_name": "tailwindlabs/tailwindcss",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "3e965c349867dd2d10c2a7842d2de460db5bbfb0d21f0e178c7ba43685a3e7a5",
+      "review": {
+        "readme_chars": 397,
+        "blocks": 0,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1094,
+        "output_tokens": 5,
+        "seconds": 0.7
+      }
+    },
+    {
+      "github_id": 18609427,
+      "full_name": "tc39/ecma262",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "7815ce7535521d17fa464b8432e40b8787f69524e70a92070114755806ed42e6",
+      "review": {
+        "readme_chars": 1080,
+        "blocks": 0,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1248,
+        "output_tokens": 5,
+        "seconds": 0.75
+      }
+    },
+    {
+      "github_id": 45717250,
+      "full_name": "tensorflow/tensorflow",
+      "ideas": [
+        {
+          "id": "llm-45717250-1",
+          "full_name": "tensorflow/tensorflow",
+          "title": "Usar TensorFlow para machine learning en tu aplicación",
+          "integration_type": "sdk",
+          "summary": "Instala el paquete en tu aplicación para construir y desplegar modelos de machine learning y redes neuronales usando sus APIs.",
+          "compatible_stack": [
+            "Python",
+            "C++"
+          ],
+          "dependencies": [
+            "Paquete pip tensorflow"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Procesamiento de datos de machine learning",
+            "Inferencia de modelos"
+          ],
+          "snippet": ">>> import tensorflow as tf\n>>> tf.add(1, 2).numpy()\n3\n>>> hello = tf.constant('Hello, TensorFlow!')\n>>> hello.numpy()\nb'Hello, TensorFlow!'",
+          "snippet_language": "python",
+          "docs_url": "https://tensorflow.org/",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "847bb155e8541ea0674b3585d6b81774b27a32b535256a8a828ff1fa37ebd6ff",
+          "evidence": "TensorFlow provides stable Python and C++ APIs, as well as a non-guaranteed backward compatible API for other languages."
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "847bb155e8541ea0674b3585d6b81774b27a32b535256a8a828ff1fa37ebd6ff",
+      "review": {
+        "readme_chars": 3735,
+        "blocks": 4,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1917,
+        "output_tokens": 191,
+        "seconds": 1.3
+      }
+    },
+    {
+      "github_id": 125863507,
+      "full_name": "testing-library/react-testing-library",
+      "ideas": [
+        {
+          "id": "llm-125863507-1",
+          "full_name": "testing-library/react-testing-library",
+          "title": "Instalar librerías de prueba para componentes",
+          "integration_type": "sdk",
+          "summary": "Agrega utilidades de testing para componentes de React en la aplicación mediante paquetes de desarrollo.",
+          "compatible_stack": [
+            "React"
+          ],
+          "dependencies": [
+            "react",
+            "react-dom"
+          ],
+          "difficulty": "medium",
+          "triggers": [],
+          "snippet": "npm install --save-dev @testing-library/react @testing-library/dom",
+          "snippet_language": "text",
+          "docs_url": "https://github.com/testing-library/react-testing-library#installation",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "db56102293af43ccd353d92cefef7207a8ef3b207347fd30cd48f3751f4f0ec7",
+          "evidence": "npm install --save-dev @testing-library/react @testing-library/dom"
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "db56102293af43ccd353d92cefef7207a8ef3b207347fd30cd48f3751f4f0ec7",
+      "review": {
+        "readme_chars": 6668,
+        "blocks": 8,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 2773,
+        "output_tokens": 160,
+        "seconds": 1.09
+      }
+    },
+    {
+      "github_id": 2325298,
+      "full_name": "torvalds/linux",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "153125884516c2dc76b47ff89b28651cf7a1144aaf2aac65eb9a158ff30f287a",
+      "review": {
+        "readme_chars": 5892,
+        "blocks": 0,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 2337,
+        "output_tokens": 4,
+        "seconds": 0.81
+      }
+    },
+    {
+      "github_id": 42408804,
+      "full_name": "traefik/traefik",
+      "ideas": [
+        {
+          "id": "llm-42408804-1",
+          "full_name": "traefik/traefik",
+          "title": "Desplegar Traefik como contenedor Docker",
+          "integration_type": "docker",
+          "summary": "Despliega Traefik como proxy inverso en tu infraestructura utilizando su imagen oficial de Docker para enrutar el tráfico hacia tus microservicios.",
+          "compatible_stack": [
+            "Docker"
+          ],
+          "dependencies": [
+            "Docker instalado",
+            "Archivo de configuración traefik.toml"
+          ],
+          "difficulty": "medium",
+          "triggers": [],
+          "snippet": "docker run -d -p 8080:8080 -p 80:80 -v $PWD/traefik.toml:/etc/traefik/traefik.toml traefik",
+          "snippet_language": "shell",
+          "docs_url": "https://github.com/traefik/traefik#download",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "186a0f5df8edce1086a7403e093d6e5fba5fbf4e9f97045b77b3e71aa61194eb",
+          "evidence": "Or use the official tiny Docker image and run it with the sample configuration file:"
+        },
+        {
+          "id": "llm-42408804-2",
+          "full_name": "traefik/traefik",
+          "title": "Consultar la API REST de Traefik",
+          "integration_type": "rest_api",
+          "summary": "Interactúa con la API REST expuesta por Traefik para supervisar el estado de las rutas y la configuración de los microservicios.",
+          "compatible_stack": [
+            "HTTP"
+          ],
+          "dependencies": [
+            "Instancia de Traefik ejecutándose"
+          ],
+          "difficulty": "medium",
+          "triggers": [],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://github.com/traefik/traefik#features",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "186a0f5df8edce1086a7403e093d6e5fba5fbf4e9f97045b77b3e71aa61194eb",
+          "evidence": "Exposes a Rest API"
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "186a0f5df8edce1086a7403e093d6e5fba5fbf4e9f97045b77b3e71aa61194eb",
+      "review": {
+        "readme_chars": 5064,
+        "blocks": 3,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 2377,
+        "output_tokens": 310,
+        "seconds": 1.59
+      }
+    },
+    {
+      "github_id": 70107786,
+      "full_name": "vercel/next.js",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "7b6741191f94d4032e8807f512a7a35634293422ab9253680c2c2e2b15223bf4",
+      "review": {
+        "readme_chars": 1578,
+        "blocks": 0,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1354,
+        "output_tokens": 4,
+        "seconds": 0.72
+      }
+    },
+    {
+      "github_id": 257485422,
+      "full_name": "vitejs/vite",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "0332948dc01e7c7bbd6644932d0e7d489ace401522022c339b95edd14955d067",
+      "review": {
+        "readme_chars": 1161,
+        "blocks": 0,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1262,
+        "output_tokens": 9,
+        "seconds": 0.84
+      }
+    },
+    {
+      "github_id": 434708679,
+      "full_name": "vitest-dev/vitest",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "25adcdea1f1e4d1e2808e3dd57e3789474c674e21a63d5fdd1ec1c5fddb4fe62",
+      "review": {
+        "readme_chars": 1839,
+        "blocks": 2,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1515,
+        "output_tokens": 9,
+        "seconds": 0.83
+      }
+    },
+    {
+      "github_id": 599547518,
+      "full_name": "vllm-project/vllm",
+      "ideas": [
+        {
+          "id": "llm-599547518-1",
+          "full_name": "vllm-project/vllm",
+          "title": "Conectar la aplicación al servidor API compatible con OpenAI",
+          "integration_type": "rest_api",
+          "summary": "Consume los endpoints expuestos por el motor para generar texto, realizar llamadas a herramientas o procesar flujos de chat en tu aplicación mediante peticiones HTTP.",
+          "compatible_stack": [
+            "OpenAI",
+            "Anthropic"
+          ],
+          "dependencies": [
+            "Servidor vLLM ejecutándose",
+            "Clave de API si está configurada"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Envío de una consulta de chat por parte del usuario",
+            "Solicitud de análisis de texto en la aplicación"
+          ],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://github.com/vllm-project/vllm#about",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "946d90d78faf0d5b1dba0d539586082afb60cdc02625c53a6250bcccb95dfcd6",
+          "evidence": "OpenAI-compatible API server, plus Anthropic Messages API and gRPC support"
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "946d90d78faf0d5b1dba0d539586082afb60cdc02625c53a6250bcccb95dfcd6",
+      "review": {
+        "readme_chars": 4071,
+        "blocks": 2,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 2119,
+        "output_tokens": 216,
+        "seconds": 1.72
+      }
+    },
+    {
+      "github_id": 137078487,
+      "full_name": "vuejs/core",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "430e2ddf0017ada168596568c83711c27fe5795aae26571f3fe8572a20424aa5",
+      "review": {
+        "readme_chars": 1266,
+        "blocks": 0,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1291,
+        "output_tokens": 9,
+        "seconds": 0.99
+      }
+    },
+    {
+      "github_id": 348060227,
+      "full_name": "withastro/astro",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "bba57fbe8713239deb26db8e889f8f62977769ab6e49856ab27ac198348a8a1a",
+      "review": {
+        "readme_chars": 2106,
+        "blocks": 2,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1535,
+        "output_tokens": 5,
+        "seconds": 0.83
+      }
+    },
+    {
+      "github_id": 40276274,
+      "full_name": "ziglang/zig",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "c352eda213ff5ce7ff446c979d4f19cbe4c17377d71aa829d26b729fff419a7d",
+      "review": {
+        "readme_chars": 55,
+        "blocks": 0,
+        "skipped": "README sin contenido suficiente",
+        "failed": false,
+        "attempts": 0,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "seconds": 0.0
+      }
+    }
+  ]
+}

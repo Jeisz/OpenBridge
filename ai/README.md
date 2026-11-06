@@ -50,6 +50,14 @@ código comprueba). Los genera Gemini 3.5 Flash-Lite; se guardan en
 [Enriquecimiento del catálogo](#enriquecimiento-del-catálogo); elección del modelo en
 [`eval/ENRICH_DECISION.md`](eval/ENRICH_DECISION.md).
 
+**Ideas de integración.** 40 de los 100 repos tienen de 1 a 3 ideas (46 en total: `sdk`,
+`docker`, `rest_api`), cada una con una cita del README que el código comprueba y, cuando el
+README lo trae, un snippet copiado tal cual. Los otros 60 quedan sin ideas: la mayoría son
+herramientas de desarrollo, frameworks e infraestructura que no se conectan a una
+aplicación. Se guardan en `data/catalog/ideas.json`. Ver
+[Ideas de integración](#ideas-de-integración); método, números y límites en
+[`eval/IDEAS_DECISION.md`](eval/IDEAS_DECISION.md).
+
 ## Estructura
 
 ```
@@ -238,6 +246,8 @@ python -m ai.scripts.enrich_catalog              # genera categorías, resumen y
 python -m ai.scripts.write_enrichment            # valida enrichment.json sin tocar la base
 python -m ai.scripts.write_enrichment --escribir # lo escribe en ai.* (requiere AI_DATABASE_URL)
 python -m ai.eval.compare_enrichment ARCHIVOS --out reporte.md  # compara corridas de distintos modelos
+python -m ai.scripts.generate_ideas              # genera las ideas de integración (requiere GEMINI_API_KEY)
+python -m ai.eval.evaluate_ideas CORRIDAS --out reporte.md  # mide corridas de ideas contra la referencia
 python -m ai.eval.run_search_eval                # evalúa la búsqueda sobre el catálogo real (--golden sample: datos de ejemplo)
 python -m ai.scripts.check_llm gemini groq-low   # prueba de humo de los proveedores de LLM (requiere las claves)
 python -m ai.eval.run_understand_eval gemini     # compara modelos en el paso de entender (--cases validation: casos de validación)
@@ -325,6 +335,34 @@ que la próxima corrida regenera los 100.
   un título de sección).
 - 8 resúmenes de la versión 4 tienen expresiones de venta ("extremadamente", "moderno") que la
   versión 5 ya rechaza.
+
+  ## Ideas de integración
+
+Para cada repo, el modelo recibe la descripción, los topics y el README (prosa limpia como en
+el enriquecimiento, pero con los bloques de código intactos y numerados) y devuelve de 0 a 3
+ideas, como máximo una por tipo. El código valida cada una antes de guardarla:
+
+| Regla | Si no se cumple |
+|---|---|
+| Más de 3 ideas, bloque inexistente, título o resumen vacío o largo, texto dañado, palabras de venta | Un reintento |
+| La cita existe en el texto que vio el modelo (al menos 15 caracteres y 2 palabras) | Se descarta la idea |
+| Al menos un nombre del stack aparece en la entrada | Se descarta la idea |
+| Una idea por tipo; repo archivado sin ideas | Se descarta la idea |
+| README casi vacío (menos de 200 caracteres) o repo archivado | Sin ideas, sin llamar al modelo |
+
+El snippet, su lenguaje y el enlace a la documentación los pone el código, nunca el modelo.
+Una lista vacía es un resultado válido y no se vuelve a pedir mientras la entrada no cambie.
+
+**Regenerar:**
+
+    python -m ai.scripts.generate_ideas
+
+Medido el 6-nov-2026: unos 217 mil tokens de entrada y 9 mil de salida para 100 repos, en el
+nivel gratuito de Gemini. Si se corta, el mismo comando sigue donde quedó.
+
+**Medir una versión nueva del prompt:** corre los repos de `eval/ideas_reference.json` dos
+veces y compáralas con `python -m ai.eval.evaluate_ideas`. Los criterios están en el mismo
+archivo de referencia.
 
 ## Cómo leer los datos
 

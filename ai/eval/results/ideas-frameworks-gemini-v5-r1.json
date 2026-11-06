@@ -1,0 +1,100 @@
+{
+  "prompt_version": "5",
+  "repos": [
+    {
+      "github_id": 399495186,
+      "full_name": "fastapi/sqlmodel",
+      "ideas": [
+        {
+          "id": "llm-399495186-1",
+          "full_name": "fastapi/sqlmodel",
+          "title": "Usar SQLModel para interactuar con bases de datos relacionales en Python",
+          "integration_type": "sdk",
+          "summary": "Conecta tu aplicación de Python con bases de datos SQL usando clases y modelos basados en tipado para definir tablas y realizar operaciones CRUD sin duplicar código con Pydantic y SQLAlchemy.",
+          "compatible_stack": [
+            "Python",
+            "SQLAlchemy",
+            "Pydantic",
+            "FastAPI"
+          ],
+          "dependencies": [
+            "sqlmodel"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Inicio de la aplicación",
+            "Consulta de datos en la base de datos"
+          ],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://sqlmodel.tiangolo.com/",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "30601e514d71c4ce3a998e552c9a23e6ab683f136abb7efcc7d59212fb2a2906",
+          "evidence": "SQLModel is a library for interacting with SQL databases from Python code, with Python objects."
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "30601e514d71c4ce3a998e552c9a23e6ab683f136abb7efcc7d59212fb2a2906",
+      "review": {
+        "readme_chars": 5863,
+        "blocks": 5,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 2541,
+        "output_tokens": 156,
+        "seconds": 1.18
+      }
+    },
+    {
+      "github_id": 138597372,
+      "full_name": "Kludex/starlette",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "63538c5271496564ffd0b6ce92c4970523648ee0b2df40721b079fb21e905566",
+      "review": {
+        "readme_chars": 2981,
+        "blocks": 6,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1800,
+        "output_tokens": 5,
+        "seconds": 1.49
+      }
+    },
+    {
+      "github_id": 596892,
+      "full_name": "pallets/flask",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "0ea9a28ffe1acd4eefad5ef9076ef1388092afd283165abf1a5e3f5dbca35765",
+      "review": {
+        "readme_chars": 1261,
+        "blocks": 2,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1318,
+        "output_tokens": 9,
+        "seconds": 0.68
+      }
+    }
+  ]
+}

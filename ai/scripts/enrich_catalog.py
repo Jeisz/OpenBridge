@@ -12,10 +12,6 @@ La clave del proveedor tiene que estar en .env.
 """
 
 import argparse
-import json
-import os
-import sys
-import time
 from collections import Counter
 from pathlib import Path
 
@@ -23,49 +19,22 @@ from dotenv import load_dotenv
 
 from ai.catalog import ENRICHMENT_FILE, load_categories, load_repos
 from ai.enrich import PROMPT_VERSION, README_CHARS, enrich_repo, input_hash, readme_input, user_message
-from ai.llm import PROVIDERS, LLMError, LLMRateLimited, LLMUnavailable
+from ai.llm import PROVIDERS
+from ai.scripts.batch import run_batch, select_repos
 
 OUT_FILE = ENRICHMENT_FILE
-WAIT_SECONDS = 30.0      # espera ante un límite por minuto que no dice cuánto esperar
-MAX_WAIT_SECONDS = 120   # si el proveedor pide más, es el límite del día: se detiene
-MAX_WAITS = 5            # esperas seguidas por el mismo repo antes de rendirse
-REPLACE_TRIES = 5        # en Windows, un antivirus o un editor puede retener el archivo un momento
-TRANSIENT_WAIT_SECONDS = 10.0  # espera ante un error temporal del proveedor (503)
-
-
-def load_records(path: Path) -> dict[int, dict]:
-    """Registros ya guardados, por github_id. Vacío si el archivo no existe."""
-    if not path.is_file():
-        return {}
-    return {r["github_id"]: r for r in json.loads(path.read_text(encoding="utf-8"))["repos"]}
-
-
-def save_records(path: Path, records: dict[int, dict]) -> None:
-    """Escribe todos los registros, ordenados por nombre para que el diff sea legible.
-
-    Primero a un archivo temporal y luego se reemplaza: si el proceso se corta
-    a mitad de la escritura, el archivo anterior queda intacto. En Windows, el
-    reemplazo falla si otro programa tiene el archivo abierto; se reintenta unas veces.
-    """
-    ordered = sorted(records.values(), key=lambda r: r["full_name"].lower())
-    tmp = path.with_suffix(".tmp")
-    tmp.write_text(json.dumps({"prompt_version": PROMPT_VERSION, "repos": ordered},
-                              ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    for attempt in range(1, REPLACE_TRIES + 1):
-        try:
-            os.replace(tmp, path)
-            return
-        except PermissionError:
-            if attempt == REPLACE_TRIES:
-                raise PermissionError(f"No se pudo reemplazar {path}: ¿está abierto en otro "
-                                      f"programa? Lo nuevo quedó en {tmp}.") from None
-            time.sleep(0.5 * attempt)
 
 
 def up_to_date(record: dict | None, current_hash: str) -> bool:
     """El registro existe, tiene datos y salió de esta misma entrada, reglas y modelo."""
     return (record is not None and record["ai_input_hash"] == current_hash
             and bool(record["categories"]))
+
+
+def describe(record: dict) -> str:
+    """Una línea con el resultado de un repo, para el progreso."""
+    return (f"{', '.join(record['categories']) or 'SIN CATEGORÍAS'}"
+            f" · {len(record['use_cases'])} casos de uso · {record['review']['seconds']} s")
 
 
 def summary(records: list[dict]) -> str:
@@ -97,54 +66,14 @@ def main() -> None:
 
     load_dotenv()
     categories = load_categories()
-    repos = load_repos()
-    if args.repos:
-        wanted = set(args.repos)
-        repos = [r for r in repos if r.full_name in wanted]
-        missing = wanted - {r.full_name for r in repos}
-        if missing:
-            sys.exit(f"No están en el catálogo: {', '.join(sorted(missing))}")
+    repos = select_repos(load_repos(), args.repos)
 
-    records = load_records(args.out)
-    done = []
-    for n, repo in enumerate(repos, start=1):
-        current = input_hash(user_message(repo, readme_input(repo, args.readme_chars)), args.provider)
-        if not args.force and up_to_date(records.get(repo.github_id), current):
-            print(f"[{n}/{len(repos)}] {repo.full_name}: sin cambios, se salta")
-            done.append(records[repo.github_id])
-            continue
-        for _ in range(MAX_WAITS):
-            try:
-                record = enrich_repo(repo, categories, args.provider, args.readme_chars)
-                break
-            except LLMRateLimited as err:
-                wait = err.retry_after or WAIT_SECONDS
-                if wait > MAX_WAIT_SECONDS:
-                    save_records(args.out, records)
-                    sys.exit(f"{err}\nParece el límite del día. Lo hecho quedó guardado: "
-                             "vuelve a correr el mismo comando más tarde.")
-                print(f"    límite por minuto: espero {wait:.0f} s")
-                time.sleep(wait)
-            except LLMUnavailable as err:
-                if not err.transient:
-                    print(f"[{n}/{len(repos)}] {repo.full_name}: ERROR {err}")
-                    record = None
-                    break
-                print(f"    error temporal del proveedor: espero {TRANSIENT_WAIT_SECONDS:.0f} s")
-                time.sleep(TRANSIENT_WAIT_SECONDS)
-            except LLMError as err:
-                print(f"[{n}/{len(repos)}] {repo.full_name}: ERROR {err} (se reintenta en otra corrida)")
-                record = None
-                break
-        else:
-            sys.exit("Demasiadas esperas seguidas; lo hecho quedó guardado.")
-        if record is None:
-            continue
-        records[repo.github_id] = record
-        save_records(args.out, records)
-        done.append(record)
-        print(f"[{n}/{len(repos)}] {repo.full_name}: {', '.join(record['categories']) or 'SIN CATEGORÍAS'}"
-              f" · {len(record['use_cases'])} casos de uso · {record['review']['seconds']} s")
+    done = run_batch(
+        repos, args.out, PROMPT_VERSION,
+        current_hash=lambda r: input_hash(user_message(r, readme_input(r, args.readme_chars)),
+                                          args.provider),
+        process=lambda r: enrich_repo(r, categories, args.provider, args.readme_chars),
+        is_done=up_to_date, describe=describe, force=args.force)
 
     print("\n" + summary(done))
     print(f"\nGuardado en {args.out}")

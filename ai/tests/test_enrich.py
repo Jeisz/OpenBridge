@@ -10,8 +10,7 @@ from ai.catalog import load_categories
 from ai.enrich import (check_use_cases, clean_readme, cut_text, enrich_repo, enrichment_schema,
                        input_hash, normalize, readme_input, rule_problems, system_prompt,
                        user_message)
-from ai.scripts import enrich_catalog
-from ai.scripts.enrich_catalog import load_records, save_records, up_to_date
+from ai.scripts.enrich_catalog import up_to_date
 from shared.contracts.repo import Repo
 
 
@@ -234,35 +233,9 @@ def test_si_el_resumen_sigue_largo_tras_el_reintento_queda_null(monkeypatch):
 
 # --- Guardado y retoma del lote ---
 
-def test_guardar_y_leer_conserva_los_registros(tmp_path):
-    ruta = tmp_path / "enrichment.json"
-    registros = {2: {"github_id": 2, "full_name": "b/b"}, 1: {"github_id": 1, "full_name": "a/a"}}
-    save_records(ruta, registros)
-    assert load_records(ruta) == registros
-    assert [r["full_name"] for r in json.loads(ruta.read_text(encoding="utf-8"))["repos"]] == ["a/a", "b/b"]
-
-
 def test_se_salta_solo_lo_que_tiene_el_mismo_hash_y_datos():
     registro = {"ai_input_hash": "h1", "categories": ["messaging"]}
     assert up_to_date(registro, "h1")
     assert not up_to_date(registro, "h2")
     assert not up_to_date({**registro, "categories": []}, "h1")
     assert not up_to_date(None, "h1")
-
-
-def test_reintenta_el_reemplazo_si_el_archivo_esta_bloqueado(tmp_path, monkeypatch):
-    real = enrich_catalog.os.replace
-    llamadas = []
-
-    def bloqueado_una_vez(origen, destino):
-        llamadas.append(destino)
-        if len(llamadas) == 1:
-            raise PermissionError("bloqueado")
-        real(origen, destino)
-
-    monkeypatch.setattr(enrich_catalog.os, "replace", bloqueado_una_vez)
-    monkeypatch.setattr(enrich_catalog.time, "sleep", lambda s: None)  # sin esperas reales
-    ruta = tmp_path / "enrichment.json"
-    save_records(ruta, {1: {"github_id": 1, "full_name": "a/a"}})
-    assert len(llamadas) == 2
-    assert load_records(ruta) == {1: {"github_id": 1, "full_name": "a/a"}}

@@ -72,7 +72,7 @@ _BLANK_LINES = re.compile(r"\n\s*\n+")
 _MARKDOWN = re.compile(r"[*_`\[\]]")  # formato y corchetes de enlaces que la limpieza no quita
 # Adjetivos de venta frecuentes. Lista corta a propósito: atrapa lo común, no todo.
 # "Rápido", "eficiente" y "ligero" se permiten: son atributos técnicos que el README afirma.
-_MARKETING = re.compile(r"\b(potentes?|poderos[oa]s?|increíbles?|revolucionari[oa]s?|"
+MARKETING_WORDS = re.compile(r"\b(potentes?|poderos[oa]s?|increíbles?|revolucionari[oa]s?|"
                         r"impresionantes?|líder(es)?|(el|la|los|las) mejor(es)?|"
                         r"extremadamente|modern[oa]s?|(última|próxima) generación|"
                         r"estándar(es)? de la industria)\b")
@@ -132,13 +132,14 @@ def user_message(repo: Repo, readme: str) -> str:
             f"<readme>\n{readme}\n</readme>")
 
 
-def input_hash(message: str, provider: str) -> str:
+def input_hash(message: str, provider: str, version: str = PROMPT_VERSION) -> str:
     """Huella de todo lo que produce la salida: entrada, reglas, proveedor y modelo.
 
     El proveedor entra además del modelo: el mismo modelo con y sin razonamiento
-    (claude-haiku y claude-haiku-razona) da salidas distintas.
+    (claude-haiku y claude-haiku-razona) da salidas distintas. `version` es la del
+    prompt que produce la salida (el de las ideas tiene la suya).
     """
-    content = "\n".join((PROMPT_VERSION, provider, PROVIDERS[provider].model, message))
+    content = "\n".join((version, provider, PROVIDERS[provider].model, message))
     return hashlib.sha256(content.encode("utf-8")).hexdigest()
 
 
@@ -179,7 +180,7 @@ def rule_problems(data: BaseModel) -> list[str]:
                         f"el máximo es {SUMMARY_CHARS}")
     if data.summary_es is not None and not data.summary_es.strip():
         problems.append("summary_es está vacío: escribe el resumen o devuelve null")
-    found = sorted({m.group(0) for m in _MARKETING.finditer((data.summary_es or "").casefold())})
+    found = sorted({m.group(0) for m in MARKETING_WORDS.finditer((data.summary_es or "").casefold())})
     if found:
         problems.append(f"summary_es usa palabras de marketing ({', '.join(found)}): "
                         "describe la herramienta sin ellas")
