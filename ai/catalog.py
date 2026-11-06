@@ -3,7 +3,8 @@
 
 Punto de acceso único a los datos. Aqui se puede cambiar el origen de
 los datos. Dos orígenes:
-    snapshot  ai/data/catalog/  copia del catálogo real (por defecto)
+    snapshot  ai/data/catalog/  copia del catálogo real (por defecto), con los datos
+                                de la IA de enrichment.json (categorías, resumen, casos de uso)
     sample    ai/data/          20 repos de ejemplo con categorías asignadas a mano
 """
 
@@ -22,6 +23,7 @@ SOURCE_DIRS: dict[str, Path] = {
     "sample": DATA_DIR,
 }
 CATEGORIES_FILE = Path(__file__).resolve().parents[1] / "shared" / "contracts" / "categories.json"
+ENRICHMENT_FILE = SOURCE_DIRS["snapshot"] / "enrichment.json"  # lo escribe ai.scripts.enrich_catalog
 
 
 def source_dir(source: Source = DEFAULT_SOURCE) -> Path:
@@ -51,19 +53,42 @@ def load_raw(source: Source = DEFAULT_SOURCE) -> list[dict]:
     return json.loads(repos_file(source).read_text(encoding="utf-8"))
 
 
+def load_enrichment() -> dict[int, dict]:
+    """Datos de la IA por github_id: la parte de abajo de `Repo` en el formato del contrato.
+
+    Vacío si todavía no hay enrichment.json. Las categorías vienen en orden: la primera
+    es la principal.
+    """
+    if not ENRICHMENT_FILE.is_file():
+        return {}
+    records = json.loads(ENRICHMENT_FILE.read_text(encoding="utf-8"))["repos"]
+    return {
+        r["github_id"]: {
+            "categories": [{"category_id": c, "assigned_by": "llm"} for c in r["categories"]],
+            "summary_es": r["summary_es"],
+            "use_cases": r["use_cases"],
+        }
+        for r in records
+    }
+
+
 def load_repos(source: Source = DEFAULT_SOURCE) -> list[Repo]:
     """Devuelve los repos del catálogo con su README, validados contra `Repo`.
 
+    En el snapshot, cada repo suma sus datos de la IA (enrichment.json), si los tiene.
+    Los repos de ejemplo traen sus categorías propias.
     Si un repo no cumple el contrato, lanza `pydantic.ValidationError`
     Si un repo no tiene archivo de README, queda con readme_text = None.
     """
+    enrichment = load_enrichment() if source == "snapshot" else {}
     repos = []
     for raw in load_raw(source):
         path = readme_file(raw["full_name"], source)
         # read_text convierte saltos de línea de Windows para que el texto
         # quede igual en cualquier sistema operativo.
         readme = path.read_text(encoding="utf-8") if path.is_file() else None
-        repos.append(Repo.model_validate({**raw, "readme_text": readme}))
+        ai_part = enrichment.get(raw["github_id"], {})
+        repos.append(Repo.model_validate({**raw, "readme_text": readme, **ai_part}))
     return repos
 
 

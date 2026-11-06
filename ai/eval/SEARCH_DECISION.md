@@ -1,8 +1,10 @@
 # Búsqueda del asistente: decisiones y evidencia
 
-**Decisión (3-nov-2026):** la búsqueda usa **EmbeddingGemma-300m** como modelo de
-embeddings y un umbral de "sin evidencia" de **0,19**, provisional hasta que el
-texto de los repos incluya categorías y un resumen en español.
+**Decisión (6-nov-2026):** la búsqueda usa **EmbeddingGemma-300m**, y el texto de
+cada repo suma el **resumen y los casos de uso que genera la IA**, sin las
+categorías. Umbral de "sin evidencia": **0,23**. La elección del modelo (3-nov) y
+el umbral anterior (0,19, con el texto sin datos de la IA) siguen abajo como
+historia.
 
 Medido con el golden set `catalog` v2 (100 consultas) sobre el snapshot del
 catálogo real del 2026-10-29. Cómo repetir la medición: [`README.md`](README.md).
@@ -79,6 +81,8 @@ MRR 0,79; el de Qwen3 conserva la medición del 27-oct. La conclusión no cambia
 
 ## Umbral de "sin evidencia": 0,19
 
+> Reemplazado el 6-nov por 0,23 al cambiar el texto de los repos (ver "Texto de los repos con los datos de la IA").
+
 `min_score` del modelo en `ai/embeddings.py`.
 
 - Si el 1.er resultado de una necesidad puntúa menos de 0,19, el catálogo no
@@ -136,6 +140,43 @@ de los pedidos que sí tienen herramienta.
 Para estas consultas, el freno tiene que venir del paso que elige entre los
 candidatos (descartar los que no cumplen la necesidad) y de un texto de los repos
 más preciso, que separe los dos grupos.
+
+## Texto de los repos con los datos de la IA (6-nov-2026)
+
+El texto de muchos repos era vago o solo en inglés ("Apache Flink"): 7 de los 12
+fallos de búsqueda venían del texto, no del modelo. Con las categorías, el resumen
+y los casos de uso que genera la IA, se midió cada paso con el mismo golden set.
+El criterio se fijó antes: un paso entra si el hit@3 sube 2 o más (o queda igual
+y sube el MRR) y las consultas sin respuesta que pasan su umbral no aumentan en
+más de 2.
+
+| Texto | hit@3 | MRR | hit@5 | Sin respuesta que pasan | Umbral sugerido |
+|---|---|---|---|---|---|
+| Sin datos de la IA (antes) | 48/60 | 0,71 | 53 | 18/40 | 0,19 |
+| + categorías | 50/60 | 0,76 | 57 | 37/40 | 0,15 |
+| + resumen | 53/60 | 0,76 | 56 | 32/40 | 0,17 |
+| + casos de uso | 53/60 | 0,81 | 56 | 22/40 | 0,24 |
+| **Resumen + casos de uso, sin categorías** | **52/60** | **0,78** | **54** | **20/40** | **0,23** |
+
+- **Las categorías acercan consultas sin respuesta.** Su descripción es genérica:
+  la de autenticación dice "inicio de sesión", así que la consulta "login" (el
+  catálogo no tiene una herramienta de login) encontraba a vault. El resumen y los
+  casos de uso describen lo que hace *ese* repo y separan mejor.
+- **La variante sin categorías se agregó después de ver las cuatro primeras**, con
+  su hipótesis y su criterio escritos antes de correrla (hit@3 ≥ 50 y sin respuesta
+  que pasan ≤ 20). Cumple justo en el límite. Como se eligió con el mismo golden
+  set, conviene validarla con casos nuevos.
+- "Procesar eventos en tiempo real": flink pasa del puesto 14 al 1.
+- Las categorías siguen en la ficha y en los filtros; solo salen del texto de
+  búsqueda.
+
+**Efecto en el asistente** (10 casos de validación × 2 corridas, frente a la
+validación del 4-nov con umbral 0,19): elige una herramienta aceptable en el 88 %
+de las necesidades que la tienen (antes 67 %) y acierta de punta a punta en el
+79 % (antes 62 %), pero se abstiene en el 50 % de las que no la tienen (antes
+68 %). Las abstenciones perdidas son alertmanager para comunicación y vault para
+autenticación: parecidos, no útiles. Reportes: `results/assistant-2026-11-04-1505-validation-gemini.md`
+y `results/assistant-2026-11-06-1111-validation-gemini.md`.
 
 ## Límites
 

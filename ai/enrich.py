@@ -12,59 +12,8 @@ from pydantic import BaseModel, ConfigDict
 from ai.llm import PROVIDERS, Deadline, LLMResult, generate_valid
 from shared.contracts.repo import Category, Repo
 
-# Expresiones para limpiar un README de GitHub (Markdown con HTML).
-# Markdown escribe enlaces e imágenes de dos formas: en línea, [texto](url),
-# y por referencia, [texto][nombre], con "[nombre]: url" más abajo.
-_HTML_COMMENT = re.compile(r"<!--.*?-->", re.DOTALL)
-_IMAGE = re.compile(r"!\[[^\]]*\]\([^)]*\)")
-_REF_IMAGE = re.compile(r"!\[[^\]]*\]\[[^\]]*\]")
-_HTML_TAG = re.compile(r"<[^>]+>")
-_LINK = re.compile(r"\[([^\]]*)\]\([^)]*\)")
-_REF_LINK = re.compile(r"\[([^\]]*)\]\[[^\]]*\]")
-_REFERENCE = re.compile(r"^\s*\[[^\]]+\]:\s*\S+.*$", re.MULTILINE)  # [nombre]: https://...
-_BARE_URL = re.compile(r"https?://\S+")
-_SPACES = re.compile(r"[ \t]+")
-_BLANK_LINES = re.compile(r"\n\s*\n+")
-
-
-def clean_readme(text: str) -> str:
-    """Quita del README lo que no aporta al modelo: HTML, imágenes, insignias y URLs.
-
-    Conserva el texto de los enlaces y la separación en párrafos.
-    """
-    text = text.replace("\r\n", "\n")
-    text = _HTML_COMMENT.sub("", text)
-    # Primero las imágenes: una insignia [![…](…)](…) queda como [](…),
-    # y el paso de enlaces la reduce a nada.
-    text = _IMAGE.sub("", text)
-    text = _REF_IMAGE.sub("", text)
-    text = _HTML_TAG.sub("", text)
-    text = _LINK.sub(r"\1", text)
-    text = _REF_LINK.sub(r"\1", text)
-    text = _REFERENCE.sub("", text)
-    text = _BARE_URL.sub("", text)
-    text = _SPACES.sub(" ", text)
-    text = "\n".join(line.strip() for line in text.split("\n"))
-    text = _BLANK_LINES.sub("\n\n", text)
-    return text.strip()
-
-
-def cut_text(text: str, limit: int) -> str:
-    """Recorta a `limit` caracteres terminando en un párrafo completo.
-
-    Si el último corte de párrafo deja menos de la mitad del límite, corta en el límite.
-    """
-    if len(text) <= limit:
-        return text
-    head = text[:limit]
-    end = head.rfind("\n\n")
-    return head[:end].rstrip() if end > limit // 2 else head.rstrip()
-
-
-# --- Entrada del modelo ---
-
 PROMPT_VERSION = "5"     # reglas del prompt y validación: si cambia, se regenera todo
-README_CHARS = 8000      # provisional: se compara con 4000 en los repos de práctica
+README_CHARS = 8000      # 4.000 y 8.000 no se distinguieron del ruido; 8.000 deja más evidencia
 MIN_README_CHARS = 200   # por debajo, el README limpio no da evidencia: use_cases vacío
 MAX_CATEGORIES = 3       # contrato Repo
 SUMMARY_CHARS = 250      # contrato Repo
@@ -105,6 +54,65 @@ Reglas:
    completo de la entrada que lo respalda, tal como aparece: sin traducir, sin
    "..." y sin cambiar palabras."""
 
+# Expresiones para limpiar un README de GitHub (Markdown con HTML).
+# Markdown escribe enlaces e imágenes de dos formas: en línea, [texto](url),
+# y por referencia, [texto][nombre], con "[nombre]: url" más abajo.
+_HTML_COMMENT = re.compile(r"<!--.*?-->", re.DOTALL)
+_IMAGE = re.compile(r"!\[[^\]]*\]\([^)]*\)")
+_REF_IMAGE = re.compile(r"!\[[^\]]*\]\[[^\]]*\]")
+_HTML_TAG = re.compile(r"<[^>]+>")
+_LINK = re.compile(r"\[([^\]]*)\]\([^)]*\)")
+_REF_LINK = re.compile(r"\[([^\]]*)\]\[[^\]]*\]")
+_REFERENCE = re.compile(r"^\s*\[[^\]]+\]:\s*\S+.*$", re.MULTILINE)  # [nombre]: https://...
+_BARE_URL = re.compile(r"https?://\S+")
+_SPACES = re.compile(r"[ \t]+")
+_BLANK_LINES = re.compile(r"\n\s*\n+")
+
+# Para validar la salida del modelo.
+_MARKDOWN = re.compile(r"[*_`\[\]]")  # formato y corchetes de enlaces que la limpieza no quita
+# Adjetivos de venta frecuentes. Lista corta a propósito: atrapa lo común, no todo.
+# "Rápido", "eficiente" y "ligero" se permiten: son atributos técnicos que el README afirma.
+_MARKETING = re.compile(r"\b(potentes?|poderos[oa]s?|increíbles?|revolucionari[oa]s?|"
+                        r"impresionantes?|líder(es)?|(el|la|los|las) mejor(es)?|"
+                        r"extremadamente|modern[oa]s?|(última|próxima) generación|"
+                        r"estándar(es)? de la industria)\b")
+
+
+def clean_readme(text: str) -> str:
+    """Quita del README lo que no aporta al modelo: HTML, imágenes, insignias y URLs.
+
+    Conserva el texto de los enlaces y la separación en párrafos.
+    """
+    text = text.replace("\r\n", "\n")
+    text = _HTML_COMMENT.sub("", text)
+    # Primero las imágenes: una insignia [![…](…)](…) queda como [](…),
+    # y el paso de enlaces la reduce a nada.
+    text = _IMAGE.sub("", text)
+    text = _REF_IMAGE.sub("", text)
+    text = _HTML_TAG.sub("", text)
+    text = _LINK.sub(r"\1", text)
+    text = _REF_LINK.sub(r"\1", text)
+    text = _REFERENCE.sub("", text)
+    text = _BARE_URL.sub("", text)
+    text = _SPACES.sub(" ", text)
+    text = "\n".join(line.strip() for line in text.split("\n"))
+    text = _BLANK_LINES.sub("\n\n", text)
+    return text.strip()
+
+
+def cut_text(text: str, limit: int) -> str:
+    """Recorta a `limit` caracteres terminando en un párrafo completo.
+
+    Si el último corte de párrafo deja menos de la mitad del límite, corta en el límite.
+    """
+    if len(text) <= limit:
+        return text
+    head = text[:limit]
+    end = head.rfind("\n\n")
+    return head[:end].rstrip() if end > limit // 2 else head.rstrip()
+
+
+# --- Entrada del modelo ---
 
 def system_prompt(categories: dict[str, Category]) -> str:
     """Las reglas y las categorías (id: nombre. qué incluye y qué no)."""
@@ -177,15 +185,6 @@ def rule_problems(data: BaseModel) -> list[str]:
                         "describe la herramienta sin ellas")
     return problems
 
-
-_MARKDOWN = re.compile(r"[*_`\[\]]")  # formato y corchetes de enlaces que la limpieza no quita
-# Adjetivos de venta frecuentes. Lista corta a propósito: atrapa lo común, no todo.
-# Adjetivos de venta frecuentes. Lista corta a propósito: atrapa lo común, no todo.
-# "Rápido", "eficiente" y "ligero" se permiten: son atributos técnicos que el README afirma.
-_MARKETING = re.compile(r"\b(potentes?|poderos[oa]s?|increíbles?|revolucionari[oa]s?|"
-                        r"impresionantes?|líder(es)?|(el|la|los|las) mejor(es)?|"
-                        r"extremadamente|modern[oa]s?|(última|próxima) generación|"
-                        r"estándar(es)? de la industria)\b")
 
 def normalize(text: str) -> str:
     """Texto para comparar citas: sin formato Markdown, espacios unificados, minúsculas."""

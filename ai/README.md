@@ -17,7 +17,9 @@ modelo de embeddings: `load_repos(source="sample")`.
 
 **Búsqueda semántica.** Dada la necesidad de un cliente en lenguaje natural (en español o inglés),
 devuelve los repos del catálogo más parecidos por significado, con filtros por licencia,
-health score y categoría.
+health score y categoría. El texto de cada repo incluye el resumen y los casos de uso que
+genera la IA; umbral de "sin evidencia" 0,23 (detalle en
+[`eval/SEARCH_DECISION.md`](eval/SEARCH_DECISION.md)).
 
 **Evaluación de la búsqueda.** Dos golden sets (catálogo real y datos de ejemplo), métricas
 (hit@3, MRR, recall) y umbral de "sin evidencia", con un solo comando. Resultados y

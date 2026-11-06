@@ -1,6 +1,7 @@
 """Búsqueda semántica sobre el catálogo de repos."""
 
 from collections.abc import Collection
+from typing import Literal
 
 import numpy as np
 from pydantic import BaseModel
@@ -22,35 +23,63 @@ NOISE_TOPICS = frozenset({
 # Licencias que no se pueden confirmar
 UNCONFIRMED_LICENSES = frozenset({None, "NOASSERTION"})
 
+# Partes del texto que vienen de la IA. Sin ninguna: nombre, descripción y topics.
+TextField = Literal["categories", "summary", "use_cases"]
+# Las que usa la búsqueda. Sin categorías (medido en ai/eval/SEARCH_DECISION.md).
+TEXT_FIELDS: tuple[TextField, ...] = ("summary", "use_cases")
+
+# Variantes para medir (python -m ai.eval.run_search_eval --texto). Las cuatro primeras
+# forman una cadena: cada una suma un dato de la IA a la anterior.
+TEXT_VARIANTS: dict[str, tuple[TextField, ...]] = {
+    "base": (),
+    "categorias": ("categories",),
+    "resumen": ("categories", "summary"),
+    "casos": ("categories", "summary", "use_cases"),
+    # Sin la descripción genérica de la categoría, que acerca consultas sin respuesta.
+    "sin-categorias": ("summary", "use_cases"),
+}
+
 
 def clean_topics(topics: list[str]) -> list[str]:
     """Topics sin los de `NOISE_TOPICS`, en su orden original."""
     return [t for t in topics if t not in NOISE_TOPICS]
 
 
-def build_embedding_text(repo: Repo, categories: dict[str, Category]) -> str:
+def build_embedding_text(repo: Repo, categories: dict[str, Category],
+                         fields: tuple[TextField, ...] = TEXT_FIELDS) -> str:
     """Texto que representa el repo en la búsqueda.
 
-    Orden: nombre -> categorías -> descripción -> topics.
-    Si el repo no tiene descripción, se omite esa parte.
+    Orden: nombre -> categorías -> resumen -> descripción -> topics -> casos de uso.
+    `fields` elige qué partes de la IA entran; las que faltan en el repo se omiten.
     """
     parts = [repo.full_name.split("/")[1] + "."]
 
-    for assignment in repo.categories:
-        category = categories[assignment.category_id]
-        parts.append(f"{category.name}: {category.description}")
+    if "categories" in fields:
+        for assignment in repo.categories:
+            category = categories[assignment.category_id]
+            parts.append(f"{category.name}: {category.description}")
+
+    if "summary" in fields and repo.summary_es:
+        parts.append(_sentence(repo.summary_es))
 
     description = (repo.description or "").strip()
     if description:
-        if not description.endswith((".", "!", "?")):
-            description += "."
-        parts.append(description)
+        parts.append(_sentence(description))
 
     topics = clean_topics(repo.topics)
     if topics:
         parts.append("Topics: " + ", ".join(topics) + ".")
 
+    if "use_cases" in fields and repo.use_cases:
+        parts.append("Usos: " + "; ".join(repo.use_cases) + ".")
+
     return " ".join(parts)
+
+
+def _sentence(text: str) -> str:
+    """El texto sin espacios en los extremos y terminado en punto."""
+    text = text.strip()
+    return text if text.endswith((".", "!", "?")) else text + "."
 
 
 class SearchResult(BaseModel):
@@ -72,13 +101,17 @@ class SearchIndex:
         self.vectors = vectors
 
     @classmethod
-    def build(cls, source: Source = DEFAULT_SOURCE) -> "SearchIndex":
-        """Carga el catálogo del origen elegido y calcula sus vectores con el modelo."""
+    def build(cls, source: Source = DEFAULT_SOURCE,
+              fields: tuple[TextField, ...] = TEXT_FIELDS) -> "SearchIndex":
+        """Carga el catálogo del origen elegido y calcula sus vectores con el modelo.
+
+        `fields`: partes de la IA que entran al texto (para medir variantes).
+        """
         from ai import embeddings   # Se importa aquí por torch
 
         repos = load_repos(source)
         categories = load_categories()
-        texts = [build_embedding_text(r, categories) for r in repos]
+        texts = [build_embedding_text(r, categories, fields) for r in repos]
         return cls(repos, embeddings.embed_documents(texts))
 
     def search(self,

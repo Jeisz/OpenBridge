@@ -21,11 +21,11 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-from ai.catalog import DATA_DIR, load_categories, load_repos
+from ai.catalog import ENRICHMENT_FILE, load_categories, load_repos
 from ai.enrich import PROMPT_VERSION, README_CHARS, enrich_repo, input_hash, readme_input, user_message
 from ai.llm import PROVIDERS, LLMError, LLMRateLimited, LLMUnavailable
 
-OUT_FILE = DATA_DIR / "catalog" / "enrichment.json"
+OUT_FILE = ENRICHMENT_FILE
 WAIT_SECONDS = 30.0      # espera ante un límite por minuto que no dice cuánto esperar
 MAX_WAIT_SECONDS = 120   # si el proveedor pide más, es el límite del día: se detiene
 MAX_WAITS = 5            # esperas seguidas por el mismo repo antes de rendirse

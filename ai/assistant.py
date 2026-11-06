@@ -33,6 +33,9 @@ TITLE_CHARS = 80         # límite del contrato
 CANDIDATES_SHOWN = 5    # candidatos por necesidad que ve el modelo
 CANDIDATES_LOGGED = 5   # los que se registran para medir el techo de la búsqueda
 BUDGET_SECONDS = 15.0   # tiempo de la IA por pedido (contrato: el frontend espera 20 s)
+BUDGET_SECONDS = 15.0   # tiempo de la IA por pedido (contrato: el frontend espera 20 s)
+
+Understood = LLMResult  # nombre que usan las métricas de entender
 
 UNDERSTAND_RULES = """Eres el primer paso de un asistente que recomienda herramientas open source
 para construir el sistema de un negocio. Tu tarea: leer el pedido del usuario
@@ -163,9 +166,6 @@ def rule_problems(data: BaseModel) -> list[str]:
     if not data.needs and not data.clarification_questions:
         problems.append("sin necesidades, escribe de 1 a 3 preguntas en clarification_questions")
     return problems
-
-
-Understood = LLMResult  # nombre que usan las métricas de entender
 
 
 def entender(request: str, *, provider: str | None = None,
