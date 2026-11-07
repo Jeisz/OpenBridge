@@ -6,6 +6,7 @@ import {HeroLights} from '../../HeroLights';
 import {promptMotion} from '../../promptPresentation.mjs';
 import {StackProposal} from './StackProposal';
 import {PromptComposer} from './PromptComposer';
+import {WorkingWords} from './WorkingWords';
 export function Assistant({flow,workspace=false}){
  const host=useRef(null);
  useLayoutEffect(()=>{
@@ -19,9 +20,12 @@ export function Assistant({flow,workspace=false}){
   if(!workspace||!slot?.dataset.dockOrigin)return;
   const origin=JSON.parse(slot.dataset.dockOrigin);delete slot.dataset.dockOrigin;
   if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
-  const target=slot.getBoundingClientRect();
-  const options={duration:620,easing:'cubic-bezier(.16,1,.3,1)'};
+  // Child layout effects have sized the textarea; dock CSS has no geometry
+  // transitions, so these are the final natural bounds, not an intermediate frame.
   const form=slot.querySelector('form');
+  const target=form.getBoundingClientRect();
+  // A gentler launch and longer deceleration let the dock settle without a snap.
+  const options={duration:780,easing:'cubic-bezier(.22,.75,.18,1)'};
   const resize=form.animate([{height:`${origin.height}px`},{height:`${form.getBoundingClientRect().height}px`}],options);
   const animation=slot.animate([{translate:`${origin.left-target.left}px ${origin.top+origin.height-target.bottom}px`},{translate:'0px 0px'}],options);
   const reduced=matchMedia('(prefers-reduced-motion: reduce)');
@@ -35,9 +39,23 @@ export function Assistant({flow,workspace=false}){
  const headerActive=expanded||Boolean(error);
  const heading=pending?'Preparando tu stack':errorCopy?errorCopy.title:assistantResponse?.title||({needs_clarification:'Precisemos tu idea',no_evidence:'Sin evidencia suficiente'}[assistantResponse?.status]||'Tu arquitectura');
  const description=pending?(slow?'La solicitud está tardando más de lo habitual.':'Estamos generando tu propuesta.'):errorCopy?errorCopy.description:assistantResponse?.summary||'';
+ const headerSizes=useRef(new Map());
+ useLayoutEffect(()=>{
+  const animations=[];
+  for(const selector of ['.prompt-heading','.prompt-intro']){
+   const element=host.current?.querySelector(selector);if(!element)continue;
+   const height=element.getBoundingClientRect().height;
+   const previous=headerSizes.current.get(selector);
+   headerSizes.current.set(selector,height);
+   if(previous!==undefined&&Math.abs(previous-height)>1&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
+    animations.push(element.animate([{height:`${previous}px`},{height:`${height}px`}],{duration:360,easing:'cubic-bezier(.22,1,.36,1)'}));
+   }
+  }
+  return()=>animations.forEach(animation=>animation.cancel());
+ },[heading,description]);
  return (<div ref={host} className={'hero'+(workspace?' assistant-workspace':'')}><HeroLights inputRef={input}/><section id="asistente"><div className={'hero-inner'+(expanded?' has-architecture':'')+(error?' has-request-error':'')} style={Object.fromEntries([...Object.entries(promptMotion).filter(([key])=>key!=='ease').map(([key,value])=>[`--prompt-${key}-duration`,`${value}ms`]),['--prompt-ease',promptMotion.ease]])}>
  <div className="prompt-heading"><div className="prompt-heading-initial" aria-hidden={headerActive}><RevealHeading as="h1" text="De tu idea a tu stack" gradientWord="stack" mobileBreak/></div><h1 ref={resultHeading} tabIndex={-1} className="prompt-heading-result" aria-hidden={!headerActive}><span className={'assistant-heading-content'+(pending?' is-pending':'')}><span className="assistant-light-loader" aria-hidden="true"/><span key={heading} className="assistant-heading-copy">{pending?<>Preparando tu <span className="gradient-word"><span className="reveal-letter" data-glow="stack" style={{'--word-play-state':'running'}}>stack</span></span></>:heading}</span></span></h1></div>
- <div className="prompt-intro" role="status" aria-live="polite" aria-atomic="true"><p className="intro intro-initial" aria-hidden={headerActive}>Describe lo que quieres construir y descubre las herramientas open source para hacerlo realidad.</p><p id="prompt-error" className="intro intro-result" aria-hidden={!headerActive}><span key={description} className="assistant-heading-copy">{description}</span></p></div>
+ <div className="prompt-intro" role="status" aria-live="polite" aria-atomic="true"><p className="intro intro-initial" aria-hidden={headerActive}>Describe lo que quieres construir y descubre las herramientas open source para hacerlo realidad.</p><p id="prompt-error" className={'intro intro-result'+(pending?' intro-working':'')} aria-hidden={!headerActive}>{pending&&!slow?<WorkingWords/>:<span key={description} className="assistant-heading-copy">{description}</span>}</p></div>
  <StackProposal expanded={expanded} pending={pending} hasResult={hasResult} slow={slow} response={assistantResponse} originalPrompt={originalPrompt}/>
 
  <PromptComposer {...flow} workspace={workspace} exampleReveal={exampleReveal}/>

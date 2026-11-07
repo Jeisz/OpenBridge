@@ -1,0 +1,123 @@
+{
+  "version": 1,
+  "catalog_taken_at": "2026-10-29T20:42:17+00:00",
+  "cases": [
+    {
+      "id": "ferreteria-sucursales",
+      "query": "Una cadena de ferreterías con cinco sucursales quiere un sistema interno donde cada sucursal vea solo su propio inventario y sus ventas, y que las consultas repetidas al catálogo de productos respondan rápido.",
+      "expected_status": "ok",
+      "needs": [
+        {"category": "auth", "acceptable": [], "note": "\"Cada sucursal vea solo lo suyo\": permisos por usuario o rol. El catálogo no tiene gestión de identidad ni de permisos; vault guarda secretos, no maneja usuarios."},
+        {"category": "cache", "acceptable": ["redis/redis"], "note": "\"Consultas repetidas respondan rápido\": caché en memoria. Licencia: el README indica que desde la 8.x se puede usar bajo AGPLv3."}
+      ],
+      "note": "Mezcla una necesidad sin herramienta (permisos) con una que sí la tiene."
+    },
+    {
+      "id": "domicilios-push",
+      "query": "Una app de domicilios quiere enviar una notificación al celular del cliente cuando su pedido salga del restaurante, y generar en segundo plano el recibo en PDF de cada pedido para no demorar la app.",
+      "expected_status": "ok",
+      "needs": [
+        {"category": "communication", "acceptable": [], "note": "\"Notificación al celular\": notificaciones push. El catálogo no tiene un servicio de notificaciones; alertmanager enruta alertas de monitoreo."},
+        {"category": "messaging", "acceptable": ["celery/celery"], "note": "\"Generar en segundo plano\": cola de tareas. kafka no: transmite eventos, no ejecuta tareas. Licencia: el README indica BSD."}
+      ],
+      "note": "La app es del usuario; las necesidades son el aviso y el trabajo en segundo plano."
+    },
+    {
+      "id": "red-mascotas-grafos",
+      "query": "Estamos armando una red social para dueños de mascotas y queremos guardar quién conoce a quién en una base de datos de grafos, para sugerir amigos de amigos.",
+      "expected_status": "no_evidence",
+      "needs": [
+        {"category": "database", "acceptable": [], "note": "\"Base de datos de grafos\": el catálogo tiene bases analíticas, clave-valor y en memoria, ninguna de grafos."}
+      ],
+      "note": "Casi dentro de una categoría que sí tiene repos: hay bases de datos, pero no del tipo pedido."
+    },
+    {
+      "id": "mercadeo-sitio-vue",
+      "query": "Una agencia de mercadeo va a rehacer su sitio web con un framework basado en Vue, y quiere que su equipo, que no sabe programar, cambie los textos y los banners sin pedírselo a los desarrolladores.",
+      "expected_status": "ok",
+      "needs": [
+        {"category": "frontend", "acceptable": ["nuxt/nuxt", "vuejs/core"], "note": "\"Framework basado en Vue\" para construir el sitio."},
+        {"category": "cms", "acceptable": [], "note": "\"Cambie los textos sin programar\": gestor de contenidos. El catálogo no tiene CMS; astro o storybook construyen o documentan interfaces, no las edita una persona no técnica."}
+      ],
+      "note": "El frontend sí es necesidad: pide un framework."
+    },
+    {
+      "id": "laboratorio-respaldos",
+      "query": "Un laboratorio clínico quiere copias de seguridad automáticas de los resultados de sus exámenes cada noche, guardadas fuera del servidor principal, y un tablero que muestre cuántas muestras procesa cada sede por día.",
+      "expected_status": "ok",
+      "needs": [
+        {"category": "storage", "acceptable": [], "note": "\"Copias de seguridad guardadas fuera del servidor\": almacenamiento y respaldos. El catálogo no tiene almacenamiento de archivos ni de respaldos."},
+        {"category": "analytics", "acceptable": ["grafana/grafana"], "note": "\"Tablero que muestre cuántas muestras\": visualización en tableros, como en los casos anteriores que aceptan grafana."}
+      ],
+      "note": "Mezcla una necesidad sin herramienta con una de tableros."
+    },
+    {
+      "id": "cosmeticos-facturas-embudo",
+      "query": "Una tienda en línea de cosméticos necesita emitir la factura electrónica de cada venta y saber en qué paso del proceso de compra abandonan los clientes.",
+      "expected_status": "no_evidence",
+      "needs": [
+        {"category": "payments", "acceptable": [], "note": "\"Emitir la factura electrónica\": facturación. El catálogo no tiene herramientas de facturación ni de pagos."},
+        {"category": "analytics", "acceptable": [], "note": "\"En qué paso abandonan\": embudos de analítica de producto, que requieren registrar los eventos de cada usuario. grafana visualiza datos que ya existen, no registra ni calcula embudos."}
+      ],
+      "note": "La analítica de embudos es un \"casi\" frente a grafana, que sí sirve para tableros."
+    },
+    {
+      "id": "empresa-aprobaciones",
+      "query": "Una empresa de 200 empleados quiere que las solicitudes de vacaciones sigan un flujo de aprobación: el empleado la pide, su jefe la aprueba y recursos humanos la registra.",
+      "expected_status": "no_evidence",
+      "needs": [
+        {"category": "automation", "acceptable": [], "note": "\"Flujo de aprobación\" entre personas. airflow, prefect y dagster orquestan procesos de datos que ejecuta código, no aprobaciones de personas."}
+      ],
+      "note": "Casi dentro de una categoría que sí tiene repos (orquestación)."
+    },
+    {
+      "id": "startup-trazas-gitops",
+      "query": "Una startup tiene diez microservicios en Python sobre Kubernetes. Quiere ver por dónde pasa cada solicitud entre servicios para encontrar dónde se demora, y que cada cambio aprobado en el repositorio se despliegue solo en su clúster.",
+      "expected_status": "ok",
+      "needs": [
+        {"category": "observability", "acceptable": ["jaegertracing/jaeger", "open-telemetry/opentelemetry-collector"], "note": "\"Ver por dónde pasa cada solicitud\": trazas distribuidas."},
+        {"category": "infrastructure", "acceptable": ["argoproj/argo-cd", "fluxcd/flux2"], "note": "\"Cada cambio en el repositorio se despliegue solo\" en Kubernetes: entrega continua con GitOps."}
+      ],
+      "note": "Kubernetes y Python son contexto, no necesidades. Dos necesidades con herramienta: mide falsos negativos."
+    },
+    {
+      "id": "artesanias-chat-busqueda",
+      "query": "Un marketplace de artesanías quiere un chat en tiempo real entre compradores y vendedores dentro de la página, y un buscador de productos que encuentre resultados aunque el comprador escriba con errores.",
+      "expected_status": "ok",
+      "needs": [
+        {"category": "communication", "acceptable": [], "note": "\"Chat entre compradores y vendedores\": comunicación con personas. kafka y celery comunican servicios entre sí, no personas."},
+        {"category": "search", "acceptable": ["opensearch-project/OpenSearch"], "note": "\"Encuentre resultados aunque escriba con errores\": búsqueda de texto completo."}
+      ],
+      "note": "El chat es un \"casi\" frente a la mensajería entre servicios."
+    },
+    {
+      "id": "distribuidora-datos",
+      "query": "El equipo de datos de una distribuidora quiere transformar las ventas crudas en tablas limpias usando SQL versionado y con pruebas, y guardar el resultado en una base analítica rápida para consultar millones de filas.",
+      "expected_status": "ok",
+      "needs": [
+        {"category": "data-processing", "acceptable": ["dbt-labs/dbt"], "note": "\"Transformar con SQL versionado y con pruebas\": dbt."},
+        {"category": "database", "acceptable": ["ClickHouse/ClickHouse", "duckdb/duckdb"], "note": "\"Base analítica para millones de filas\"."}
+      ],
+      "note": "Solo necesidades con herramienta: mide falsos negativos."
+    },
+    {
+      "id": "revista-cdn",
+      "query": "Una revista digital con lectores en toda Latinoamérica quiere que sus fotos carguen rápido en cualquier país, servidas desde servidores cercanos a cada lector.",
+      "expected_status": "no_evidence",
+      "needs": [
+        {"category": "infrastructure", "acceptable": [], "note": "\"Servidas desde servidores cercanos a cada lector\": red de distribución de contenido. nginx o caddy sirven y cachean desde un servidor propio, no reparten el contenido entre países."}
+      ],
+      "note": "Casi dentro de una categoría que sí tiene repos (servidores web)."
+    },
+    {
+      "id": "instituto-videoclases",
+      "query": "Un instituto de idiomas quiere dar clases en vivo por videollamada desde el navegador y guardar las grabaciones para que los estudiantes las vean después.",
+      "expected_status": "no_evidence",
+      "needs": [
+        {"category": "communication", "acceptable": [], "note": "\"Clases por videollamada\": el catálogo no tiene videollamadas; playwright automatiza navegadores para pruebas."},
+        {"category": "storage", "acceptable": [], "note": "\"Guardar las grabaciones\": almacenamiento de video. Sin repos de almacenamiento."}
+      ],
+      "note": "Dos necesidades sin herramienta."
+    }
+  ]
+}

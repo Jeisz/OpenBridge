@@ -12,7 +12,7 @@ Con una fecha límite (Deadline), cada intento usa solo el tiempo que queda.
 
 import os
 import time
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from functools import lru_cache
 from pydantic import BaseModel, ValidationError
 
@@ -70,6 +70,19 @@ PROVIDERS = {
         base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
         api_key_env="GEMINI_API_KEY",
         # Modelo abierto en la API de Gemini; mucha más cuota diaria que los Gemini.
+    ),
+    "claude-haiku-razona": ProviderSpec(
+        model="claude-haiku-5-5",
+        base_url="https://api.anthropic.com/v1/",
+        api_key_env="ANTHROPIC_API_KEY",
+        # Igual que claude-haiku, pero razonando (por defecto en Claude 5): más lento,
+        # útil en procesos por lotes sin usuario esperando, como el enriquecimiento.
+    ),
+    "claude-sonnet": ProviderSpec(
+        model="claude-sonnet-5-5",
+        base_url="https://api.anthropic.com/v1/",
+        api_key_env="ANTHROPIC_API_KEY",
+        # Modelo grande de Anthropic, de pago. Razona por defecto; no acepta temperatura.
     ),
     "claude-haiku": ProviderSpec(
         model="claude-haiku-5-5",
@@ -346,3 +359,67 @@ def generar(messages: list[dict], *,
         if breaker and slow:
             _open_until[key] = time.monotonic() + COOLDOWN_SECONDS
     raise last_error
+
+
+# --- Respuesta validada, con un reintento ---
+
+@dataclass
+class LLMResult:
+    """Respuesta validada de un paso con LLM, con lo que hace falta para medirla."""
+
+    data: BaseModel | None = None          # None = ningún intento cumplió el esquema
+    attempts: int = 0
+    problems_first: list[str] = field(default_factory=list)  # del primer intento
+    problems_final: list[str] = field(default_factory=list)  # vacío = válida
+    seconds: float = 0.0
+    input_tokens: int = 0
+    output_tokens: int = 0
+
+
+def generate_valid(messages: list[dict], schema: type[BaseModel],
+                   check, provider: str | None,
+                   format_hint: str | None = None,
+                   deadline: Deadline | None = None) -> LLMResult:
+    """Llama al modelo y reintenta una vez si la respuesta no cumple el esquema o las reglas.
+
+    `check` recibe la respuesta ya validada contra `schema` y devuelve la lista de
+    reglas que no cumple (vacía = cumple).
+    `format_hint` se suma al aviso cuando la respuesta no cumple el formato: dice qué
+    valores son válidos, porque el error del proveedor no lo dice.
+    Con `deadline`, si no queda tiempo para el reintento, generar() lanza LLMTimeout.
+    """
+    out = LLMResult()
+    for attempt in (1, 2):
+        out.attempts = attempt
+        start = time.perf_counter()
+        try:
+            result = generar(messages, schema=schema, provider=provider, deadline=deadline)
+        except LLMInvalidResponse as err:
+            out.data, raw = None, err.raw_text
+            problems = [f"la respuesta no cumple el formato pedido: {err.detail}"]
+            if format_hint:
+                problems.append(format_hint)
+        else:
+            out.data, raw = result.data, result.text
+            out.input_tokens += result.input_tokens or 0
+            out.output_tokens += result.output_tokens or 0
+            problems = check(result.data)
+        out.seconds += time.perf_counter() - start
+
+        if attempt == 1:
+            out.problems_first = problems
+        out.problems_final = problems
+        if not problems:
+            break
+        # Reintento: el modelo ve su respuesta y qué reglas no cumplió.
+        # Si el proveedor no devolvió el texto fallido, se envía un aviso:
+        # algunos proveedores rechazan un mensaje del asistente vacío.
+        messages = messages + [
+            {"role": "assistant", "content": raw or "(respuesta vacía)"},
+            {"role": "user", "content": "Tu respuesta no cumple estas reglas:\n- "
+                                        + "\n- ".join(problems)
+                                        + "\nCorrígela y responde otra vez con el mismo formato."},
+        ]
+
+    out.seconds = round(out.seconds, 2)
+    return out

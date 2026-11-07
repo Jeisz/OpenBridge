@@ -18,7 +18,7 @@ def found(*names):
 
 
 def assisted(results, pick, other_limitations=(), title="Observabilidad", missing=(),
-             rationale="Razón.", final_extra=()):
+             rationale="Razón.", final_extra=(), fit=None):
     """Una corrida: entender detectó observability (más `missing`, sin candidatos)
     y el modelo eligió `pick`. La respuesta final la arma `to_response`, como en el flujo;
     `final_extra` agrega limitaciones a la respuesta final, para probar la métrica sola."""
@@ -29,8 +29,10 @@ def assisted(results, pick, other_limitations=(), title="Observabilidad", missin
     names = [r.repo.full_name for r in results]
     draft = assistant.draft_schema(["observability"], names)(
         title=title, summary="Resumen.",
-        boxes=[{"need": "observability", "full_name": pick, "label": "Herramienta",
-                "role": "Rol", "rationale": rationale}],
+        boxes=[{"need": "observability", "fit_check": "Pide algo; el candidato hace algo.",
+                "fit": fit or ("serves" if pick else "only_related"),
+                "full_name": pick, "label": "Herramienta", "role": "Rol",
+                "rationale": rationale}],
         links=[], assumptions=[], other_limitations=list(other_limitations))
     found_ = {"observability": results, **{c: [] for c in missing}}
     response = assistant.to_response(draft, understood.needs, found_)
@@ -115,7 +117,7 @@ def test_textos_del_modelo_que_hablan_del_catalogo():
                    other_limitations=["ClickHouse no está en el catálogo."],
                    rationale="Es el candidato más mantenido.", missing=["auth"])
     o = flow_outcome(CASE, "fake", 1, run)
-    # La línea del sistema ("Autenticación: el catálogo no tiene…") no cuenta: no es del modelo.
+    # La línea del sistema ("Autenticación: no se encontraron…") no cuenta: no es del modelo.
     assert o.catalog_claims == 1
 
 
@@ -146,3 +148,8 @@ def test_acierto_de_punta_a_punta_no_depende_de_k():
     for shown in (3, 5):
         s = summarize([flow_outcome(CASE, "fake", 1, run, shown=shown)])
         assert s["chose_ok_all"] == 1.0   # misma cuenta con cualquier k
+
+
+def test_solo_relacionado_cuenta_como_abstencion():
+    run = assisted(found("helm/helm"), "helm/helm", fit="only_related")
+    assert flow_outcome(CASE, "fake", 1, run).needs[0].chosen is None

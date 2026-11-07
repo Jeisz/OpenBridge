@@ -33,9 +33,11 @@ def needs(*categories):
         clarification_questions=[]).needs
 
 
-def box(full_name="run-llama/llama_index", need="ai"):
-    return {"need": need, "full_name": full_name, "label": "Herramienta",
-            "role": "Rol", "rationale": "Razón."}
+def box(full_name="run-llama/llama_index", need="ai", fit=None):
+    """Una caja del borrador. Sin `fit`, el que corresponde: con repo sirve, sin repo no."""
+    return {"need": need, "fit_check": "Pide algo; el candidato hace algo.",
+            "fit": fit or ("serves" if full_name else "only_related"),
+            "full_name": full_name, "label": "Herramienta", "role": "Rol", "rationale": "Razón."}
 
 
 def draft(boxes, links=(), title="RAG privado", other=()):
@@ -90,6 +92,8 @@ def test_esquema_acepta_ninguno():
     ([box()], "RAG privado", "faltan cajas para: cache"),
     ([box(), box("langchain-ai/langchain"), box("redis/redis", need="cache")],
      "RAG privado", "más de una caja"),
+    ([box(), box(None, need="cache", fit="serves")], "RAG privado",
+     "fit es serves pero full_name es null"),
     (VALID, "x" * 81, "el máximo es 80"),
 ])
 def test_reglas_del_borrador(boxes, title, expected):
@@ -111,8 +115,8 @@ def test_caja_descartada_conexion_invalida_y_necesidad_sin_candidatos():
     assert response.status == "ok"
     assert [c.full_name for c in response.components] == ["run-llama/llama_index"]
     assert response.connections == []        # apuntaba a la caja descartada
-    assert response.limitations[0].startswith("Caché: ninguna herramienta")
-    assert response.limitations[1].startswith("Autenticación: el catálogo no tiene")
+    assert response.limitations[0].startswith("Caché: ninguna de las herramientas encontradas")
+    assert response.limitations[1].startswith("Autenticación: no se encontraron herramientas")
     assert response.limitations[-1] == "Otra limitación."
 
 
@@ -123,8 +127,8 @@ def test_limitaciones_del_modelo_que_repiten_una_necesidad_sin_herramienta_se_qu
                      "LangChain podría complementar a LlamaIndex."])
     response = assistant.to_response(d, needs("ai", "cache", "auth"), CANDIDATES)
     assert response.limitations == [
-        response.limitations[0],                  # "Caché: ninguna herramienta…" (sistema)
-        response.limitations[1],                  # "Autenticación: el catálogo no tiene…" (sistema)
+        response.limitations[0],                  # "Caché: ninguna de las herramientas…" (sistema)
+        response.limitations[1],                  # "Autenticación: no se encontraron…" (sistema)
         "LangChain podría complementar a LlamaIndex.",
     ]
     assert response.limitations[0].startswith("Caché:")
@@ -151,6 +155,13 @@ def test_si_descarta_todo_queda_sin_evidencia():
                                      needs("ai", "cache"), CANDIDATES)
     assert response.status == "no_evidence"
     assert response.components == []
+
+
+def test_solo_relacionado_queda_sin_herramienta_aunque_traiga_nombre():
+    d = draft([box(), box("redis/redis", need="cache", fit="only_related")])
+    response = assistant.to_response(d, needs("ai", "cache"), CANDIDATES)
+    assert [c.full_name for c in response.components] == ["run-llama/llama_index"]
+    assert response.limitations[0].startswith("Caché: ninguna de las herramientas encontradas")
 
 
 def test_plantillas_cumplen_el_contrato():

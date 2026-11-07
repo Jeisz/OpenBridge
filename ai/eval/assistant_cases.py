@@ -7,7 +7,7 @@ la respuesta debería mencionarlo como limitación.
 
 Las reglas que comparan contra otros archivos (categorías, catálogo) viven en
 ai/tests/test_assistant_cases.py.
-Los casos de validación viven aparte (VALIDATION_CASES_FILE), con el mismo esquema.
+Los casos de validación y los reservados viven aparte, con el mismo esquema.
 """
 
 from pathlib import Path
@@ -21,7 +21,11 @@ ASSISTANT_CASES_FILE = EVAL_DIR / "assistant_cases.json"
 # Casos escritos para validar reglas nuevas del prompt. No se usan para ajustarlo:
 # si se ajusta mirándolos, dejan de medir lo que el asistente hace con pedidos nuevos.
 VALIDATION_CASES_FILE = EVAL_DIR / "assistant_cases_validation.json"
-CASE_FILES = {"base": ASSISTANT_CASES_FILE, "validation": VALIDATION_CASES_FILE}
+# Casos reservados: se escriben antes de cambiar el prompt y se corren solo con la línea
+# base y con la versión final. Sus textos no se leen para ajustar.
+HOLDOUT_CASES_FILE = EVAL_DIR / "assistant_cases_holdout.json"
+CASE_FILES = {"base": ASSISTANT_CASES_FILE, "validation": VALIDATION_CASES_FILE,
+              "holdout": HOLDOUT_CASES_FILE}
 
 # Mismos valores que el status de la respuesta del asistente.
 Status = AssistantResponse.model_fields["status"].annotation

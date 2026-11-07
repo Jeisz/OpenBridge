@@ -54,10 +54,11 @@ def test_pares_completos_y_distintos(golden):
         assert set(qs[0].expected) != set(qs[1].expected), f"par {name}: mismas respuestas"
 
 
-def test_golden_del_catalogo_lleva_la_fecha_del_snapshot_actual():
+@pytest.mark.parametrize("name", ["catalog", "catalog-validation"])
+def test_golden_del_catalogo_lleva_la_fecha_del_snapshot_actual(name):
     # Si el snapshot se renueva, este test falla a propósito: hay que revisar las
     # consultas (repos nuevos pueden responder las que hoy no tienen respuesta).
-    golden = load_search_queries("catalog")
+    golden = load_search_queries(name)
     assert golden.source == "snapshot"
     taken_at = datetime.fromisoformat(json.loads(META_FILE.read_text(encoding="utf-8"))["taken_at"])
     assert golden.catalog_taken_at == taken_at, (

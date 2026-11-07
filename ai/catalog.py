@@ -23,6 +23,8 @@ SOURCE_DIRS: dict[str, Path] = {
 }
 CATEGORIES_FILE = Path(__file__).resolve().parents[1] / "shared" / "contracts" / "categories.json"
 
+ENRICHMENT_FILE = SOURCE_DIRS["snapshot"] / "enrichment.json"  # lo escribe ai.scripts.enrich_catalog
+
 
 def source_dir(source: Source = DEFAULT_SOURCE) -> Path:
     """Carpeta de un origen. Lanza `ValueError` si el origen no existe."""

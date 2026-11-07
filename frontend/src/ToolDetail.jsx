@@ -5,14 +5,15 @@ import React,{useEffect,useState} from 'react';
 import {useCatalogData} from './data/CatalogProvider';
 import {IntegrationIdeas} from './IntegrationIdeas';
 import {IntegrationIdeasSkeleton} from './IntegrationIdeasSkeleton';
-import {Activity,ArrowLeft,ArrowUpRight} from 'lucide-react';
+import {Activity,ArrowLeft,ArrowUpRight,Star,GitPullRequest,GitCommitHorizontal,UserRound,Archive,Scale,Code2} from 'lucide-react';
 
 import {repositoryStatus,toolCategoryNames} from './data/catalog.mjs';
 import {useBrandIdentity,markBrandFailed} from './brandIdentity';
 
 export function ToolDetail({id,onBack}){
  const [tab,setTab]=useState('about');
- useEffect(()=>setTab('about'),[id]);
+ const [compact,setCompact]=useState(false);
+ useEffect(()=>{setTab('about');setCompact(false);},[id]);
  const {tools,profiles,http,categories,status,retry}=useCatalogData();
  const {original,fullName}=detailTarget(id,tools);
  const [remote,setRemote]=useState(null),[failed,setFailed]=useState(false),[attempt,setAttempt]=useState(0);
@@ -35,7 +36,7 @@ export function ToolDetail({id,onBack}){
  const hasHealth=Number.isFinite(detail.healthScore);
  const tone=!hasHealth?'unknown':detail.healthScore>=80?'good':detail.healthScore>=60?'moderate':'low';
  const logo=identity.logo;
- return <div className="tool-detail" style={{'--brand-start':brand.start,'--brand-end':brand.end,'--brand-tag':brand.tag}}>
+ return <div className="tool-detail" data-compact={compact} style={{'--brand-start':brand.start,'--brand-end':brand.end,'--brand-tag':brand.tag}}>
   <section className="detail-cover" data-tool-id={id} aria-label={`Portada de ${tool.name}`}>
    {identity.watermark && <img className="detail-watermark" src={identity.watermark} onError={()=>markBrandFailed('watermark:'+identity.watermark)} alt="" aria-hidden="true"/>}
    <div className="wrap detail-cover-inner">
@@ -45,12 +46,12 @@ export function ToolDetail({id,onBack}){
   <div className="detail-tabs" role="tablist" aria-label="Ficha técnica">
    {[['about','Acerca de'],['integrations','Integraciones']].map(([value,label])=><button key={value} id={`detail-tab-${value}`} role="tab" aria-selected={tab===value} aria-controls={`detail-panel-${value}`} tabIndex={tab===value?0:-1} onClick={()=>setTab(value)} onKeyDown={event=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(event.key)){event.preventDefault();const next=event.key==='Home'?'about':event.key==='End'?'integrations':tab==='about'?'integrations':'about';setTab(next);document.getElementById(`detail-tab-${next}`)?.focus();}}}>{label}</button>)}
   </div>
-  <div className="detail-body wrap">
+  <div className="detail-body wrap" onScroll={event=>{const top=event.currentTarget.scrollTop;if(top>80)setCompact(true);else if(top<=0)setCompact(false);}}>
    <div id="detail-panel-about" role="tabpanel" aria-labelledby="detail-tab-about" hidden={tab!=='about'}>
    <div className="detail-overview"><section>{profile.summary&&<><h2>Acerca de {tool.name}</h2><p className="detail-summary">{profile.summary}</p></>}
 </section>
    <aside className="detail-metrics" aria-label="Datos técnicos"><div className="detail-health"><h2>Salud del repositorio</h2><span className={`health-score health-score--${tone}`} role="img" aria-label={hasHealth?`Salud del repositorio: ${detail.healthScore} de 100`:'Salud sin evaluar'}><Activity className="health-icon" size={20}/><strong>{hasHealth?<>{detail.healthScore}<span>/100</span></>:<span>Sin evaluar</span>}</strong></span></div>
-   <dl>{[['Estrellas',tool.stars.toLocaleString('es-CL')],['Issues y PRs abiertos',detail.openIssues??'Sin datos'],['Último push',tool.activity],['Mantenedor activo',tool.maintained===true?'Sí':tool.maintained===false?'No':'Por confirmar'],['Repositorio',repositoryStatus(tool)],['Licencia',tool.license],['Lenguaje',tool.language]].map(([label,value])=><div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl></aside></div>
+   <dl>{[['Estrellas',tool.stars.toLocaleString('es-CL'),Star],['Issues y PRs abiertos',detail.openIssues??'Sin datos',GitPullRequest],['Último push',tool.activity,GitCommitHorizontal],['Mantenedor activo',tool.maintained===true?'Sí':tool.maintained===false?'No':'Por confirmar',UserRound],['Repositorio',repositoryStatus(tool),Archive],['Licencia',tool.license,Scale],['Lenguaje',tool.language,Code2]].map(([label,value,Icon])=><div key={label}><dt><Icon size={15} strokeWidth={1.5} aria-hidden="true"/>{label}</dt><dd>{value}</dd></div>)}</dl></aside></div>
    </div>
    <div id="detail-panel-integrations" role="tabpanel" aria-labelledby="detail-tab-integrations" hidden={tab!=='integrations'}>
    {failed&&<div role="alert"><p>{interfaceErrors.detail}</p><button className="ui-button ui-button--secondary" onClick={()=>setAttempt(n=>n+1)}>{errorActions.retry}</button></div>}

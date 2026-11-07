@@ -1,4 +1,4 @@
-"""Valida los casos de prueba del asistente: los de siempre y los de validación.
+"""Valida los casos de prueba del asistente: los de siempre, los de validación y los reservados.
 
 Sin base de datos ni modelo de lenguaje. Correr desde la raíz del repo:
     python -m pytest ai/tests/test_assistant_cases.py -v
@@ -6,6 +6,7 @@ Sin base de datos ni modelo de lenguaje. Correr desde la raíz del repo:
 
 import json
 from datetime import datetime
+from itertools import combinations
 
 import pytest
 from pydantic import ValidationError
@@ -72,13 +73,15 @@ def test_casos_escritos_con_el_catalogo_actual(case_set):
     )
 
 
-def test_validacion_separada_de_la_base():
-    # Los casos de validación miden pedidos que el prompt no vio: no pueden repetir los de la base.
-    base = load_assistant_cases(CASE_FILES["base"]).cases
-    validation = load_assistant_cases(CASE_FILES["validation"]).cases
-    assert not {c.id for c in base} & {c.id for c in validation}, "id repetido entre archivos"
-    assert not {c.query for c in base} & {c.query for c in validation}, "pedido repetido entre archivos"
-    assert not any(c.quick_set for c in validation), "los casos rápidos son de la base"
+def test_archivos_de_casos_separados():
+    # Cada archivo mide algo distinto: ningún caso puede repetirse entre ellos.
+    sets = {name: load_assistant_cases(path).cases for name, path in CASE_FILES.items()}
+    for a, b in combinations(sorted(sets), 2):
+        assert not {c.id for c in sets[a]} & {c.id for c in sets[b]}, f"id repetido entre {a} y {b}"
+        assert not {c.query for c in sets[a]} & {c.query for c in sets[b]}, (
+            f"pedido repetido entre {a} y {b}")
+    assert not any(c.quick_set for name, cases in sets.items() if name != "base" for c in cases), (
+        "los casos rápidos son de la base")
 
 
 # --- Reglas del esquema ---

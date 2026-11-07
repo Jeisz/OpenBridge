@@ -50,7 +50,7 @@ export function ProposalTabs({response}){
  const select=(index)=>{setTab(index===0?'tools':'connections');tabs.current[index]?.focus();};
  const onKeyDown=e=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();select(e.key==='Home'?0:e.key==='End'?1:tab==='tools'?1:0);}};
  return <div className="proposal-tabs">
-  <div role="tablist" aria-label="Propuesta de arquitectura" onKeyDown={onKeyDown}>
+  <div role="tablist" data-active={tab} aria-label="Propuesta de arquitectura" onKeyDown={onKeyDown}>
    {[['tools','Herramientas',response.components.length,Layers3],['connections','Conexiones',connections.length,Workflow]].map(([key,label,count,Icon],index)=><button key={key} ref={el=>{tabs.current[index]=el;}} id={'proposal-tab-'+key} type="button" role="tab" aria-selected={tab===key} aria-controls={'proposal-panel-'+key} tabIndex={tab===key?0:-1} onClick={()=>setTab(key)}><Icon size={17} aria-hidden="true"/>{label}<span>{count}</span></button>)}
   </div>
   <div className="proposal-panels">

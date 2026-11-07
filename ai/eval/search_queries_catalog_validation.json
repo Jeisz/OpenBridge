@@ -1,0 +1,304 @@
+{
+  "version": 1,
+  "source": "snapshot",
+  "catalog_taken_at": "2026-10-29T20:42:17+00:00",
+  "queries": [
+    {
+      "id": "cola-tareas",
+      "query": "cola de tareas en segundo plano",
+      "expected": [
+        "celery/celery"
+      ],
+      "pair": null,
+      "note": "Escrita para validar el texto de búsqueda con consultas nuevas. Tareas asíncronas: celery. kafka no: transmite eventos, no ejecuta tareas."
+    },
+    {
+      "id": "transformacion-sql",
+      "query": "transformación de datos con SQL versionado",
+      "expected": [
+        "dbt-labs/dbt"
+      ],
+      "pair": null,
+      "note": "Escrita para validar el texto de búsqueda con consultas nuevas."
+    },
+    {
+      "id": "db-embebida",
+      "query": "base de datos analítica dentro de la aplicación",
+      "expected": [
+        "duckdb/duckdb"
+      ],
+      "pair": null,
+      "note": "Escrita para validar el texto de búsqueda con consultas nuevas. duckdb corre dentro del proceso."
+    },
+    {
+      "id": "clave-valor",
+      "query": "almacén clave-valor distribuido y consistente",
+      "expected": [
+        "etcd-io/etcd"
+      ],
+      "pair": null,
+      "note": "Escrita para validar el texto de búsqueda con consultas nuevas."
+    },
+    {
+      "id": "https-automatico",
+      "query": "servidor web con certificados HTTPS automáticos",
+      "expected": [
+        "caddyserver/caddy",
+        "traefik/traefik"
+      ],
+      "pair": null,
+      "note": "Escrita para validar el texto de búsqueda con consultas nuevas."
+    },
+    {
+      "id": "certificados-k8s",
+      "query": "gestión de certificados TLS en Kubernetes",
+      "expected": [
+        "cert-manager/cert-manager"
+      ],
+      "pair": null,
+      "note": "Escrita para validar el texto de búsqueda con consultas nuevas."
+    },
+    {
+      "id": "paquetes-k8s",
+      "query": "empaquetado y despliegue de aplicaciones en Kubernetes",
+      "expected": [
+        "helm/helm"
+      ],
+      "pair": null,
+      "note": "Escrita para validar el texto de búsqueda con consultas nuevas."
+    },
+    {
+      "id": "malla-servicios",
+      "query": "malla de servicios entre microservicios",
+      "expected": [
+        "istio/istio",
+        "envoyproxy/envoy"
+      ],
+      "pair": null,
+      "note": "Escrita para validar el texto de búsqueda con consultas nuevas. envoy es el proxy sobre el que se arman mallas de servicios."
+    },
+    {
+      "id": "red-contenedores",
+      "query": "políticas de red entre contenedores",
+      "expected": [
+        "cilium/cilium",
+        "istio/istio"
+      ],
+      "pair": null,
+      "note": "Escrita para validar el texto de búsqueda con consultas nuevas."
+    },
+    {
+      "id": "datos-tabulares",
+      "query": "manipulación de datos tabulares en Python",
+      "expected": [
+        "pandas-dev/pandas"
+      ],
+      "pair": null,
+      "note": "Escrita para validar el texto de búsqueda con consultas nuevas."
+    },
+    {
+      "id": "redes-neuronales",
+      "query": "entrenamiento de redes neuronales profundas",
+      "expected": [
+        "pytorch/pytorch",
+        "tensorflow/tensorflow"
+      ],
+      "pair": null,
+      "note": "Escrita para validar el texto de búsqueda con consultas nuevas."
+    },
+    {
+      "id": "ml-clasico",
+      "query": "modelos clásicos de aprendizaje automático",
+      "expected": [
+        "scikit-learn/scikit-learn"
+      ],
+      "pair": null,
+      "note": "Escrita para validar el texto de búsqueda con consultas nuevas."
+    },
+    {
+      "id": "api-llm",
+      "query": "conexión con la API de un modelo de lenguaje",
+      "expected": [
+        "anthropics/anthropic-sdk-python",
+        "openai/openai-python",
+        "langchain-ai/langchain"
+      ],
+      "pair": null,
+      "note": "Escrita para validar el texto de búsqueda con consultas nuevas."
+    },
+    {
+      "id": "componentes-ui",
+      "query": "interfaz web con componentes reutilizables",
+      "expected": [
+        "react/react",
+        "vuejs/core",
+        "sveltejs/svelte"
+      ],
+      "pair": null,
+      "note": "Escrita para validar el texto de búsqueda con consultas nuevas."
+    },
+    {
+      "id": "estilos-ui",
+      "query": "estilos de interfaz con clases utilitarias",
+      "expected": [
+        "tailwindlabs/tailwindcss"
+      ],
+      "pair": null,
+      "note": "Escrita para validar el texto de búsqueda con consultas nuevas."
+    },
+    {
+      "id": "multi-contenedor",
+      "query": "definición de servicios con varios contenedores",
+      "expected": [
+        "docker/compose"
+      ],
+      "pair": null,
+      "note": "Escrita para validar el texto de búsqueda con consultas nuevas."
+    },
+    {
+      "id": "balanceo-carga",
+      "query": "balanceo de carga del tráfico web",
+      "expected": [
+        "nginx/nginx",
+        "traefik/traefik",
+        "envoyproxy/envoy"
+      ],
+      "pair": null,
+      "note": "Escrita para validar el texto de búsqueda con consultas nuevas."
+    },
+    {
+      "id": "metricas-servidores",
+      "query": "recolección de métricas de servidores",
+      "expected": [
+        "prometheus/prometheus",
+        "open-telemetry/opentelemetry-collector"
+      ],
+      "pair": null,
+      "note": "Escrita para validar el texto de búsqueda con consultas nuevas."
+    },
+    {
+      "id": "validacion-datos",
+      "query": "validación de datos de entrada con tipos",
+      "expected": [
+        "pydantic/pydantic"
+      ],
+      "pair": null,
+      "note": "Escrita para validar el texto de búsqueda con consultas nuevas."
+    },
+    {
+      "id": "pruebas-js",
+      "query": "pruebas unitarias de código JavaScript",
+      "expected": [
+        "jestjs/jest",
+        "vitest-dev/vitest"
+      ],
+      "pair": null,
+      "note": "Escrita para validar el texto de búsqueda con consultas nuevas."
+    },
+    {
+      "id": "none-grafos",
+      "query": "base de datos de grafos",
+      "expected": [],
+      "pair": null,
+      "note": "Escrita para validar el texto de búsqueda con consultas nuevas. Casi: hay bases de datos, ninguna de grafos."
+    },
+    {
+      "id": "none-cdn",
+      "query": "red de distribución de contenido global",
+      "expected": [],
+      "pair": null,
+      "note": "Escrita para validar el texto de búsqueda con consultas nuevas. Casi: nginx y caddy cachean desde un servidor propio."
+    },
+    {
+      "id": "none-respaldos",
+      "query": "copias de seguridad automáticas de archivos",
+      "expected": [],
+      "pair": null,
+      "note": "Escrita para validar el texto de búsqueda con consultas nuevas. Sin almacenamiento ni respaldos."
+    },
+    {
+      "id": "none-objetos",
+      "query": "almacenamiento de objetos compatible con S3",
+      "expected": [],
+      "pair": null,
+      "note": "Escrita para validar el texto de búsqueda con consultas nuevas. Sin almacenamiento de objetos."
+    },
+    {
+      "id": "none-push",
+      "query": "notificaciones push a dispositivos móviles",
+      "expected": [],
+      "pair": null,
+      "note": "Escrita para validar el texto de búsqueda con consultas nuevas. Casi: alertmanager enruta alertas de monitoreo."
+    },
+    {
+      "id": "none-chat",
+      "query": "chat en tiempo real entre usuarios",
+      "expected": [],
+      "pair": null,
+      "note": "Escrita para validar el texto de búsqueda con consultas nuevas. Casi: kafka y celery comunican servicios, no personas."
+    },
+    {
+      "id": "none-sms",
+      "query": "envío de mensajes de texto SMS",
+      "expected": [],
+      "pair": null,
+      "note": "Escrita para validar el texto de búsqueda con consultas nuevas."
+    },
+    {
+      "id": "none-aprobaciones",
+      "query": "flujos de aprobación entre empleados",
+      "expected": [],
+      "pair": null,
+      "note": "Escrita para validar el texto de búsqueda con consultas nuevas. Casi: airflow, prefect y dagster orquestan procesos de datos."
+    },
+    {
+      "id": "none-embudos",
+      "query": "embudos de conversión de usuarios",
+      "expected": [],
+      "pair": null,
+      "note": "Escrita para validar el texto de búsqueda con consultas nuevas. Casi: grafana visualiza datos; no registra eventos de usuarios."
+    },
+    {
+      "id": "none-sso",
+      "query": "inicio de sesión único con proveedores externos",
+      "expected": [],
+      "pair": null,
+      "note": "Escrita para validar el texto de búsqueda con consultas nuevas. Casi: vault controla acceso a secretos, no a usuarios."
+    },
+    {
+      "id": "none-facturacion-uso",
+      "query": "facturación por consumo de clientes",
+      "expected": [],
+      "pair": null,
+      "note": "Escrita para validar el texto de búsqueda con consultas nuevas."
+    },
+    {
+      "id": "none-editor-paginas",
+      "query": "editor visual de páginas para no programadores",
+      "expected": [],
+      "pair": null,
+      "note": "Escrita para validar el texto de búsqueda con consultas nuevas. Casi: astro y storybook son para desarrolladores."
+    },
+    {
+      "id": "none-crm",
+      "query": "gestión de relaciones con clientes",
+      "expected": [],
+      "pair": null,
+      "note": "Escrita para validar el texto de búsqueda con consultas nuevas."
+    },
+    {
+      "id": "none-agenda",
+      "query": "agenda de citas en línea",
+      "expected": [],
+      "pair": null,
+      "note": "Escrita para validar el texto de búsqueda con consultas nuevas."
+    },
+    {
+      "id": "none-firma",
+      "query": "firma electrónica de documentos",
+      "expected": [],
+      "pair": null,
+      "note": "Escrita para validar el texto de búsqueda con consultas nuevas."
+    }
+  ]
+}

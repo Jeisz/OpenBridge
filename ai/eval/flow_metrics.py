@@ -10,7 +10,7 @@ from collections import defaultdict
 from dataclasses import dataclass
 from statistics import median
 
-from ai.assistant import CANDIDATES_SHOWN, Assisted
+from ai.assistant import CANDIDATES_SHOWN, Assisted, chosen
 from ai.catalog import load_categories
 from ai.eval.assistant_cases import AssistantCase
 
@@ -65,11 +65,11 @@ class FlowOutcome:
 
 
 def _chosen(assisted: Assisted) -> dict[str, str | None]:
-    """Repo elegido por necesidad, según el borrador del modelo."""
+    """Repo que queda por necesidad, según el borrador del modelo y su juicio."""
     generated = assisted.generated
     if generated is None or generated.data is None or generated.problems_final:
         return {}
-    return {box.need: box.full_name for box in generated.data.boxes}
+    return {box.need: chosen(box) for box in generated.data.boxes}
 
 
 def _plain(text: str) -> str:

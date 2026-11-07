@@ -27,7 +27,14 @@ export function ToolModal({id,onClose}){
   scrollport.addEventListener('scroll',syncFromContent,{passive:true});scrollbar.addEventListener('scroll',syncFromRail,{passive:true});
   frame.current?.focus({preventScroll:true});
   const keydown=event=>{
-   if(event.key==='Escape'){event.preventDefault();onClose();return;}
+   if(event.key==='Escape'){
+    if(event.defaultPrevented)return;
+    event.preventDefault();
+    if(frame.current.querySelector('[role="tooltip"][aria-hidden="false"]')){
+     window.dispatchEvent(new Event('dismiss-review-tooltip'));return;
+    }
+    onClose();return;
+   }
    if(event.key!=='Tab')return;
    const controls=[...frame.current.querySelectorAll('a[href],button:not([disabled]),textarea,input,select,[tabindex="0"]')].filter(el=>el.getClientRects().length&&!el.closest('[inert]'));
    const first=controls[0],last=controls.at(-1);

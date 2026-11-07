@@ -46,6 +46,7 @@ evaluación construye el índice con ese mismo catálogo.
 | Nombre | Archivo | Catálogo | Para qué |
 |---|---|---|---|
 | `catalog` (por defecto) | `search_queries_catalog.json` | Snapshot del catálogo real (`ai/data/catalog/`, 100 repos) | Medir la búsqueda que usa el asistente y calibrar el umbral |
+| `catalog-validation` | `search_queries_catalog_validation.json` | Snapshot del catálogo real | Validar con consultas nuevas el texto de búsqueda elegido con `catalog`; no se usa para ajustar |
 | `sample` | `search_queries.json` | 20 repos de ejemplo (`ai/data/`) | Repetir la elección del modelo de embeddings |
 
 - Cada consulta tiene sus repos aceptables (`expected`). Una lista vacía
