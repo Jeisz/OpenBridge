@@ -4,7 +4,7 @@ import {CardDescription} from './CardDescription';
 import {useCatalogData} from '../../data/CatalogProvider';
 import {useBrandIdentity,markBrandFailed} from '../../brandIdentity';
 import {useCardTilt} from '../../useCardTilt';
-import {UserRound,Star,GitCommitHorizontal,Scale,Activity,ArrowRight} from 'lucide-react';
+import {UserRound,Star,GitCommitHorizontal,Scale,Activity,ArrowRight,ArrowUpRight} from 'lucide-react';
 export function ToolCard({ tool, onOpen }) {
  const {profiles}=useCatalogData();
  const tiltRef = useCardTilt();
@@ -55,8 +55,8 @@ export function ToolCard({ tool, onOpen }) {
     <div className="tool-metric"><dt><Icon size={14} strokeWidth={1.75} aria-hidden="true"/><span>{label}</span></dt><dd>{value}</dd></div>
    </React.Fragment>)}</dl>
    <div className="tool-actions">
-    <a className="detail-link ui-wash" href={'#herramienta/'+tool.id} onClick={e=>{if(!e.metaKey&&!e.ctrlKey&&!e.shiftKey&&!e.altKey){e.preventDefault();onOpen(tool.id,e.currentTarget);}}} aria-label={'Ver detalle de '+tool.name}>Ver detalle <ArrowRight size={14}/></a>
-    {tool.repo ? <a className="ui-wash" href={'https://github.com/'+tool.repo} target="_blank" rel="noopener noreferrer" aria-label={'Ver repositorio de '+tool.name+' (otra pestaña)'}>Repositorio ↗</a> : <button type="button" className="example-repository ui-wash" disabled aria-disabled="true" aria-label="Repositorio no disponible para Default">Repositorio ↗</button>}
+    <a className="detail-link ui-button ui-button--secondary ui-button--compact" href={'#herramienta/'+tool.id} onClick={e=>{if(!e.metaKey&&!e.ctrlKey&&!e.shiftKey&&!e.altKey){e.preventDefault();onOpen(tool.id,e.currentTarget);}}} aria-label={'Ver detalle de '+tool.name}>Ver detalle <ArrowRight size={14}/></a>
+    {tool.repo ? <a className="ui-button ui-button--tertiary ui-button--compact" href={'https://github.com/'+tool.repo} target="_blank" rel="noopener noreferrer" aria-label={'Ver repositorio de '+tool.name+' (otra pestaña)'}>Repositorio <ArrowUpRight size={16} aria-hidden="true"/></a> : <button type="button" className="example-repository ui-button ui-button--tertiary ui-button--compact" disabled aria-disabled="true" aria-label="Repositorio no disponible para Default">Repositorio <ArrowUpRight size={16} aria-hidden="true"/></button>}
    </div>
   </div>
   <div className="card-glare" aria-hidden="true"/>

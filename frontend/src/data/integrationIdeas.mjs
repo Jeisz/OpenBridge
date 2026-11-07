@@ -6,7 +6,8 @@ export function toIntegrationIdea(idea){
  return {id:idea.id,title:idea.title,summary:idea.summary,type:types[idea.integration_type],stack:idea.compatible_stack,
  dependencies:idea.dependencies??[],difficulty:difficulties[idea.difficulty],triggers:idea.triggers??[],
  snippet:idea.snippet??null,snippetLanguage:idea.snippet_language??null,docs:idea.docs_url,
- reviewLabel:idea.reviewed_at?'Revisada':idea.generated_by==='llm'?'Sugerida por IA · sin revisar':'Borrador editorial · sin revisar'};
+ reviewStatus:idea.reviewed_at?'reviewed':idea.generated_by==='llm'?'suggested':'draft',
+ reviewLabel:idea.reviewed_at?'Revisada':idea.generated_by==='llm'?'Sugerida':'Borrador editorial · sin revisar'};
 }
 export function integrationIdeasForTool(tool){
  if(tool.archived)return [];

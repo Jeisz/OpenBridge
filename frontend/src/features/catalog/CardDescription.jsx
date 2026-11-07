@@ -23,5 +23,5 @@ export function CardDescription({description,tool,onOpen}){
   document.fonts.ready.then(measure);document.fonts.addEventListener('loadingdone',measure);
   return()=>{active=false;observer.disconnect();document.fonts.removeEventListener('loadingdone',measure);};
  },[description]);
- return <p ref={ref} className="card-description">{result.text}{result.clipped&&<> <span className="card-description-more">… <a className="card-read-more" href={'#herramienta/'+tool.id} aria-label={'Ver descripción completa de '+tool.name} onClick={e=>{if(!e.metaKey&&!e.ctrlKey&&!e.shiftKey&&!e.altKey){e.preventDefault();onOpen(tool.id,e.currentTarget.closest('.tool-card').querySelector('.detail-link'));}}}>Ver más</a></span></>}</p>;
+ return <p ref={ref} className="card-description">{result.text}{result.clipped&&<> <span className="card-description-more">… <a className="card-read-more ui-button ui-button--text" href={'#herramienta/'+tool.id} aria-label={'Ver descripción completa de '+tool.name} onClick={e=>{if(!e.metaKey&&!e.ctrlKey&&!e.shiftKey&&!e.altKey){e.preventDefault();onOpen(tool.id,e.currentTarget.closest('.tool-card').querySelector('.detail-link'));}}}>Ver más</a></span></>}</p>;
 }

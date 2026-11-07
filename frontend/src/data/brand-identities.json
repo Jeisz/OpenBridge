@@ -150,6 +150,574 @@
         "end": "#196073",
         "tag": "#1d758d"
       }
+    },
+    "clickhouse/clickhouse": {
+      "logo": "/assets/brands/clickhouse.svg",
+      "palette": {
+        "start": "#2a240c",
+        "end": "#5e4f12",
+        "tag": "#7c691d"
+      }
+    },
+    "prefecthq/prefect": {
+      "logo": "/assets/brands/prefect.svg",
+      "palette": {
+        "start": "#151e21",
+        "end": "#294047",
+        "tag": "#3a575f"
+      }
+    },
+    "angular/angular": {
+      "logo": "/assets/brands/angular.svg",
+      "palette": {
+        "start": "#1a1a1c",
+        "end": "#36363a",
+        "tag": "#4a4a4f"
+      }
+    },
+    "ansible/ansible": {
+      "logo": "/assets/brands/ansible.svg",
+      "palette": {
+        "start": "#2a0c0c",
+        "end": "#5e1212",
+        "tag": "#7c1d1d"
+      }
+    },
+    "apache/airflow": {
+      "logo": "/assets/brands/apacheairflow.svg",
+      "palette": {
+        "start": "#0c1b29",
+        "end": "#123a5e",
+        "tag": "#1d4e7c"
+      }
+    },
+    "apache/flink": {
+      "logo": "/assets/brands/apacheflink.svg",
+      "palette": {
+        "start": "#261014",
+        "end": "#551c27",
+        "tag": "#702937"
+      }
+    },
+    "apache/kafka": {
+      "logo": "/assets/brands/apachekafka.svg",
+      "palette": {
+        "start": "#1c1a1a",
+        "end": "#3a3637",
+        "tag": "#4f4a4b"
+      }
+    },
+    "apache/spark": {
+      "logo": "/assets/brands/apachespark.svg",
+      "palette": {
+        "start": "#26160f",
+        "end": "#562d1a",
+        "tag": "#713f28"
+      }
+    },
+    "argoproj/argo-cd": {
+      "logo": "/assets/brands/argo.svg",
+      "palette": {
+        "start": "#27150e",
+        "end": "#582a18",
+        "tag": "#743b25"
+      }
+    },
+    "astral-sh/ruff": {
+      "logo": "/assets/brands/ruff.svg",
+      "palette": {
+        "start": "#222a0c",
+        "end": "#4b5e12",
+        "tag": "#637c1d"
+      }
+    },
+    "astral-sh/uv": {
+      "logo": "/assets/brands/uv.svg",
+      "palette": {
+        "start": "#241026",
+        "end": "#501b55",
+        "tag": "#6b2970"
+      }
+    },
+    "babel/babel": {
+      "logo": "/assets/brands/babel.svg",
+      "palette": {
+        "start": "#29240d",
+        "end": "#5c5114",
+        "tag": "#796b20"
+      }
+    },
+    "biomejs/biome": {
+      "logo": "/assets/brands/biome.svg",
+      "palette": {
+        "start": "#0d1929",
+        "end": "#14345c",
+        "tag": "#204879"
+      }
+    },
+    "caddyserver/caddy": {
+      "logo": "/assets/brands/caddy.svg",
+      "palette": {
+        "start": "#101e25",
+        "end": "#1d4054",
+        "tag": "#2a576f"
+      }
+    },
+    "celery/celery": {
+      "logo": "/assets/brands/celery.svg",
+      "palette": {
+        "start": "#152118",
+        "end": "#294731",
+        "tag": "#396043"
+      }
+    },
+    "cilium/cilium": {
+      "logo": "/assets/brands/cilium.svg",
+      "palette": {
+        "start": "#29220d",
+        "end": "#5c4c14",
+        "tag": "#796520"
+      }
+    },
+    "containerd/containerd": {
+      "logo": "/assets/brands/containerd.svg",
+      "palette": {
+        "start": "#1b1b1b",
+        "end": "#383838",
+        "tag": "#4c4c4c"
+      }
+    },
+    "cypress-io/cypress": {
+      "logo": "/assets/brands/cypress.svg",
+      "palette": {
+        "start": "#13231c",
+        "end": "#234d3c",
+        "tag": "#336651"
+      }
+    },
+    "denoland/deno": {
+      "logo": "/assets/brands/deno.svg",
+      "palette": {
+        "start": "#1b1b1b",
+        "end": "#383838",
+        "tag": "#4c4c4c"
+      }
+    },
+    "docker/compose": {
+      "logo": "/assets/brands/docker.svg",
+      "palette": {
+        "start": "#0e1c27",
+        "end": "#183c58",
+        "tag": "#245275"
+      }
+    },
+    "duckdb/duckdb": {
+      "logo": "/assets/brands/duckdb.svg",
+      "palette": {
+        "start": "#2a280c",
+        "end": "#5e5a12",
+        "tag": "#7c761d"
+      }
+    },
+    "envoyproxy/envoy": {
+      "logo": "/assets/brands/envoyproxy.svg",
+      "palette": {
+        "start": "#1f161d",
+        "end": "#442c3e",
+        "tag": "#5b3e54"
+      }
+    },
+    "eslint/eslint": {
+      "logo": "/assets/brands/eslint.svg",
+      "palette": {
+        "start": "#151223",
+        "end": "#29224f",
+        "tag": "#3a3069"
+      }
+    },
+    "etcd-io/etcd": {
+      "logo": "/assets/brands/etcd.svg",
+      "palette": {
+        "start": "#111d25",
+        "end": "#1e3e52",
+        "tag": "#2d536c"
+      }
+    },
+    "fluxcd/flux2": {
+      "logo": "/assets/brands/flux.svg",
+      "palette": {
+        "start": "#0c0f2a",
+        "end": "#121b5e",
+        "tag": "#1d287c"
+      }
+    },
+    "git/git": {
+      "logo": "/assets/brands/git.svg",
+      "palette": {
+        "start": "#28100e",
+        "end": "#591c17",
+        "tag": "#762923"
+      }
+    },
+    "golang/go": {
+      "logo": "/assets/brands/go.svg",
+      "palette": {
+        "start": "#0c242a",
+        "end": "#124f5e",
+        "tag": "#1d697c"
+      }
+    },
+    "hashicorp/terraform": {
+      "logo": "/assets/brands/terraform.svg",
+      "palette": {
+        "start": "#1b1421",
+        "end": "#382749",
+        "tag": "#4c3861"
+      }
+    },
+    "hashicorp/vault": {
+      "logo": "/assets/brands/vault.svg",
+      "palette": {
+        "start": "#2a260c",
+        "end": "#5e5412",
+        "tag": "#7c701d"
+      }
+    },
+    "helm/helm": {
+      "logo": "/assets/brands/helm.svg",
+      "palette": {
+        "start": "#0f1027",
+        "end": "#191d57",
+        "tag": "#262b73"
+      }
+    },
+    "istio/istio": {
+      "logo": "/assets/brands/istio.svg",
+      "palette": {
+        "start": "#141921",
+        "end": "#283349",
+        "tag": "#384661"
+      }
+    },
+    "jaegertracing/jaeger": {
+      "logo": "/assets/brands/jaeger.svg",
+      "palette": {
+        "start": "#112225",
+        "end": "#1e4a52",
+        "tag": "#2c636d"
+      }
+    },
+    "jestjs/jest": {
+      "logo": "/assets/brands/jest.svg",
+      "palette": {
+        "start": "#270f11",
+        "end": "#57191f",
+        "tag": "#73262e"
+      }
+    },
+    "kubernetes/kubernetes": {
+      "logo": "/assets/brands/kubernetes.svg",
+      "palette": {
+        "start": "#0f1726",
+        "end": "#1b2e56",
+        "tag": "#284071"
+      }
+    },
+    "langchain-ai/langchain": {
+      "logo": "/assets/brands/langchain.svg",
+      "palette": {
+        "start": "#0c1d2a",
+        "end": "#123d5e",
+        "tag": "#1d537c"
+      }
+    },
+    "microsoft/typescript": {
+      "logo": "/assets/brands/typescript.svg",
+      "palette": {
+        "start": "#121a24",
+        "end": "#21374f",
+        "tag": "#304b69"
+      }
+    },
+    "moby/moby": {
+      "logo": "/assets/brands/docker.svg",
+      "palette": {
+        "start": "#0e1c27",
+        "end": "#183c58",
+        "tag": "#245275"
+      }
+    },
+    "neovim/neovim": {
+      "logo": "/assets/brands/neovim.svg",
+      "palette": {
+        "start": "#172115",
+        "end": "#2f4828",
+        "tag": "#416039"
+      }
+    },
+    "nginx/nginx": {
+      "logo": "/assets/brands/nginx.svg",
+      "palette": {
+        "start": "#0c2a17",
+        "end": "#125e2f",
+        "tag": "#1d7c41"
+      }
+    },
+    "nodejs/node": {
+      "logo": "/assets/brands/nodedotjs.svg",
+      "palette": {
+        "start": "#182016",
+        "end": "#30452b",
+        "tag": "#435d3c"
+      }
+    },
+    "npm/cli": {
+      "logo": "/assets/brands/npm.svg",
+      "palette": {
+        "start": "#231212",
+        "end": "#4f2222",
+        "tag": "#683131"
+      }
+    },
+    "numpy/numpy": {
+      "logo": "/assets/brands/numpy.svg",
+      "palette": {
+        "start": "#0c2229",
+        "end": "#134a5d",
+        "tag": "#1e637b"
+      }
+    },
+    "nuxt/nuxt": {
+      "logo": "/assets/brands/nuxt.svg",
+      "palette": {
+        "start": "#0c2a1d",
+        "end": "#125e3f",
+        "tag": "#1d7c55"
+      }
+    },
+    "open-telemetry/opentelemetry-collector": {
+      "logo": "/assets/brands/opentelemetry.svg",
+      "palette": {
+        "start": "#1b1b1b",
+        "end": "#383838",
+        "tag": "#4c4c4c"
+      }
+    },
+    "opensearch-project/opensearch": {
+      "logo": "/assets/brands/opensearch.svg",
+      "palette": {
+        "start": "#0c1b2a",
+        "end": "#12395e",
+        "tag": "#1d4e7c"
+      }
+    },
+    "pallets/flask": {
+      "logo": "/assets/brands/flask.svg",
+      "palette": {
+        "start": "#132023",
+        "end": "#24454d",
+        "tag": "#335d66"
+      }
+    },
+    "pandas-dev/pandas": {
+      "logo": "/assets/brands/pandas.svg",
+      "palette": {
+        "start": "#130d28",
+        "end": "#23155b",
+        "tag": "#332178"
+      }
+    },
+    "pnpm/pnpm": {
+      "logo": "/assets/brands/pnpm.svg",
+      "palette": {
+        "start": "#281c0d",
+        "end": "#5b3a15",
+        "tag": "#784f21"
+      }
+    },
+    "prettier/prettier": {
+      "logo": "/assets/brands/prettier.svg",
+      "palette": {
+        "start": "#281f0d",
+        "end": "#5b4415",
+        "tag": "#785b21"
+      }
+    },
+    "psf/black": {
+      "logo": "/assets/brands/black.svg",
+      "palette": {
+        "start": "#1b1b1b",
+        "end": "#383838",
+        "tag": "#4c4c4c"
+      }
+    },
+    "pydantic/pydantic": {
+      "logo": "/assets/brands/pydantic.svg",
+      "palette": {
+        "start": "#270f17",
+        "end": "#57192e",
+        "tag": "#732640"
+      }
+    },
+    "pytest-dev/pytest": {
+      "logo": "/assets/brands/pytest.svg",
+      "palette": {
+        "start": "#0d2028",
+        "end": "#15465b",
+        "tag": "#215e78"
+      }
+    },
+    "python/cpython": {
+      "logo": "/assets/brands/python.svg",
+      "palette": {
+        "start": "#131b22",
+        "end": "#253a4c",
+        "tag": "#344f65"
+      }
+    },
+    "pytorch/pytorch": {
+      "logo": "/assets/brands/pytorch.svg",
+      "palette": {
+        "start": "#27120e",
+        "end": "#592218",
+        "tag": "#753124"
+      }
+    },
+    "redis/redis": {
+      "logo": "/assets/brands/redis.svg",
+      "palette": {
+        "start": "#2a0e0c",
+        "end": "#5e1712",
+        "tag": "#7c231d"
+      }
+    },
+    "rust-lang/rust": {
+      "logo": "/assets/brands/rust.svg",
+      "palette": {
+        "start": "#1b1b1b",
+        "end": "#383838",
+        "tag": "#4c4c4c"
+      }
+    },
+    "scikit-learn/scikit-learn": {
+      "logo": "/assets/brands/scikitlearn.svg",
+      "palette": {
+        "start": "#281c0d",
+        "end": "#5c3b15",
+        "tag": "#795020"
+      }
+    },
+    "scipy/scipy": {
+      "logo": "/assets/brands/scipy.svg",
+      "palette": {
+        "start": "#111824",
+        "end": "#203051",
+        "tag": "#2e426b"
+      }
+    },
+    "sqlalchemy/sqlalchemy": {
+      "logo": "/assets/brands/sqlalchemy.svg",
+      "palette": {
+        "start": "#2a100c",
+        "end": "#5e1d12",
+        "tag": "#7c2b1d"
+      }
+    },
+    "storybookjs/storybook": {
+      "logo": "/assets/brands/storybook.svg",
+      "palette": {
+        "start": "#2a0c16",
+        "end": "#5e122c",
+        "tag": "#7c1d3d"
+      }
+    },
+    "sveltejs/svelte": {
+      "logo": "/assets/brands/svelte.svg",
+      "palette": {
+        "start": "#2a130c",
+        "end": "#5e2512",
+        "tag": "#7c341d"
+      }
+    },
+    "tailwindlabs/tailwindcss": {
+      "logo": "/assets/brands/tailwindcss.svg",
+      "palette": {
+        "start": "#0d2529",
+        "end": "#14525c",
+        "tag": "#206c79"
+      }
+    },
+    "tensorflow/tensorflow": {
+      "logo": "/assets/brands/tensorflow.svg",
+      "palette": {
+        "start": "#2a190c",
+        "end": "#5e3312",
+        "tag": "#7c461d"
+      }
+    },
+    "testing-library/react-testing-library": {
+      "logo": "/assets/brands/testinglibrary.svg",
+      "palette": {
+        "start": "#261010",
+        "end": "#551b1b",
+        "tag": "#712928"
+      }
+    },
+    "torvalds/linux": {
+      "logo": "/assets/brands/linux.svg",
+      "palette": {
+        "start": "#29220c",
+        "end": "#5d4b13",
+        "tag": "#7b641e"
+      }
+    },
+    "vitejs/vite": {
+      "logo": "/assets/brands/vite.svg",
+      "palette": {
+        "start": "#190c2a",
+        "end": "#35125e",
+        "tag": "#481d7c"
+      }
+    },
+    "vitest-dev/vitest": {
+      "logo": "/assets/brands/vitest.svg",
+      "palette": {
+        "start": "#0c2a19",
+        "end": "#125e35",
+        "tag": "#1d7c48"
+      }
+    },
+    "vllm-project/vllm": {
+      "logo": "/assets/brands/vllm.svg",
+      "palette": {
+        "start": "#0c1c2a",
+        "end": "#123c5e",
+        "tag": "#1d517c"
+      }
+    },
+    "vuejs/core": {
+      "logo": "/assets/brands/vuedotjs.svg",
+      "palette": {
+        "start": "#14221b",
+        "end": "#264a3a",
+        "tag": "#36634f"
+      }
+    },
+    "withastro/astro": {
+      "logo": "/assets/brands/astro.svg",
+      "palette": {
+        "start": "#1f0f27",
+        "end": "#431957",
+        "tag": "#5a2673"
+      }
+    },
+    "ziglang/zig": {
+      "logo": "/assets/brands/zig.svg",
+      "palette": {
+        "start": "#281e0d",
+        "end": "#5c4115",
+        "tag": "#795720"
+      }
     }
   }
 }

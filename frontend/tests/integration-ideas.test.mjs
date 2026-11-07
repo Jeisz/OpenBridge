@@ -20,7 +20,7 @@ test('adapter preserves lists, optional snippets and honest review labels',()=>{
  const raw=integrationIdeaRecords.find(idea=>!idea.snippet);const draft=toIntegrationIdea(raw);
  assert.deepEqual(draft.stack,raw.compatible_stack);assert.equal(draft.snippet,null);assert.match(draft.reviewLabel,/Borrador editorial/);
  const ai=toIntegrationIdea({...raw,generated_by:'llm',snippet:'console.log(1)',snippet_language:'javascript'});
- assert.match(ai.reviewLabel,/Sugerida por IA/);assert.equal(ai.snippetLanguage,'javascript');
+ assert.equal(ai.reviewLabel,'Sugerida');assert.equal(ai.reviewStatus,'suggested');assert.equal(ai.snippetLanguage,'javascript');
  assert.equal(toIntegrationIdea({...raw,reviewed_at:'2026-10-22T12:00:00Z'}).reviewLabel,'Revisada');
 });
 test('pending types stay out of active ideas and archived tools have none',()=>{

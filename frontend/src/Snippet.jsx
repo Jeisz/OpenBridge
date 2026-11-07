@@ -16,7 +16,7 @@ export function Snippet({text,language}){
   catch{setStatus(interfaceErrors.copy);}
  }
  return <div className="snippet">
-  <div className="snippet-toolbar"><span className="snippet-language">{syntax.label}</span><button className="ui-wash" type="button" onClick={copy} aria-label="Copiar snippet">{status==='Copiado'?<Check size={15}/>:<Copy size={15}/>} {status==='Copiado'?'Copiado':'Copiar'}</button></div>
+  <div className="snippet-toolbar"><span className="snippet-language">{syntax.label}</span><button className="ui-button ui-button--tertiary ui-button--compact" type="button" onClick={copy} aria-label="Copiar snippet">{status==='Copiado'?<Check size={15}/>:<Copy size={15}/>} {status==='Copiado'?'Copiado':'Copiar'}</button></div>
   <Highlight theme={theme} code={text} language={syntax.language}>{({className,style,tokens,getLineProps,getTokenProps})=><pre tabIndex={0} aria-label={`Código: ${syntax.label}`} className={className} style={style}><code data-language={syntax.language}>{tokens.map((line,index)=><span key={index} {...getLineProps({line})} className="snippet-line"><span className="snippet-line-number" aria-hidden="true">{index+1}</span><span className="snippet-line-code">{line.map((token,key)=><span key={key} {...getTokenProps({token})}/>)}</span></span>)}</code></pre>}</Highlight>
   <span className={status===interfaceErrors.copy?"snippet-copy-error":"sr-only"} role="status" aria-live="polite">{status}</span>
  </div>;
