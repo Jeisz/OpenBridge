@@ -7,6 +7,7 @@ import pytest
 from ai import catalog
 from ai.catalog import ENRICHMENT_FILE, load_repos
 from ai.catalog_diff import ARCHIVED_CHANGED, NAME_CHANGED, OTHER_MODEL, diff_catalog
+from ai.published import UPSERT_PROCESSING, processing_rows, to_records
 from ai.scripts import export_catalog_snapshot, refresh_ai_data as refresh
 from ai.scripts.batch import load_records, save_records, stored_version
 from ai.scripts.generate_ideas import OUT_FILE as IDEAS_FILE
@@ -103,6 +104,40 @@ def test_cambio_de_modelo_queda_pendiente(data):
     assert plan.ideas == [] and plan.pending == [("ideas", repo, OTHER_MODEL)]
 
 
+def test_primera_publicacion_sin_modelo(data):
+    # La base todavía no tiene nada en ai_processing y el borrador está al día: se publica todo
+    # sin llamar al modelo, aunque el enriquecimiento esté en otra versión de las reglas.
+    repos, enrichment, ideas = data
+    nothing = diff_catalog(repos, repos, {}, {})
+    plan = refresh.make_plan(diff_catalog(repos, repos, enrichment, ideas),
+                             enrichment_block=BLOCK, published=nothing)
+    assert len(plan.publish_enrichment) == len(plan.publish_ideas) == len(repos)
+    assert plan.model_calls == 0 and plan.pending == [] and not plan.needs_generate
+
+
+def test_no_publica_un_borrador_desactualizado(data):
+    repos, enrichment, ideas = data
+    repo = repos[0]
+    live = [repo.model_copy(update={"readme_text": "Nuevo.\n\n" + (repo.readme_text or "")})]
+    live += repos[1:]
+    published = diff_catalog(live, repos, enrichment, ideas)    # la base tenía lo de antes
+    plan = refresh.make_plan(diff_catalog(live, repos, enrichment, ideas), published=published)
+    assert repo.github_id not in {r.github_id for r in plan.publish_ideas}
+    assert [r.github_id for r in plan.ideas] == [repo.github_id]   # primero se regenera
+
+
+def test_lo_publicado_se_lee_igual_que_los_archivos(data):
+    # Ida y vuelta por ai_processing: lo escrito desde los registros, leído de nuevo,
+    # no muestra diferencias con la vista.
+    repos, enrichment, ideas = data
+    rows = processing_rows("enrichment", list(enrichment.values()))
+    rows += processing_rows("ideas", list(ideas.values()))
+    columns = ("github_id", "kind", "full_name", "ai_input_hash", "provider", "model",
+               "prompt_version", "skipped")
+    published = to_records([tuple(r[c] for c in columns) for r in rows])
+    assert not diff_catalog(repos, repos, published["enrichment"], published["ideas"]).has_changes
+
+
 def test_bloqueo_por_version_de_los_archivos_del_repo():
     # Hoy: enriquecimiento en una versión anterior al código, ideas al día.
     assert refresh.version_block(ENRICHMENT_FILE, refresh.ENRICHMENT_VERSION) is not None
@@ -157,18 +192,21 @@ def test_generar_y_volver_a_comparar_converge(files, monkeypatch):
 
     monkeypatch.setattr(refresh, "generate", fake_generate)
     monkeypatch.setattr(refresh, "enrich", lambda *a, **k: pytest.fail("no debe enriquecer"))
-    _, plan = refresh.current_state(live)
+    published = {"enrichment": load_records(ENRICHMENT_FILE), "ideas": load_records(IDEAS_FILE)}
+    plan = refresh.current_state(live, published)
     assert plan.ideas == [new] and plan.drop["ideas"] == [gone.github_id]
     refresh.generate_files(plan, live, ["github_id"], "gemini")
-    _, after = refresh.current_state(live)
+    after = refresh.current_state(live, published)
     assert calls == [[new.full_name]]
     assert not after.needs_generate
+    assert after.unpublish["ideas"] == [gone.github_id]     # publicado, pero ya no está en la vista
     assert gone.github_id not in load_records(files / "enrichment.json")
 
 
 def test_escribir_se_niega_si_los_archivos_no_reflejan_la_vista(files, monkeypatch, data):
     repos, _, _ = data
     monkeypatch.setattr(refresh, "read_view", lambda: (repos[1:], ["github_id"]))
+    monkeypatch.setattr(refresh, "read_published", lambda: {"enrichment": {}, "ideas": {}})
     monkeypatch.setattr("sys.argv", ["refresh_ai_data", "--escribir"])
     monkeypatch.setattr(refresh, "write_database", lambda *a: pytest.fail("no debe escribir"))
     with pytest.raises(SystemExit) as exit_:
@@ -185,6 +223,9 @@ class FakeCursor:
 
     def execute(self, sql, params=None):
         self.executed.append((sql, params))
+
+    def executemany(self, sql, rows):
+        self.executed.extend((sql, row) for row in rows)
 
     def fetchall(self):
         return [("ai_repo_enrichment", g, 1) for g in self.orphans]
@@ -207,6 +248,9 @@ class FakeConnection:
     def execute(self, *a):            # el "with conn.cursor() as cur" devuelve esto mismo
         return self._cursor.execute(*a)
 
+    def executemany(self, *a):
+        return self._cursor.executemany(*a)
+
     def fetchall(self):
         return self._cursor.fetchall()
 
@@ -216,8 +260,10 @@ def database(monkeypatch):
     """Conexión simulada; los escritores de siempre, reemplazados por registros de llamadas."""
     monkeypatch.setenv(refresh.WRITER_ENV_VAR, "postgresql://usuario@servidor/base")
     written = []
-    monkeypatch.setattr(refresh.write_enrichment, "write", lambda cur, e, c: written.append("e") or {})
-    monkeypatch.setattr(refresh.write_ideas, "write", lambda cur, i: written.append("i") or {})
+    monkeypatch.setattr(refresh.write_enrichment, "write",
+                        lambda cur, e, c: written.append(("e", [r["github_id"] for r in e])) or {})
+    monkeypatch.setattr(refresh.write_ideas, "write",
+                        lambda cur, i: written.append(("i", [r["github_id"] for r in i])) or {})
 
     def connect(orphans):
         cur = FakeCursor(orphans)
@@ -230,17 +276,17 @@ def database(monkeypatch):
 def test_sin_permiso_de_borrar_solo_lista_los_huerfanos(database):
     connect, written = database
     cur, conn = connect([111])
-    refresh.write_database(delete_orphans=False)
-    assert written == ["e", "i"] and not conn.failed
+    refresh.write_database(refresh.Plan(), delete_orphans=False)
+    assert [kind for kind, _ in written] == ["e", "i"] and not conn.failed
     assert not any(sql.startswith("delete") for sql, _ in cur.executed)
 
 
 def test_borra_solo_filas_regenerables(database):
     connect, _ = database
     cur, _ = connect([111, 222])
-    refresh.write_database(delete_orphans=True)
+    refresh.write_database(refresh.Plan(), delete_orphans=True)
     deletes = [(sql, p) for sql, p in cur.executed if sql.startswith("delete")]
-    assert len(deletes) == 4 and all(p == {"ids": [111, 222]} for _, p in deletes)
+    assert len(deletes) == 5 and all(p == {"ids": [111, 222]} for _, p in deletes)
     assert "assigned_by = 'llm'" in deletes[1][0]
     assert "generated_by = 'llm' and reviewed_at is null" in deletes[2][0]
 
@@ -251,5 +297,18 @@ def test_demasiados_huerfanos_no_cambia_nada(database):
     connect, written = database
     cur, conn = connect(list(range(1, 50)))
     with pytest.raises(SystemExit):
-        refresh.write_database(delete_orphans=True)
+        refresh.write_database(refresh.Plan(), delete_orphans=True)
     assert written == [] and conn.failed
+
+
+def test_publica_solo_lo_marcado_y_su_registro(database, data):
+    connect, written = database
+    repos, _, _ = data
+    cur, conn = connect([])
+    plan = refresh.Plan(publish_enrichment=[repos[0]], publish_ideas=[repos[1]])
+    refresh.write_database(plan, delete_orphans=False)
+    assert written == [("e", [repos[0].github_id]), ("i", [repos[1].github_id])]
+    processed = [p for sql, p in cur.executed if sql == UPSERT_PROCESSING]
+    assert [(p["github_id"], p["kind"]) for p in processed] == [
+        (repos[0].github_id, "enrichment"), (repos[1].github_id, "ideas")]
+    assert not conn.failed

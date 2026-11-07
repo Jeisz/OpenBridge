@@ -284,27 +284,38 @@ que quede en el historial (PowerShell):
 El script valida cada fila contra `Repo` antes de escribir: si alguna no cumple, no toca el
 snapshot anterior. Regenerarlo reescribe `readmes/` completo; el diff muestra qué cambió en el catálogo.
 
-Para saber si hace falta actualizar, `python -m ai.scripts.compare_catalog` compara la vista con el
-snapshot y con los datos de la IA, sin escribir nada: repos nuevos, eliminados y renombrados,
-cambios de `archived`, y qué repos tienen el enriquecimiento o las ideas desactualizados. Para eso
-recalcula la huella de lo que lee el modelo con la versión de las reglas de cada registro, así que
-un cambio de reglas no cuenta como cambio del catálogo.
+Para saber si hace falta actualizar, `python -m ai.scripts.compare_catalog` compara la vista con lo
+que la IA publicó en la base (`ai.ai_processing`) y con el snapshot, sin escribir nada: repos nuevos,
+eliminados y renombrados, cambios de `archived`, y qué repos tienen el enriquecimiento o las ideas
+desactualizados. Para eso recalcula la huella de lo que lee el modelo con la versión de las reglas de
+cada registro, así que un cambio de reglas no cuenta como cambio del catálogo.
 
 ## Actualizar los datos de la IA cuando cambia el catálogo
 
-`python -m ai.scripts.refresh_ai_data` compara la vista con lo que tiene la IA y hace solo lo que
-falta. Se puede repetir: si se corta (por ejemplo, por el límite del día del proveedor), se vuelve a
-correr el mismo comando.
+Lo publicado vive en la base: las tablas `ai.*` (lo que leen la ficha y el asistente) y
+`ai.ai_processing`, una fila por repo y tipo de dato con la huella, el proveedor, el modelo y la versión
+de las reglas con que se generó, también cuando el resultado fue "sin ideas". Los archivos de
+`ai/data/catalog/` son el borrador, la caché del lote y la copia fija para las evaluaciones.
+
+`python -m ai.scripts.refresh_ai_data` compara la vista con lo publicado y con el borrador, y hace solo
+lo que falta. Se puede repetir: si se corta (por ejemplo, por el límite del día del proveedor), se
+vuelve a correr el mismo comando.
 
 1. **Plan** (sin opciones): qué cambió, qué se haría y cuántas llamadas al modelo costaría. No toca nada.
 2. **`--generar`**: refresca `ai/data/catalog/`, quita los registros de repos que salieron, corrige
    nombres y regenera con el modelo solo los repos cuya entrada cambió. Solo archivos.
 3. Revisar `git diff ai/data/catalog/`.
-4. **`--escribir`**: escribe los archivos en las tablas `ai.*` en una transacción. Se niega si los
-   archivos no reflejan la vista. Los repos que salieron solo se listan; con `--borrar-huerfanos` se
-   borran sus filas regenerables (nunca categorías humanas ni ideas revisadas), con un máximo de
-   `--max-borrar` (10) para no vaciar las tablas si la vista devolviera de menos.
+4. **`--escribir`**: publica en las tablas `ai.*`, en una transacción, solo los repos desactualizados
+   en la base, y actualiza su fila en `ai.ai_processing`. Un repo cuyo borrador ya está al día se
+   publica sin llamar al modelo. Se niega si los archivos no reflejan la vista. Los repos que salieron
+   solo se listan; con `--borrar-huerfanos` se borran sus filas regenerables (nunca categorías humanas
+   ni ideas revisadas), con un máximo de `--max-borrar` (10) para no vaciar las tablas si la vista
+   devolviera de menos.
 5. Reiniciar el servicio del asistente (carga el catálogo al arrancar) y hacer commit de los archivos.
+
+La primera vez después de aplicar `ai/sql/004_procesamiento_ia.sql`, `ai.ai_processing` está vacía: el
+plan muestra todos los repos para publicar y 0 llamadas al modelo, y `--escribir` llena el registro sin
+cambiar los textos publicados.
 
 Un cambio de reglas no se regenera aquí: si el archivo está en otra versión de las reglas que el
 código, o un registro es de otro modelo, el plan lo muestra como pendiente.

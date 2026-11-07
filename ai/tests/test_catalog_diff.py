@@ -134,8 +134,10 @@ def test_saltos_de_linea_de_windows_no_cambian_la_huella(data):
 @pytest.mark.parametrize("drop, code", [(0, compare_catalog.NO_CHANGES),
                                         (1, compare_catalog.CHANGES)])
 def test_codigo_de_salida(data, monkeypatch, capsys, drop, code):
-    repos, _, _ = data
+    repos, enrichment, ideas = data
     monkeypatch.setattr(compare_catalog, "read_view", lambda: (repos[drop:], ["github_id"]))
+    monkeypatch.setattr(compare_catalog, "read_published",
+                        lambda: {"enrichment": enrichment, "ideas": ideas})
     with pytest.raises(SystemExit) as exit_:
         compare_catalog.main()
     assert exit_.value.code == code

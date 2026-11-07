@@ -6,12 +6,15 @@ Uso desde la raíz del repo, con el entorno activo:
     python -m ai.scripts.refresh_ai_data --escribir   # escribe los archivos en las tablas de la IA
     python -m ai.scripts.refresh_ai_data --escribir --borrar-huerfanos
 
-Cada corrida compara la vista con lo que tiene la IA (ai/catalog_diff.py) y hace lo que
-falta. Si se corta (por ejemplo, por el límite del día del proveedor), se vuelve a correr
-el mismo comando y termina. Un cambio de reglas (otra versión del prompt, otro modelo) no
-se regenera aquí: queda como pendiente, porque es una decisión aparte.
+Lo publicado vive en la base (tablas ai.*, con ai.ai_processing diciendo con qué se generó
+cada dato); los archivos de ai/data/catalog/ son el borrador, la caché del lote y la copia para
+las evaluaciones. Cada corrida compara la vista con lo publicado y con los archivos
+(ai/catalog_diff.py) y hace lo que falta: un repo cuyo borrador ya está al día se publica sin
+llamar al modelo. Si se corta (por ejemplo, por el límite del día del proveedor), se vuelve a
+correr el mismo comando y termina. Un cambio de reglas (otra versión del prompt, otro modelo)
+no se regenera aquí: queda como pendiente, porque es una decisión aparte.
 
-Requiere AI_READER_DATABASE_URL (leer la vista); con --generar, la clave del proveedor;
+Requiere AI_READER_DATABASE_URL (leer la vista y lo publicado); con --generar, la clave del proveedor;
 con --escribir, AI_DATABASE_URL (usuario escritor). Después de --generar: revisar
 `git diff ai/data/catalog/`, reiniciar el servicio del asistente y hacer commit de los archivos.
 """
@@ -31,9 +34,10 @@ from ai.catalog_diff import (ARCHIVED_CHANGED, INPUT_CHANGED, NAME_CHANGED, NO_R
 from ai.enrich import PROMPT_VERSION as ENRICHMENT_VERSION
 from ai.ideas import PROMPT_VERSION as IDEAS_VERSION
 from ai.llm import PROVIDERS
+from ai.published import UPSERT_PROCESSING, processing_rows
 from ai.scripts import write_enrichment, write_ideas
 from ai.scripts.batch import load_records, save_records, stored_version
-from ai.scripts.compare_catalog import fail, read_view, report
+from ai.scripts.compare_catalog import fail, read_published, read_view, report
 from ai.scripts.enrich_catalog import enrich
 from ai.scripts.export_catalog_snapshot import REPOS_FILE as SNAPSHOT_FILE
 from ai.scripts.export_catalog_snapshot import compare_columns, redact, write_snapshot
@@ -54,6 +58,7 @@ DELETE_ORPHANS = (
     "delete from ai.ai_integration_ideas where github_id = any(%(ids)s)"
     " and generated_by = 'llm' and reviewed_at is null",
     "delete from ai.ai_embeddings where github_id = any(%(ids)s)",
+    "delete from ai.ai_processing where github_id = any(%(ids)s)",
 )
 
 
@@ -68,6 +73,9 @@ class Plan:
     ideas: list[Repo] = field(default_factory=list)
     reset_ideas: list[Repo] = field(default_factory=list)      # se quitan antes de regenerar
     pending: list[tuple[str, Repo, str]] = field(default_factory=list)   # (dato, repo, motivo)
+    publish_enrichment: list[Repo] = field(default_factory=list)   # borrador al día, falta publicarlo
+    publish_ideas: list[Repo] = field(default_factory=list)
+    unpublish: dict[str, list[int]] = field(default_factory=dict)   # publicados que salieron de la vista
 
     @property
     def needs_generate(self) -> bool:
@@ -89,13 +97,25 @@ def version_block(path: Path, code_version: str) -> str | None:
 
 
 def make_plan(diff: CatalogDiff, enrichment_block: str | None = None,
-              ideas_block: str | None = None) -> Plan:
-    """Decide qué hacer con cada diferencia. No lee ni escribe nada."""
+              ideas_block: str | None = None, published: CatalogDiff | None = None) -> Plan:
+    """Decide qué hacer con cada diferencia. No lee ni escribe nada.
+
+    diff: la vista frente a los archivos (borrador). published: la vista frente a lo publicado;
+    se publica lo que está desactualizado en la base y ya está al día en el borrador.
+    """
     plan = Plan(
         refresh_snapshot=bool(diff.new or diff.removed or diff.renamed
                               or diff.archived_changed or diff.field_changes),
         drop=diff.orphans,
     )
+    if published is not None:
+        draft_stale = {"enrichment": {r.github_id for r, _ in diff.enrichment_stale},
+                       "ideas": {r.github_id for r, _ in diff.ideas_stale}}
+        plan.publish_enrichment = [r for r, _ in published.enrichment_stale
+                                   if r.github_id not in draft_stale["enrichment"]]
+        plan.publish_ideas = [r for r, _ in published.ideas_stale
+                              if r.github_id not in draft_stale["ideas"]]
+        plan.unpublish = published.orphans
     for repo, why in diff.enrichment_stale:
         if why == NAME_CHANGED:
             plan.rename.append(repo)          # el modelo no lee el nombre: no hace falta llamarlo
@@ -123,6 +143,12 @@ def describe_plan(plan: Plan) -> str:
         lines.append(f"- corregir el nombre en el enriquecimiento: {len(plan.rename)}")
     lines.append(f"- enriquecer: {len(plan.enrichment)} · ideas: {len(plan.ideas)} "
                  f"· llamadas al modelo: hasta {plan.model_calls}")
+    lines.append(f"- publicar en la base (sin modelo): enriquecimiento {len(plan.publish_enrichment)}"
+                 f" · ideas {len(plan.publish_ideas)}")
+    unpublished = sorted({i for ids in plan.unpublish.values() for i in ids})
+    if unpublished:
+        lines.append(f"- publicados que ya no están en la vista: {len(unpublished)} "
+                     "(se listan al escribir; se borran con --borrar-huerfanos)")
     for what, repo, why in plan.pending:
         lines.append(f"- pendiente ({what}) {repo.full_name}: {why}")
     return "\n".join(lines)
@@ -163,22 +189,28 @@ def generate_files(plan: Plan, live: list[Repo], columns: list[str], provider: s
         enrich(plan.enrichment, ENRICHMENT_FILE, provider)
 
 
-def current_state(live: list[Repo]) -> tuple[CatalogDiff, Plan]:
-    """Compara la vista con los archivos tal como están ahora y arma el plan."""
+def current_state(live: list[Repo], published: dict[str, dict[int, dict]]) -> Plan:
+    """Compara la vista con lo publicado y con los archivos tal como están ahora, y arma el plan."""
     known = load_repos("snapshot")
-    diff = diff_catalog(live, known, load_records(ENRICHMENT_FILE), load_records(IDEAS_FILE))
-    plan = make_plan(diff, version_block(ENRICHMENT_FILE, ENRICHMENT_VERSION),
-                     version_block(IDEAS_FILE, IDEAS_VERSION))
-    print(report(diff, len(live), len(known)))
+    draft = diff_catalog(live, known, load_records(ENRICHMENT_FILE), load_records(IDEAS_FILE))
+    public = diff_catalog(live, known, published["enrichment"], published["ideas"])
+    plan = make_plan(draft, version_block(ENRICHMENT_FILE, ENRICHMENT_VERSION),
+                     version_block(IDEAS_FILE, IDEAS_VERSION), published=public)
+    print(report(public, len(live), len(known)))
     print(describe_plan(plan))
-    return diff, plan
+    return plan
 
 
-def write_database(delete_orphans: bool, max_delete: int = MAX_DELETE) -> None:
-    """Escribe los archivos en ai.* en una sola transacción, con los escritores de siempre."""
+def write_database(plan: Plan, delete_orphans: bool, max_delete: int = MAX_DELETE) -> None:
+    """Publica en ai.* lo que el plan marca, en una sola transacción, con los escritores de siempre.
+
+    Solo los repos desactualizados en la base; con su fila en ai_processing.
+    """
     snapshot = json.loads(SNAPSHOT_FILE.read_text(encoding="utf-8"))
-    enrichment = json.loads(ENRICHMENT_FILE.read_text(encoding="utf-8"))["repos"]
-    ideas = json.loads(IDEAS_FILE.read_text(encoding="utf-8"))["repos"]
+    wanted = {r.github_id for r in plan.publish_enrichment}
+    enrichment = [r for r in load_records(ENRICHMENT_FILE).values() if r["github_id"] in wanted]
+    wanted = {r.github_id for r in plan.publish_ideas}
+    ideas = [r for r in load_records(IDEAS_FILE).values() if r["github_id"] in wanted]
     try:
         write_enrichment.validate_records(enrichment, snapshot, set(load_categories()))
         write_ideas.validate_records(ideas, snapshot)
@@ -199,6 +231,8 @@ def write_database(delete_orphans: bool, max_delete: int = MAX_DELETE) -> None:
                      f"borrar: {max_delete}). ¿La vista devolvió todo? No se cambió nada.")
             counts = write_enrichment.write(cur, enrichment_rows, category_rows)
             counts |= write_ideas.write(cur, ideas)
+            cur.executemany(UPSERT_PROCESSING, processing_rows("enrichment", enrichment)
+                            + processing_rows("ideas", ideas))
             if delete_orphans and orphans:
                 for statement in DELETE_ORPHANS:
                     cur.execute(statement, {"ids": orphans})
@@ -227,7 +261,8 @@ def main() -> None:
         parser.error("--borrar-huerfanos solo va con --escribir")
 
     live, columns = read_view()           # se lee una vez: la comparación y la copia usan lo mismo
-    _, plan = current_state(live)
+    published = read_published()
+    plan = current_state(live, published)
 
     if args.generar and plan.needs_generate:
         for path in (ENRICHMENT_FILE, IDEAS_FILE):
@@ -235,7 +270,7 @@ def main() -> None:
         print()
         generate_files(plan, live, columns, args.provider)
         print("\nDespués de generar:")
-        _, plan = current_state(live)      # lo que quedó: si algo falló, se ve aquí
+        plan = current_state(live, published)   # lo que quedó: si algo falló, se ve aquí
         print("\nRevisa `git diff ai/data/catalog/`, reinicia el servicio del asistente y haz commit.")
 
     if args.escribir:
@@ -243,7 +278,7 @@ def main() -> None:
             fail("Los archivos no reflejan la vista: corre primero --generar (o vuelve a "
                  "correrlo si se cortó). No se escribió nada.")
         load_dotenv()
-        write_database(args.borrar_huerfanos, args.max_borrar)
+        write_database(plan, args.borrar_huerfanos, args.max_borrar)
     elif not args.generar:
         print("\nSin --generar ni --escribir no se toca nada.")
 
