@@ -243,6 +243,7 @@ python -m pytest tests/contracts -v              # valida los ejemplos del contr
 python -m ai.scripts.build_sample_data           # regenera ai/data/ (requiere `gh` autenticado)
 python -m ai.scripts.export_catalog_snapshot     # regenera ai/data/catalog/ (requiere AI_READER_DATABASE_URL en .env)
 python -m ai.scripts.compare_catalog             # qué cambió en la vista frente a lo que tiene la IA (0 igual, 1 cambios, 2 error)
+python -m ai.scripts.refresh_ai_data             # plan para actualizar la IA según la vista (--generar, --escribir)
 python -m ai.scripts.load_seed_example           # carga los datos de ejemplo en ai.* (requiere AI_DATABASE_URL en .env)
 python -m ai.scripts.load_seed_example --limpiar # borra los datos de ejemplo
 python -m ai.scripts.enrich_catalog              # genera categorías, resumen y casos de uso (requiere GEMINI_API_KEY)
@@ -288,6 +289,25 @@ snapshot y con los datos de la IA, sin escribir nada: repos nuevos, eliminados y
 cambios de `archived`, y qué repos tienen el enriquecimiento o las ideas desactualizados. Para eso
 recalcula la huella de lo que lee el modelo con la versión de las reglas de cada registro, así que
 un cambio de reglas no cuenta como cambio del catálogo.
+
+## Actualizar los datos de la IA cuando cambia el catálogo
+
+`python -m ai.scripts.refresh_ai_data` compara la vista con lo que tiene la IA y hace solo lo que
+falta. Se puede repetir: si se corta (por ejemplo, por el límite del día del proveedor), se vuelve a
+correr el mismo comando.
+
+1. **Plan** (sin opciones): qué cambió, qué se haría y cuántas llamadas al modelo costaría. No toca nada.
+2. **`--generar`**: refresca `ai/data/catalog/`, quita los registros de repos que salieron, corrige
+   nombres y regenera con el modelo solo los repos cuya entrada cambió. Solo archivos.
+3. Revisar `git diff ai/data/catalog/`.
+4. **`--escribir`**: escribe los archivos en las tablas `ai.*` en una transacción. Se niega si los
+   archivos no reflejan la vista. Los repos que salieron solo se listan; con `--borrar-huerfanos` se
+   borran sus filas regenerables (nunca categorías humanas ni ideas revisadas), con un máximo de
+   `--max-borrar` (10) para no vaciar las tablas si la vista devolviera de menos.
+5. Reiniciar el servicio del asistente (carga el catálogo al arrancar) y hacer commit de los archivos.
+
+Un cambio de reglas no se regenera aquí: si el archivo está en otra versión de las reglas que el
+código, o un registro es de otro modelo, el plan lo muestra como pendiente.
 
 ## Datos de ejemplo en las tablas de la IA
 

@@ -22,6 +22,7 @@ from ai.catalog import ENRICHMENT_FILE, load_categories, load_repos
 from ai.enrich import PROMPT_VERSION, README_CHARS, enrich_repo, input_hash, readme_input, user_message
 from ai.llm import PROVIDERS
 from ai.scripts.batch import run_batch, select_repos
+from shared.contracts.repo import Repo
 
 OUT_FILE = ENRICHMENT_FILE
 
@@ -55,6 +56,19 @@ def summary(records: list[dict]) -> str:
     return "\n".join(lines)
 
 
+def enrich(repos: list[Repo], out: Path = OUT_FILE, provider: str = "gemini",
+           readme_chars: int = README_CHARS, force: bool = False,
+           allow_version_change: bool = False) -> list[dict]:
+    """Enriquece los repos con el lote reanudable y devuelve los registros de esta corrida."""
+    categories = load_categories()
+    return run_batch(
+        repos, out, PROMPT_VERSION,
+        current_hash=lambda r: input_hash(user_message(r, readme_input(r, readme_chars)), provider),
+        process=lambda r: enrich_repo(r, categories, provider, readme_chars),
+        is_done=up_to_date, describe=describe, force=force,
+        allow_version_change=allow_version_change)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Enriquece el catálogo con el LLM.")
     parser.add_argument("--provider", default="gemini", choices=list(PROVIDERS))
@@ -69,16 +83,9 @@ def main() -> None:
     args = parser.parse_args()
 
     load_dotenv()
-    categories = load_categories()
     repos = select_repos(load_repos(), args.repos)
-
-    done = run_batch(
-        repos, args.out, PROMPT_VERSION,
-        current_hash=lambda r: input_hash(user_message(r, readme_input(r, args.readme_chars)),
-                                          args.provider),
-        process=lambda r: enrich_repo(r, categories, args.provider, args.readme_chars),
-        is_done=up_to_date, describe=describe, force=args.force,
-        allow_version_change=args.new_version)
+    done = enrich(repos, args.out, args.provider, args.readme_chars, force=args.force,
+                  allow_version_change=args.new_version)
 
     print("\n" + summary(done))
     print(f"\nGuardado en {args.out}")

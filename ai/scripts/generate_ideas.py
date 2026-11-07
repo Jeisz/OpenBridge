@@ -22,6 +22,7 @@ from ai.enrich import input_hash, user_message
 from ai.ideas import PROMPT_VERSION, ideas_for_repo, ideas_input
 from ai.llm import PROVIDERS
 from ai.scripts.batch import run_batch, select_repos
+from shared.contracts.repo import Repo
 
 OUT_FILE = SOURCE_DIRS["snapshot"] / "ideas.json"
 
@@ -66,6 +67,18 @@ def summary(records: list[dict]) -> str:
     return "\n".join(lines)
 
 
+def generate(repos: list[Repo], out: Path = OUT_FILE, provider: str = "gemini",
+             force: bool = False, allow_version_change: bool = False) -> list[dict]:
+    """Genera las ideas con el lote reanudable y devuelve los registros de esta corrida."""
+    return run_batch(
+        repos, out, PROMPT_VERSION,
+        current_hash=lambda r: input_hash(user_message(r, ideas_input(r).text), provider,
+                                          PROMPT_VERSION),
+        process=lambda r: ideas_for_repo(r, provider),
+        is_done=up_to_date, describe=describe, force=force,
+        allow_version_change=allow_version_change)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Genera las ideas de integración con el LLM.")
     parser.add_argument("--provider", default="gemini", choices=list(PROVIDERS))
@@ -80,13 +93,8 @@ def main() -> None:
 
     load_dotenv()
     repos = select_repos(load_repos(), args.repos)
-    done = run_batch(
-        repos, args.out, PROMPT_VERSION,
-        current_hash=lambda r: input_hash(user_message(r, ideas_input(r).text), args.provider,
-                                          PROMPT_VERSION),
-        process=lambda r: ideas_for_repo(r, args.provider),
-        is_done=up_to_date, describe=describe, force=args.force,
-        allow_version_change=args.new_version)
+    done = generate(repos, args.out, args.provider, force=args.force,
+                    allow_version_change=args.new_version)
 
     print("\n" + summary(done))
     print(f"\nGuardado en {args.out}")

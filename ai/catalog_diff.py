@@ -10,6 +10,9 @@ Qué compara, por github_id (no cambia aunque el repo cambie de nombre):
   registro, así solo cuenta un cambio de la entrada; un cambio de reglas lo decide el
   guard de versión del lote, no esta comparación;
 - cambios de `archived` (un repo archivado queda sin ideas sin llamar al modelo);
+- en cada registro de la IA, el nombre y el estado de archivado con que se generó: así la
+  comparación no "olvida" un renombrado o un archivado cuando el snapshot ya se refrescó
+  y una corrida anterior se cortó antes de regenerar;
 - el resto de campos de la ingesta (estrellas, licencia, fechas): solo hay que refrescar la copia.
 """
 
@@ -27,6 +30,10 @@ AI_FIELDS = {"categories", "summary_es", "use_cases"}   # los escribe la IA, no 
 NO_RECORD = "sin datos de la IA"
 INPUT_CHANGED = "cambió lo que lee el modelo"
 OTHER_MODEL = "el registro es de otro modelo"
+NAME_CHANGED = "el registro tiene otro nombre del repo"
+ARCHIVED_CHANGED = "cambió archived"
+
+ARCHIVED_SKIP = "repo archivado"   # así marca ai.ideas un repo archivado (sin llamar al modelo)
 
 
 def enrichment_message(repo: Repo) -> str:
@@ -59,7 +66,20 @@ def stale_reason(repo: Repo, record: dict | None, message_of: Callable[[Repo], s
     if spec is None or spec.model != record["model"]:
         return OTHER_MODEL
     expected = input_hash(message_of(repo), record["provider"], record["prompt_version"])
-    return None if expected == record["ai_input_hash"] else INPUT_CHANGED
+    if expected != record["ai_input_hash"]:
+        return INPUT_CHANGED
+    if record["full_name"] != repo.full_name:
+        return NAME_CHANGED
+    return None
+
+
+def ideas_stale_reason(repo: Repo, record: dict | None) -> str | None:
+    """Como `stale_reason`, más el archivado: las ideas de un repo archivado se vacían y las
+    de un repo que deja de estarlo se generan. `archived` no entra en la huella."""
+    reason = stale_reason(repo, record, ideas_message)
+    if reason is None and (record["review"].get("skipped") == ARCHIVED_SKIP) != repo.archived:
+        return ARCHIVED_CHANGED
+    return reason
 
 
 @dataclass(frozen=True)
@@ -87,9 +107,13 @@ def _by_name(repos: Iterable[Repo]) -> list[Repo]:
 
 
 def _stale(repos: list[Repo], records: dict[int, dict],
-           message_of: Callable[[Repo], str]) -> list[tuple[Repo, str]]:
-    found = [(r, stale_reason(r, records.get(r.github_id), message_of)) for r in repos]
+           reason_of: Callable[[Repo, dict | None], str | None]) -> list[tuple[Repo, str]]:
+    found = [(r, reason_of(r, records.get(r.github_id))) for r in repos]
     return [(r, reason) for r, reason in found if reason is not None]
+
+
+def enrichment_stale_reason(repo: Repo, record: dict | None) -> str | None:
+    return stale_reason(repo, record, enrichment_message)
 
 
 def diff_catalog(live: list[Repo], known: list[Repo],
@@ -117,8 +141,8 @@ def diff_catalog(live: list[Repo], known: list[Repo],
                  if r.full_name != known_by[r.github_id].full_name],
         archived_changed=[r for r in _by_name(common)
                           if r.archived != known_by[r.github_id].archived],
-        enrichment_stale=_stale(live_repos, enrichment, enrichment_message),
-        ideas_stale=_stale(live_repos, ideas, ideas_message),
+        enrichment_stale=_stale(live_repos, enrichment, enrichment_stale_reason),
+        ideas_stale=_stale(live_repos, ideas, ideas_stale_reason),
         orphans={"enriquecimiento": sorted(enrichment.keys() - live_by.keys()),
                  "ideas": sorted(ideas.keys() - live_by.keys())},
         field_changes=dict(sorted(changes.items())),
