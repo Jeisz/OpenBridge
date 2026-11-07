@@ -4,6 +4,7 @@ Uso, desde la raíz del repo:
     python -m ai.eval.run_assistant_eval                 # gemini, groq-low y ollama, 3 corridas
     python -m ai.eval.run_assistant_eval gemini --runs 1            # ensayo corto
     python -m ai.eval.run_assistant_eval gemini --cases validation  # casos de validación
+    python -m ai.eval.run_assistant_eval gemini --cases holdout     # casos reservados
 
 Usa los casos rápidos y la búsqueda sobre el catálogo real (snapshot). Cada
 proveedor recibe primero una llamada de calentamiento que no se cuenta; ante
@@ -99,6 +100,32 @@ def render_review(answers, providers, cases) -> list[str]:
     return lines
 
 
+def render_runs(providers, outcomes, runs) -> list[str]:
+    """Métricas principales de cada corrida: el rango entre corridas es el ruido del modelo."""
+    metrics = [("Status correcto", "status_ok", pct),
+               ("Eligió un aceptable (donde había)", "chose_ok", pct),
+               ("Se abstuvo (donde no había)", "declined_ok", pct),
+               ("Acierto de punta a punta", "chose_ok_all", pct),
+               ("Textos del modelo que hablan del catálogo", "catalog_claims", str)]
+    lines = ["## Por corrida", "",
+             "Una diferencia entre versiones menor que el rango entre corridas no se puede "
+             "atribuir al cambio.", ""]
+    for p in providers:
+        per_run = [summarize([o for o in outcomes if o.provider == p and o.run == r])
+                   for r in range(1, runs + 1)]
+        lines += [f"**{p}**", "",
+                  "| Métrica | " + " | ".join(f"Corrida {r}" for r in range(1, runs + 1))
+                  + " | Rango |",
+                  "|---|" + "---|" * (runs + 1)]
+        for label, key, fmt in metrics:
+            values = [s[key] for s in per_run]
+            known = [v for v in values if v is not None]
+            span = f"{fmt(min(known))} – {fmt(max(known))}" if known else "—"
+            lines.append(f"| {label} | " + " | ".join(fmt(v) for v in values) + f" | {span} |")
+        lines.append("")
+    return lines
+
+
 def render_report(providers, summaries, cold, outcomes, answers, cases, runs,
                   n_repos, min_score, shown) -> str:
     def row(label, fmt):
@@ -155,6 +182,7 @@ def render_report(providers, summaries, cold, outcomes, answers, cases, runs,
         "",
         f"Evidencia direccional: {len(cases)} casos; los porcentajes no son estadística firme.",
         "",
+        *render_runs(providers, outcomes, runs),
         "## Por necesidad",
         "",
         "Cuenta sobre las corridas válidas: detectada · había un aceptable en el top 3 (techo) · "
@@ -198,7 +226,8 @@ def main() -> None:
                         help="por defecto: " + ", ".join(DEFAULT_PROVIDERS))
     parser.add_argument("--runs", type=int, default=3)
     parser.add_argument("--cases", choices=CASE_FILES, default="base",
-                        help="base: los casos rápidos (por defecto); validation: los casos de validación")
+                        help="base: los casos rápidos (por defecto); validation: los casos de "
+                             "validación; holdout: los reservados (solo línea base y versión final)")
     parser.add_argument("--shown", type=int, choices=range(1, 6), default=CANDIDATES_SHOWN,
                         help=f"candidatos por necesidad que ve el modelo (por defecto {CANDIDATES_SHOWN})")
     args = parser.parse_args()

@@ -146,4 +146,3 @@ def run_batch(repos: list[Repo], out: Path, prompt_version: str, *,
         done.append(record)
         print(f"{prefix}: {describe(record)}")
     return done
-

@@ -16,15 +16,19 @@ from ai.catalog import Source
 
 EVAL_DIR = Path(__file__).resolve().parent
 
-GoldenName = Literal["catalog", "sample"]
+GoldenName = Literal["catalog", "catalog-validation", "sample"]
 DEFAULT_GOLDEN: GoldenName = "catalog"
 GOLDEN_FILES: dict[str, Path] = {
     "catalog": EVAL_DIR / "search_queries_catalog.json",
+    # Consultas nuevas para validar el texto de búsqueda elegido con "catalog"; no se usan para ajustarlo.
+    "catalog-validation": EVAL_DIR / "search_queries_catalog_validation.json",
     "sample": EVAL_DIR / "search_queries.json",
 }
 # Nombre del reporte de cada golden set. El de los datos de ejemplo conserva su
 # nombre original para regenerarse en el mismo archivo.
-REPORT_PREFIX: dict[str, str] = {"catalog": "search-catalog", "sample": "search"}
+REPORT_PREFIX: dict[str, str] = {"catalog": "search-catalog",
+                                 "catalog-validation": "search-catalog-validation",
+                                 "sample": "search"}
 
 
 class SearchQuery(BaseModel):

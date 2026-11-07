@@ -82,6 +82,22 @@ python -m ai.eval.run_understand_eval gemini --cases validation
 python -m ai.eval.run_assistant_eval gemini --cases validation
 ```
 
+## Casos reservados (12 casos)
+
+`assistant_cases_holdout.json`, con el mismo esquema. Se escriben antes de
+cambiar el prompt y se corren solo con la línea base y con la versión elegida,
+una vez. Sus textos no se leen para ajustar; si se usan para afinar, hacen falta
+otros. No comparten ids ni pedidos con los otros archivos (lo comprueba un test).
+
+Prueban la abstención con necesidades parecidas a algo del catálogo pero no
+cubiertas (6 en categorías sin repos y 6 dentro de categorías con repos), y 9
+necesidades con herramienta para comprobar que el asistente no deja de
+recomendar lo que sí sirve.
+
+```bash
+python -m ai.eval.run_assistant_eval gemini --cases holdout
+```
+
 ## Qué no se mide aquí
 
 Los textos (título, resumen, roles, razones) y las conexiones: hay muchas

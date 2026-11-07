@@ -178,6 +178,28 @@ de las necesidades que la tienen (antes 67 %) y acierta de punta a punta en el
 autenticación: parecidos, no útiles. Reportes: `results/assistant-2026-11-04-1505-validation-gemini.md`
 y `results/assistant-2026-11-06-1111-validation-gemini.md`.
 
+## Validación con consultas nuevas (7-nov-2026)
+
+35 consultas escritas después de elegir la variante (`search_queries_catalog_validation.json`:
+20 con respuesta y 15 sin respuesta). Criterio fijado antes: volver al texto anterior solo
+si le gana por 2 o más en hit@3, o si la variante actual deja pasar 3 o más consultas sin
+respuesta de más.
+
+| Texto | hit@3 | MRR | Sin respuesta que pasan (umbral) |
+|---|---|---|---|
+| Sin datos de la IA | 20/20 | 0,93 | 9/15 (0,19) |
+| Resumen + casos de uso (actual) | 19/20 | 0,90 | 11/15 (0,23) |
+
+- Se mantiene la variante actual: las diferencias quedan dentro del margen fijado.
+- La ventaja medida con el golden set con que se eligió (+4 en hit@3) no se repite con
+  consultas nuevas.
+- El umbral 0,23 no bloquea ninguna consulta resuelta, pero deja pasar 11 de 15 sin
+  respuesta: frente a herramientas parecidas que no sirven, el freno tiene que estar en el
+  paso que elige entre los candidatos.
+
+Reportes: `results/search-catalog-validation-embeddinggemma-300m.md` y
+`results/search-catalog-validation-embeddinggemma-300m-texto-base.md`.
+
 ## Límites
 
 - **Los números indican una dirección, no son precisos:** 60 consultas con
