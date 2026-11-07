@@ -53,6 +53,16 @@ def test_salud_muestra_la_cadena_y_los_desconectados_sin_claves(client):
     assert "clave-falsa" not in str(body)
 
 
+def test_salud_dice_de_cuando_es_el_catalogo(monkeypatch):
+    monkeypatch.setenv("AI_LLM_PROVIDER", "gemini")
+    monkeypatch.setenv("AI_LLM_FALLBACK", "")
+    taken = "2026-10-29T20:42:17+00:00"
+    load = lambda: Catalog(buscar=lambda query, k: [], min_score=0.19, repos=3,
+                           embedding_model="falso", catalog_taken_at=taken)
+    with TestClient(create_app(load=load, settings=Settings(cors_origins=(FRONTEND,)))) as c:
+        assert c.get("/health").json()["catalog_taken_at"] == taken
+
+
 # --- Pedido ---
 
 def test_respuesta_valida(client, monkeypatch):

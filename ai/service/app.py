@@ -37,17 +37,20 @@ class Catalog:
     min_score: float
     repos: int
     embedding_model: str
+    catalog_taken_at: str | None = None   # cuándo se tomó la copia del catálogo que usa
 
 
 def load_catalog() -> Catalog:
     """Modelo de embeddings e índice del catálogo. Tarda unos segundos."""
     from ai import embeddings           # importa torch: solo al arrancar el servicio
     from ai.search import SearchIndex
+    from ai.catalog import snapshot_taken_at
 
     index = SearchIndex.build()
     spec = embeddings.model_spec()
     return Catalog(buscar=index.search, min_score=spec.min_score,
-                   repos=len(index.repos), embedding_model=spec.name)
+                   repos=len(index.repos), embedding_model=spec.name,
+                   catalog_taken_at=snapshot_taken_at())
 
 
 def _error(status: int, body: ErrorResponse) -> JSONResponse:
@@ -99,6 +102,7 @@ def create_app(load: Callable[[], Catalog] = load_catalog,
                  "disconnected_seconds": paused.get(p)} for p in app.state.providers]
         return {"status": "ok" if llms[0]["key_configured"] else "incomplete",
                 "repos": catalog.repos,
+                "catalog_taken_at": catalog.catalog_taken_at,
                 "embedding_model": catalog.embedding_model,
                 "min_score": catalog.min_score,
                 "llm": llms}

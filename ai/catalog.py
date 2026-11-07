@@ -24,6 +24,7 @@ SOURCE_DIRS: dict[str, Path] = {
 }
 CATEGORIES_FILE = Path(__file__).resolve().parents[1] / "shared" / "contracts" / "categories.json"
 ENRICHMENT_FILE = SOURCE_DIRS["snapshot"] / "enrichment.json"  # lo escribe ai.scripts.enrich_catalog
+META_FILE = SOURCE_DIRS["snapshot"] / "meta.json"  # lo escribe ai.scripts.export_catalog_snapshot
 
 
 def source_dir(source: Source = DEFAULT_SOURCE) -> Path:
@@ -51,6 +52,13 @@ def readme_file(full_name: str, source: Source = DEFAULT_SOURCE) -> Path:
 def load_raw(source: Source = DEFAULT_SOURCE) -> list[dict]:
     """Contenido de repos.json tal cual, sin validar y sin README."""
     return json.loads(repos_file(source).read_text(encoding="utf-8"))
+
+
+def snapshot_taken_at() -> str | None:
+    """Cuándo se tomó el snapshot (UTC, ISO 8601). None si no hay meta.json."""
+    if not META_FILE.is_file():
+        return None
+    return json.loads(META_FILE.read_text(encoding="utf-8")).get("taken_at")
 
 
 def load_enrichment() -> dict[int, dict]:

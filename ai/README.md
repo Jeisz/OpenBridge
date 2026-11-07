@@ -67,10 +67,12 @@ ai/
 ├── search.py                   # SearchIndex: texto a embeber, filtros y ranking
 ├── llm.py                      # generar(): registro de proveedores de LLM, salida estructurada y errores
 ├── assistant.py                # entender(), generar_mapa() y asistir(): el flujo del asistente
+├── catalog_diff.py             # Compara la vista con lo que tiene la IA (sin leer archivos ni la base)
 ├── requirements.txt
 ├── scripts/
 │   ├── build_sample_data.py        # Regenera ai/data/ desde la API de GitHub
 │   ├── check_llm.py                # Prueba de humo de los proveedores de LLM
+│   ├── compare_catalog.py          # Compara la vista con el snapshot y los datos de la IA (solo lectura)
 │   ├── export_catalog_snapshot.py  # Regenera ai/data/catalog/ desde la base (solo lectura)
 │   └── load_seed_example.py        # Carga o borra los datos de ejemplo en las tablas ai.*
 ├── data/
@@ -213,7 +215,7 @@ acepta pedidos hasta terminar.
 | Ruta | Qué hace |
 |---|---|
 | `POST /assistant` | Cuerpo `AssistantRequest` (`{"query": "…"}`, 20–2000 caracteres) → `AssistantResponse`, o `ErrorResponse` con 422 `invalid_query`, 502 `invalid_response`, 503 `provider_unavailable` o 504 `timeout` |
-| `GET /health` | Repos cargados, modelo de embeddings, umbral y, por proveedor, si tiene clave y cuántos segundos le quedan desconectado (nunca muestra claves) |
+| `GET /health` | Repos cargados, fecha de la copia del catálogo, modelo de embeddings, umbral y, por proveedor, si tiene clave y cuántos segundos le quedan desconectado (nunca muestra claves) |
 | `GET /docs` | Documentación interactiva generada desde el contrato |
 
 - **CORS:** acepta los orígenes de `AI_CORS_ORIGINS` (separados por comas; por defecto
@@ -240,6 +242,7 @@ AI_MODEL_TESTS=1 python -m pytest ai/tests -v    # incluye las pruebas con el mo
 python -m pytest tests/contracts -v              # valida los ejemplos del contrato
 python -m ai.scripts.build_sample_data           # regenera ai/data/ (requiere `gh` autenticado)
 python -m ai.scripts.export_catalog_snapshot     # regenera ai/data/catalog/ (requiere AI_READER_DATABASE_URL en .env)
+python -m ai.scripts.compare_catalog             # qué cambió en la vista frente a lo que tiene la IA (0 igual, 1 cambios, 2 error)
 python -m ai.scripts.load_seed_example           # carga los datos de ejemplo en ai.* (requiere AI_DATABASE_URL en .env)
 python -m ai.scripts.load_seed_example --limpiar # borra los datos de ejemplo
 python -m ai.scripts.enrich_catalog              # genera categorías, resumen y casos de uso (requiere GEMINI_API_KEY)
@@ -279,6 +282,12 @@ que quede en el historial (PowerShell):
 
 El script valida cada fila contra `Repo` antes de escribir: si alguna no cumple, no toca el
 snapshot anterior. Regenerarlo reescribe `readmes/` completo; el diff muestra qué cambió en el catálogo.
+
+Para saber si hace falta actualizar, `python -m ai.scripts.compare_catalog` compara la vista con el
+snapshot y con los datos de la IA, sin escribir nada: repos nuevos, eliminados y renombrados,
+cambios de `archived`, y qué repos tienen el enriquecimiento o las ideas desactualizados. Para eso
+recalcula la huella de lo que lee el modelo con la versión de las reglas de cada registro, así que
+un cambio de reglas no cuenta como cambio del catálogo.
 
 ## Datos de ejemplo en las tablas de la IA
 
