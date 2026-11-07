@@ -9,8 +9,10 @@ import os
 import numpy as np
 import pytest
 
-from ai.search import SearchIndex, build_embedding_text, clean_topics
+from ai.search import TEXT_VARIANTS, SearchIndex, build_embedding_text, clean_topics
 from shared.contracts.repo import Category, Repo
+
+CADENA = ["base", "categorias", "resumen", "casos"]
 
 # Consulta y vectores de largo 1. Similitud con QUERY: A=1.0, B=0.8, C=0.6, D=0.0
 QUERY = np.array([1.0, 0.0])
@@ -148,15 +150,52 @@ def test_clean_topics_quita_ruido_y_conserva_el_orden():
     assert clean_topics(["hacktoberfest", "login", "open-source", "oidc"]) == ["login", "oidc"]
 
 
-def test_texto_a_embeber():
+def test_texto_a_embeber_por_defecto_no_lleva_categorias():
     repo = make_repo("keycloak", description="Identity management", topics=["hacktoberfest", "oidc"])
-    assert build_embedding_text(repo, AUTH) == (
+    assert build_embedding_text(repo, AUTH) == "keycloak. Identity management. Topics: oidc."
+
+
+def test_texto_a_embeber_con_categorias():
+    repo = make_repo("keycloak", description="Identity management", topics=["hacktoberfest", "oidc"])
+    assert build_embedding_text(repo, AUTH, fields=("categories",)) == (
         "keycloak. Autenticación: Login y SSO. Identity management. Topics: oidc."
     )
 
 
 def test_texto_a_embeber_sin_descripcion():
-    assert build_embedding_text(make_repo("x"), AUTH) == "x. Autenticación: Login y SSO."
+    assert build_embedding_text(make_repo("x"), AUTH, fields=("categories",)) == (
+        "x. Autenticación: Login y SSO."
+    )
+
+
+def _repo_con_ia():
+    repo = make_repo("kafka", description="Event streaming", topics=["streaming"])
+    return repo.model_copy(update={"summary_es": "Plataforma de eventos",
+                                   "use_cases": ["Construir pipelines", "Integrar datos"]})
+
+
+def test_texto_base_sin_datos_de_la_ia():
+    assert build_embedding_text(_repo_con_ia(), AUTH, fields=()) == (
+        "kafka. Event streaming. Topics: streaming."
+    )
+
+
+def test_texto_con_todos_los_datos_de_la_ia():
+    fields = ("categories", "summary", "use_cases")
+    assert build_embedding_text(_repo_con_ia(), AUTH, fields=fields) == (
+        "kafka. Autenticación: Login y SSO. Plataforma de eventos. Event streaming. "
+        "Topics: streaming. Usos: Construir pipelines; Integrar datos."
+    )
+
+
+def test_las_variantes_de_la_cadena_suman_datos_de_a_uno():
+    variantes = [TEXT_VARIANTS[nombre] for nombre in CADENA]
+    assert variantes[0] == ()
+    assert all(set(a) < set(b) for a, b in zip(variantes, variantes[1:]))
+
+
+def test_sin_categorias_es_casos_menos_las_categorias():
+    assert set(TEXT_VARIANTS["sin-categorias"]) == set(TEXT_VARIANTS["casos"]) - {"categories"}
 
 
 # --- Con el modelo real (AI_MODEL_TESTS=1) ---

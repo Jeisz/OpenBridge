@@ -5,7 +5,7 @@ from datetime import datetime, timezone
 import pytest
 from pydantic import ValidationError
 
-from ai import assistant
+from ai import assistant, llm
 from ai.catalog import load_repos
 from ai.llm import Generation, LLMInvalidResponse
 from ai.search import SearchResult
@@ -188,7 +188,7 @@ def test_reintenta_si_elige_un_repo_de_otra_necesidad(monkeypatch):
         return Generation(text=reply.model_dump_json(), provider="fake", model="fake",
                           seconds=0.1, input_tokens=100, output_tokens=10, data=reply)
 
-    monkeypatch.setattr(assistant, "generar", fake_generar)
+    monkeypatch.setattr(llm, "generar", fake_generar)
     response, result_ = assistant.generar_mapa(REQUEST, needs("ai", "cache"), CANDIDATES)
 
     assert result_.attempts == 2
@@ -221,7 +221,7 @@ def test_formato_rechazado_reintenta_con_los_valores_validos(monkeypatch):
         return Generation(text=reply.model_dump_json(), provider="fake", model="fake",
                           seconds=0.1, input_tokens=100, output_tokens=10, data=reply)
 
-    monkeypatch.setattr(assistant, "generar", fake_generar)
+    monkeypatch.setattr(llm, "generar", fake_generar)
     response, result_ = assistant.generar_mapa(REQUEST, needs("ai", "cache"), CANDIDATES)
 
     retry = calls[1][-1]["content"]  # el mensaje del reintento

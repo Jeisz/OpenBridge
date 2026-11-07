@@ -1,0 +1,542 @@
+{
+  "prompt_version": "4",
+  "repos": [
+    {
+      "github_id": 50904245,
+      "full_name": "apache/beam",
+      "categories": [
+        "data-processing"
+      ],
+      "summary_es": "Modelo de programación unificado para definir pipelines de procesamiento de datos por lotes y en streaming, con SDKs en Java, Python y Go y runners para ejecutarlos en backends como Flink, Spark y Dataflow.",
+      "use_cases": [
+        "Definir pipelines de procesamiento de datos por lotes y en streaming con un mismo modelo",
+        "Ejecutar el mismo pipeline en distintos backends distribuidos mediante runners",
+        "Escribir pipelines de datos en Java, Python o Go"
+      ],
+      "evidence": [
+        "Apache Beam is a unified model for defining both batch and streaming data-parallel processing pipelines, as well as a set of language-specific SDKs for constructing pipelines and Runners for executing them on distributed processing backends, including Apache Flink, Apache Spark, Google Cloud Dataflow, and Hazelcast Jet.",
+        "Beam supports executing programs on multiple distributed processing backends through PipelineRunners. Currently, the following PipelineRunners are available:",
+        "Currently, this repository contains SDKs for Java, Python and Go."
+      ],
+      "provider": "claude-sonnet",
+      "model": "claude-sonnet-5-5",
+      "prompt_version": "4",
+      "ai_input_hash": "2b8c4d1f1fd38b099c05e28c0b822da875585494a1a27535c735f1b61cd2f6dc",
+      "review": {
+        "readme_chars": 4554,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 5850,
+        "output_tokens": 413,
+        "seconds": 3.03
+      }
+    },
+    {
+      "github_id": 120896210,
+      "full_name": "argoproj/argo-cd",
+      "categories": [
+        "infrastructure"
+      ],
+      "summary_es": "Herramienta declarativa de entrega continua basada en GitOps para Kubernetes, que automatiza el despliegue y la gestión del ciclo de vida de aplicaciones a partir de definiciones versionadas.",
+      "use_cases": [
+        "Desplegar aplicaciones en Kubernetes siguiendo el enfoque GitOps",
+        "Automatizar y auditar el despliegue y el ciclo de vida de las aplicaciones",
+        "Mantener configuraciones y entornos declarativos bajo control de versiones"
+      ],
+      "evidence": [
+        "Argo CD is a declarative GitOps continuous delivery tool for Kubernetes.",
+        "Application deployment and lifecycle management should be automated, auditable, and easy to understand.",
+        "Application definitions, configurations, and environments should be declarative and version controlled."
+      ],
+      "provider": "claude-sonnet",
+      "model": "claude-sonnet-5-5",
+      "prompt_version": "4",
+      "ai_input_hash": "d8dc0fabd8886fd0a02159489ed1c617fc5541b36a5de46b978a45b6dffa2795",
+      "review": {
+        "readme_chars": 3106,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 5564,
+        "output_tokens": 316,
+        "seconds": 2.5
+      }
+    },
+    {
+      "github_id": 53631945,
+      "full_name": "BurntSushi/ripgrep",
+      "categories": [
+        "dev-tools"
+      ],
+      "summary_es": "Herramienta de línea de comandos que busca de forma recursiva un patrón regex en directorios, respetando las reglas de gitignore y omitiendo por defecto archivos ocultos y binarios.",
+      "use_cases": [
+        "Buscar patrones regex en árboles de código fuente respetando .gitignore",
+        "Limitar la búsqueda a tipos de archivo concretos o excluir otros",
+        "Buscar en archivos comprimidos o con codificaciones distintas de UTF-8",
+        "Reemplazar grep con una alternativa más rápida y con soporte Unicode"
+      ],
+      "evidence": [
+        "ripgrep is a line-oriented search tool that recursively searches the current directory for a regex pattern.",
+        "ripgrep can search specific types of files. For example, `rg -tpy foo` limits your search to Python files and `rg -Tjs foo` excludes JavaScript files from your search.",
+        "ripgrep supports searching files compressed in a common format (brotli, bzip2, gzip, lz4, lzma, xz, or zstandard) with the `-z/--search-zip` flag.",
+        "It can replace many use cases served by other search tools because it contains most of their features and is generally faster."
+      ],
+      "provider": "claude-sonnet",
+      "model": "claude-sonnet-5-5",
+      "prompt_version": "4",
+      "ai_input_hash": "87f2cd78e88db26dfd794445c320f176aae973d603336a86c82fee9aec5b2623",
+      "review": {
+        "readme_chars": 7554,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 7583,
+        "output_tokens": 447,
+        "seconds": 4.58
+      }
+    },
+    {
+      "github_id": 48109239,
+      "full_name": "cilium/cilium",
+      "categories": [
+        "infrastructure",
+        "observability",
+        "auth"
+      ],
+      "summary_es": "Solución de redes, observabilidad y seguridad para Kubernetes con plano de datos basado en eBPF. Funciona como plugin CNI, balanceador de carga distribuido y aplica políticas de red L3-L7 basadas en identidad.",
+      "use_cases": [
+        "Proveer redes para clústeres de Kubernetes como plugin CNI",
+        "Reemplazar kube-proxy con balanceo de carga distribuido en eBPF",
+        "Aplicar políticas de red L3-L7 basadas en identidad",
+        "Conectar varios clústeres de Kubernetes con Cluster Mesh"
+      ],
+      "evidence": [
+        "`Cilium as a CNI plugin `_ provides a\nfast, scalable, and secure networking layer for Kubernetes clusters.",
+        "Cilium implements distributed load balancing for traffic between pods and to\nexternal services, and is able to fully replace kube-proxy, using efficient\nhash tables in eBPF, allowing for almost unlimited scale.",
+        "It is L7-protocol\naware and can enforce network policies on L3-L7 using an identity-based security\nmodel that is decoupled from network addressing.",
+        "Cilium `Cluster Mesh `_ enables\nsecure, seamless connectivity across multiple Kubernetes clusters."
+      ],
+      "provider": "claude-sonnet",
+      "model": "claude-sonnet-5-5",
+      "prompt_version": "4",
+      "ai_input_hash": "93e4001f57225923c282fe2f5757b40274f5152f9f86711dd985a82b84b4dea3",
+      "review": {
+        "readme_chars": 7880,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 6803,
+        "output_tokens": 494,
+        "seconds": 3.63
+      }
+    },
+    {
+      "github_id": 60246359,
+      "full_name": "ClickHouse/ClickHouse",
+      "categories": [
+        "database"
+      ],
+      "summary_es": "Sistema de gestión de bases de datos columnar de código abierto, orientado a generar informes analíticos en tiempo real con SQL. Admite despliegue distribuido y autoalojado.",
+      "use_cases": [
+        "Generar informes analíticos de datos en tiempo real"
+      ],
+      "evidence": [
+        "ClickHouse® is an open-source column-oriented database management system that allows generating analytical data reports in real-time."
+      ],
+      "provider": "claude-sonnet",
+      "model": "claude-sonnet-5-5",
+      "prompt_version": "4",
+      "ai_input_hash": "aa5688c1000f705e8dde707e2c9f8730e16a558a7b117274c48053019eada6a2",
+      "review": {
+        "readme_chars": 3146,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 5440,
+        "output_tokens": 159,
+        "seconds": 1.64
+      }
+    },
+    {
+      "github_id": 131619646,
+      "full_name": "dagster-io/dagster",
+      "categories": [
+        "data-processing"
+      ],
+      "summary_es": "Orquestador de pipelines de datos para todo el ciclo de desarrollo. Permite declarar en Python los data assets (tablas, datasets, modelos, reportes) y ejecutarlos y mantenerlos actualizados, con lineage y observabilidad integrados.",
+      "use_cases": [
+        "Orquestar pipelines de datos en producción con un motor multi-tenant y multi-herramienta",
+        "Desarrollar y mantener data assets como tablas, datasets, modelos de ML y reportes",
+        "Centralizar metadata, catálogo y lineage de los datos en una sola herramienta"
+      ],
+      "evidence": [
+        "Put your pipelines into production with a robust multi-tenant, multi-tool engine that scales technically and organizationally.",
+        "It is designed for **developing and maintaining data assets**, such as tables, data sets, machine learning models, and reports.",
+        "Centralize your metadata in one tool with built-in observability, diagnostics, cataloging, and lineage."
+      ],
+      "provider": "claude-sonnet",
+      "model": "claude-sonnet-5-5",
+      "prompt_version": "4",
+      "ai_input_hash": "f42ca71572409d6167d1ca1f128b27825fb01c19d63b189002aa87846de35ac0",
+      "review": {
+        "readme_chars": 3613,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 5507,
+        "output_tokens": 368,
+        "seconds": 3.12
+      }
+    },
+    {
+      "github_id": 138754790,
+      "full_name": "duckdb/duckdb",
+      "categories": [
+        "database",
+        "analytics"
+      ],
+      "summary_es": "Sistema de base de datos analítica que se ejecuta dentro de la aplicación, sin servidor aparte. Ofrece un dialecto SQL amplio, lee CSV, Parquet y JSON, y tiene clientes para Python, R, Java y otros.",
+      "use_cases": [
+        "Consultar archivos CSV, Parquet o JSON con SQL sin cargarlos antes",
+        "Consultar y unir datos de PostgreSQL, MySQL y SQLite sin un paso ETL",
+        "Embeber una base de datos analítica en una aplicación sin gestionar un servidor",
+        "Leer datos remotos desde S3, HTTP, Azure o Google Cloud Storage"
+      ],
+      "evidence": [
+        "For many of these formats, including CSV, Parquet, and JSON, loading data is as simple as referencing the file in the FROM clause:",
+        "DuckDB can attach to other database systems and query them in place, so you can read, join, and move data across engines without a separate ETL step.",
+        "DuckDB runs in-process inside your application, so there is no separate server to manage and no external dependencies.",
+        "DuckDB reads and writes a wide range of file formats, including CSV, Parquet, JSON, and Excel, directly from local disk or from remote endpoints such as S3, HTTP(S), Azure, and Google Cloud Storage."
+      ],
+      "provider": "claude-sonnet",
+      "model": "claude-sonnet-5-5",
+      "prompt_version": "4",
+      "ai_input_hash": "a2d443b2fe29a03564a9bd9e5aab037864faf7fa73d263b3a89b199d0731718c",
+      "review": {
+        "readme_chars": 3284,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 5277,
+        "output_tokens": 499,
+        "seconds": 3.36
+      }
+    },
+    {
+      "github_id": 179492861,
+      "full_name": "encode/httpx",
+      "categories": [
+        "backend"
+      ],
+      "summary_es": "Cliente HTTP para Python 3 con API síncrona y asíncrona, soporte para HTTP/1.1 y HTTP/2, cliente de línea de comandos integrado y API compatible con requests.",
+      "use_cases": [
+        "Realizar peticiones HTTP desde Python con interfaz síncrona o asíncrona",
+        "Consumir servicios web usando HTTP/2",
+        "Probar aplicaciones WSGI o ASGI enviándoles peticiones directamente",
+        "Lanzar peticiones HTTP desde la terminal con el cliente de línea de comandos"
+      ],
+      "evidence": [
+        "Standard synchronous interface, but with async support if you need it.",
+        "HTTP/1.1 and HTTP/2 support.",
+        "Ability to make requests directly to WSGI applications or ASGI applications.",
+        "An integrated command-line client."
+      ],
+      "provider": "claude-sonnet",
+      "model": "claude-sonnet-5-5",
+      "prompt_version": "4",
+      "ai_input_hash": "976627b4636c8770d08b54eb44b9c96ac167288097623b9c2e721ed5e04a9c81",
+      "review": {
+        "readme_chars": 3363,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 5516,
+        "output_tokens": 333,
+        "seconds": 2.59
+      }
+    },
+    {
+      "github_id": 160919119,
+      "full_name": "fastapi/fastapi",
+      "categories": [
+        "backend"
+      ],
+      "summary_es": "Framework web para construir APIs con Python basado en type hints estándar. Usa Starlette y Pydantic, valida datos y genera documentación interactiva con OpenAPI y JSON Schema.",
+      "use_cases": [
+        "Construir APIs REST en Python con validación de datos mediante type hints",
+        "Generar documentación interactiva de la API automáticamente con Swagger UI y ReDoc",
+        "Exponer modelos de aprendizaje automático como servicio REST para obtener predicciones"
+      ],
+      "evidence": [
+        "FastAPI is a modern, fast (high-performance), web framework for building APIs with Python based on standard Python type hints.",
+        "Automatic interactive API documentation, including 2 alternative user interfaces:",
+        "\"_We adopted the **FastAPI** library to spawn a **REST** server that can be queried to obtain **predictions**. [for Ludwig]_\""
+      ],
+      "provider": "claude-sonnet",
+      "model": "claude-sonnet-5-5",
+      "prompt_version": "4",
+      "ai_input_hash": "930140c5ecfeab0186f8bc03b16ad53d65bb8749fed72addb07d85ac65b22da0",
+      "review": {
+        "readme_chars": 7940,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 7274,
+        "output_tokens": 337,
+        "seconds": 2.94
+      }
+    },
+    {
+      "github_id": 15111821,
+      "full_name": "grafana/grafana",
+      "categories": [
+        "observability",
+        "analytics"
+      ],
+      "summary_es": "Plataforma de observabilidad y visualización de datos que permite consultar, visualizar y alertar sobre métricas, logs y trazas desde múltiples fuentes como Prometheus, Loki, Elasticsearch, InfluxDB y Postgres.",
+      "use_cases": [
+        "Monitorear métricas y logs de sistemas mediante dashboards compartidos",
+        "Definir reglas de alerta con notificaciones a Slack, PagerDuty u OpsGenie",
+        "Explorar logs y métricas con consultas ad hoc y filtros de etiquetas",
+        "Combinar varias fuentes de datos en un mismo gráfico"
+      ],
+      "evidence": [
+        "Grafana allows you to query, visualize, alert on and understand your metrics no matter where they are stored.",
+        "**Alerting:** Visually define alert rules for your most important metrics. Grafana will continuously evaluate and send notifications to systems like Slack, PagerDuty, VictorOps, OpsGenie.",
+        "**Explore Logs:** Experience the magic of switching from metrics to logs with preserved label filters. Quickly search through all your logs or streaming them live.",
+        "**Mixed Data Sources:** Mix different data sources in the same graph! You can specify a data source on a per-query basis. This works for even custom datasources."
+      ],
+      "provider": "claude-sonnet",
+      "model": "claude-sonnet-5-5",
+      "prompt_version": "4",
+      "ai_input_hash": "c0eb4bd6ec35fa593b28fa66fb761c24255902dbc6e659dae66f3db61a1cc827",
+      "review": {
+        "readme_chars": 2194,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 5026,
+        "output_tokens": 488,
+        "seconds": 3.33
+      }
+    },
+    {
+      "github_id": 31288958,
+      "full_name": "hashicorp/vault",
+      "categories": [
+        "auth"
+      ],
+      "summary_es": "Herramienta para gestionar secretos, cifrado como servicio y gestión de acceso privilegiado. Ofrece una interfaz unificada para acceder a secretos con control de acceso estricto y registro de auditoría detallado.",
+      "use_cases": [
+        "Almacenar de forma segura claves de API, contraseñas y certificados",
+        "Generar credenciales dinámicas bajo demanda para AWS o bases de datos SQL",
+        "Cifrar y descifrar datos sin almacenarlos en Vault",
+        "Revocar secretos individuales o grupos de secretos ante una intrusión"
+      ],
+      "evidence": [
+        "A secret is anything that you want to tightly control access to, such as API keys, passwords, certificates, and more.",
+        "**Dynamic Secrets**: Vault can generate secrets on-demand for some",
+        "**Data Encryption**: Vault can encrypt and decrypt data without storing",
+        "Revocation assists in key rolling as well as locking down systems in the"
+      ],
+      "provider": "claude-sonnet",
+      "model": "claude-sonnet-5-5",
+      "prompt_version": "4",
+      "ai_input_hash": "8c8106c7ab54d53700a162a8d343fbe68bc6f1b32f36eeb7a20a6d4e9059720f",
+      "review": {
+        "readme_chars": 7822,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 6848,
+        "output_tokens": 377,
+        "seconds": 3.67
+      }
+    },
+    {
+      "github_id": 71995937,
+      "full_name": "nuxt/nuxt",
+      "categories": [
+        "frontend",
+        "backend"
+      ],
+      "summary_es": "Framework de código abierto basado en Vue.js para crear aplicaciones web y sitios full-stack con TypeScript, que admite renderizado en servidor, generación de sitios estáticos y renderizado híbrido.",
+      "use_cases": [
+        "Construir aplicaciones web full-stack con Vue.js y un directorio server/",
+        "Generar sitios estáticos o con renderizado en servidor, híbrido y en el borde",
+        "Crear sitios web optimizados para SEO con meta tags",
+        "Ampliar el proyecto con módulos de la comunidad y del equipo de Nuxt"
+      ],
+      "evidence": [
+        "Go full-stack with our server/ directory",
+        "Server-side rendering, static site generation, hybrid rendering and edge-side rendering",
+        "Search engine optimization and defining meta tags",
+        "Extensible with 300+ modules"
+      ],
+      "provider": "claude-sonnet",
+      "model": "claude-sonnet-5-5",
+      "prompt_version": "4",
+      "ai_input_hash": "39f313e291de931e0faccb8dff1829e65c4b97eef594e65721b54c68c70bb760",
+      "review": {
+        "readme_chars": 2884,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 5314,
+        "output_tokens": 339,
+        "seconds": 2.66
+      }
+    },
+    {
+      "github_id": 658928958,
+      "full_name": "ollama/ollama",
+      "categories": [
+        "ai"
+      ],
+      "summary_es": "Herramienta para descargar y ejecutar modelos de lenguaje abiertos (Gemma, Qwen, DeepSeek, gpt-oss y otros) de forma local o en la nube, con CLI, API REST y librerías para Python y JavaScript.",
+      "use_cases": [
+        "Ejecutar modelos de lenguaje abiertos de forma local con CLI",
+        "Integrar modelos locales en aplicaciones mediante la API REST",
+        "Conectar modelos a agentes de programación como Claude Code u OpenCode",
+        "Crear un asistente personal de IA en WhatsApp, Telegram o Slack"
+      ],
+      "evidence": [
+        "Run and chat with Gemma 4:",
+        "Ollama has a REST API for running and managing models.",
+        "Supported integrations include Claude Code, Codex, Copilot CLI, DeepSeek Harness, Droid, and OpenCode.",
+        "Use OpenClaw to turn Ollama into a personal AI assistant across WhatsApp, Telegram, Slack, Discord, and more:"
+      ],
+      "provider": "claude-sonnet",
+      "model": "claude-sonnet-5-5",
+      "prompt_version": "4",
+      "ai_input_hash": "8ca1c6cbbdd071a7e9257fb55b6931272217b24b3b2c14e97fbdf64216a3981c",
+      "review": {
+        "readme_chars": 7624,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 7532,
+        "output_tokens": 401,
+        "seconds": 3.23
+      }
+    },
+    {
+      "github_id": 359952601,
+      "full_name": "pgvector/pgvector",
+      "categories": [
+        "search",
+        "database"
+      ],
+      "summary_es": "Extensión de Postgres para búsqueda por similitud de vectores. Permite almacenar vectores junto al resto de los datos y hacer búsqueda exacta o aproximada de vecinos más cercanos con índices HNSW e IVFFlat.",
+      "use_cases": [
+        "Buscar vecinos más cercanos de vectores directamente en Postgres",
+        "Almacenar vectores junto con el resto de los datos de la aplicación",
+        "Acelerar consultas de similitud con índices aproximados HNSW o IVFFlat"
+      ],
+      "evidence": [
+        "exact and approximate nearest neighbor search",
+        "Store your vectors with the rest of your data. Supports:",
+        "You can add an index to use approximate nearest neighbor search, which trades some recall for speed."
+      ],
+      "provider": "claude-sonnet",
+      "model": "claude-sonnet-5-5",
+      "prompt_version": "4",
+      "ai_input_hash": "3882efa8ae34b2f93ad699e5bef82a7d2f3ace9ce6c6d53b3d836852035be948",
+      "review": {
+        "readme_chars": 7793,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 7395,
+        "output_tokens": 298,
+        "seconds": 2.53
+      }
+    },
+    {
+      "github_id": 156018,
+      "full_name": "redis/redis",
+      "categories": [
+        "cache",
+        "database",
+        "messaging"
+      ],
+      "summary_es": "Servidor de estructuras de datos en memoria que funciona como caché, base de datos NoSQL clave-valor y de documentos, motor de búsqueda vectorial y de texto, y message broker con streams y pub/sub.",
+      "use_cases": [
+        "Cachear datos de uso frecuente para aliviar la base de datos principal",
+        "Gestionar sesiones de usuario distribuidas",
+        "Implementar colas de trabajo, pub/sub y streams entre servicios",
+        "Almacenar vectores y memoria para aplicaciones de IA generativa con RAG"
+      ],
+      "evidence": [
+        "**Caching:** quickly access frequently used data without needing to query your primary database",
+        "**Distributed Session Store:** Offers flexible session data modeling (string, JSON, hash).",
+        "**Messaging and interservice communication:** job queues, message brokering, pub/sub, and streams for communicating between services",
+        "**Vector Store for GenAI:** Integrates with AI applications (e.g. LangGraph, mem0) for short-term memory, long-term memory, LLM response caching (semantic caching), and retrieval augmented generation (RAG)."
+      ],
+      "provider": "claude-sonnet",
+      "model": "claude-sonnet-5-5",
+      "prompt_version": "4",
+      "ai_input_hash": "5cdc5f6221e0079d6f0676d991e84a7c31d0806aa214017cd06a4dcb7e425292",
+      "review": {
+        "readme_chars": 7339,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 6859,
+        "output_tokens": 437,
+        "seconds": 2.84
+      }
+    },
+    {
+      "github_id": 54173593,
+      "full_name": "storybookjs/storybook",
+      "categories": [
+        "frontend",
+        "dev-tools"
+      ],
+      "summary_es": "Entorno de trabajo para construir, documentar y probar componentes de interfaz de usuario de forma aislada. Admite React, Angular, Vue, Svelte, Web Components y otros, y se amplía con addons.",
+      "use_cases": [
+        "Construir componentes y páginas de interfaz de forma aislada",
+        "Documentar componentes de interfaz con documentación de alta calidad",
+        "Probar la accesibilidad de los componentes de interfaz",
+        "Revisar el diseño responsivo de componentes en distintos tamaños de pantalla"
+      ],
+      "evidence": [
+        "Storybook is a frontend workshop for building UI components and pages in isolation.",
+        "| docs | Add high quality documentation to your components |",
+        "| a11y | Test components for user accessibility in Storybook |",
+        "| viewport | Change display sizes and layouts for responsive components using Storybook |"
+      ],
+      "provider": "claude-sonnet",
+      "model": "claude-sonnet-5-5",
+      "prompt_version": "4",
+      "ai_input_hash": "6abffe233ce2e6228f3edf5fd0d27227eea128ace3fa10532fbde2734a4d212d",
+      "review": {
+        "readme_chars": 5311,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 6042,
+        "output_tokens": 346,
+        "seconds": 2.83
+      }
+    }
+  ]
+}

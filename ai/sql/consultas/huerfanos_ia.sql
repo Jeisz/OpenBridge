@@ -25,4 +25,10 @@ from ai.ai_embeddings m
 where not exists (select 1 from public.v_repos_for_ai v where v.github_id = m.github_id)
 group by m.github_id
 
+union all
+select 'ai_processing', p.github_id, count(*)
+from ai.ai_processing p
+where not exists (select 1 from public.v_repos_for_ai v where v.github_id = p.github_id)
+group by p.github_id
+
 order by tabla, github_id;

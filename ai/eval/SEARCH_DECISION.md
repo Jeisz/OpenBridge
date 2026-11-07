@@ -1,8 +1,10 @@
 # Búsqueda del asistente: decisiones y evidencia
 
-**Decisión (3-nov-2026):** la búsqueda usa **EmbeddingGemma-300m** como modelo de
-embeddings y un umbral de "sin evidencia" de **0,19**, provisional hasta que el
-texto de los repos incluya categorías y un resumen en español.
+**Decisión (6-nov-2026):** la búsqueda usa **EmbeddingGemma-300m**, y el texto de
+cada repo suma el **resumen y los casos de uso que genera la IA**, sin las
+categorías. Umbral de "sin evidencia": **0,23**. La elección del modelo (3-nov) y
+el umbral anterior (0,19, con el texto sin datos de la IA) siguen abajo como
+historia.
 
 Medido con el golden set `catalog` v2 (100 consultas) sobre el snapshot del
 catálogo real del 2026-10-29. Cómo repetir la medición: [`README.md`](README.md).
@@ -78,6 +80,8 @@ MRR 0,79; el de Qwen3 conserva la medición del 27-oct. La conclusión no cambia
   modelo obliga a recalibrar el umbral.
 
 ## Umbral de "sin evidencia": 0,19
+
+> Reemplazado el 6-nov por 0,23 al cambiar el texto de los repos (ver "Texto de los repos con los datos de la IA").
 
 `min_score` del modelo en `ai/embeddings.py`.
 

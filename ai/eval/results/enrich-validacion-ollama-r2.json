@@ -1,0 +1,631 @@
+{
+  "prompt_version": "4",
+  "repos": [
+    {
+      "github_id": 50904245,
+      "full_name": "apache/beam",
+      "categories": [
+        "data-processing",
+        "dev-tools"
+      ],
+      "summary_es": "Framework unificado para definir y ejecutar pipelines de procesamiento paralelo de datos, tanto por lotes como en tiempo real. Soporta múltiples lenguajes (Java, Python, Go) y runners distribuidos como Flink, Spark y Dataflow.",
+      "use_cases": [
+        "Definir pipelines paralelos para el procesamiento por lotes o de streaming"
+      ],
+      "evidence": [
+        "Apache Beam is a unified programming model for Batch and Streaming data processing."
+      ],
+      "provider": "ollama",
+      "model": "qwen3.5:4b-q4_K_M",
+      "prompt_version": "4",
+      "ai_input_hash": "abf501eee05c9e966cfbd521122603846eb96ffaaa21328a4d45026aa3dc2e3d",
+      "review": {
+        "readme_chars": 4554,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [
+          {
+            "use_case": "Construir pipelines de procesamiento distribuido en clusters externos",
+            "evidence": "Runners: FlinkRunner, SparkRunner, DataflowRunner",
+            "reason": "la cita no está en la entrada"
+          },
+          {
+            "use_case": "Escribir código de procesamiento paralelo usando modelos abstractos y transformaciones",
+            "evidence": "The key concepts in the Beam programming model are: PCollection, PTransform, Pipeline.",
+            "reason": "la cita no está en la entrada"
+          }
+        ],
+        "input_tokens": 3115,
+        "output_tokens": 232,
+        "seconds": 6.17
+      }
+    },
+    {
+      "github_id": 120896210,
+      "full_name": "argoproj/argo-cd",
+      "categories": [
+        "infrastructure",
+        "dev-tools"
+      ],
+      "summary_es": "Herramienta declarativa de entregas continuas para Kubernetes basada en GitOps, gestionando aplicaciones y configuraciones mediante control de versiones.",
+      "use_cases": [
+        "Implementar entrega continua para aplicaciones ejecutadas en Kubernetes.",
+        "Gestionar versiones controladas de definiciones, configuraciones y entornos declarativos.",
+        "Automatizar el ciclo de vida y la gestión del despliegue de aplicaciones.",
+        "Evitar pipelines complejos mediante la aplicación de principios GitOps en entornos como Kubernetes."
+      ],
+      "evidence": [
+        "Argo CD - Declarative Continuous Delivery for Kubernetes",
+        "Application definitions, configurations, and environments should be declarative and version controlled.",
+        "Application deployment and lifecycle management should be automated, auditable, and easy to understand.",
+        "GitOps Without Pipelines With ArgoCD Image Updater"
+      ],
+      "provider": "ollama",
+      "model": "qwen3.5:4b-q4_K_M",
+      "prompt_version": "4",
+      "ai_input_hash": "0f0fdebdd5f668c45360dc040c04f4d93c300da8e3fbcd318fa7c71e6e98e66a",
+      "review": {
+        "readme_chars": 3106,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2896,
+        "output_tokens": 218,
+        "seconds": 5.7
+      }
+    },
+    {
+      "github_id": 53631945,
+      "full_name": "BurntSushi/ripgrep",
+      "categories": [
+        "dev-tools",
+        "search"
+      ],
+      "summary_es": "Herramienta de búsqueda de línea por línea que recurre en directorios buscando patrones regex, respetando gitignore y ocultando archivos.",
+      "use_cases": [
+        "Buscar código dentro de repositorios de control de versiones",
+        "Realizar búsquedas rápidas en archivos comprimidos",
+        "Buscar en archivos con codificaciones de texto no UTF-8",
+        "Extracción de texto de documentos PDF sin preparación previa"
+      ],
+      "evidence": [
+        "ripgrep is a line-oriented search tool that recursively searches the current directory for a regex pattern. By default, ripgrep will respect gitignore rules and automatically skip hidden files/directories and binary files.",
+        "ripgrep supports searching files compressed in a common format (brotli, bzip2, gzip, lz4, lzma, xz, or zstandard) with the -z/--search-zip flag.",
+        "ripgrep supports searching files in text encodings other than UTF-8, such as UTF-16, latin-1, GBK, EUC-JP, Shift_JIS and more.",
+        "ripgrep has rudimentary support for replacements, which permit rewriting output based on what was matched."
+      ],
+      "provider": "ollama",
+      "model": "qwen3.5:4b-q4_K_M",
+      "prompt_version": "4",
+      "ai_input_hash": "5020ea599b5dc4b067a1ac8d781ec7046c1d03440ec413c394ddd3a66d52a378",
+      "review": {
+        "readme_chars": 7554,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 4564,
+        "output_tokens": 346,
+        "seconds": 12.43
+      }
+    },
+    {
+      "github_id": 48109239,
+      "full_name": "cilium/cilium",
+      "categories": [
+        "backend",
+        "infrastructure",
+        "observability"
+      ],
+      "summary_es": "Plataforma de servicio que implementa red, seguridad y observabilidad para Kubernetes usando eBPF en el kernel como dataplane dinámico.",
+      "use_cases": [
+        "Reemplazar kube-proxy y gestionar balanceo de carga distribuido para alto rendimiento.",
+        "Imponer políticas de red y seguridad basadas en identidad a través del modelo L3-L7."
+      ],
+      "evidence": [
+        "Cilium implements distributed load balancing for traffic between pods and to external services, and is able to fully replace kube-proxy, using efficient hash tables in eBPF, allowing for almost unlimited scale.",
+        "Cilium implements distributed load balancing for traffic between pods and to external services, and is able to fully replace kube-proxy, using efficient hash tables in eBPF, allowing for almost unlimited scale. It also supports advanced functionality like integrated ingress and egress gateways, bandwidth management, and service mesh, and provides deep network and security visibility and monitoring."
+      ],
+      "provider": "ollama",
+      "model": "qwen3.5:4b-q4_K_M",
+      "prompt_version": "4",
+      "ai_input_hash": "9fe7285062e4e31ca11b3280b14efa0dbcc6fac564a8fbe89c428073eb0472b2",
+      "review": {
+        "readme_chars": 7880,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [
+          {
+            "use_case": "Operar redes virtuales segmentadas para clusters de Kubernetes sin dependencias de dispositivos externos.",
+            "evidence": "Cilium is a networking, observability, and security solution with an eBPF-based dataplane. It provides a simple flat Layer 3 network with the ability to span multiple clusters in either a native routing or overlay mode.",
+            "reason": "caso de uso vacío o de más de 100 caracteres"
+          }
+        ],
+        "input_tokens": 3729,
+        "output_tokens": 283,
+        "seconds": 7.31
+      }
+    },
+    {
+      "github_id": 60246359,
+      "full_name": "ClickHouse/ClickHouse",
+      "categories": [
+        "database"
+      ],
+      "summary_es": "Sistema de gestión de bases de datos orientado a columnas y MPP para generación de informes analíticos en tiempo real. No incluye: cachés, archivos.",
+      "use_cases": [],
+      "evidence": [],
+      "provider": "ollama",
+      "model": "qwen3.5:4b-q4_K_M",
+      "prompt_version": "4",
+      "ai_input_hash": "230da51d405486856c8f54efb2e08102f1c900e4a94e4e631f2e059aa31268c3",
+      "review": {
+        "readme_chars": 3146,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [
+          {
+            "use_case": "Generar",
+            "evidence": "'generating analytical data reports in real-time'",
+            "reason": "la cita no está en la entrada"
+          },
+          {
+            "use_case": "Almacenar",
+            "evidence": "",
+            "reason": "cita demasiado corta"
+          },
+          {
+            "use_case": "Consultar datos estructurados a gran escala",
+            "evidence": "clickhouse",
+            "reason": "cita demasiado corta"
+          },
+          {
+            "use_case": "Operar en entornos distribuidos",
+            "evidence": "distributed",
+            "reason": "cita demasiado corta"
+          }
+        ],
+        "input_tokens": 2960,
+        "output_tokens": 114,
+        "seconds": 4.21
+      }
+    },
+    {
+      "github_id": 131619646,
+      "full_name": "dagster-io/dagster",
+      "categories": [
+        "data-processing",
+        "analytics"
+      ],
+      "summary_es": "Plataforma de orquestación para el ciclo de desarrollo completo de activos de datos, permitiendo definir modelos declarativos en Python y gestionar automatizaciones desde la localización hasta la producción.",
+      "use_cases": [
+        "Automatizar flujos de trabajo en entornos locales y de prueba sin configurar infraestructura externa"
+      ],
+      "evidence": [
+        "local development, unit tests, integration tests"
+      ],
+      "provider": "ollama",
+      "model": "qwen3.5:4b-q4_K_M",
+      "prompt_version": "4",
+      "ai_input_hash": "e139f7e4babdc859956264a7c1644d860d5ce698837502b2eab5d10fc3bdff14",
+      "review": {
+        "readme_chars": 3613,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [
+          {
+            "use_case": "Orquestar trabajos ETL distribuidos para procesar conjuntos de datos estructurados",
+            "evidence": "data-engineering, etl, data-pipelines",
+            "reason": "la cita no está en la entrada"
+          },
+          {
+            "use_case": "Gestionar el entrenamiento, despliegue y evaluación de modelos de aprendizaje automático como activos en una cadena de flujo de trabajo (MLops)",
+            "evidence": "machine learning models, mlops, data-science",
+            "reason": "la cita no está en la entrada"
+          },
+          {
+            "use_case": "Visualizar la línea de datos y los problemas de calidad para monitorear la salud de pipelines complejos",
+            "evidence": "observability, lineage, metadata",
+            "reason": "la cita no está en la entrada"
+          }
+        ],
+        "input_tokens": 2957,
+        "output_tokens": 211,
+        "seconds": 5.6
+      }
+    },
+    {
+      "github_id": 138754790,
+      "full_name": "duckdb/duckdb",
+      "categories": [
+        "database",
+        "analytics"
+      ],
+      "summary_es": "Base de datos SQL in-process diseñada para análisis, que ejecuta consultas dentro de la aplicación con soporte para múltiples formatos de archivo y conectores a otros sistemas.",
+      "use_cases": [
+        "Analizar grandes conjuntos de datos directamente en memoria o desde archivos externos",
+        "Lectura y escritura directa de formatos como CSV, Parquet y JSON sin conversión previa",
+        "Consultar y unir datos cruzando motores de bases de datos sin pasos ETL",
+        "Usar extensibilidad mediante módulos para añadir conectores y tipos nuevos al tiempo de ejecución"
+      ],
+      "evidence": [
+        "DuckDB is a high-performance analytical database system",
+        "DuckDB reads and writes a wide range of file formats, including CSV, Parquet, JSON, and Excel, directly from local disk or from remote endpoints such as S3, HTTP(S), Azure, and Google Cloud Storage",
+        "DuckDB can attach to other database systems and query them in place, so you can read, join, and move data across engines without a separate ETL step",
+        "DuckDB has a modular extension mechanism: core extensions are bundled with DuckDB, while community and third-party extensions can be installed and loaded at runtime"
+      ],
+      "provider": "ollama",
+      "model": "qwen3.5:4b-q4_K_M",
+      "prompt_version": "4",
+      "ai_input_hash": "2864859ce8f399c4a3f38c8646875937ad441ee1599508eb60ed16f9db79a8b7",
+      "review": {
+        "readme_chars": 3284,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2793,
+        "output_tokens": 286,
+        "seconds": 6.99
+      }
+    },
+    {
+      "github_id": 179492861,
+      "full_name": "encode/httpx",
+      "categories": [
+        "dev-tools"
+      ],
+      "summary_es": "Biblioteca de código abierto que funciona como cliente HTTP asíncrono para Python, ofreciendo soporte nativo para HTTP/1.1 y HTTP/2.",
+      "use_cases": [
+        "Enviar solicitudes HTTP con el cliente integrador desde la terminal.",
+        "Ejecutar operaciones asíncronas de red utilizando la API estándar de Python.",
+        "Comunicarse directamente con aplicaciones WSGI o ASGI en el servidor."
+      ],
+      "evidence": [
+        "An integrated command-line client.",
+        "Standard synchronous interface, but with async support if you need it.",
+        "Ability to make requests directly to WSGI applications or ASGI applications."
+      ],
+      "provider": "ollama",
+      "model": "qwen3.5:4b-q4_K_M",
+      "prompt_version": "4",
+      "ai_input_hash": "afe6e3979d5cdcf2c5a9a15d8117c83eb4cc807878f4845598b801fcb295eb91",
+      "review": {
+        "readme_chars": 3363,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2977,
+        "output_tokens": 158,
+        "seconds": 4.66
+      }
+    },
+    {
+      "github_id": 160919119,
+      "full_name": "fastapi/fastapi",
+      "categories": [
+        "backend",
+        "frontend"
+      ],
+      "summary_es": "Framework web y de APIs moderno para Python. Utiliza punteros de tipo estándar (type hints) para generar validación automática, documentación interactiva y servidores HTTP asincrónicos de alto rendimiento.",
+      "use_cases": [
+        "Servir endpoints RESTful con soporte nativo para operaciones HTTP asíncronas"
+      ],
+      "evidence": [
+        ": * **Fast**: Very high performance, on par with **NodeJS** and **Go** (thanks to Starlette and Pydantic)."
+      ],
+      "provider": "ollama",
+      "model": "qwen3.5:4b-q4_K_M",
+      "prompt_version": "4",
+      "ai_input_hash": "cd537fd5407c6efd4231af077cc26af49dd2eebd30f21e2bf9d6a1288b46457e",
+      "review": {
+        "readme_chars": 7940,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [
+          {
+            "use_case": "Desarrollar aplicaciones de backend que requieran alta performance en Python",
+            "evidence": ": FastAPI is a modern, fast (high-performance), web framework for building APIs with Python based on standard Python type hints.",
+            "reason": "la cita no está en la entrada"
+          },
+          {
+            "use_case": "Reducir errores humanos y acelerar el desarrollo de características",
+            "evidence": ": **Fewer bugs**: Reduce about 40% of human (developer) induced errors. *",
+            "reason": "la cita no está en la entrada"
+          },
+          {
+            "use_case": "Generar documentación de la API interactiva mediante estándares OpenAPI y JSON Schema",
+            "evidence": ": **Standards-based**: Based on (and fully compatible with) the open standards for APIs: OpenAPI (previously known as Swagger) and JSON Schema.",
+            "reason": "la cita no está en la entrada"
+          }
+        ],
+        "input_tokens": 4231,
+        "output_tokens": 258,
+        "seconds": 7.13
+      }
+    },
+    {
+      "github_id": 15111821,
+      "full_name": "grafana/grafana",
+      "categories": [
+        "observability",
+        "analytics"
+      ],
+      "summary_es": "Plataforma de monitoreo y visualización de métricas, logs y trazas para múltiples fuentes, permitiendo el creacione de paneles interactivos y alertas.",
+      "use_cases": [
+        "Visualizar dashboards",
+        "Definir alertas para métricas críticas",
+        "Explorar datos de métricas y logs simultáneamente",
+        "Analizar y comparar rangos temporales en distintas fuentes"
+      ],
+      "evidence": [
+        "- **Visualizations:** Fast and flexible client side graphs with a multitude of options. Panel plugins offer many different ways to visualize metrics and logs.",
+        "- **Alerting:** Visually define alert rules for your most important metrics. Grafana will continuously evaluate and send notifications to systems like Slack, PagerDuty, VictorOps, OpsGenie.",
+        "- **Explore Logs:** Experience the magic of switching from metrics to logs with preserved label filters. Quickly search through all your logs or streaming them live.",
+        "- **Explore Metrics:** Explore your data through ad-hoc queries and dynamic drilldown. Split view and compare different time ranges, queries and data sources side by side."
+      ],
+      "provider": "ollama",
+      "model": "qwen3.5:4b-q4_K_M",
+      "prompt_version": "4",
+      "ai_input_hash": "49b5771244defc84ca1b638044316d18816e5aa67dfa7313baa6c51526f460f1",
+      "review": {
+        "readme_chars": 2194,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2620,
+        "output_tokens": 326,
+        "seconds": 7.79
+      }
+    },
+    {
+      "github_id": 31288958,
+      "full_name": "hashicorp/vault",
+      "categories": [
+        "auth",
+        "database",
+        "storage"
+      ],
+      "summary_es": "Herramienta para gestión de secretos, cifrado como servicio y acceso privilegiado. Proporciona interfaz unificada, control de acceso estricto y auditoría detallada para credenciales y claves.",
+      "use_cases": [
+        "Gestionar almacenamiento seguro de secretos mediante pares clave/valor encriptados.",
+        "Generar y revocar dinámicamente secretos temporales bajo demanda (ej. credenciales AWS o SQL).",
+        "Encriptar y desencriptar datos sin almacenarlos en persistencia local."
+      ],
+      "evidence": [
+        "* **Secure Secret Storage**",
+        "* **Dynamic Secrets**: Vault can generate secrets on-demand for some systems, such as AWS or SQL databases.",
+        "* **Data Encryption**: Vault can encrypt and decrypt data without storing it."
+      ],
+      "provider": "ollama",
+      "model": "qwen3.5:4b-q4_K_M",
+      "prompt_version": "4",
+      "ai_input_hash": "f074cbab2d7105ba32e23aa4fcfc39e234db6ed887397512cc23adff022214fd",
+      "review": {
+        "readme_chars": 7822,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [
+          {
+            "use_case": "Gestionar caducidad de acceso mediante sistema de arrendamientos (leasing) con opción de renovación automática.",
+            "evidence": "* **Leasing and Renewal**",
+            "reason": "caso de uso vacío o de más de 100 caracteres"
+          }
+        ],
+        "input_tokens": 3860,
+        "output_tokens": 220,
+        "seconds": 6.1
+      }
+    },
+    {
+      "github_id": 71995937,
+      "full_name": "nuxt/nuxt",
+      "categories": [
+        "frontend",
+        "ai"
+      ],
+      "summary_es": "Framework de desarrollo web que combina Vue.js con capacidades de renderizado en el servidor (SSR), generación estática y tipos de datos, orientado al ecosistema JavaScript.",
+      "use_cases": [],
+      "evidence": [],
+      "provider": "ollama",
+      "model": "qwen3.5:4b-q4_K_M",
+      "prompt_version": "4",
+      "ai_input_hash": "3eebc5af5f678862009c4dc1cd2f1e5a8abe5378b1a3d6cb1a86324c5725f75c",
+      "review": {
+        "readme_chars": 2884,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [
+          {
+            "use_case": "Desarrollar aplicaciones web completas y escalables con un enfoque en la seguridad y el rendimiento tipo producción",
+            "evidence": "production-grade full-stack web applications and websites with Vue.js",
+            "reason": "caso de uso vacío o de más de 100 caracteres"
+          },
+          {
+            "use_case": "Optimizar sitios web para motores de búsqueda mediante renderizado del lado del servidor y generación estática de sitios",
+            "evidence": "SEO-friendly, fast web applications",
+            "reason": "la cita no está en la entrada"
+          }
+        ],
+        "input_tokens": 2804,
+        "output_tokens": 172,
+        "seconds": 4.97
+      }
+    },
+    {
+      "github_id": 658928958,
+      "full_name": "ollama/ollama",
+      "categories": [
+        "ai",
+        "backend"
+      ],
+      "summary_es": "Herramienta para ejecutar modelos de lenguaje localmente en la nube o on-premise con privacidad completa, soportando múltiples frameworks y agentes.",
+      "use_cases": [],
+      "evidence": [],
+      "provider": "ollama",
+      "model": "qwen3.5:4b-q4_K_M",
+      "prompt_version": "4",
+      "ai_input_hash": "24e4ef1baf06328aa099f1bd63a6099f1357045676593dfcf8fc435ec28db78b",
+      "review": {
+        "readme_chars": 7624,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [
+          {
+            "use_case": "Procesar consultas de chat con modelos generativos como Gemma o Claude mediante interacción por línea de comandos o APIs REST.",
+            "evidence": ": Chat with a model, ollama run gemma4",
+            "reason": "la cita no está en la entrada"
+          },
+          {
+            "use_case": "Servir inferencias para frameworks de integración y agentes que requieren acceso a LLMs localmente configurables.",
+            "evidence": "Get up and running with Kimi, GLM, MiniMax, DeepSeek, gpt-oss, Qwen, Gemma and other models.",
+            "reason": "caso de uso vacío o de más de 100 caracteres"
+          },
+          {
+            "use_case": "Gestionar modelos distribuidos y servidores de inferencia a través de librerías y SDKs compatibles con Python, Go y múltiples lenguajes.",
+            "evidence": "Libraries - ollama-python, ollama-js",
+            "reason": "la cita no está en la entrada"
+          }
+        ],
+        "input_tokens": 4158,
+        "output_tokens": 264,
+        "seconds": 7.09
+      }
+    },
+    {
+      "github_id": 359952601,
+      "full_name": "pgvector/pgvector",
+      "categories": [
+        "database",
+        "search"
+      ],
+      "summary_es": "Extensión de Postgres para almacenar vectores y realizar búsqueda por similaridad. Permite búsquedas exactas y aproximadas con múltiples medidas de distancia.",
+      "use_cases": [],
+      "evidence": [],
+      "provider": "ollama",
+      "model": "qwen3.5:4b-q4_K_M",
+      "prompt_version": "4",
+      "ai_input_hash": "9df444042f85b83ece6253b27e83b85108accfb99798a7c39e30c3665a6fd83e",
+      "review": {
+        "readme_chars": 7793,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [
+          {
+            "use_case": "Realizar búsqueda de vecinos más cercanos (exacta o aproximada) en conjuntos grandes de datos estructurados",
+            "evidence": "- exact and approximate nearest neighbor search",
+            "reason": "caso de uso vacío o de más de 100 caracteres"
+          },
+          {
+            "use_case": "Integrar capacidades vectoriales directamente en entornos de base de datos relacionales mediante consultas SQL nativas",
+            "evidence": "Store your vectors with the rest of your data.",
+            "reason": "caso de uso vacío o de más de 100 caracteres"
+          },
+          {
+            "use_case": "Optimizar el rendimiento de búsqueda de similaridad escalando el uso de cuantización para grandes volúmenes de vectores",
+            "evidence": "- L2 distance, inner product, cosine distance, L1 distance, Hamming distance, and Jaccard distance",
+            "reason": "caso de uso vacío o de más de 100 caracteres"
+          },
+          {
+            "use_case": "Implementar índices HNSW e IVFFlat para acelerar consultas en tiempo real sin abandonar la consistencia ACID de Postgres",
+            "evidence": "By default, pgvector performs exact nearest neighbor search, which provides perfect recall.",
+            "reason": "caso de uso vacío o de más de 100 caracteres"
+          }
+        ],
+        "input_tokens": 4156,
+        "output_tokens": 309,
+        "seconds": 6.75
+      }
+    },
+    {
+      "github_id": 156018,
+      "full_name": "redis/redis",
+      "categories": [
+        "cache",
+        "search",
+        "database"
+      ],
+      "summary_es": "Servidor en memoria para caché de alto rendimiento y almacenamiento documentales. Soporta operaciones vectoriales y búsquedas semánticas además de bases de datos clave-valor, series temporales y estructuras distribuidas.",
+      "use_cases": [
+        "Cachear datos frecuentemente accesibles para reducir la latencia en aplicaciones críticas.",
+        "Almacenar sesiones de usuario persistentes y distribuidas entre múltiples instancias.",
+        "Realizar búsquedas semánticas y recuperación de documentos vectoriales para aplicaciones IA.",
+        "Actuar como mensajería y cola de eventos entre servicios mediante streams y pub/sub."
+      ],
+      "evidence": [
+        "- **Caching:** Supports multiple eviction policies, key expiration, and hash-field expiration.",
+        "- **Distributed Session Store:** Offers flexible session data modeling (string, JSON, hash).",
+        "- **Vector Store for GenAI:** Integrates with AI applications (e.g. LangGraph, mem0) for short-term memory, long-term memory, LLM response caching (semantic caching), and retrieval augmented generation (RAG).",
+        "- **Event Store & Message Broker:** Implements queues (lists), priority queues (sorted sets), event deduplication (sets), streams, and pub/sub with probabilistic stream processing capabilities."
+      ],
+      "provider": "ollama",
+      "model": "qwen3.5:4b-q4_K_M",
+      "prompt_version": "4",
+      "ai_input_hash": "3e5af1cad2c226cbc9b8153c85f9fa26935235f9a41d2db637d12f2e75f1c066",
+      "review": {
+        "readme_chars": 7339,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 3808,
+        "output_tokens": 301,
+        "seconds": 6.63
+      }
+    },
+    {
+      "github_id": 54173593,
+      "full_name": "storybookjs/storybook",
+      "categories": [
+        "frontend",
+        "dev-tools"
+      ],
+      "summary_es": "Entorno de trabajo para construir componentes UI en reposo. Permite desarrollar, documentar y probar librerías de frontend como React o Vue sin conectividad al servidor.",
+      "use_cases": [
+        "Desarrollar",
+        "Aislar lógica de UI"
+      ],
+      "evidence": [
+        "Storybook is a frontend workshop for building UI components and pages in isolation",
+        "Build bulletproof UI components faster"
+      ],
+      "provider": "ollama",
+      "model": "qwen3.5:4b-q4_K_M",
+      "prompt_version": "4",
+      "ai_input_hash": "b8fb8ec908acd91bfd8a6a8acd13f031fb45f9b80dab6b55ccb65df7c3a7a9b0",
+      "review": {
+        "readme_chars": 5311,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [
+          {
+            "use_case": "Documentar",
+            "evidence": "\"Addons ... docs ... Add high quality documentation to your components\"",
+            "reason": "la cita no está en la entrada"
+          },
+          {
+            "use_case": "Probar accesibilidad",
+            "evidence": "\"addons | Test components for user accessibility in Storybook\"",
+            "reason": "la cita no está en la entrada"
+          }
+        ],
+        "input_tokens": 3313,
+        "output_tokens": 223,
+        "seconds": 6.0
+      }
+    }
+  ]
+}

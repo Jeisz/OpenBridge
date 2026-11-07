@@ -1,0 +1,744 @@
+{
+  "prompt_version": "4",
+  "repos": [
+    {
+      "github_id": 2211243,
+      "full_name": "apache/kafka",
+      "ideas": [
+        {
+          "id": "llm-2211243-1",
+          "full_name": "apache/kafka",
+          "title": "Desplegar Apache Kafka con Docker",
+          "integration_type": "docker",
+          "summary": "Despliega una plataforma de streaming de eventos para gestionar pipelines de datos y analíticas en tiempo real en tu infraestructura ejecutando un contenedor.",
+          "compatible_stack": [
+            "Docker"
+          ],
+          "dependencies": [
+            "Docker instalado en el sistema"
+          ],
+          "difficulty": "low",
+          "triggers": [],
+          "snippet": "docker run -p 9092:9092 apache/kafka:latest",
+          "snippet_language": "bash",
+          "docs_url": "https://github.com/apache/kafka#running-a-kafka-broker",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "738ceb5ebe2b668af7a0ca1e576e7cd38eb40eddfa0029ad66787bbc1ac3c318",
+          "evidence": "docker run -p 9092:9092 apache/kafka:latest"
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "738ceb5ebe2b668af7a0ca1e576e7cd38eb40eddfa0029ad66787bbc1ac3c318",
+      "review": {
+        "readme_chars": 7863,
+        "blocks": 27,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 3117,
+        "output_tokens": 161,
+        "seconds": 1.21
+      }
+    },
+    {
+      "github_id": 53631945,
+      "full_name": "BurntSushi/ripgrep",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "0fae170840a53844421152499247258f2577839d34d07e040fbbfbc0c1d8fb68",
+      "review": {
+        "readme_chars": 7554,
+        "blocks": 0,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 3528,
+        "output_tokens": 9,
+        "seconds": 1.43
+      }
+    },
+    {
+      "github_id": 184460,
+      "full_name": "celery/celery",
+      "ideas": [
+        {
+          "id": "llm-184460-1",
+          "full_name": "celery/celery",
+          "title": "Procesar tareas asíncronas con Celery",
+          "integration_type": "sdk",
+          "summary": "Distribuye tareas pesadas o en segundo plano fuera del flujo principal de tu aplicación utilizando la librería de Celery conectada a un broker de mensajes.",
+          "compatible_stack": [
+            "Python",
+            "Node.js",
+            "Go",
+            "Rust"
+          ],
+          "dependencies": [
+            "Un broker de mensajes como RabbitMQ o Redis",
+            "El paquete celery instalado"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Envío de un formulario pesado",
+            "Generación de reportes programados"
+          ],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://github.com/celery/celery#whats-a-task-queue",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "b1706d5e72fb54a6473dc388c5d6efb60d2f601bed9e636d1bd74c7a0d10fdc6",
+          "evidence": "Celery is written in Python, but the protocol can be implemented in any language. In addition to Python there's node-celery_ for Node.js, a PHP client_, gocelery_, gopher-celery_ for Go, and rusty-celery_ for Rust."
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "b1706d5e72fb54a6473dc388c5d6efb60d2f601bed9e636d1bd74c7a0d10fdc6",
+      "review": {
+        "readme_chars": 7976,
+        "blocks": 0,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 3171,
+        "output_tokens": 258,
+        "seconds": 1.36
+      }
+    },
+    {
+      "github_id": 138754790,
+      "full_name": "duckdb/duckdb",
+      "ideas": [
+        {
+          "id": "llm-138754790-1",
+          "full_name": "duckdb/duckdb",
+          "title": "Usar DuckDB en la aplicación",
+          "integration_type": "sdk",
+          "summary": "Conecta la aplicación a DuckDB instalando los clientes oficiales para consultar datos analíticos directamente en proceso mediante SQL.",
+          "compatible_stack": [
+            "Python",
+            "R",
+            "Java",
+            "Rust",
+            "Go",
+            "Wasm"
+          ],
+          "dependencies": [],
+          "difficulty": "medium",
+          "triggers": [
+            "Consulta analítica de datos en la aplicación"
+          ],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://github.com/duckdb/duckdb#duckdb",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "e036069e5c158bf55c28fe41e68f95926bd1c753d55585a82695539986ff079a",
+          "evidence": "DuckDB is available as a standalone CLI application and has clients for Python, R, Java, Rust, Go, Wasm, and many more, with deep integrations with packages such as pandas."
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "e036069e5c158bf55c28fe41e68f95926bd1c753d55585a82695539986ff079a",
+      "review": {
+        "readme_chars": 3298,
+        "blocks": 1,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1692,
+        "output_tokens": 202,
+        "seconds": 1.23
+      }
+    },
+    {
+      "github_id": 160919119,
+      "full_name": "fastapi/fastapi",
+      "ideas": [
+        {
+          "id": "llm-160919119-1",
+          "full_name": "fastapi/fastapi",
+          "title": "Desplegar una API web REST con FastAPI",
+          "integration_type": "rest_api",
+          "summary": "Implementa un servidor web rápido basado en Python y tipos estándar para exponer endpoints REST y documentación interactiva automática.",
+          "compatible_stack": [
+            "Python",
+            "Uvicorn",
+            "Pydantic"
+          ],
+          "dependencies": [
+            "Python",
+            "FastAPI"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Petición HTTP entrante",
+            "Consulta de parámetros de ruta o consulta"
+          ],
+          "snippet": "from fastapi import FastAPI\n\napp = FastAPI()\n\n\n@app.get(\"/\")\ndef read_root():\n    return {\"Hello\": \"World\"}\n\n\n@app.get(\"/items/{item_id}\")\ndef read_item(item_id: int, q: str | None = None):\n    return {\"item_id\": item_id, \"q\": q}",
+          "snippet_language": "python",
+          "docs_url": "https://fastapi.tiangolo.com/",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "915a77b1400563faa351a4aca807a5541f313fec3f95013734e91b4e451240bc",
+          "evidence": "FastAPI is a modern, fast (high-performance), web framework for building APIs with Python based on standard Python type hints."
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "915a77b1400563faa351a4aca807a5541f313fec3f95013734e91b4e451240bc",
+      "review": {
+        "readme_chars": 8000,
+        "blocks": 8,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 3145,
+        "output_tokens": 205,
+        "seconds": 1.51
+      }
+    },
+    {
+      "github_id": 15111821,
+      "full_name": "grafana/grafana",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "82a621e02df9302cd02b0c14c214b90ec5718660190007ab5eb5fc1435d74222",
+      "review": {
+        "readme_chars": 2194,
+        "blocks": 0,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1513,
+        "output_tokens": 9,
+        "seconds": 0.79
+      }
+    },
+    {
+      "github_id": 31288958,
+      "full_name": "hashicorp/vault",
+      "ideas": [
+        {
+          "id": "llm-31288958-1",
+          "full_name": "hashicorp/vault",
+          "title": "Usar las librerías API y SDK en la aplicación",
+          "integration_type": "sdk",
+          "summary": "Conecta tu aplicación con Vault usando sus librerías cliente en Go para acceder de forma segura a secretos, gestionar cifrado y renovar leases dinámicos.",
+          "compatible_stack": [
+            "Go"
+          ],
+          "dependencies": [
+            "Vault servidor en ejecución",
+            "Claves de acceso o token"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Arranque de la aplicación",
+            "Petición de un secreto o credencial"
+          ],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://github.com/hashicorp/vault#importing-vault",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "e129a04761377a736bccabcede7801ee0630de5608153b457f71b360e1a9a7c3",
+          "evidence": "This repository publishes two libraries that may be imported by other projects: `github.com/hashicorp/vault/api` and `github.com/hashicorp/vault/sdk`."
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "e129a04761377a736bccabcede7801ee0630de5608153b457f71b360e1a9a7c3",
+      "review": {
+        "readme_chars": 7902,
+        "blocks": 8,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 2866,
+        "output_tokens": 225,
+        "seconds": 1.44
+      }
+    },
+    {
+      "github_id": 56342508,
+      "full_name": "jaegertracing/jaeger",
+      "ideas": [
+        {
+          "id": "llm-56342508-1",
+          "full_name": "jaegertracing/jaeger",
+          "title": "Desplegar Jaeger con Docker",
+          "integration_type": "docker",
+          "summary": "Ejecuta la plataforma de trazado distribuido Jaeger como un contenedor para recopilar trazas y visualizar métricas de la aplicación.",
+          "compatible_stack": [
+            "Docker"
+          ],
+          "dependencies": [
+            "Docker instalado"
+          ],
+          "difficulty": "low",
+          "triggers": [],
+          "snippet": "# Run Jaeger all-in-one (includes UI, collector, query, and in-memory storage)\ndocker run --rm --name jaeger \\\n  -p 16686:16686 \\\n  -p 4317:4317 \\\n  -p 4318:4318 \\\n  jaegertracing/jaeger:latest\n\n# Access the UI at http://localhost:16686\n# Send traces via OTLP: gRPC on port 4317, HTTP on port 4318",
+          "snippet_language": "bash",
+          "docs_url": "https://github.com/jaegertracing/jaeger#quick-start",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "c7c19450daf64342b10a9af9fd850e1b52d61c08b8046d43917d30b29fbc961a",
+          "evidence": "docker run --rm --name jaeger \\"
+        },
+        {
+          "id": "llm-56342508-2",
+          "full_name": "jaegertracing/jaeger",
+          "title": "Enviar trazas mediante OTLP",
+          "integration_type": "rest_api",
+          "summary": "Envía trazas desde la aplicación hacia Jaeger utilizando el protocolo OTLP a través de HTTP o gRPC.",
+          "compatible_stack": [
+            "OpenTelemetry SDK"
+          ],
+          "dependencies": [
+            "Jaeger Collector ejecutándose",
+            "OpenTelemetry SDK en la aplicación"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Inicio de una petición HTTP en la aplicación",
+            "Ejecución de una operación rastreada"
+          ],
+          "snippet": "# Run Jaeger all-in-one (includes UI, collector, query, and in-memory storage)\ndocker run --rm --name jaeger \\\n  -p 16686:16686 \\\n  -p 4317:4317 \\\n  -p 4318:4318 \\\n  jaegertracing/jaeger:latest\n\n# Access the UI at http://localhost:16686\n# Send traces via OTLP: gRPC on port 4317, HTTP on port 4318",
+          "snippet_language": "bash",
+          "docs_url": "https://github.com/jaegertracing/jaeger#quick-start",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "c7c19450daf64342b10a9af9fd850e1b52d61c08b8046d43917d30b29fbc961a",
+          "evidence": "Send traces via OTLP: gRPC on port 4317, HTTP on port 4318"
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "c7c19450daf64342b10a9af9fd850e1b52d61c08b8046d43917d30b29fbc961a",
+      "review": {
+        "readme_chars": 7973,
+        "blocks": 3,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 2767,
+        "output_tokens": 335,
+        "seconds": 1.63
+      }
+    },
+    {
+      "github_id": 658928958,
+      "full_name": "ollama/ollama",
+      "ideas": [
+        {
+          "id": "llm-658928958-1",
+          "full_name": "ollama/ollama",
+          "title": "Desplegar Ollama con Docker",
+          "integration_type": "docker",
+          "summary": "Ejecuta Ollama como un contenedor aislado en tu infraestructura usando la imagen oficial para servir modelos locales a tu aplicación.",
+          "compatible_stack": [
+            "Docker"
+          ],
+          "dependencies": [
+            "Docker instalado y corriendo"
+          ],
+          "difficulty": "medium",
+          "triggers": [],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://github.com/ollama/ollama#docker",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "682f0d8a9b7146641bd6cd445366579c9e808d2a7b5fbf46de6b71eb2b124e63",
+          "evidence": "The official Ollama Docker image `ollama/ollama` is available on Docker Hub."
+        },
+        {
+          "id": "llm-658928958-2",
+          "full_name": "ollama/ollama",
+          "title": "Usar el SDK de Ollama en Python",
+          "integration_type": "sdk",
+          "summary": "Instala el paquete cliente en Python para enviar mensajes a los modelos locales e integrar respuestas de inteligencia artificial en tu código.",
+          "compatible_stack": [
+            "Python"
+          ],
+          "dependencies": [
+            "Paquete ollama de Python",
+            "Servicio Ollama corriendo"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Solicitud de procesamiento de lenguaje"
+          ],
+          "snippet": "from ollama import chat\n\nresponse = chat(model='gemma4', messages=[\n  {\n    'role': 'user',\n    'content': 'Why is the sky blue?',\n  },\n])\nprint(response.message.content)",
+          "snippet_language": "python",
+          "docs_url": "https://github.com/ollama/ollama#python",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "682f0d8a9b7146641bd6cd445366579c9e808d2a7b5fbf46de6b71eb2b124e63",
+          "evidence": "pip install ollama"
+        },
+        {
+          "id": "llm-658928958-3",
+          "full_name": "ollama/ollama",
+          "title": "Integrar la REST API de Ollama",
+          "integration_type": "rest_api",
+          "summary": "Conecta tu aplicación con Ollama llamando directamente a sus endpoints HTTP para ejecutar y gestionar modelos de lenguaje.",
+          "compatible_stack": [
+            "HTTP"
+          ],
+          "dependencies": [
+            "Servicio Ollama corriendo"
+          ],
+          "difficulty": "high",
+          "triggers": [
+            "Mensaje del usuario en el chat"
+          ],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://github.com/ollama/ollama#rest-api",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "682f0d8a9b7146641bd6cd445366579c9e808d2a7b5fbf46de6b71eb2b124e63",
+          "evidence": "Ollama has a REST API for running and managing models."
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "682f0d8a9b7146641bd6cd445366579c9e808d2a7b5fbf46de6b71eb2b124e63",
+      "review": {
+        "readme_chars": 7978,
+        "blocks": 12,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 3202,
+        "output_tokens": 458,
+        "seconds": 1.91
+      }
+    },
+    {
+      "github_id": 307213173,
+      "full_name": "openai/openai-python",
+      "ideas": [
+        {
+          "id": "llm-307213173-1",
+          "full_name": "openai/openai-python",
+          "title": "Generar texto y respuestas con IA",
+          "integration_type": "sdk",
+          "summary": "Usa la librería oficial para conectar tu aplicación con los modelos de OpenAI y generar texto o completar chats mediante peticiones síncronas o asíncronas.",
+          "compatible_stack": [
+            "Python"
+          ],
+          "dependencies": [
+            "Clave de API de OpenAI o configuración de identidad"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Mensaje del usuario en el chat",
+            "Solicitud de generación de contenido"
+          ],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://github.com/openai/openai-python#openai-python-api-library",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "2117812e39cec3ea87860f89af0d68c9a18d378f05bd2654bb51462270158a3f",
+          "evidence": "The OpenAI Python library provides convenient access to the OpenAI REST API from any Python 3.10+ application."
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "2117812e39cec3ea87860f89af0d68c9a18d378f05bd2654bb51462270158a3f",
+      "review": {
+        "readme_chars": 7839,
+        "blocks": 11,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 3230,
+        "output_tokens": 197,
+        "seconds": 1.3
+      }
+    },
+    {
+      "github_id": 334274271,
+      "full_name": "opensearch-project/OpenSearch",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "1e72c4c39dcb2f8dfb4f0f53ecc607c08b4975971a1ccc0c5d18ab6630b2ad0f",
+      "review": {
+        "readme_chars": 1370,
+        "blocks": 0,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1273,
+        "output_tokens": 9,
+        "seconds": 0.83
+      }
+    },
+    {
+      "github_id": 359952601,
+      "full_name": "pgvector/pgvector",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "0c7bad32d274f37009f1a67e7672aceed224d75be7fa9db26f60d1b8b205b043",
+      "review": {
+        "readme_chars": 7978,
+        "blocks": 33,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 3290,
+        "output_tokens": 9,
+        "seconds": 0.77
+      }
+    },
+    {
+      "github_id": 11452538,
+      "full_name": "prometheus/alertmanager",
+      "ideas": [
+        {
+          "id": "llm-11452538-1",
+          "full_name": "prometheus/alertmanager",
+          "title": "Desplegar Prometheus Alertmanager con Docker",
+          "integration_type": "docker",
+          "summary": "Despliega Prometheus Alertmanager en un contenedor para gestionar, agrupar y enrutar las alertas de tu aplicación de forma centralizada.",
+          "compatible_stack": [
+            "Docker"
+          ],
+          "dependencies": [
+            "Docker"
+          ],
+          "difficulty": "low",
+          "triggers": [],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://github.com/prometheus/alertmanager#docker-images",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "15a75e6f15ca8254d9206d953d93dd637cf5bc8c62d74f1a496582c920dd8415",
+          "evidence": "You can launch an Alertmanager container for trying it out with"
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "15a75e6f15ca8254d9206d953d93dd637cf5bc8c62d74f1a496582c920dd8415",
+      "review": {
+        "readme_chars": 7278,
+        "blocks": 5,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 3034,
+        "output_tokens": 150,
+        "seconds": 1.08
+      }
+    },
+    {
+      "github_id": 156018,
+      "full_name": "redis/redis",
+      "ideas": [
+        {
+          "id": "llm-156018-1",
+          "full_name": "redis/redis",
+          "title": "Desplegar Redis con Docker",
+          "integration_type": "docker",
+          "summary": "Ejecuta una instancia de Redis como contenedor en tu entorno de desarrollo o producción usando la imagen oficial.",
+          "compatible_stack": [
+            "Docker",
+            "Alpine",
+            "Debian"
+          ],
+          "dependencies": [
+            "Docker corriendo"
+          ],
+          "difficulty": "low",
+          "triggers": [],
+          "snippet": "  docker run -d -p 6379:6379 redis:latest",
+          "snippet_language": "sh",
+          "docs_url": "https://github.com/redis/redis#getting-started",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "c98cde133ed44d81057be6d201b5d759af937231a81cfa308e3490117734c93f",
+          "evidence": "docker run -d -p 6379:6379 redis:latest"
+        },
+        {
+          "id": "llm-156018-2",
+          "full_name": "redis/redis",
+          "title": "Conectar la aplicación con Redis usando librerías cliente",
+          "integration_type": "sdk",
+          "summary": "Integra Redis en tu aplicación utilizando librerías oficiales o recomendadas para lenguajes como Python, Go, C#, JavaScript o Java.",
+          "compatible_stack": [
+            "Python",
+            "Go",
+            "JavaScript",
+            "Java"
+          ],
+          "dependencies": [
+            "Servidor Redis accesible",
+            "Librería cliente instalada"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Guardar datos en caché",
+            "Consultar sesiones de usuario"
+          ],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://github.com/redis/redis#table-of-contents",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "c98cde133ed44d81057be6d201b5d759af937231a81cfa308e3490117734c93f",
+          "evidence": "Using Redis with client libraries"
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "c98cde133ed44d81057be6d201b5d759af937231a81cfa308e3490117734c93f",
+      "review": {
+        "readme_chars": 7385,
+        "blocks": 3,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 2753,
+        "output_tokens": 343,
+        "seconds": 1.75
+      }
+    },
+    {
+      "github_id": 42408804,
+      "full_name": "traefik/traefik",
+      "ideas": [
+        {
+          "id": "llm-42408804-1",
+          "full_name": "traefik/traefik",
+          "title": "Desplegar Traefik como contenedor Docker",
+          "integration_type": "docker",
+          "summary": "Despliega Traefik utilizando su imagen oficial para gestionar el tráfico y balanceo de carga de tus microservicios.",
+          "compatible_stack": [
+            "Docker"
+          ],
+          "dependencies": [
+            "Docker corriendo",
+            "Archivo de configuración traefik.toml"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Despliegue del contenedor"
+          ],
+          "snippet": "docker run -d -p 8080:8080 -p 80:80 -v $PWD/traefik.toml:/etc/traefik/traefik.toml traefik",
+          "snippet_language": "shell",
+          "docs_url": "https://github.com/traefik/traefik#download",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "2e80dea7e77051501f8a7fad9aa83dfa71b0aae265f646687ab43666c5309a8b",
+          "evidence": "Or use the official tiny Docker image and run it with the sample configuration file:"
+        },
+        {
+          "id": "llm-42408804-2",
+          "full_name": "traefik/traefik",
+          "title": "Consultar la API REST de Traefik",
+          "integration_type": "rest_api",
+          "summary": "Consulta la API REST expuesta por Traefik para monitorizar rutas y estado de los microservicios.",
+          "compatible_stack": [
+            "HTTP"
+          ],
+          "dependencies": [
+            "Traefik en ejecución"
+          ],
+          "difficulty": "medium",
+          "triggers": [],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://github.com/traefik/traefik#features",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "2e80dea7e77051501f8a7fad9aa83dfa71b0aae265f646687ab43666c5309a8b",
+          "evidence": "Exposes a Rest API"
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "2e80dea7e77051501f8a7fad9aa83dfa71b0aae265f646687ab43666c5309a8b",
+      "review": {
+        "readme_chars": 5064,
+        "blocks": 3,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 2350,
+        "output_tokens": 308,
+        "seconds": 1.4
+      }
+    }
+  ]
+}

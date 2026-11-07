@@ -1,7 +1,7 @@
 """Embeddings de texto con un modelo local, en CPU.
 
 El modelo se elige con la variable de entorno AI_EMBEDDING_MODEL
-(por defecto, qwen3). Solo este archivo sabe qué modelo se usa.
+(por defecto, embeddinggemma). Solo este archivo sabe qué modelo se usa.
 Cambiar el modelo obliga a recalcular los vectores de todo el catálogo.
 """
 
@@ -10,9 +10,6 @@ from dataclasses import dataclass
 from functools import lru_cache
 
 import numpy as np
-import torch
-from huggingface_hub.errors import GatedRepoError
-from sentence_transformers import SentenceTransformer
 
 
 @dataclass(frozen=True)
@@ -20,6 +17,7 @@ class ModelSpec:
     """Modelo de embeddings y como usarlo"""
 
     name: str                       # id en Hugging Face
+    dims: int                       # dimensión de los vectores
     query_prompt: str               # se antepone a la consulta
     document_prompt: str = ""       # se antepone a cada documento
     left_padding: bool = False
@@ -31,18 +29,18 @@ QWEN3_INSTRUCTION  = (
     "retrieve open-source tools that fit it"
 )
 
-MODELS = {"qwen3": ModelSpec(name="Qwen/Qwen3-Embedding-0.6B",
+MODELS = {"qwen3": ModelSpec(name="Qwen/Qwen3-Embedding-0.6B", dims=1024,
                              # Instrucción en inglés en la consulta, como recomienda el modelo.
                              query_prompt=f"Instruct: {QWEN3_INSTRUCTION}\nQuery:",
                              left_padding=True,),
-          "embeddinggemma": ModelSpec(name="google/embeddinggemma-300m",
+          "embeddinggemma": ModelSpec(name="google/embeddinggemma-300m", dims=768,
                                       # Formatos de su ficha. Requiere aceptar licencia HF
                                       query_prompt="task: search result | query: ",
                                       document_prompt="title: none | text: ",
-                                      # Calibrado con ai/eval (catálogo real, 100 repos, sin
-                                      # categorías, 100 consultas); provisional: se recalibra
-                                      # cuando el texto de los repos incluya categorías.
-                                      min_score=0.19),
+                                      # Calibrado con ai/eval (catálogo real, 100 repos, texto
+                                      # con resumen y casos de uso de la IA, 100 consultas).
+                                      # Cambiar el texto de los repos obliga a recalibrarlo.
+                                      min_score=0.23),
 }
 DEFAULT_MODEL = "embeddinggemma"
 
@@ -56,8 +54,16 @@ def model_spec() -> ModelSpec:
 
 
 @lru_cache(maxsize=1)
-def _model() -> SentenceTransformer:
-    """Carga el modelo la primera vez; luego reutiliza el mismo."""
+def _model():
+    """Carga el modelo la primera vez; luego reutiliza el mismo.
+
+    torch y sentence-transformers se importan aquí: leer `model_spec()` (nombre, dimensión,
+    prompts) no carga el modelo ni sus librerías.
+    """
+    import torch
+    from huggingface_hub.errors import GatedRepoError
+    from sentence_transformers import SentenceTransformer
+
     spec = model_spec()
     try:
         # float32: en CPU, bfloat16 (default) es lento e impreciso.
@@ -73,8 +79,14 @@ def _model() -> SentenceTransformer:
         ) from err
 
 
+def preload() -> None:
+    """Carga el modelo ahora. El servicio lo hace al arrancar: aunque todos los vectores de los
+    repos vengan de la base, cada pregunta necesita el modelo, y la primera no debe esperar."""
+    _model()
+
+
 def embed_documents(texts: list[str]) -> np.ndarray:
-    """Vectores de los documentos normalizados: (len(texts), 1024)."""
+    """Vectores de los documentos normalizados: (len(texts), dimensión del modelo)."""
     return _model().encode(texts,
                            prompt=model_spec().document_prompt or None,
                            normalize_embeddings=True,

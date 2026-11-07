@@ -3,6 +3,7 @@
 Uso, desde la raíz del repo:
     python -m ai.eval.run_search_eval                  # catálogo real (snapshot)
     python -m ai.eval.run_search_eval --golden sample  # 20 repos de ejemplo
+    python -m ai.eval.run_search_eval --texto base     # variante del texto embebido (ver TEXT_VARIANTS en ai/search.py)
 """
 
 import argparse
@@ -22,7 +23,7 @@ from ai.eval.metrics import (QueryOutcome,
                              suggest_min_score,
                              summarize,
                              threshold_errors,)
-from ai.search import SearchIndex, SearchResult
+from ai.search import TEXT_FIELDS, TEXT_VARIANTS, SearchIndex, SearchResult, TextField
 
 K = 3
 RESULTS_DIR = EVAL_DIR / "results"
@@ -38,14 +39,18 @@ def top_cell(results: list[SearchResult]) -> str:
 
 def render_report(model: str, min_score: float | None, golden_name: str,
                   golden: SearchGoldenSet, n_repos: int, summary: dict, times: dict,
-                  rows: list[tuple[SearchQuery, list[SearchResult], QueryOutcome]]) -> str:
+                  rows: list[tuple[SearchQuery, list[SearchResult], QueryOutcome]],
+                  fields: tuple[TextField, ...] = TEXT_FIELDS, variant: str | None = None) -> str:
     taken = f" del {golden.catalog_taken_at:%Y-%m-%d}" if golden.catalog_taken_at else ""
+    option = f" --texto {variant}" if variant else ""
     lines = [
         f"# Evaluación de la búsqueda · {model}",
         "",
-        f"Generado con `python -m ai.eval.run_search_eval --golden {golden_name}` el {date.today()}. "
+        f"Generado con `python -m ai.eval.run_search_eval --golden {golden_name}{option}` "
+        f"el {date.today()}. "
         f"Golden set `{golden_name}` v{golden.version} · catálogo `{golden.source}`{taken} · "
-        f"{n_repos} repos · k = {K} · CPU.",
+        f"{n_repos} repos · k = {K} · CPU · "
+        f"datos de la IA en el texto: {', '.join(fields) or 'ninguno'}.",
         "",
         "## Resumen",
         "",
@@ -132,7 +137,10 @@ def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser(description="Mide la búsqueda contra un golden set.")
     parser.add_argument("--golden", choices=sorted(GOLDEN_FILES), default=DEFAULT_GOLDEN,
                         help="golden set a medir (por defecto: %(default)s)")
+    parser.add_argument("--texto", choices=list(TEXT_VARIANTS),
+                        help="variante del texto embebido; sin ella, la que usa la búsqueda")
     args = parser.parse_args(argv)
+    fields = TEXT_VARIANTS[args.texto] if args.texto else TEXT_FIELDS
 
     golden = load_search_queries(args.golden)
     spec = embeddings.model_spec()
@@ -143,7 +151,7 @@ def main(argv: list[str] | None = None) -> None:
     load_s = time.perf_counter() - start
 
     start = time.perf_counter()
-    index = SearchIndex.build(source=golden.source)   # el catálogo del golden set
+    index = SearchIndex.build(source=golden.source, fields=fields)   # el catálogo del golden set
     build_s = time.perf_counter() - start
     n_repos = len(index.repos)
 
@@ -164,9 +172,10 @@ def main(argv: list[str] | None = None) -> None:
     times = {"load": load_s, "build": build_s, "query": sum(query_s) / len(query_s)}
 
     RESULTS_DIR.mkdir(exist_ok=True)
-    path = RESULTS_DIR / f"{REPORT_PREFIX[args.golden]}-{short(model).lower()}.md"
+    suffix = f"-texto-{args.texto}" if args.texto else ""
+    path = RESULTS_DIR / f"{REPORT_PREFIX[args.golden]}-{short(model).lower()}{suffix}.md"
     path.write_text(render_report(model, spec.min_score, args.golden, golden, n_repos,
-                                  summary, times, rows),
+                                  summary, times, rows, fields, args.texto),
                     encoding="utf-8",)
 
     print(f"Modelo: {model} · golden set: {args.golden} · catálogo: {golden.source} ({n_repos} repos)")

@@ -1,0 +1,527 @@
+{
+  "prompt_version": "4",
+  "repos": [
+    {
+      "github_id": 50904245,
+      "full_name": "apache/beam",
+      "categories": [
+        "data-processing"
+      ],
+      "summary_es": "Modelo de programación unificado para procesamiento de datos por lotes y en tiempo real (batch y streaming).",
+      "use_cases": [
+        "Definir pipelines de procesamiento de datos paralelos tanto por lotes como en streaming",
+        "Ejecutar programas en múltiples backends de procesamiento distribuido mediante PipelineRunners"
+      ],
+      "evidence": [
+        "Apache Beam is a unified model for defining both batch and streaming data-parallel processing pipelines, as well as a set of language-specific SDKs for constructing pipelines and Runners for executing them on distributed processing backends, including Apache Flink, Apache Spark, Google Cloud Dataflow, and Hazelcast Jet.",
+        "Beam supports executing programs on multiple distributed processing backends through PipelineRunners."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "756b9cf0c16e3111e1f76ef407de0ba215de42c93157a01f97f70e3b12b0cf16",
+      "review": {
+        "readme_chars": 4554,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 3067,
+        "output_tokens": 211,
+        "seconds": 1.61
+      }
+    },
+    {
+      "github_id": 120896210,
+      "full_name": "argoproj/argo-cd",
+      "categories": [
+        "infrastructure",
+        "automation"
+      ],
+      "summary_es": "Herramienta de entrega continua GitOps declarativa para Kubernetes.",
+      "use_cases": [
+        "Gestionar el despliegue y ciclo de vida de aplicaciones de forma automatizada"
+      ],
+      "evidence": [
+        "Application deployment and lifecycle management should be automated, auditable, and easy to understand."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "29e9f788b8026da2b2dbb4e8be108766b20b1e12ff0944c68e5d1fb85046fdb8",
+      "review": {
+        "readme_chars": 3106,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2791,
+        "output_tokens": 108,
+        "seconds": 1.07
+      }
+    },
+    {
+      "github_id": 53631945,
+      "full_name": "BurntSushi/ripgrep",
+      "categories": [
+        "dev-tools",
+        "search"
+      ],
+      "summary_es": "Herramienta de búsqueda orientada a líneas que busca de forma recursiva en directorios un patrón de expresión regular respetando gitignore.",
+      "use_cases": [
+        "Buscar patrones con expresiones regulares de forma recursiva en directorios",
+        "Filtrar automáticamente archivos ocultos y binarios ignorando reglas de gitignore",
+        "Limitar las búsquedas a tipos específicos de archivos"
+      ],
+      "evidence": [
+        "ripgrep recursively searches directories for a regex pattern while respecting your gitignore",
+        "By default, ripgrep will respect gitignore rules and automatically skip hidden files/directories and binary files.",
+        "ripgrep can search specific types of files."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "0fae170840a53844421152499247258f2577839d34d07e040fbbfbc0c1d8fb68",
+      "review": {
+        "readme_chars": 7554,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 4588,
+        "output_tokens": 220,
+        "seconds": 1.73
+      }
+    },
+    {
+      "github_id": 48109239,
+      "full_name": "cilium/cilium",
+      "categories": [
+        "infrastructure",
+        "observability",
+        "search"
+      ],
+      "summary_es": "Solución de redes, observabilidad y seguridad basada en eBPF para contenedores y Kubernetes.",
+      "use_cases": [
+        "Gestionar la red y seguridad en clústeres de Kubernetes",
+        "Implementar balanceo de carga distribuido",
+        "Conectar de forma segura múltiples clústeres",
+        "Aplicar políticas de red basadas en identidad"
+      ],
+      "evidence": [
+        "Cilium as a CNI plugin provides a fast, scalable, and secure networking layer for Kubernetes clusters.",
+        "Cilium implements distributed load balancing for traffic between pods and to external services, and is able to fully replace kube-proxy",
+        "Cluster Mesh enables secure, seamless connectivity across multiple Kubernetes clusters.",
+        "It is L7-protocol aware and can enforce network policies on L3-L7 using an identity-based security model that is decoupled from network addressing."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "f8656c86702df2e204e6a32b8562ca94840fab76830d4056fb65d933e5dfe514",
+      "review": {
+        "readme_chars": 7880,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 3726,
+        "output_tokens": 280,
+        "seconds": 1.5
+      }
+    },
+    {
+      "github_id": 60246359,
+      "full_name": "ClickHouse/ClickHouse",
+      "categories": [
+        "database",
+        "analytics"
+      ],
+      "summary_es": "Sistema de gestión de bases de datos analíticas orientado a columnas de código abierto que permite generar informes de datos en tiempo real.",
+      "use_cases": [
+        "Generar informes de datos analíticos en tiempo real"
+      ],
+      "evidence": [
+        "ClickHouse® is an open-source column-oriented database management system that allows generating analytical data reports in real-time."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "15ddf0317544dd0b23edc017639dc6d83c3a5128e99338677eea003e1cb865fb",
+      "review": {
+        "readme_chars": 3146,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2917,
+        "output_tokens": 122,
+        "seconds": 1.32
+      }
+    },
+    {
+      "github_id": 131619646,
+      "full_name": "dagster-io/dagster",
+      "categories": [
+        "data-processing",
+        "observability"
+      ],
+      "summary_es": "Plataforma de orquestación de datos nativa de la nube para el desarrollo, la producción y la observación de activos de datos.",
+      "use_cases": [
+        "Centralizar metadatos con observabilidad, diagnósticos, catalogación y linaje integrados"
+      ],
+      "evidence": [
+        "Centralize your metadata in one tool with built-in observability, diagnostics, cataloging, and lineage."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "5d0c949617e6ef668ee8a74a63f72b06a7a52fcce5cee0d9d5eb8adaf1d59426",
+      "review": {
+        "readme_chars": 3613,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [
+          {
+            "use_case": "Desarrollar y mantener activos de datos como tablas, conjuntos de datos, modelos de aprendizaje automático y informes",
+            "evidence": "It is designed for developing and maintaining data assets, such as tables, data sets, machine learning models, and reports.",
+            "reason": "caso de uso vacío o de más de 100 caracteres"
+          }
+        ],
+        "input_tokens": 2927,
+        "output_tokens": 200,
+        "seconds": 1.34
+      }
+    },
+    {
+      "github_id": 138754790,
+      "full_name": "duckdb/duckdb",
+      "categories": [
+        "database",
+        "data-processing"
+      ],
+      "summary_es": "Sistema de base de datos analítica de alto rendimiento diseñado para ejecutarse dentro de la aplicación sin un servidor separado.",
+      "use_cases": [
+        "Consultar archivos de diversos formatos directamente desde el disco local o extremos remotos",
+        "Conectarse a otros sistemas de base de datos para consultarlos in situ sin un paso ETL separado"
+      ],
+      "evidence": [
+        "DuckDB reads and writes a wide range of file formats, including CSV, Parquet, JSON, and Excel, directly from local disk or from remote endpoints such as S3, HTTP(S), Azure, and Google Cloud Storage.",
+        "DuckDB can attach to other database systems and query them in place, so you can read, join, and move data across engines without a separate ETL step."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "d07b1ef7bc72cd069f7d67e85252af5b8862f212ae081fc3cb4919e4d15c6260",
+      "review": {
+        "readme_chars": 3284,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2744,
+        "output_tokens": 222,
+        "seconds": 1.28
+      }
+    },
+    {
+      "github_id": 179492861,
+      "full_name": "encode/httpx",
+      "categories": [
+        "backend"
+      ],
+      "summary_es": "Librería cliente HTTP totalmente equipada para Python 3 que incluye un cliente de línea de comandos, soporte HTTP/1.1 y HTTP/2, y APIs síncronas y asíncronas.",
+      "use_cases": [
+        "Soportar tanto HTTP/1.1 como HTTP/2",
+        "Proveer interfaces síncronas y asíncronas",
+        "Realizar peticiones directamente a aplicaciones WSGI o ASGI"
+      ],
+      "evidence": [
+        "support for both HTTP/1.1 and HTTP/2",
+        "provides both sync and async APIs",
+        "Ability to make requests directly to WSGI applications or ASGI applications"
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "4f61a0369651b3b8d4fbfd9ca93f861f0bbe15563325a88ccda687ed83a43e36",
+      "review": {
+        "readme_chars": 3363,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2929,
+        "output_tokens": 213,
+        "seconds": 1.49
+      }
+    },
+    {
+      "github_id": 160919119,
+      "full_name": "fastapi/fastapi",
+      "categories": [
+        "backend"
+      ],
+      "summary_es": "Framework web moderno y de alto rendimiento para construir APIs con Python basado en tipos estándar.",
+      "use_cases": [
+        "Construir APIs con Python"
+      ],
+      "evidence": [
+        "FastAPI is a modern, fast (high-performance), web framework for building APIs with Python based on standard Python type hints."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "2d37ab8a0da44a0e7f696b782f6f27da4ba783cc243aa24267843c8e43a5c829",
+      "review": {
+        "readme_chars": 7940,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 4215,
+        "output_tokens": 106,
+        "seconds": 1.45
+      }
+    },
+    {
+      "github_id": 15111821,
+      "full_name": "grafana/grafana",
+      "categories": [
+        "observability",
+        "analytics"
+      ],
+      "summary_es": "Plataforma de observabilidad y visualización de datos que permite consultar, visualizar y crear alertas sobre métricas, logs y trazas desde múltiples fuentes.",
+      "use_cases": [
+        "Visualizar métricas y logs con diferentes opciones de paneles",
+        "Crear dashboards dinámicos y reutilizables con variables de plantilla",
+        "Explorar datos mediante consultas ad-hoc y desglose dinámico",
+        "Definir reglas de alerta visualmente para métricas importantes"
+      ],
+      "evidence": [
+        "Panel plugins offer many different ways to visualize metrics and logs.",
+        "Create dynamic & reusable dashboards with template variables that appear as dropdowns at the top of the dashboard.",
+        "Explore your data through ad-hoc queries and dynamic drilldown.",
+        "Visually define alert rules for your most important metrics."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "82a621e02df9302cd02b0c14c214b90ec5718660190007ab5eb5fc1435d74222",
+      "review": {
+        "readme_chars": 2194,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 2573,
+        "output_tokens": 263,
+        "seconds": 1.43
+      }
+    },
+    {
+      "github_id": 31288958,
+      "full_name": "hashicorp/vault",
+      "categories": [
+        "auth",
+        "database",
+        "storage"
+      ],
+      "summary_es": "Herramienta para acceder de forma segura a secretos, como claves API, contraseñas y certificados, con control de acceso y registro de auditoría.",
+      "use_cases": [
+        "Almacenar claves y valores arbitrarios cifrados en almacenamiento persistente",
+        "Generar secretos dinámicos bajo demanda para sistemas como AWS o bases de datos SQL",
+        "Cifrar y descifrar datos sin necesidad de almacenarlos",
+        "Revocar automáticamente secretos individuales o árboles de secretos"
+      ],
+      "evidence": [
+        "Vault can store arbitrary key/value pairs. Vault encrypts data before writing it to persistent storage, so gaining access to the raw storage isn't enough to access your secrets.",
+        "Vault can generate secrets on-demand for some systems, such as AWS or SQL databases.",
+        "Vault can encrypt and decrypt data without storing it.",
+        "Vault has built-in support for secret revocation. Vault can revoke not only single secrets, but a tree of secrets, for example, all secrets read by a specific user, or all secrets of a particular type."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "b93a5f25df3e728b12199c4fe4737d45715445f40a320cb2d1bdf376937f8e6b",
+      "review": {
+        "readme_chars": 7822,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 3874,
+        "output_tokens": 321,
+        "seconds": 1.67
+      }
+    },
+    {
+      "github_id": 71995937,
+      "full_name": "nuxt/nuxt",
+      "categories": [
+        "frontend"
+      ],
+      "summary_es": "Framework web full-stack de código abierto basado en Vue.js para crear aplicaciones y sitios web.",
+      "use_cases": [
+        "Configurar enrutamiento automático con división de código y pre-carga",
+        "Desarrollar la parte de servidor con el directorio server/",
+        "Desplegar en una variedad de plataformas de alojamiento"
+      ],
+      "evidence": [
+        "Automatic routing with code-splitting and pre-fetching",
+        "Go full-stack with our server/ directory",
+        "Deployment to a variety of hosting platforms"
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "52a7ae926816ae295f5993c0e74920d539c394eb01545dbad0c14020b571b769",
+      "review": {
+        "readme_chars": 2884,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [
+          {
+            "use_case": "Implementar renderizado del lado del servidor, generación de sitios estáticos, renderizado híbrido y en el borde",
+            "evidence": "Server-side rendering, static site generation, hybrid rendering and edge-side rendering",
+            "reason": "caso de uso vacío o de más de 100 caracteres"
+          }
+        ],
+        "input_tokens": 2762,
+        "output_tokens": 245,
+        "seconds": 1.53
+      }
+    },
+    {
+      "github_id": 658928958,
+      "full_name": "ollama/ollama",
+      "categories": [
+        "ai"
+      ],
+      "summary_es": "Servidor de inferencia y ejecución local de modelos de lenguaje de gran tamaño (LLM) con soporte para múltiples arquitecturas.",
+      "use_cases": [
+        "Ejecutar y chatear con modelos de lenguaje de forma local",
+        "Gestionar y ejecutar modelos mediante una API REST"
+      ],
+      "evidence": [
+        "Run and chat with Gemma 4:",
+        "Ollama has a REST API for running and managing models."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "07f2b53bc2b44f8b8b9e9318a08eadf947592daad1b159d73f9fa119413494a5",
+      "review": {
+        "readme_chars": 7624,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 4100,
+        "output_tokens": 147,
+        "seconds": 1.39
+      }
+    },
+    {
+      "github_id": 359952601,
+      "full_name": "pgvector/pgvector",
+      "categories": [
+        "search",
+        "database"
+      ],
+      "summary_es": "Extensión open-source para PostgreSQL que permite realizar búsqueda de similitud de vectores y almacenar embeddings junto con los demás datos.",
+      "use_cases": [
+        "Realizar búsquedas de vecinos más cercanos exactas y aproximadas",
+        "Escalar grandes volúmenes de vectores mediante cuantización"
+      ],
+      "evidence": [
+        "exact and approximate nearest neighbor search",
+        "Have a lot of vectors? Use quantization to scale"
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "5cf7ceb66ca047c1efef1da454e29eed1a9bcab9530d001116209c9344440133",
+      "review": {
+        "readme_chars": 7793,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 4128,
+        "output_tokens": 150,
+        "seconds": 1.39
+      }
+    },
+    {
+      "github_id": 156018,
+      "full_name": "redis/redis",
+      "categories": [
+        "cache",
+        "database",
+        "search"
+      ],
+      "summary_es": "Sistema de caché en memoria, servidor de estructuras de datos y motor de consultas de documentos y vectores en tiempo real.",
+      "use_cases": [
+        "Implementar almacenamiento en caché con múltiples políticas de desalojo y expiración de claves",
+        "Gestionar sesiones de usuario distribuidas con opciones flexibles de modelado de datos",
+        "Almacenar y buscar datos vectoriales para aplicaciones de inteligencia artificial generativa",
+        "Procesar colas de mensajes y eventos en tiempo real con agentes de mensajería"
+      ],
+      "evidence": [
+        "Caching: Supports multiple eviction policies, key expiration, and hash-field expiration.",
+        "Distributed Session Store: Offers flexible session data modeling (string, JSON, hash).",
+        "Vector Store for GenAI: Integrates with AI applications (e.g. LangGraph, mem0) for short-term memory, long-term memory, LLM response caching (semantic caching), and retrieval augmented generation (RAG).",
+        "Event Store & Message Broker: Implements queues (lists), priority queues (sorted sets), event deduplication (sets), streams, and pub/sub with probabilistic stream processing capabilities."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "c5004abe057dcb9c146a86ca0d2d30cde1bfa062f02216d1ff14abf28d551750",
+      "review": {
+        "readme_chars": 7339,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 3788,
+        "output_tokens": 334,
+        "seconds": 1.74
+      }
+    },
+    {
+      "github_id": 54173593,
+      "full_name": "storybookjs/storybook",
+      "categories": [
+        "frontend",
+        "dev-tools"
+      ],
+      "summary_es": "Taller frontend para construir, documentar y probar componentes y páginas de interfaz de usuario de forma aislada.",
+      "use_cases": [
+        "Construir componentes de interfaz de usuario y páginas en aislamiento",
+        "Documentar componentes de interfaz de usuario",
+        "Probar componentes de interfaz de usuario"
+      ],
+      "evidence": [
+        "Storybook is a frontend workshop for building UI components and pages in isolation.",
+        "Thousands of teams use it for UI development, testing, and documentation.",
+        "Thousands of teams use it for UI development, testing, and documentation."
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "4",
+      "ai_input_hash": "e9858265d7ff5faf38e080e3c5efa24cc3dde4723c32df65c4b64edec4f26efb",
+      "review": {
+        "readme_chars": 5311,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_use_cases": [],
+        "input_tokens": 3289,
+        "output_tokens": 197,
+        "seconds": 1.72
+      }
+    }
+  ]
+}

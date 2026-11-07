@@ -8,7 +8,8 @@ from fastapi.testclient import TestClient
 from ai import assistant, llm
 from ai.assistant import Assisted
 from ai.llm import LLMRateLimited, LLMTimeout, LLMUnavailable
-from ai.service.app import Catalog, create_app
+from ai.service import app as service_app
+from ai.service.app import Catalog, create_app, read_catalog
 from ai.service.settings import DEFAULT_CORS_ORIGINS, Settings
 
 QUERY = {"query": "Necesito cobrar suscripciones mensuales a mis clientes."}
@@ -51,6 +52,86 @@ def test_salud_muestra_la_cadena_y_los_desconectados_sin_claves(client):
     assert body["llm"][0]["disconnected_seconds"] is not None
     assert body["llm"][1]["disconnected_seconds"] is None
     assert "clave-falsa" not in str(body)
+
+
+def test_salud_dice_de_cuando_es_el_catalogo(monkeypatch):
+    monkeypatch.setenv("AI_LLM_PROVIDER", "gemini")
+    monkeypatch.setenv("AI_LLM_FALLBACK", "")
+    taken = "2026-10-29T20:42:17+00:00"
+    load = lambda: Catalog(buscar=lambda query, k: [], min_score=0.19, repos=3,
+                           embedding_model="falso", catalog_taken_at=taken)
+    with TestClient(create_app(load=load, settings=Settings(cors_origins=(FRONTEND,)))) as c:
+        assert c.get("/health").json()["catalog_taken_at"] == taken
+
+
+# --- Origen del catálogo ---
+
+READER = "AI_READER_DATABASE_URL"
+
+
+def test_por_defecto_lee_la_base_y_files_es_la_vuelta_atras(monkeypatch):
+    monkeypatch.delenv("AI_CATALOG_SOURCE", raising=False)
+    assert Settings.from_env().catalog_source == "database"
+    monkeypatch.setenv("AI_CATALOG_SOURCE", "files")
+    assert Settings.from_env().catalog_source == "files"
+    monkeypatch.setenv("AI_CATALOG_SOURCE", "otra")
+    with pytest.raises(ValueError, match="AI_CATALOG_SOURCE"):
+        Settings.from_env()
+
+
+def test_lee_el_catalogo_publicado_de_la_base(monkeypatch):
+    monkeypatch.setenv(READER, "postgresql://lector@servidor/base")
+    monkeypatch.setattr("ai.published.fetch_catalog", lambda url: (["repo"], {1: "vector"}))
+    repos, stored, source, taken, reason = read_catalog(Settings(catalog_source="database"))
+    assert (repos, stored, source, reason) == (["repo"], {1: "vector"}, "database", None) and taken
+
+
+def test_si_la_base_falla_usa_los_archivos_y_lo_dice_sin_el_host(monkeypatch):
+    import psycopg
+    monkeypatch.setenv(READER, "postgresql://lector@db.servidor-secreto.com/base")
+
+    def fails(url):
+        raise psycopg.OperationalError('connection to server at "db.servidor-secreto.com" failed')
+    monkeypatch.setattr("ai.published.fetch_catalog", fails)
+    repos, stored, source, taken, reason = read_catalog(Settings(catalog_source="database"))
+    assert source == "files" and len(repos) > 0 and stored == {} and taken
+    assert "no se pudo leer" in reason and "servidor-secreto" not in reason
+
+
+def test_sin_variable_usa_los_archivos(monkeypatch):
+    monkeypatch.delenv(READER, raising=False)
+    _, _, source, _, reason = read_catalog(Settings(catalog_source="database"))
+    assert source == "files" and READER in reason
+
+
+def test_con_files_no_toca_la_base(monkeypatch):
+    monkeypatch.setattr("ai.published.fetch_catalog", lambda url: pytest.fail("no debe leer la base"))
+    _, _, source, _, reason = read_catalog(Settings(catalog_source="files"))
+    assert source == "files" and reason is None
+
+
+def test_salud_dice_de_donde_salio_el_catalogo(monkeypatch):
+    monkeypatch.setenv("AI_LLM_PROVIDER", "gemini")
+    monkeypatch.setenv("AI_LLM_FALLBACK", "")
+    load = lambda: Catalog(buscar=lambda query, k: [], min_score=0.19, repos=3,
+                           embedding_model="falso", catalog_source="files",
+                           catalog_fallback_reason="falta AI_READER_DATABASE_URL")
+    with TestClient(create_app(load=load, settings=Settings(cors_origins=(FRONTEND,)))) as c:
+        body = c.get("/health").json()
+    assert body["catalog_source"] == "files"
+    assert body["catalog_fallback_reason"] == "falta AI_READER_DATABASE_URL"
+    assert body["vectors"] == {"stored": 0, "computed_at_startup": 0}
+
+
+def test_sin_load_explicito_usa_el_origen_de_la_configuracion(monkeypatch):
+    seen = []
+    monkeypatch.setattr(service_app, "load_catalog",
+                        lambda settings: seen.append(settings.catalog_source) or fake_catalog())
+    monkeypatch.setenv("AI_LLM_PROVIDER", "gemini")
+    monkeypatch.setenv("AI_LLM_FALLBACK", "")
+    with TestClient(create_app(settings=Settings(catalog_source="files"))):
+        pass
+    assert seen == ["files"]
 
 
 # --- Pedido ---

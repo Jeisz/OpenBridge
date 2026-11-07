@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "catalog_taken_at": "2026-10-29T20:42:17+00:00",
+  "note": "Comprobación de una sola regla: un framework o librería para construir tu propia API es sdk, no rest_api. Repos que el prompt no vio y que no están en la referencia principal. Escrita antes de correr, con el texto que ve el modelo.",
+  "criteria": {"min_required": 3, "min_stable": 3},
+  "repos": [
+    {"full_name": "Kludex/starlette",
+     "required": [{"type": "sdk", "evidence": "$ pip install starlette"}],
+     "admissible": [], "forbidden": ["rest_api"],
+     "note": "Framework ASGI para construir servicios web propios."},
+    {"full_name": "pallets/flask",
+     "required": [{"type": "sdk", "evidence": "from flask import Flask"}],
+     "admissible": [], "forbidden": ["rest_api"],
+     "note": "Framework web para construir aplicaciones propias."},
+    {"full_name": "fastapi/sqlmodel",
+     "required": [{"type": "sdk", "evidence": "SQLModel is a library for interacting with SQL databases from Python code, with Python objects."}],
+     "admissible": [], "forbidden": ["rest_api"],
+     "note": "Librería de acceso a bases SQL; menciona FastAPI, pero no expone una API."}
+  ]
+}

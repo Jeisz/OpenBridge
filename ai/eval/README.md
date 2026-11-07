@@ -15,14 +15,18 @@ eligieron el modelo de embeddings y el umbral, con su evidencia:
 | | |
 |---|---|
 | Modelo de embeddings | EmbeddingGemma-300m |
-| Umbral de "sin evidencia" (`min_score`) | 0,19, provisional |
-| Acierto en el catálogo real (hit@3) | 48 de 60 consultas (80 %); con 5 candidatos, 53 (88 %) |
+| Texto de cada repo | nombre, resumen de la IA, descripción, topics y casos de uso de la IA (sin categorías) |
+| Umbral de "sin evidencia" (`min_score`) | 0,23 |
+| Acierto en el catálogo real (hit@3) | 52 de 60 consultas (87 %); con 5 candidatos, 54 (90 %) |
 | Golden set | `catalog` v2: 100 consultas, snapshot del 2026-10-29 |
 
-Con el texto actual de los repos, el umbral solo frena pedidos sin nada parecido
-en el catálogo. Los que *suenan* parecido a un repo que no los resuelve (por
-ejemplo, "gestión de permisos de acceso" → vault) pasan, y el freno tiene que
+El umbral frena la mitad de los pedidos sin respuesta (20 de 40 pasan). Los que
+*suenan* parecido a un repo que no los resuelve (por ejemplo, "comunicación con
+clientes" → alertmanager, "inicio de sesión" → vault) pasan, y el freno tiene que
 venir del paso que elige entre los candidatos.
+
+Para comparar variantes del texto: `python -m ai.eval.run_search_eval --texto <variante>`
+(variantes en `TEXT_VARIANTS`, `ai/search.py`).
 
 ## Cómo correrla
 

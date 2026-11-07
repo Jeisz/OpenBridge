@@ -1,6 +1,8 @@
 """Búsqueda semántica sobre el catálogo de repos."""
 
+import hashlib
 from collections.abc import Collection
+from typing import Literal
 
 import numpy as np
 from pydantic import BaseModel
@@ -22,35 +24,99 @@ NOISE_TOPICS = frozenset({
 # Licencias que no se pueden confirmar
 UNCONFIRMED_LICENSES = frozenset({None, "NOASSERTION"})
 
+# Partes del texto que vienen de la IA. Sin ninguna: nombre, descripción y topics.
+TextField = Literal["categories", "summary", "use_cases"]
+# Las que usa la búsqueda. Sin categorías (medido en ai/eval/SEARCH_DECISION.md).
+TEXT_FIELDS: tuple[TextField, ...] = ("summary", "use_cases")
+
+# Variantes para medir (python -m ai.eval.run_search_eval --texto). Las cuatro primeras
+# forman una cadena: cada una suma un dato de la IA a la anterior.
+TEXT_VARIANTS: dict[str, tuple[TextField, ...]] = {
+    "base": (),
+    "categorias": ("categories",),
+    "resumen": ("categories", "summary"),
+    "casos": ("categories", "summary", "use_cases"),
+    # Sin la descripción genérica de la categoría, que acerca consultas sin respuesta.
+    "sin-categorias": ("summary", "use_cases"),
+}
+
 
 def clean_topics(topics: list[str]) -> list[str]:
     """Topics sin los de `NOISE_TOPICS`, en su orden original."""
     return [t for t in topics if t not in NOISE_TOPICS]
 
 
-def build_embedding_text(repo: Repo, categories: dict[str, Category]) -> str:
+def build_embedding_text(repo: Repo, categories: dict[str, Category],
+                         fields: tuple[TextField, ...] = TEXT_FIELDS) -> str:
     """Texto que representa el repo en la búsqueda.
 
-    Orden: nombre -> categorías -> descripción -> topics.
-    Si el repo no tiene descripción, se omite esa parte.
+    Orden: nombre -> categorías -> resumen -> descripción -> topics -> casos de uso.
+    `fields` elige qué partes de la IA entran; las que faltan en el repo se omiten.
     """
     parts = [repo.full_name.split("/")[1] + "."]
 
-    for assignment in repo.categories:
-        category = categories[assignment.category_id]
-        parts.append(f"{category.name}: {category.description}")
+    if "categories" in fields:
+        for assignment in repo.categories:
+            category = categories[assignment.category_id]
+            parts.append(f"{category.name}: {category.description}")
+
+    if "summary" in fields and repo.summary_es:
+        parts.append(_sentence(repo.summary_es))
 
     description = (repo.description or "").strip()
     if description:
-        if not description.endswith((".", "!", "?")):
-            description += "."
-        parts.append(description)
+        parts.append(_sentence(description))
 
     topics = clean_topics(repo.topics)
     if topics:
         parts.append("Topics: " + ", ".join(topics) + ".")
 
+    if "use_cases" in fields and repo.use_cases:
+        parts.append("Usos: " + "; ".join(repo.use_cases) + ".")
+
     return " ".join(parts)
+
+
+def embedding_hash(text: str, model: str, document_prompt: str = "") -> str:
+    """Huella de un vector: el texto del repo, el modelo y el prompt con que se calcula.
+
+    Si cambia cualquiera de los tres (por ejemplo, un resumen nuevo publicado), el vector
+    guardado deja de servir.
+    """
+    content = "\n".join((model, document_prompt, text))
+    return hashlib.sha256(content.encode("utf-8")).hexdigest()
+
+
+def plan_vectors(repos: list[Repo], stored: dict[int, dict],
+                 fields: tuple[TextField, ...] = TEXT_FIELDS
+                 ) -> tuple[dict[int, np.ndarray], list[tuple[Repo, str, str]]]:
+    """Qué vectores guardados sirven y cuáles hay que calcular. No carga el modelo.
+
+    stored: vectores guardados por github_id, con model, ai_input_hash y embedding (lista).
+    Devuelve (vectores que sirven por github_id, [(repo, texto, huella)] por calcular).
+    """
+    from ai import embeddings   # solo model_spec(): no carga el modelo
+
+    spec = embeddings.model_spec()
+    categories = load_categories()
+    reuse: dict[int, np.ndarray] = {}
+    missing: list[tuple[Repo, str, str]] = []
+    for repo in repos:
+        text = build_embedding_text(repo, categories, fields)
+        fingerprint = embedding_hash(text, spec.name, spec.document_prompt)
+        saved = stored.get(repo.github_id)
+        if (saved and saved["model"] == spec.name and saved["ai_input_hash"] == fingerprint
+                and len(saved["embedding"]) == spec.dims):
+            reuse[repo.github_id] = np.asarray(saved["embedding"], dtype=np.float32)
+        else:
+            missing.append((repo, text, fingerprint))
+    return reuse, missing
+
+
+def _sentence(text: str) -> str:
+    """El texto sin espacios en los extremos y terminado en punto."""
+    text = text.strip()
+    return text if text.endswith((".", "!", "?")) else text + "."
 
 
 class SearchResult(BaseModel):
@@ -65,21 +131,39 @@ class SearchResult(BaseModel):
 class SearchIndex:
     """Repos del catálogo y sus vectores, alineados: la fila i es el repo i."""
 
-    def __init__(self, repos: list[Repo], vectors: np.ndarray):
+    def __init__(self, repos: list[Repo], vectors: np.ndarray, reused: int = 0):
         if len(repos) != len(vectors):
             raise ValueError(f"{len(repos)} repos y {len(vectors)} vectores")
         self.repos = repos
         self.vectors = vectors
+        self.reused = reused                    # vectores guardados que sirvieron
+        self.computed = len(repos) - reused     # vectores calculados al construir el índice
 
     @classmethod
-    def build(cls, source: Source = DEFAULT_SOURCE) -> "SearchIndex":
-        """Carga el catálogo del origen elegido y calcula sus vectores con el modelo."""
-        from ai import embeddings   # Se importa aquí por torch
+    def build(cls, source: Source = DEFAULT_SOURCE,
+              fields: tuple[TextField, ...] = TEXT_FIELDS) -> "SearchIndex":
+        """Carga el catálogo del origen elegido y calcula sus vectores con el modelo.
 
-        repos = load_repos(source)
-        categories = load_categories()
-        texts = [build_embedding_text(r, categories) for r in repos]
-        return cls(repos, embeddings.embed_documents(texts))
+        `fields`: partes de la IA que entran al texto (para medir variantes).
+        """
+        return cls.from_repos(load_repos(source), fields)
+
+    @classmethod
+    def from_repos(cls, repos: list[Repo], fields: tuple[TextField, ...] = TEXT_FIELDS,
+                   stored: dict[int, dict] | None = None) -> "SearchIndex":
+        """Índice de repos ya cargados (de los archivos o de la base).
+
+        stored: vectores guardados (ver `plan_vectors`); los que siguen al día se reutilizan y
+        solo se calculan los demás. Sin stored, se calculan todos.
+        """
+        reuse, missing = plan_vectors(repos, stored or {}, fields)
+        computed: dict[int, np.ndarray] = {}
+        if missing:
+            from ai import embeddings   # carga el modelo (torch) solo si hay algo que calcular
+            vectors = embeddings.embed_documents([text for _, text, _ in missing])
+            computed = {repo.github_id: v for (repo, _, _), v in zip(missing, vectors)}
+        rows = [reuse.get(r.github_id, computed.get(r.github_id)) for r in repos]
+        return cls(repos, np.vstack(rows) if rows else np.empty((0, 0)), reused=len(reuse))
 
     def search(self,
                query: str,

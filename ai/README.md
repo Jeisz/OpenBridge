@@ -17,7 +17,9 @@ modelo de embeddings: `load_repos(source="sample")`.
 
 **Búsqueda semántica.** Dada la necesidad de un cliente en lenguaje natural (en español o inglés),
 devuelve los repos del catálogo más parecidos por significado, con filtros por licencia,
-health score y categoría.
+health score y categoría. El texto de cada repo incluye el resumen y los casos de uso que
+genera la IA; umbral de "sin evidencia" 0,23 (detalle en
+[`eval/SEARCH_DECISION.md`](eval/SEARCH_DECISION.md)).
 
 **Evaluación de la búsqueda.** Dos golden sets (catálogo real y datos de ejemplo), métricas
 (hit@3, MRR, recall) y umbral de "sin evidencia", con un solo comando. Resultados y
@@ -40,6 +42,22 @@ respaldo sin esperar. Se expone como servicio HTTP (`POST /assistant`, ver [Serv
 razonamiento bajo. Criterios, comparación y descartados en
 [`eval/LLM_DECISION.md`](eval/LLM_DECISION.md).
 
+**Enriquecimiento del catálogo.** Los 100 repos tienen categorías (1 a 3 de
+`categories.json`, la primera es la principal), un resumen en español (`summary_es`, hasta
+250 caracteres) y casos de uso (0 a 4, cada uno respaldado por una cita del README que el
+código comprueba). Los genera Gemini 3.5 Flash-Lite; se guardan en
+`data/catalog/enrichment.json` y en las tablas `ai.*`. Ver
+[Enriquecimiento del catálogo](#enriquecimiento-del-catálogo); elección del modelo en
+[`eval/ENRICH_DECISION.md`](eval/ENRICH_DECISION.md).
+
+**Ideas de integración.** 40 de los 100 repos tienen de 1 a 3 ideas (46 en total: `sdk`,
+`docker`, `rest_api`), cada una con una cita del README que el código comprueba y, cuando el
+README lo trae, un snippet copiado tal cual. Los otros 60 quedan sin ideas: la mayoría son
+herramientas de desarrollo, frameworks e infraestructura que no se conectan a una
+Se guardan en `data/catalog/ideas.json` y en `ai.ai_integration_ideas`. Verss
+[Ideas de integración](#ideas-de-integración); método, números y límites en
+[`eval/IDEAS_DECISION.md`](eval/IDEAS_DECISION.md).
+
 ## Estructura
 
 ```
@@ -49,10 +67,12 @@ ai/
 ├── search.py                   # SearchIndex: texto a embeber, filtros y ranking
 ├── llm.py                      # generar(): registro de proveedores de LLM, salida estructurada y errores
 ├── assistant.py                # entender(), generar_mapa() y asistir(): el flujo del asistente
+├── catalog_diff.py             # Compara la vista con lo que tiene la IA (sin leer archivos ni la base)
 ├── requirements.txt
 ├── scripts/
 │   ├── build_sample_data.py        # Regenera ai/data/ desde la API de GitHub
 │   ├── check_llm.py                # Prueba de humo de los proveedores de LLM
+│   ├── compare_catalog.py          # Compara la vista con el snapshot y los datos de la IA (solo lectura)
 │   ├── export_catalog_snapshot.py  # Regenera ai/data/catalog/ desde la base (solo lectura)
 │   └── load_seed_example.py        # Carga o borra los datos de ejemplo en las tablas ai.*
 ├── data/
@@ -188,14 +208,26 @@ nunca del servicio (lo comprueba un test). Se levanta desde la raíz del repo:
 python -m uvicorn ai.service.app:create_app --factory --port 8001
 ```
 
-Al arrancar carga el modelo de embeddings y el índice del catálogo (unos segundos) y muestra la
-cadena de proveedores (`listo: 100 repos, proveedores gemini → groq-low → claude-haiku`). No
-acepta pedidos hasta terminar.
+Al arrancar carga el catálogo, el modelo de embeddings y el índice (unos segundos) y muestra de
+dónde salió el catálogo y la cadena de proveedores
+(`listo: 100 repos (database), proveedores gemini → groq-low → claude-haiku`). No acepta pedidos
+hasta terminar. Para que use un catálogo actualizado, se reinicia.
+
+- **Catálogo:** `AI_CATALOG_SOURCE=database` (por defecto) lee lo publicado en la base (la vista
+  más las tablas `ai.*`, lo mismo que muestra la ficha) con `AI_READER_DATABASE_URL`;
+  `AI_CATALOG_SOURCE=files` lee `ai/data/catalog/` (vuelta atrás sin tocar código). Si la base
+  falla al arrancar, usa los archivos y `GET /health` lo dice en `catalog_source` y
+  `catalog_fallback_reason` (sin host). Las evaluaciones leen siempre los archivos.
+- **Vectores:** con la base, usa los vectores guardados en `ai.ai_embeddings` cuya huella (texto
+  del repo, modelo y prompt) sigue al día y calcula solo los demás. El log de arranque dice cuántos
+  de cada uno y cuánto tardó; `GET /health` lo muestra en `vectors`. Un número de calculados mayor
+  que 0 indica que falta publicar (`refresh_ai_data --escribir`). La búsqueda sigue en memoria
+  (numpy); buscar en la base con pgvector queda para cuando el catálogo crezca.
 
 | Ruta | Qué hace |
 |---|---|
 | `POST /assistant` | Cuerpo `AssistantRequest` (`{"query": "…"}`, 20–2000 caracteres) → `AssistantResponse`, o `ErrorResponse` con 422 `invalid_query`, 502 `invalid_response`, 503 `provider_unavailable` o 504 `timeout` |
-| `GET /health` | Repos cargados, modelo de embeddings, umbral y, por proveedor, si tiene clave y cuántos segundos le quedan desconectado (nunca muestra claves) |
+| `GET /health` | Repos cargados, de dónde salió el catálogo (`database` o `files`, y por qué si cayó a los archivos) y de cuándo es, vectores guardados y calculados al arrancar, modelo de embeddings, umbral y, por proveedor, si tiene clave y cuántos segundos le quedan desconectado (nunca muestra claves) |
 | `GET /docs` | Documentación interactiva generada desde el contrato |
 
 - **CORS:** acepta los orígenes de `AI_CORS_ORIGINS` (separados por comas; por defecto
@@ -222,8 +254,19 @@ AI_MODEL_TESTS=1 python -m pytest ai/tests -v    # incluye las pruebas con el mo
 python -m pytest tests/contracts -v              # valida los ejemplos del contrato
 python -m ai.scripts.build_sample_data           # regenera ai/data/ (requiere `gh` autenticado)
 python -m ai.scripts.export_catalog_snapshot     # regenera ai/data/catalog/ (requiere AI_READER_DATABASE_URL en .env)
+python -m ai.scripts.compare_catalog             # qué cambió en la vista frente a lo que tiene la IA (0 igual, 1 cambios, 2 error)
+python -m ai.scripts.refresh_ai_data             # plan para actualizar la IA según la vista (--generar, --escribir)
 python -m ai.scripts.load_seed_example           # carga los datos de ejemplo en ai.* (requiere AI_DATABASE_URL en .env)
 python -m ai.scripts.load_seed_example --limpiar # borra los datos de ejemplo
+python -m ai.scripts.enrich_catalog              # genera categorías, resumen y casos de uso (requiere GEMINI_API_KEY)
+python -m ai.scripts.write_enrichment            # valida enrichment.json sin tocar la base
+python -m ai.scripts.write_enrichment --escribir # lo escribe en ai.* (requiere AI_DATABASE_URL)
+python -m ai.eval.compare_enrichment ARCHIVOS --out reporte.md  # compara corridas de distintos modelos
+python -m ai.scripts.generate_ideas              # genera las ideas de integración (requiere GEMINI_API_KEY)
+python -m ai.eval.evaluate_ideas CORRIDAS --out reporte.md  # mide corridas de ideas contra la referencia
+python -m ai.scripts.write_ideas                 # valida ideas.json sin tocar la base
+python -m ai.scripts.write_ideas --escribir      # lo escribe en ai.ai_integration_ideas (requiere AI_DATABASE_URL)
+python -m ai.scripts.review_ideas --aprobar ID … # marca ideas como revisadas (--escribir para aplicar)
 python -m ai.eval.run_search_eval                # evalúa la búsqueda sobre el catálogo real (--golden sample: datos de ejemplo)
 python -m ai.scripts.check_llm gemini groq-low   # prueba de humo de los proveedores de LLM (requiere las claves)
 python -m ai.eval.run_understand_eval gemini     # compara modelos en el paso de entender (--cases validation: casos de validación)
@@ -253,35 +296,158 @@ que quede en el historial (PowerShell):
 El script valida cada fila contra `Repo` antes de escribir: si alguna no cumple, no toca el
 snapshot anterior. Regenerarlo reescribe `readmes/` completo; el diff muestra qué cambió en el catálogo.
 
+Para saber si hace falta actualizar, `python -m ai.scripts.compare_catalog` compara la vista con lo
+que la IA publicó en la base (`ai.ai_processing`) y con el snapshot, sin escribir nada: repos nuevos,
+eliminados y renombrados, cambios de `archived`, y qué repos tienen el enriquecimiento o las ideas
+desactualizados. Para eso recalcula la huella de lo que lee el modelo con la versión de las reglas de
+cada registro, así que un cambio de reglas no cuenta como cambio del catálogo.
+
+## Actualizar los datos de la IA cuando cambia el catálogo
+
+Lo publicado vive en la base: las tablas `ai.*` (lo que leen la ficha y el asistente) y
+`ai.ai_processing`, una fila por repo y tipo de dato con la huella, el proveedor, el modelo y la versión
+de las reglas con que se generó, también cuando el resultado fue "sin ideas". Los archivos de
+`ai/data/catalog/` son el borrador, la caché del lote y la copia fija para las evaluaciones.
+
+`python -m ai.scripts.refresh_ai_data` compara la vista con lo publicado y con el borrador, y hace solo
+lo que falta. Se puede repetir: si se corta (por ejemplo, por el límite del día del proveedor), se
+vuelve a correr el mismo comando.
+
+1. **Plan** (sin opciones): qué cambió, qué se haría y cuántas llamadas al modelo costaría. No toca nada.
+2. **`--generar`**: refresca `ai/data/catalog/`, quita los registros de repos que salieron, corrige
+   nombres y regenera con el modelo solo los repos cuya entrada cambió. Solo archivos.
+3. Revisar `git diff ai/data/catalog/`.
+4. **`--escribir`**: publica en las tablas `ai.*`, en una transacción, solo los repos desactualizados
+   en la base, y actualiza su fila en `ai.ai_processing`. En la misma transacción calcula y guarda
+   los vectores de búsqueda que faltan o quedaron viejos (`ai.ai_embeddings`; carga el modelo de
+   embeddings solo si hay alguno). Un repo cuyo borrador ya está al día se
+   publica sin llamar al modelo. Se niega si los archivos no reflejan la vista. Los repos que salieron
+   solo se listan; con `--borrar-huerfanos` se borran sus filas regenerables (nunca categorías humanas
+   ni ideas revisadas), con un máximo de `--max-borrar` (10) para no vaciar las tablas si la vista
+   devolviera de menos.
+5. Reiniciar el servicio del asistente (carga el catálogo al arrancar) y hacer commit de los archivos.
+
+La primera vez después de aplicar `ai/sql/004_procesamiento_ia.sql`, `ai.ai_processing` está vacía: el
+plan muestra todos los repos para publicar y 0 llamadas al modelo, y `--escribir` llena el registro sin
+cambiar los textos publicados.
+
+Un cambio de reglas no se regenera aquí: si el archivo está en otra versión de las reglas que el
+código, o un registro es de otro modelo, el plan lo muestra como pendiente.
+
 ## Datos de ejemplo en las tablas de la IA
 
 `ai/data/seed/ejemplo_ia.json` tiene resumen, categorías e ideas de integración para 8 repos
-del catálogo, para probar la API y la ficha antes de que la IA genere los datos reales. Están
-escritos desde el README de cada repo y revisados de forma manual. No son salida del LLM.
+del catálogo, escritos a mano desde el README de cada uno. Sirvieron para probar la API y la
+ficha antes de que la IA generara los datos reales. **Ya no están en la base:** el escritor
+del enriquecimiento los borra antes de escribir.
 
-Los repos se eligieron para cubrir los casos de la ficha:
+`ai/scripts/load_seed_example.py` los vuelve a cargar si hace falta para pruebas
+(`--limpiar` solo los borra). Se reconocen por `ai_input_hash` y `based_on_hash` =
+`seed-ejemplo`; la limpieza borra solo esas filas, nunca datos reales.
 
-| Caso | Repos |
+## Enriquecimiento del catálogo
+
+Para cada repo, el modelo recibe la descripción, los topics y el README (sin HTML, imágenes
+ni URLs, recortado a 8.000 caracteres en un final de párrafo) y devuelve categorías,
+`summary_es` y casos de uso. El código valida la respuesta antes de guardarla:
+
+| Regla | Si no se cumple |
 |---|---|
-| 3, 2, 1 y 0 ideas | ollama · redis, pgvector, fastapi · duckdb, vault · grafana, ripgrep |
-| Idea con fragmento de código | ollama, redis, duckdb, pgvector, fastapi |
-| Idea sin fragmento («Código no disponible») | vault, y una idea de ollama, redis y fastapi |
-| Sin sitio web (`homepage` vacío) | pgvector, ripgrep |
-| Licencia sin confirmar (`NOASSERTION`) | redis, pgvector, vault |
-| Sin datos de la IA | los demás repos del catálogo |
+| Categorías: 1 a 3 ids de `categories.json`, sin repetir | Un reintento; si sigue mal, se guarda lo que cumple |
+| `summary_es`: 1 a 250 caracteres, sin palabras de venta | Un reintento; si sigue mal, `null` (la ficha muestra la descripción) |
+| Cada caso de uso trae una cita del README que existe en el texto que vio el modelo (al menos 15 caracteres y 2 palabras) | Se descarta ese caso de uso, sin reintento |
+| README casi vacío (menos de 200 caracteres) | Sin casos de uso |
 
-`ai/scripts/load_seed_example.py` los valida contra los contratos y los escribe con el usuario
-escritor (`AI_DATABASE_URL` en `.env`, con la contraseña codificada como en la sección anterior).
-Todo va en una sola transacción: si algo falla, la base queda como estaba. Se puede correr las
-veces que haga falta: borra los datos de ejemplo y los vuelve a insertar.
+Cada registro guarda el proveedor, el modelo, la versión de las reglas (`PROMPT_VERSION`) y
+un hash de la entrada. Si nada de eso cambió, el repo no se vuelve a pedir al modelo.
 
-**Antes de generar los datos reales de la IA, hay que borrarlos:**
+**Regenerar** (por ejemplo, cuando cambie el catálogo):
 
-    python -m ai.scripts.load_seed_example --limpiar
+    python -m ai.scripts.enrich_catalog
+    python -m ai.scripts.write_enrichment             # revisar que sea válido
+    python -m ai.scripts.write_enrichment --escribir
 
-Las filas de ejemplo se reconocen por `ai_input_hash` y `based_on_hash` = `seed-ejemplo`.
-La limpieza borra solo esas filas (y las categorías de esos repos), nunca datos reales. Si ya
-hay datos reales para alguno de estos repos, la carga falla sin cambiar nada.
+Medido el 6-nov-2026: unos 320 mil tokens de entrada y 17 mil de salida para 100 repos, en el
+nivel gratuito de Gemini; entre 5 y 10 minutos con las esperas por límite de uso. Guarda cada
+repo apenas llega: si se corta, el mismo comando sigue donde quedó. `enrichment.json` se
+generó con la versión 4 de las reglas; el código ya está en la 5 (más palabras de venta), así
+que la próxima corrida regenera los 100.
+
+**Escribir en la base** es una sola transacción (todo o nada) y repetible. Las categorías con
+`assigned_by = 'human'` nunca se sobrescriben.
+
+**Qué lee la API del catálogo:** `summary_es` y `use_cases` de `ai.ai_repo_enrichment`;
+`category_id` y `assigned_by` de `ai.ai_repo_categories`, ordenadas por `rank` (1 = principal).
+`ai_input_hash` y `processed_at` son internas de la IA.
+
+**Limitaciones conocidas:**
+- Entre corridas, Gemini cambia la categoría principal en 1 de cada 16 repos aproximadamente.
+- En la corrida actual, 6 repos tienen una categoría dudosa frente a las notas de
+  `categories.json`: deno y linux con `dev-tools` como principal (deno es un runtime como
+  Node.js; un kernel no es una herramienta de desarrollo), flink y pytorch con `backend`,
+  celery con `backend` y alertmanager con `communication` como secundarias. No se corrigen a
+  mano: un archivo de correcciones no escala. Si hace falta más calidad: generar las
+  categorías con un modelo más capaz o revisar solo los repos que cambian entre dos corridas.
+- La cita prueba que el texto existe en el README, no que respalde el caso de uso (por ejemplo,
+  un título de sección).
+- 8 resúmenes de la versión 4 tienen expresiones de venta ("extremadamente", "moderno") que la
+  versión 5 ya rechaza.
+
+  ## Ideas de integración
+
+Para cada repo, el modelo recibe la descripción, los topics y el README (prosa limpia como en
+el enriquecimiento, pero con los bloques de código intactos y numerados) y devuelve de 0 a 3
+ideas, como máximo una por tipo. El código valida cada una antes de guardarla:
+
+| Regla | Si no se cumple |
+|---|---|
+| Más de 3 ideas, bloque inexistente, título o resumen vacío o largo, texto dañado, palabras de venta | Un reintento |
+| La cita existe en el texto que vio el modelo (al menos 15 caracteres y 2 palabras) | Se descarta la idea |
+| Al menos un nombre del stack aparece en la entrada | Se descarta la idea |
+| Una idea por tipo; repo archivado sin ideas | Se descarta la idea |
+| README casi vacío (menos de 200 caracteres) o repo archivado | Sin ideas, sin llamar al modelo |
+
+El snippet, su lenguaje y el enlace a la documentación los pone el código, nunca el modelo.
+Una lista vacía es un resultado válido y no se vuelve a pedir mientras la entrada no cambie.
+
+**Regenerar:**
+
+    python -m ai.scripts.generate_ideas
+
+Medido el 6-nov-2026: unos 217 mil tokens de entrada y 9 mil de salida para 100 repos, en el
+nivel gratuito de Gemini. Si se corta, el mismo comando sigue donde quedó.
+
+**Medir una versión nueva del prompt:** corre los repos de `eval/ideas_reference.json` dos
+veces y compáralas con `python -m ai.eval.evaluate_ideas`. Los criterios están en el mismo
+archivo de referencia.
+
+
+**Escribir en la base:**
+
+    python -m ai.scripts.write_ideas             # revisar que sea válido
+    python -m ai.scripts.write_ideas --escribir
+
+Es una sola transacción (todo o nada) y repetible. Solo reemplaza las ideas regenerables
+(`generated_by = 'llm'` y `reviewed_at` nulo) de los repos del archivo. Las revisadas o
+escritas por una persona nunca se tocan y ocupan cupo: como máximo 3 ideas por repo y una por
+tipo, contando las revisadas. Si el README de una idea revisada cambió desde que se revisó,
+el informe la muestra para revisarla de nuevo, sin tocarla.
+
+**Aprobar ideas revisadas:** una persona lee la idea en la ficha o en `ideas.json` y, si está
+bien sin cambios, la aprueba:
+
+    python -m ai.scripts.review_ideas --aprobar llm-<github_id>-<n> …             # comprueba
+    python -m ai.scripts.review_ideas --aprobar llm-<github_id>-<n> … --escribir  # marca
+
+Pone `reviewed_at`; desde ahí la regeneración no la toca. La tabla no guarda quién la revisó.
+Verificación después de escribir: `ai/sql/consultas/ideas_ia.sql` y `huerfanos_ia.sql`.
+
+**Qué lee la API del catálogo:** todas las columnas de `ai.ai_integration_ideas` (las del
+contrato `IntegrationIdea` más `github_id` para unir; `full_name` lo pone la API), ordenadas
+por `id`, como máximo 3 por repo, y nada de los repos archivados. El rol de lectura de la API
+necesita `USAGE` en el esquema `ai` y `SELECT` sobre `ai.ai_repo_enrichment`,
+`ai.ai_repo_categories` y `ai.ai_integration_ideas` (no sobre `ai.ai_embeddings`, que es
+interna de la IA).
 
 ## Cómo leer los datos
 

@@ -20,7 +20,8 @@ from uuid import uuid4
 from pydantic import BaseModel, ConfigDict, ValidationError
 
 from ai.catalog import load_categories
-from ai.llm import Deadline, LLMError, LLMInvalidResponse, LLMTimeout, generar
+from ai.llm import (Deadline, LLMError, LLMInvalidResponse, LLMResult, LLMTimeout,
+                      generate_valid)
 from ai.search import UNCONFIRMED_LICENSES, SearchResult, clean_topics
 from shared.contracts.assistant import (AssistantResponse, Component, Connection,
                                         ErrorDetail, ErrorResponse)
@@ -32,6 +33,8 @@ TITLE_CHARS = 80         # límite del contrato
 CANDIDATES_SHOWN = 5    # candidatos por necesidad que ve el modelo
 CANDIDATES_LOGGED = 5   # los que se registran para medir el techo de la búsqueda
 BUDGET_SECONDS = 15.0   # tiempo de la IA por pedido (contrato: el frontend espera 20 s)
+
+Understood = LLMResult  # nombre que usan las métricas de entender
 
 UNDERSTAND_RULES = """Eres el primer paso de un asistente que recomienda herramientas open source
 para construir el sistema de un negocio. Tu tarea: leer el pedido del usuario
@@ -174,77 +177,12 @@ def rule_problems(data: BaseModel) -> list[str]:
     return problems
 
 
-# --- Llamada al modelo con un reintento ---
-
-@dataclass
-class LLMResult:
-    """Respuesta validada de un paso con LLM, con lo que hace falta para medirla."""
-
-    data: BaseModel | None = None          # None = ningún intento cumplió el esquema
-    attempts: int = 0
-    problems_first: list[str] = field(default_factory=list)  # del primer intento
-    problems_final: list[str] = field(default_factory=list)  # vacío = válida
-    seconds: float = 0.0
-    input_tokens: int = 0
-    output_tokens: int = 0
-
-
-Understood = LLMResult
-
-
-def _generate_valid(messages: list[dict], schema: type[BaseModel],
-                    check, provider: str | None,
-                    format_hint: str | None = None,
-                    deadline: Deadline | None = None) -> LLMResult:
-    """Llama al modelo y reintenta una vez si la respuesta no cumple el esquema o las reglas.
-
-    `format_hint` se suma al aviso cuando la respuesta no cumple el formato: dice qué
-    valores son válidos, porque el error del proveedor no lo dice.
-    Con `deadline`, si no queda tiempo para el reintento, generar() lanza LLMTimeout.
-    """
-    out = LLMResult()
-    for attempt in (1, 2):
-        out.attempts = attempt
-        start = time.perf_counter()
-        try:
-            result = generar(messages, schema=schema, provider=provider, deadline=deadline)
-        except LLMInvalidResponse as err:
-            out.data, raw = None, err.raw_text
-            problems = [f"la respuesta no cumple el formato pedido: {err.detail}"]
-            if format_hint:
-                problems.append(format_hint)
-        else:
-            out.data, raw = result.data, result.text
-            out.input_tokens += result.input_tokens or 0
-            out.output_tokens += result.output_tokens or 0
-            problems = check(result.data)
-        out.seconds += time.perf_counter() - start
-
-        if attempt == 1:
-            out.problems_first = problems
-        out.problems_final = problems
-        if not problems:
-            break
-        # Reintento: el modelo ve su respuesta y qué reglas no cumplió.
-        # Si el proveedor no devolvió el texto fallido, se envía un aviso:
-        # algunos proveedores rechazan un mensaje del asistente vacío.
-        messages = messages + [
-            {"role": "assistant", "content": raw or "(respuesta vacía)"},
-            {"role": "user", "content": "Tu respuesta no cumple estas reglas:\n- "
-                                        + "\n- ".join(problems)
-                                        + "\nCorrígela y responde otra vez con el mismo formato."},
-        ]
-
-    out.seconds = round(out.seconds, 2)
-    return out
-
-
 def entender(request: str, *, provider: str | None = None,
              deadline: Deadline | None = None) -> LLMResult:
     """Necesidades del pedido, con un reintento si la respuesta no cumple las reglas."""
     messages = [{"role": "system", "content": system_prompt()},
                 {"role": "user", "content": request}]
-    return _generate_valid(messages, understanding_schema(), rule_problems, provider,
+    return generate_valid(messages, understanding_schema(), rule_problems, provider,
                            deadline=deadline)
 
 
@@ -464,7 +402,7 @@ def generar_mapa(request: str, needs, candidates: dict[str, list[SearchResult]],
                 problems = [f"la respuesta no cumple el contrato: {err}"]
         return problems
 
-    result = _generate_valid(messages, schema, check, provider,
+    result = generate_valid(messages, schema, check, provider,
                              format_hint=_format_hint(with_tools), deadline=deadline)
     ok = result.data is not None and not result.problems_final
     return (to_response(result.data, needs, candidates) if ok else None), result
