@@ -7,6 +7,7 @@ Uso desde la raíz del repo, con el entorno activo:
     python -m ai.scripts.enrich_catalog                                  # los 100 repos
     python -m ai.scripts.enrich_catalog --repos apache/flink apache/kafka --out salida.json
     python -m ai.scripts.enrich_catalog --provider claude-haiku --readme-chars 4000 --out salida.json
+    python -m ai.scripts.enrich_catalog --new-version               # reglas nuevas: regenera todo
 
 La clave del proveedor tiene que estar en .env.
 """
@@ -62,6 +63,9 @@ def main() -> None:
     parser.add_argument("--readme-chars", type=int, default=README_CHARS)
     parser.add_argument("--out", type=Path, default=OUT_FILE)
     parser.add_argument("--force", action="store_true", help="regenera aunque el hash no cambie")
+    parser.add_argument("--new-version", action="store_true",
+                        help="sigue aunque el archivo sea de otra versión de las reglas "
+                             "(regenera todos los repos)")
     args = parser.parse_args()
 
     load_dotenv()
@@ -73,7 +77,8 @@ def main() -> None:
         current_hash=lambda r: input_hash(user_message(r, readme_input(r, args.readme_chars)),
                                           args.provider),
         process=lambda r: enrich_repo(r, categories, args.provider, args.readme_chars),
-        is_done=up_to_date, describe=describe, force=args.force)
+        is_done=up_to_date, describe=describe, force=args.force,
+        allow_version_change=args.new_version)
 
     print("\n" + summary(done))
     print(f"\nGuardado en {args.out}")

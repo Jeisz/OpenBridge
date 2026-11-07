@@ -16,9 +16,10 @@ def _repo(github_id: int, full_name: str) -> Repo:
                                 "pushed_at": "2026-10-01T00:00:00Z", "archived": False})
 
 
-def _run(repos, out, process, done=lambda record, h: record is not None and record["hash"] == h):
+def _run(repos, out, process, done=lambda record, h: record is not None and record["hash"] == h,
+         **options):
     return run_batch(repos, out, "1", current_hash=lambda r: f"h{r.github_id}",
-                     process=process, is_done=done, describe=lambda rec: "ok")
+                     process=process, is_done=done, describe=lambda rec: "ok", **options)
 
 
 @pytest.fixture(autouse=True)
@@ -117,3 +118,36 @@ def test_un_error_del_modelo_salta_el_repo_sin_guardarlo(tmp_path):
 
     assert _run([_repo(1, "a/a")], out, process) == []
     assert load_records(out) == {}
+
+
+# --- Versión de las reglas ---
+
+def _registro(repo):
+    return {"github_id": repo.github_id, "full_name": repo.full_name, "hash": f"h{repo.github_id}"}
+
+
+def test_archivo_de_otra_version_termina_sin_llamar_al_modelo(tmp_path):
+    out = tmp_path / "salida.json"
+    save_records(out, {1: {"github_id": 1, "full_name": "a/a", "hash": "h1"}}, "0")
+    llamados = []
+
+    def process(repo):
+        llamados.append(repo.full_name)
+        return _registro(repo)
+
+    with pytest.raises(SystemExit):
+        _run([_repo(1, "a/a"), _repo(2, "b/b")], out, process)
+    assert llamados == []
+    assert json.loads(out.read_text(encoding="utf-8"))["prompt_version"] == "0"
+
+
+def test_archivo_de_otra_version_sigue_con_pedido_explicito(tmp_path):
+    out = tmp_path / "salida.json"
+    save_records(out, {1: {"github_id": 1, "full_name": "a/a", "hash": "viejo"}}, "0")
+    hechos = _run([_repo(1, "a/a")], out, _registro, allow_version_change=True)
+    assert [r["hash"] for r in hechos] == ["h1"]
+    assert json.loads(out.read_text(encoding="utf-8"))["prompt_version"] == "1"
+
+
+def test_sin_archivo_no_hay_version_que_comparar(tmp_path):
+    assert len(_run([_repo(1, "a/a")], tmp_path / "nuevo.json", _registro)) == 1

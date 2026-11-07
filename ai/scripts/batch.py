@@ -3,6 +3,7 @@
 Lo usan los scripts que generan datos con el modelo (enriquecimiento, ideas de
 integración). Guarda cada repo apenas llega, así que una corrida cortada se retoma
 donde quedó: un repo cuyo hash de entrada no cambió no se vuelve a pedir al modelo.
+Si el archivo es de otra versión de las reglas, se detiene, salvo pedido explícito.
 """
 
 import json
@@ -43,6 +44,29 @@ def load_records(path: Path) -> dict[int, dict]:
     return {r["github_id"]: r for r in json.loads(path.read_text(encoding="utf-8"))["repos"]}
 
 
+def stored_version(path: Path) -> str | None:
+    """Versión de las reglas con que se escribió el archivo. None si no existe."""
+    if not path.is_file():
+        return None
+    return json.loads(path.read_text(encoding="utf-8")).get("prompt_version")
+
+
+def check_version(path: Path, prompt_version: str, allow_change: bool) -> None:
+    """Termina el programa si el archivo es de otra versión de las reglas, salvo pedido explícito.
+
+    Seguir regeneraría todos los repos (la versión entra en el hash de cada uno) y,
+    si la corrida se corta, dejaría en el archivo registros de dos versiones.
+    """
+    stored = stored_version(path)
+    if stored is None or stored == prompt_version or allow_change:
+        return
+    sys.exit(f"{path} tiene datos de la versión {stored} de las reglas y el código está en la "
+             f"versión {prompt_version}: seguir regeneraría los repos con las reglas nuevas "
+             "(todos, o los de --repos, y el archivo quedaría con dos versiones mezcladas).\n"
+             "Si es lo que quieres, agrega --new-version. Para probar sin tocar ese archivo, "
+             "usa --out con otro archivo.")
+
+
 def save_records(path: Path, records: dict[int, dict], prompt_version: str) -> None:
     """Escribe todos los registros, ordenados por nombre para que el diff sea legible.
 
@@ -70,15 +94,18 @@ def run_batch(repos: list[Repo], out: Path, prompt_version: str, *,
               process: Callable[[Repo], dict],
               is_done: Callable[[dict | None, str], bool],
               describe: Callable[[dict], str],
-              force: bool = False) -> list[dict]:
+              force: bool = False,
+              allow_version_change: bool = False) -> list[dict]:
     """Procesa los repos en orden y devuelve los registros de esta corrida.
 
     current_hash: huella de la entrada de un repo (se compara con la guardada).
     process: llama al modelo para un repo y devuelve su registro.
     is_done: si el registro guardado sirve para este hash (cada script decide qué es "hecho").
     describe: una línea con el resultado de un repo, para el progreso.
+    allow_version_change: seguir aunque el archivo sea de otra versión de las reglas.
     Ante el límite del día guarda lo hecho y termina el programa.
     """
+    check_version(out, prompt_version, allow_version_change)
     records = load_records(out)
     done = []
     for n, repo in enumerate(repos, start=1):
@@ -119,3 +146,4 @@ def run_batch(repos: list[Repo], out: Path, prompt_version: str, *,
         done.append(record)
         print(f"{prefix}: {describe(record)}")
     return done
+

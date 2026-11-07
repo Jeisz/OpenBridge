@@ -73,6 +73,9 @@ def main() -> None:
                         help="solo estos repos (por defecto, todos)")
     parser.add_argument("--out", type=Path, default=OUT_FILE)
     parser.add_argument("--force", action="store_true", help="regenera aunque el hash no cambie")
+    parser.add_argument("--new-version", action="store_true",
+                        help="sigue aunque el archivo sea de otra versión de las reglas "
+                             "(regenera todos los repos)")
     args = parser.parse_args()
 
     load_dotenv()
@@ -82,7 +85,8 @@ def main() -> None:
         current_hash=lambda r: input_hash(user_message(r, ideas_input(r).text), args.provider,
                                           PROMPT_VERSION),
         process=lambda r: ideas_for_repo(r, args.provider),
-        is_done=up_to_date, describe=describe, force=args.force)
+        is_done=up_to_date, describe=describe, force=args.force,
+        allow_version_change=args.new_version)
 
     print("\n" + summary(done))
     print(f"\nGuardado en {args.out}")
