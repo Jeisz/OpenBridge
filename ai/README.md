@@ -54,7 +54,7 @@ código comprueba). Los genera Gemini 3.5 Flash-Lite; se guardan en
 `docker`, `rest_api`), cada una con una cita del README que el código comprueba y, cuando el
 README lo trae, un snippet copiado tal cual. Los otros 60 quedan sin ideas: la mayoría son
 herramientas de desarrollo, frameworks e infraestructura que no se conectan a una
-aplicación. Se guardan en `data/catalog/ideas.json`. Ver
+Se guardan en `data/catalog/ideas.json` y en `ai.ai_integration_ideas`. Verss
 [Ideas de integración](#ideas-de-integración); método, números y límites en
 [`eval/IDEAS_DECISION.md`](eval/IDEAS_DECISION.md).
 
@@ -248,6 +248,9 @@ python -m ai.scripts.write_enrichment --escribir # lo escribe en ai.* (requiere 
 python -m ai.eval.compare_enrichment ARCHIVOS --out reporte.md  # compara corridas de distintos modelos
 python -m ai.scripts.generate_ideas              # genera las ideas de integración (requiere GEMINI_API_KEY)
 python -m ai.eval.evaluate_ideas CORRIDAS --out reporte.md  # mide corridas de ideas contra la referencia
+python -m ai.scripts.write_ideas                 # valida ideas.json sin tocar la base
+python -m ai.scripts.write_ideas --escribir      # lo escribe en ai.ai_integration_ideas (requiere AI_DATABASE_URL)
+python -m ai.scripts.review_ideas --aprobar ID … # marca ideas como revisadas (--escribir para aplicar)
 python -m ai.eval.run_search_eval                # evalúa la búsqueda sobre el catálogo real (--golden sample: datos de ejemplo)
 python -m ai.scripts.check_llm gemini groq-low   # prueba de humo de los proveedores de LLM (requiere las claves)
 python -m ai.eval.run_understand_eval gemini     # compara modelos en el paso de entender (--cases validation: casos de validación)
@@ -363,6 +366,34 @@ nivel gratuito de Gemini. Si se corta, el mismo comando sigue donde quedó.
 **Medir una versión nueva del prompt:** corre los repos de `eval/ideas_reference.json` dos
 veces y compáralas con `python -m ai.eval.evaluate_ideas`. Los criterios están en el mismo
 archivo de referencia.
+
+
+**Escribir en la base:**
+
+    python -m ai.scripts.write_ideas             # revisar que sea válido
+    python -m ai.scripts.write_ideas --escribir
+
+Es una sola transacción (todo o nada) y repetible. Solo reemplaza las ideas regenerables
+(`generated_by = 'llm'` y `reviewed_at` nulo) de los repos del archivo. Las revisadas o
+escritas por una persona nunca se tocan y ocupan cupo: como máximo 3 ideas por repo y una por
+tipo, contando las revisadas. Si el README de una idea revisada cambió desde que se revisó,
+el informe la muestra para revisarla de nuevo, sin tocarla.
+
+**Aprobar ideas revisadas:** una persona lee la idea en la ficha o en `ideas.json` y, si está
+bien sin cambios, la aprueba:
+
+    python -m ai.scripts.review_ideas --aprobar llm-<github_id>-<n> …             # comprueba
+    python -m ai.scripts.review_ideas --aprobar llm-<github_id>-<n> … --escribir  # marca
+
+Pone `reviewed_at`; desde ahí la regeneración no la toca. La tabla no guarda quién la revisó.
+Verificación después de escribir: `ai/sql/consultas/ideas_ia.sql` y `huerfanos_ia.sql`.
+
+**Qué lee la API del catálogo:** todas las columnas de `ai.ai_integration_ideas` (las del
+contrato `IntegrationIdea` más `github_id` para unir; `full_name` lo pone la API), ordenadas
+por `id`, como máximo 3 por repo, y nada de los repos archivados. El rol de lectura de la API
+necesita `USAGE` en el esquema `ai` y `SELECT` sobre `ai.ai_repo_enrichment`,
+`ai.ai_repo_categories` y `ai.ai_integration_ideas` (no sobre `ai.ai_embeddings`, que es
+interna de la IA).
 
 ## Cómo leer los datos
 
