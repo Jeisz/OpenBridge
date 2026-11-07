@@ -4,9 +4,16 @@ Lee y escribe ai.ai_processing (una fila por repo y tipo de dato). Las filas se 
 la forma de los registros del lote (provider, model, prompt_version, ai_input_hash, full_name,
 review.skipped), así la comparación (ai/catalog_diff.py) funciona igual con lo publicado que
 con los archivos.
+
+También arma el catálogo publicado (la vista más los datos de la IA de las tablas ai.*) para
+el servicio del asistente: lo mismo que muestra la ficha.
 """
 
 import psycopg
+from psycopg.rows import dict_row
+
+from ai.catalog_diff import with_unix_newlines
+from shared.contracts.repo import Repo
 
 KINDS = ("enrichment", "ideas")      # los vectores se suman cuando se guarden en la base
 
@@ -58,3 +65,43 @@ def processing_rows(kind: str, records: list[dict]) -> list[dict]:
              "ai_input_hash": r["ai_input_hash"], "provider": r["provider"], "model": r["model"],
              "prompt_version": r["prompt_version"], "skipped": r["review"].get("skipped")}
             for r in records]
+
+
+# --- Catálogo publicado, para el servicio del asistente ---
+
+SELECT_VIEW = "select * from public.v_repos_for_ai"
+SELECT_ENRICHMENT = "select github_id, summary_es, use_cases from ai.ai_repo_enrichment"
+SELECT_CATEGORIES = """
+select github_id, category_id, assigned_by from ai.ai_repo_categories order by github_id, rank
+"""
+
+
+def compose_repos(view: list[dict], enrichment: list[dict], categories: list[dict]) -> list[Repo]:
+    """Repos de la vista con su parte de la IA, validados contra Repo y ordenados por nombre.
+
+    categories: ordenadas por rank (la primera es la principal), con quién las asignó.
+    Lanza ValueError (o pydantic.ValidationError, que lo es) si algo no cumple el contrato.
+    """
+    if not view:
+        raise ValueError("la vista no devolvió repos")
+    ai_part: dict[int, dict] = {r["github_id"]: {"summary_es": r["summary_es"],
+                                                 "use_cases": list(r["use_cases"] or []),
+                                                 "categories": []} for r in enrichment}
+    for c in categories:
+        ai_part.setdefault(c["github_id"], {"categories": []})["categories"].append(
+            {"category_id": c["category_id"], "assigned_by": c["assigned_by"]})
+    repos = [with_unix_newlines(Repo.model_validate({**row, **ai_part.get(row["github_id"], {})}))
+             for row in view]
+    if len({r.github_id for r in repos}) != len(repos):
+        raise ValueError("la vista tiene github_id repetidos")
+    return sorted(repos, key=lambda r: r.full_name)
+
+
+def fetch_catalog(url: str) -> list[Repo]:
+    """El catálogo publicado, leído en una sola transacción de solo lectura (lector de la IA)."""
+    with psycopg.connect(url, row_factory=dict_row) as conn:
+        conn.read_only = True
+        view = conn.execute(SELECT_VIEW).fetchall()
+        enrichment = conn.execute(SELECT_ENRICHMENT).fetchall()
+        categories = conn.execute(SELECT_CATEGORIES).fetchall()
+    return compose_repos(view, enrichment, categories)

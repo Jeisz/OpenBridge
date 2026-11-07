@@ -208,14 +208,21 @@ nunca del servicio (lo comprueba un test). Se levanta desde la raíz del repo:
 python -m uvicorn ai.service.app:create_app --factory --port 8001
 ```
 
-Al arrancar carga el modelo de embeddings y el índice del catálogo (unos segundos) y muestra la
-cadena de proveedores (`listo: 100 repos, proveedores gemini → groq-low → claude-haiku`). No
-acepta pedidos hasta terminar.
+Al arrancar carga el catálogo, el modelo de embeddings y el índice (unos segundos) y muestra de
+dónde salió el catálogo y la cadena de proveedores
+(`listo: 100 repos (database), proveedores gemini → groq-low → claude-haiku`). No acepta pedidos
+hasta terminar. Para que use un catálogo actualizado, se reinicia.
+
+- **Catálogo:** `AI_CATALOG_SOURCE=database` (por defecto) lee lo publicado en la base (la vista
+  más las tablas `ai.*`, lo mismo que muestra la ficha) con `AI_READER_DATABASE_URL`;
+  `AI_CATALOG_SOURCE=files` lee `ai/data/catalog/` (vuelta atrás sin tocar código). Si la base
+  falla al arrancar, usa los archivos y `GET /health` lo dice en `catalog_source` y
+  `catalog_fallback_reason` (sin host). Las evaluaciones leen siempre los archivos.
 
 | Ruta | Qué hace |
 |---|---|
 | `POST /assistant` | Cuerpo `AssistantRequest` (`{"query": "…"}`, 20–2000 caracteres) → `AssistantResponse`, o `ErrorResponse` con 422 `invalid_query`, 502 `invalid_response`, 503 `provider_unavailable` o 504 `timeout` |
-| `GET /health` | Repos cargados, fecha de la copia del catálogo, modelo de embeddings, umbral y, por proveedor, si tiene clave y cuántos segundos le quedan desconectado (nunca muestra claves) |
+| `GET /health` | Repos cargados, de dónde salió el catálogo (`database` o `files`, y por qué si cayó a los archivos) y de cuándo es, modelo de embeddings, umbral y, por proveedor, si tiene clave y cuántos segundos le quedan desconectado (nunca muestra claves) |
 | `GET /docs` | Documentación interactiva generada desde el contrato |
 
 - **CORS:** acepta los orígenes de `AI_CORS_ORIGINS` (separados por comas; por defecto

@@ -107,9 +107,14 @@ class SearchIndex:
 
         `fields`: partes de la IA que entran al texto (para medir variantes).
         """
+        return cls.from_repos(load_repos(source), fields)
+
+    @classmethod
+    def from_repos(cls, repos: list[Repo],
+                   fields: tuple[TextField, ...] = TEXT_FIELDS) -> "SearchIndex":
+        """Calcula los vectores de repos ya cargados (de los archivos o de la base)."""
         from ai import embeddings   # Se importa aquí por torch
 
-        repos = load_repos(source)
         categories = load_categories()
         texts = [build_embedding_text(r, categories, fields) for r in repos]
         return cls(repos, embeddings.embed_documents(texts))

@@ -4,14 +4,20 @@ Valida la pregunta con el contrato, llama a asistir() y traduce los errores a
 ErrorResponse. Lo pesado (modelo de embeddings e índice del catálogo) se carga
 una vez al arrancar, antes de aceptar pedidos.
 
+El catálogo sale de lo publicado en la base (AI_CATALOG_SOURCE=database, por defecto) o de
+los archivos (files). Si la base falla al arrancar, usa los archivos y GET /health lo dice.
+
 Arranque, desde la raíz del repo:
     uvicorn ai.service.app:create_app --factory --port 8001
 """
 
 import logging
+import os
 from collections.abc import Callable
 from contextlib import asynccontextmanager
 from dataclasses import dataclass
+from datetime import datetime, timezone
+from functools import partial
 
 from dotenv import load_dotenv
 from fastapi import FastAPI, Request
@@ -23,6 +29,7 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from ai import assistant, llm
 from ai.service.settings import Settings
+from shared.contracts.repo import Repo
 from shared.contracts.assistant import (AssistantRequest, AssistantResponse, ErrorDetail,
                                         ErrorResponse)
 
@@ -38,31 +45,64 @@ class Catalog:
     repos: int
     embedding_model: str
     catalog_taken_at: str | None = None   # cuándo se tomó la copia del catálogo que usa
+    catalog_source: str = "files"          # database o files
+    catalog_fallback_reason: str | None = None   # por qué no se usó la base, si se pidió
 
 
-def load_catalog() -> Catalog:
-    """Modelo de embeddings e índice del catálogo. Tarda unos segundos."""
+def read_catalog(settings: Settings) -> tuple[list[Repo], str, str | None, str | None]:
+    """Repos del catálogo, de dónde salieron, de cuándo son y, si hubo respaldo, por qué.
+
+    Con la base: el catálogo publicado (vista + tablas de la IA) con el lector de la IA.
+    Si no se puede (sin variable, error de conexión, datos que no cumplen el contrato), usa
+    los archivos y lo avisa: el servicio arranca igual y nadie cree que está en la base.
+    """
+    from ai.catalog import load_repos, snapshot_taken_at
+    from ai.published import fetch_catalog
+    from ai.scripts.export_catalog_snapshot import ENV_VAR, redact
+
+    reason = None
+    if settings.catalog_source == "database":
+        url = os.environ.get(ENV_VAR)
+        if not url:
+            reason = f"falta {ENV_VAR}"
+        else:
+            try:
+                repos = fetch_catalog(url)
+                taken = datetime.now(timezone.utc).isoformat(timespec="seconds")
+                return repos, "database", taken, None
+            except Exception as e:      # cualquier falla de la base: se arranca con los archivos
+                first = (redact(str(e), url).splitlines() or [type(e).__name__])[0]
+                reason = f"no se pudo leer el catálogo de la base: {first}"
+        log.warning("catálogo desde los archivos (respaldo): %s", reason)
+    return load_repos("snapshot"), "files", snapshot_taken_at(), reason
+
+
+def load_catalog(settings: Settings) -> Catalog:
+    """Catálogo, modelo de embeddings e índice. Tarda unos segundos."""
     from ai import embeddings           # importa torch: solo al arrancar el servicio
     from ai.search import SearchIndex
-    from ai.catalog import snapshot_taken_at
 
-    index = SearchIndex.build()
+    repos, source, taken, reason = read_catalog(settings)
+    index = SearchIndex.from_repos(repos)
     spec = embeddings.model_spec()
     return Catalog(buscar=index.search, min_score=spec.min_score,
                    repos=len(index.repos), embedding_model=spec.name,
-                   catalog_taken_at=snapshot_taken_at())
+                   catalog_taken_at=taken, catalog_source=source,
+                   catalog_fallback_reason=reason)
 
 
 def _error(status: int, body: ErrorResponse) -> JSONResponse:
     return JSONResponse(status_code=status, content=body.model_dump())
 
 
-def create_app(load: Callable[[], Catalog] = load_catalog,
+def create_app(load: Callable[[], Catalog] | None = None,
                settings: Settings | None = None) -> FastAPI:
     """La app del servicio. Sin `settings`, lee el entorno y el archivo .env."""
     if settings is None:
         load_dotenv()
         settings = Settings.from_env()
+    if load is None:
+        load = partial(load_catalog, settings)
 
     @asynccontextmanager
     async def lifespan(app: FastAPI):
@@ -70,8 +110,8 @@ def create_app(load: Callable[[], Catalog] = load_catalog,
         if not llm.key_configured(app.state.providers[0]):
             log.warning("el proveedor principal no tiene clave: %s", app.state.providers[0])
         app.state.catalog = load()
-        log.warning("listo: %d repos, proveedores %s",
-                    app.state.catalog.repos, " → ".join(app.state.providers))
+        log.warning("listo: %d repos (%s), proveedores %s", app.state.catalog.repos,
+                    app.state.catalog.catalog_source, " → ".join(app.state.providers))
         yield
 
     app = FastAPI(title="OpenBridge · asistente", version="1.1", lifespan=lifespan)
@@ -102,6 +142,8 @@ def create_app(load: Callable[[], Catalog] = load_catalog,
                  "disconnected_seconds": paused.get(p)} for p in app.state.providers]
         return {"status": "ok" if llms[0]["key_configured"] else "incomplete",
                 "repos": catalog.repos,
+                "catalog_source": catalog.catalog_source,
+                "catalog_fallback_reason": catalog.catalog_fallback_reason,
                 "catalog_taken_at": catalog.catalog_taken_at,
                 "embedding_model": catalog.embedding_model,
                 "min_score": catalog.min_score,
