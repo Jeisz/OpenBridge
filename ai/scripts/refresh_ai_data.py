@@ -14,6 +14,10 @@ llamar al modelo. Si se corta (por ejemplo, por el límite del día del proveedo
 correr el mismo comando y termina. Un cambio de reglas (otra versión del prompt, otro modelo)
 no se regenera aquí: queda como pendiente, porque es una decisión aparte.
 
+Al escribir también se calculan y guardan los vectores de búsqueda que faltan o quedaron viejos
+(ai.ai_embeddings), con lo publicado en esa misma transacción; el modelo de embeddings se carga
+solo si hay alguno que calcular.
+
 Requiere AI_READER_DATABASE_URL (leer la vista y lo publicado); con --generar, la clave del proveedor;
 con --escribir, AI_DATABASE_URL (usuario escritor). Después de --generar: revisar
 `git diff ai/data/catalog/`, reiniciar el servicio del asistente y hacer commit de los archivos.
@@ -34,16 +38,19 @@ from ai.catalog_diff import (ARCHIVED_CHANGED, INPUT_CHANGED, NAME_CHANGED, NO_R
 from ai.enrich import PROMPT_VERSION as ENRICHMENT_VERSION
 from ai.ideas import PROMPT_VERSION as IDEAS_VERSION
 from ai.llm import PROVIDERS
-from ai.published import UPSERT_PROCESSING, processing_rows
+from ai.published import (UPSERT_EMBEDDING, UPSERT_PROCESSING, VECTOR_DIMS, fetch_catalog,
+                          processing_rows, published_catalog)
 from ai.scripts import write_enrichment, write_ideas
 from ai.scripts.batch import load_records, save_records, stored_version
 from ai.scripts.compare_catalog import fail, read_published, read_view, report
 from ai.scripts.enrich_catalog import enrich
+from ai.scripts.export_catalog_snapshot import ENV_VAR as READER_ENV_VAR
 from ai.scripts.export_catalog_snapshot import REPOS_FILE as SNAPSHOT_FILE
 from ai.scripts.export_catalog_snapshot import compare_columns, redact, write_snapshot
 from ai.scripts.generate_ideas import OUT_FILE as IDEAS_FILE
 from ai.scripts.generate_ideas import generate
 from ai.scripts.load_seed_example import ENV_VAR as WRITER_ENV_VAR
+from ai.search import plan_vectors
 from shared.contracts.repo import Repo
 
 REGENERATE = {NO_RECORD, INPUT_CHANGED}           # cambió la entrada: se pide al modelo
@@ -201,6 +208,36 @@ def current_state(live: list[Repo], published: dict[str, dict[int, dict]]) -> Pl
     return plan
 
 
+def stale_vectors() -> int:
+    """Vectores guardados que hoy faltan o quedaron viejos frente a lo publicado (solo lectura)."""
+    repos, stored = fetch_catalog(os.environ[READER_ENV_VAR])
+    return len(plan_vectors(repos, stored)[1])
+
+
+def publish_vectors(conn: psycopg.Connection, cur: psycopg.Cursor) -> tuple[int, int]:
+    """Calcula y guarda los vectores que faltan o quedaron viejos. Devuelve (al día, calculados).
+
+    Lee lo publicado dentro de la transacción de `conn`, así los vectores salen de los textos
+    que se acaban de escribir. El modelo se carga solo si hay alguno que calcular.
+    """
+    from ai import embeddings
+
+    spec = embeddings.model_spec()
+    if spec.dims != VECTOR_DIMS:
+        print(f"vectores: no se guardan ({spec.name} da {spec.dims} dimensiones; la columna es "
+              f"de {VECTOR_DIMS}). El servicio los calcula al arrancar.")
+        return 0, 0
+    repos, stored = published_catalog(conn)
+    current, missing = plan_vectors(repos, stored)
+    if missing:
+        vectors = embeddings.embed_documents([text for _, text, _ in missing])
+        cur.executemany(UPSERT_EMBEDDING, [
+            {"github_id": repo.github_id, "embedding": vector.tolist(), "model": spec.name,
+             "ai_input_hash": fingerprint}
+            for (repo, _, fingerprint), vector in zip(missing, vectors)])
+    return len(current), len(missing)
+
+
 def write_database(plan: Plan, delete_orphans: bool, max_delete: int = MAX_DELETE) -> None:
     """Publica en ai.* lo que el plan marca, en una sola transacción, con los escritores de siempre.
 
@@ -233,11 +270,15 @@ def write_database(plan: Plan, delete_orphans: bool, max_delete: int = MAX_DELET
             counts |= write_ideas.write(cur, ideas)
             cur.executemany(UPSERT_PROCESSING, processing_rows("enrichment", enrichment)
                             + processing_rows("ideas", ideas))
+            current, computed = publish_vectors(conn, cur)
+            counts |= {"vectores al día": current, "vectores calculados y guardados": computed}
             if delete_orphans and orphans:
                 for statement in DELETE_ORPHANS:
                     cur.execute(statement, {"ids": orphans})
     except psycopg.Error as e:
         fail(f"No se pudo escribir en la base (no se cambió nada): {redact(str(e), url)}")
+    except ValueError as e:     # lo publicado no cumple el contrato al releerlo
+        fail(f"No se pudo escribir en la base (no se cambió nada): {e}")
     for key, value in counts.items():
         print(f"{key}: {value}")
     action = "borrados" if delete_orphans else "sin borrar (--borrar-huerfanos)"
@@ -263,6 +304,8 @@ def main() -> None:
     live, columns = read_view()           # se lee una vez: la comparación y la copia usan lo mismo
     published = read_published()
     plan = current_state(live, published)
+    print(f"- vectores de búsqueda desactualizados en la base: {stale_vectors()} "
+          "(más los de los repos que se publiquen; se calculan al escribir)")
 
     if args.generar and plan.needs_generate:
         for path in (ENRICHMENT_FILE, IDEAS_FILE):

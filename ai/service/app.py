@@ -13,6 +13,7 @@ Arranque, desde la raíz del repo:
 
 import logging
 import os
+import time
 from collections.abc import Callable
 from contextlib import asynccontextmanager
 from dataclasses import dataclass
@@ -47,10 +48,14 @@ class Catalog:
     catalog_taken_at: str | None = None   # cuándo se tomó la copia del catálogo que usa
     catalog_source: str = "files"          # database o files
     catalog_fallback_reason: str | None = None   # por qué no se usó la base, si se pidió
+    vectors_stored: int = 0         # vectores guardados en la base que sirvieron
+    vectors_computed: int = 0       # vectores calculados al arrancar (faltaban o no coincidían)
 
 
-def read_catalog(settings: Settings) -> tuple[list[Repo], str, str | None, str | None]:
-    """Repos del catálogo, de dónde salieron, de cuándo son y, si hubo respaldo, por qué.
+def read_catalog(settings: Settings
+                 ) -> tuple[list[Repo], dict[int, dict], str, str | None, str | None]:
+    """Repos del catálogo, vectores guardados, de dónde salieron, de cuándo son y, si hubo
+    respaldo, por qué.
 
     Con la base: el catálogo publicado (vista + tablas de la IA) con el lector de la IA.
     Si no se puede (sin variable, error de conexión, datos que no cumplen el contrato), usa
@@ -67,14 +72,14 @@ def read_catalog(settings: Settings) -> tuple[list[Repo], str, str | None, str |
             reason = f"falta {ENV_VAR}"
         else:
             try:
-                repos = fetch_catalog(url)
+                repos, stored = fetch_catalog(url)
                 taken = datetime.now(timezone.utc).isoformat(timespec="seconds")
-                return repos, "database", taken, None
+                return repos, stored, "database", taken, None
             except Exception as e:      # cualquier falla de la base: se arranca con los archivos
                 first = (redact(str(e), url).splitlines() or [type(e).__name__])[0]
                 reason = f"no se pudo leer el catálogo de la base: {first}"
         log.warning("catálogo desde los archivos (respaldo): %s", reason)
-    return load_repos("snapshot"), "files", snapshot_taken_at(), reason
+    return load_repos("snapshot"), {}, "files", snapshot_taken_at(), reason
 
 
 def load_catalog(settings: Settings) -> Catalog:
@@ -82,13 +87,19 @@ def load_catalog(settings: Settings) -> Catalog:
     from ai import embeddings           # importa torch: solo al arrancar el servicio
     from ai.search import SearchIndex
 
-    repos, source, taken, reason = read_catalog(settings)
-    index = SearchIndex.from_repos(repos)
+    repos, stored, source, taken, reason = read_catalog(settings)
+    start = time.perf_counter()
+    embeddings.preload()                # las preguntas lo necesitan aunque no haya nada que calcular
+    loaded = time.perf_counter()
+    index = SearchIndex.from_repos(repos, stored=stored)
+    log.warning("modelo cargado en %.1f s; vectores: %d guardados, %d calculados (%.1f s)",
+                loaded - start, index.reused, index.computed, time.perf_counter() - loaded)
     spec = embeddings.model_spec()
     return Catalog(buscar=index.search, min_score=spec.min_score,
                    repos=len(index.repos), embedding_model=spec.name,
                    catalog_taken_at=taken, catalog_source=source,
-                   catalog_fallback_reason=reason)
+                   catalog_fallback_reason=reason,
+                   vectors_stored=index.reused, vectors_computed=index.computed)
 
 
 def _error(status: int, body: ErrorResponse) -> JSONResponse:
@@ -145,6 +156,8 @@ def create_app(load: Callable[[], Catalog] | None = None,
                 "catalog_source": catalog.catalog_source,
                 "catalog_fallback_reason": catalog.catalog_fallback_reason,
                 "catalog_taken_at": catalog.catalog_taken_at,
+                "vectors": {"stored": catalog.vectors_stored,
+                            "computed_at_startup": catalog.vectors_computed},
                 "embedding_model": catalog.embedding_model,
                 "min_score": catalog.min_score,
                 "llm": llms}

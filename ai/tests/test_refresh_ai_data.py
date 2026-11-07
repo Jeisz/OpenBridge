@@ -207,6 +207,7 @@ def test_escribir_se_niega_si_los_archivos_no_reflejan_la_vista(files, monkeypat
     repos, _, _ = data
     monkeypatch.setattr(refresh, "read_view", lambda: (repos[1:], ["github_id"]))
     monkeypatch.setattr(refresh, "read_published", lambda: {"enrichment": {}, "ideas": {}})
+    monkeypatch.setattr(refresh, "stale_vectors", lambda: 0)
     monkeypatch.setattr("sys.argv", ["refresh_ai_data", "--escribir"])
     monkeypatch.setattr(refresh, "write_database", lambda *a: pytest.fail("no debe escribir"))
     with pytest.raises(SystemExit) as exit_:
@@ -264,6 +265,7 @@ def database(monkeypatch):
                         lambda cur, e, c: written.append(("e", [r["github_id"] for r in e])) or {})
     monkeypatch.setattr(refresh.write_ideas, "write",
                         lambda cur, i: written.append(("i", [r["github_id"] for r in i])) or {})
+    monkeypatch.setattr(refresh, "publish_vectors", lambda conn, cur: (0, 0))
 
     def connect(orphans):
         cur = FakeCursor(orphans)
@@ -312,3 +314,36 @@ def test_publica_solo_lo_marcado_y_su_registro(database, data):
     assert [(p["github_id"], p["kind"]) for p in processed] == [
         (repos[0].github_id, "enrichment"), (repos[1].github_id, "ideas")]
     assert not conn.failed
+
+
+# --- Vectores ---
+
+def test_publicar_vectores_calcula_solo_los_que_faltan(monkeypatch, data):
+    import numpy as np
+    from ai import embeddings
+    from ai.published import UPSERT_EMBEDDING
+    from ai.search import plan_vectors
+
+    repos, _, _ = data
+    current = {r.github_id: {"model": "x", "ai_input_hash": "x", "embedding": [0.0]} for r in repos}
+    _, missing = plan_vectors(repos[:1], {})                 # el primero: huella correcta
+    first, text, fingerprint = missing[0]
+    spec = embeddings.model_spec()
+    current[first.github_id] = {"model": spec.name, "ai_input_hash": fingerprint,
+                                "embedding": [0.1] * spec.dims}
+    monkeypatch.setattr(refresh, "published_catalog", lambda conn: (repos, current))
+    asked = []
+    monkeypatch.setattr(embeddings, "embed_documents",
+                        lambda texts: asked.append(len(texts)) or np.ones((len(texts), spec.dims)))
+    cur = FakeCursor([])
+    ok, computed = refresh.publish_vectors(None, cur)
+    assert (ok, computed) == (1, len(repos) - 1) and asked == [len(repos) - 1]
+    rows = [p for sql, p in cur.executed if sql == UPSERT_EMBEDDING]
+    assert len(rows) == len(repos) - 1 and len(rows[0]["embedding"]) == spec.dims
+    assert first.github_id not in {r["github_id"] for r in rows}
+
+
+def test_modelo_de_otra_dimension_no_guarda_vectores(monkeypatch):
+    monkeypatch.setenv("AI_EMBEDDING_MODEL", "qwen3")
+    monkeypatch.setattr(refresh, "published_catalog", lambda conn: pytest.fail("no debe leer"))
+    assert refresh.publish_vectors(None, FakeCursor([])) == (0, 0)

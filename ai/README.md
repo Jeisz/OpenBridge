@@ -218,11 +218,16 @@ hasta terminar. Para que use un catálogo actualizado, se reinicia.
   `AI_CATALOG_SOURCE=files` lee `ai/data/catalog/` (vuelta atrás sin tocar código). Si la base
   falla al arrancar, usa los archivos y `GET /health` lo dice en `catalog_source` y
   `catalog_fallback_reason` (sin host). Las evaluaciones leen siempre los archivos.
+- **Vectores:** con la base, usa los vectores guardados en `ai.ai_embeddings` cuya huella (texto
+  del repo, modelo y prompt) sigue al día y calcula solo los demás. El log de arranque dice cuántos
+  de cada uno y cuánto tardó; `GET /health` lo muestra en `vectors`. Un número de calculados mayor
+  que 0 indica que falta publicar (`refresh_ai_data --escribir`). La búsqueda sigue en memoria
+  (numpy); buscar en la base con pgvector queda para cuando el catálogo crezca.
 
 | Ruta | Qué hace |
 |---|---|
 | `POST /assistant` | Cuerpo `AssistantRequest` (`{"query": "…"}`, 20–2000 caracteres) → `AssistantResponse`, o `ErrorResponse` con 422 `invalid_query`, 502 `invalid_response`, 503 `provider_unavailable` o 504 `timeout` |
-| `GET /health` | Repos cargados, de dónde salió el catálogo (`database` o `files`, y por qué si cayó a los archivos) y de cuándo es, modelo de embeddings, umbral y, por proveedor, si tiene clave y cuántos segundos le quedan desconectado (nunca muestra claves) |
+| `GET /health` | Repos cargados, de dónde salió el catálogo (`database` o `files`, y por qué si cayó a los archivos) y de cuándo es, vectores guardados y calculados al arrancar, modelo de embeddings, umbral y, por proveedor, si tiene clave y cuántos segundos le quedan desconectado (nunca muestra claves) |
 | `GET /docs` | Documentación interactiva generada desde el contrato |
 
 - **CORS:** acepta los orígenes de `AI_CORS_ORIGINS` (separados por comas; por defecto
@@ -313,7 +318,9 @@ vuelve a correr el mismo comando.
    nombres y regenera con el modelo solo los repos cuya entrada cambió. Solo archivos.
 3. Revisar `git diff ai/data/catalog/`.
 4. **`--escribir`**: publica en las tablas `ai.*`, en una transacción, solo los repos desactualizados
-   en la base, y actualiza su fila en `ai.ai_processing`. Un repo cuyo borrador ya está al día se
+   en la base, y actualiza su fila en `ai.ai_processing`. En la misma transacción calcula y guarda
+   los vectores de búsqueda que faltan o quedaron viejos (`ai.ai_embeddings`; carga el modelo de
+   embeddings solo si hay alguno). Un repo cuyo borrador ya está al día se
    publica sin llamar al modelo. Se niega si los archivos no reflejan la vista. Los repos que salieron
    solo se listan; con `--borrar-huerfanos` se borran sus filas regenerables (nunca categorías humanas
    ni ideas revisadas), con un máximo de `--max-borrar` (10) para no vaciar las tablas si la vista

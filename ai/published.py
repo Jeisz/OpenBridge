@@ -6,7 +6,8 @@ review.skipped), así la comparación (ai/catalog_diff.py) funciona igual con lo
 con los archivos.
 
 También arma el catálogo publicado (la vista más los datos de la IA de las tablas ai.*) para
-el servicio del asistente: lo mismo que muestra la ficha.
+el servicio del asistente: lo mismo que muestra la ficha, con los vectores de búsqueda guardados
+en ai.ai_embeddings.
 """
 
 import psycopg
@@ -74,6 +75,17 @@ SELECT_ENRICHMENT = "select github_id, summary_es, use_cases from ai.ai_repo_enr
 SELECT_CATEGORIES = """
 select github_id, category_id, assigned_by from ai.ai_repo_categories order by github_id, rank
 """
+# embedding::real[] llega a Python como lista de floats, sin paquetes extra.
+SELECT_EMBEDDINGS = "select github_id, model, ai_input_hash, embedding::real[] as embedding from ai.ai_embeddings"
+UPSERT_EMBEDDING = """
+insert into ai.ai_embeddings (github_id, embedding, model, ai_input_hash)
+values (%(github_id)s, %(embedding)s::extensions.vector, %(model)s, %(ai_input_hash)s)
+on conflict (github_id) do update set
+    embedding = excluded.embedding,
+    model = excluded.model,
+    ai_input_hash = excluded.ai_input_hash
+"""
+VECTOR_DIMS = 768   # ai.ai_embeddings.embedding es vector(768) (ai/sql/001_tablas_ia.sql)
 
 
 def compose_repos(view: list[dict], enrichment: list[dict], categories: list[dict]) -> list[Repo]:
@@ -97,11 +109,18 @@ def compose_repos(view: list[dict], enrichment: list[dict], categories: list[dic
     return sorted(repos, key=lambda r: r.full_name)
 
 
-def fetch_catalog(url: str) -> list[Repo]:
-    """El catálogo publicado, leído en una sola transacción de solo lectura (lector de la IA)."""
-    with psycopg.connect(url, row_factory=dict_row) as conn:
+def published_catalog(conn: psycopg.Connection) -> tuple[list[Repo], dict[int, dict]]:
+    """Repos publicados y vectores guardados, leídos en la transacción de `conn`."""
+    with conn.cursor(row_factory=dict_row) as cur:
+        view = cur.execute(SELECT_VIEW).fetchall()
+        enrichment = cur.execute(SELECT_ENRICHMENT).fetchall()
+        categories = cur.execute(SELECT_CATEGORIES).fetchall()
+        stored = {r["github_id"]: r for r in cur.execute(SELECT_EMBEDDINGS).fetchall()}
+    return compose_repos(view, enrichment, categories), stored
+
+
+def fetch_catalog(url: str) -> tuple[list[Repo], dict[int, dict]]:
+    """El catálogo publicado y sus vectores, en una sola transacción de solo lectura (lector)."""
+    with psycopg.connect(url) as conn:
         conn.read_only = True
-        view = conn.execute(SELECT_VIEW).fetchall()
-        enrichment = conn.execute(SELECT_ENRICHMENT).fetchall()
-        categories = conn.execute(SELECT_CATEGORIES).fetchall()
-    return compose_repos(view, enrichment, categories)
+        return published_catalog(conn)

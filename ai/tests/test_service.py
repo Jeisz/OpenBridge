@@ -81,9 +81,9 @@ def test_por_defecto_lee_la_base_y_files_es_la_vuelta_atras(monkeypatch):
 
 def test_lee_el_catalogo_publicado_de_la_base(monkeypatch):
     monkeypatch.setenv(READER, "postgresql://lector@servidor/base")
-    monkeypatch.setattr("ai.published.fetch_catalog", lambda url: ["repo"])
-    repos, source, taken, reason = read_catalog(Settings(catalog_source="database"))
-    assert (repos, source, reason) == (["repo"], "database", None) and taken
+    monkeypatch.setattr("ai.published.fetch_catalog", lambda url: (["repo"], {1: "vector"}))
+    repos, stored, source, taken, reason = read_catalog(Settings(catalog_source="database"))
+    assert (repos, stored, source, reason) == (["repo"], {1: "vector"}, "database", None) and taken
 
 
 def test_si_la_base_falla_usa_los_archivos_y_lo_dice_sin_el_host(monkeypatch):
@@ -93,20 +93,20 @@ def test_si_la_base_falla_usa_los_archivos_y_lo_dice_sin_el_host(monkeypatch):
     def fails(url):
         raise psycopg.OperationalError('connection to server at "db.servidor-secreto.com" failed')
     monkeypatch.setattr("ai.published.fetch_catalog", fails)
-    repos, source, taken, reason = read_catalog(Settings(catalog_source="database"))
-    assert source == "files" and len(repos) > 0 and taken
+    repos, stored, source, taken, reason = read_catalog(Settings(catalog_source="database"))
+    assert source == "files" and len(repos) > 0 and stored == {} and taken
     assert "no se pudo leer" in reason and "servidor-secreto" not in reason
 
 
 def test_sin_variable_usa_los_archivos(monkeypatch):
     monkeypatch.delenv(READER, raising=False)
-    _, source, _, reason = read_catalog(Settings(catalog_source="database"))
+    _, _, source, _, reason = read_catalog(Settings(catalog_source="database"))
     assert source == "files" and READER in reason
 
 
 def test_con_files_no_toca_la_base(monkeypatch):
     monkeypatch.setattr("ai.published.fetch_catalog", lambda url: pytest.fail("no debe leer la base"))
-    _, source, _, reason = read_catalog(Settings(catalog_source="files"))
+    _, _, source, _, reason = read_catalog(Settings(catalog_source="files"))
     assert source == "files" and reason is None
 
 
@@ -120,6 +120,7 @@ def test_salud_dice_de_donde_salio_el_catalogo(monkeypatch):
         body = c.get("/health").json()
     assert body["catalog_source"] == "files"
     assert body["catalog_fallback_reason"] == "falta AI_READER_DATABASE_URL"
+    assert body["vectors"] == {"stored": 0, "computed_at_startup": 0}
 
 
 def test_sin_load_explicito_usa_el_origen_de_la_configuracion(monkeypatch):
