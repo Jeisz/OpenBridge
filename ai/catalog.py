@@ -22,7 +22,6 @@ SOURCE_DIRS: dict[str, Path] = {
     "sample": DATA_DIR,
 }
 CATEGORIES_FILE = Path(__file__).resolve().parents[1] / "shared" / "contracts" / "categories.json"
-
 ENRICHMENT_FILE = SOURCE_DIRS["snapshot"] / "enrichment.json"  # lo escribe ai.scripts.enrich_catalog
 
 
