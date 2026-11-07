@@ -1,4 +1,4 @@
-/* Shared state tokens. Geometry and filled/outline/icon/text variants stay local.
+/* Shared state tokens. Action geometry and variants live in buttons.css.
    ui-wash is opt-in: chips, tabs, accordion and metallic prompt keep their fills. */
 :root{--control-focus:#8ccfff;--control-press-scale:.975;--control-state-duration:160ms;--control-return-duration:180ms;--control-ease:cubic-bezier(.22,1,.36,1)}
 :where(button,.ui-button,.nav nav a,.tool-actions a,.integration-docs,.proposal-tool>a):focus-visible{outline:2px solid var(--control-focus);outline-offset:3px}

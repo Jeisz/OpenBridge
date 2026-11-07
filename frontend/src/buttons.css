@@ -1,0 +1,36 @@
+/* Action buttons: three surface variants plus text, two sizes. Section styles own layout only. */
+.ui-button {
+ --action-bg:transparent; --action-border:transparent; --action-color:#ededf0;
+ box-sizing:border-box; display:inline-flex; align-items:center; justify-content:center;
+ gap:8px; min-width:0; min-height:44px; padding:10px 18px;
+ border:1px solid var(--action-border); border-radius:999px;
+ background:var(--action-bg); color:var(--action-color);
+ font-family:inherit; font-size:14px; font-weight:500; line-height:22px;
+ text-decoration:none; white-space:nowrap; cursor:pointer;
+ transition:background-color 140ms ease-out,color 140ms ease-out,border-color 140ms ease-out;
+}
+.ui-button::before { content:none; }
+.ui-button--primary { --action-bg:var(--button-brand,#1745c7); --action-color:#fff; }
+.ui-button--secondary { --action-border:#ffffff38; }
+.ui-button--tertiary { --action-color:#d5d8de; }
+.ui-button--compact { min-height:40px; padding:8px 14px; font-size:13px; line-height:22px; }
+.ui-button--icon { width:44px; padding:0; flex-shrink:0; }
+.ui-button--icon.ui-button--compact { width:40px; }
+.ui-button svg { display:block; width:16px; height:16px; flex-shrink:0; color:currentColor; }
+@media(hover:hover) {
+ .ui-button:not(.ui-button--text):not(:disabled):not([aria-disabled=true]):hover { background:#fff; border-color:#fff; color:#141414; }
+ .tool-card[data-return-rest] .ui-button:hover { background:var(--action-bg); border-color:var(--action-border); color:var(--action-color); }
+}
+.ui-button:focus-visible { outline:2px solid var(--control-focus,#8ccfff); outline-offset:3px; }
+.ui-button:not(.ui-button--text):not(:disabled):not([aria-disabled=true]):active { background:#e2e5ea; border-color:#e2e5ea; color:#141414; }
+.ui-button:is(:disabled,[aria-disabled=true]) { opacity:.45; cursor:not-allowed; }
+.tool-card-details>.tool-actions { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; margin-top:auto; }
+.tool-actions>.ui-button { width:100%; padding-inline:8px; }
+@media(prefers-reduced-motion:reduce) { .ui-button { transition:none; } }
+@media(forced-colors:active) { .ui-button { border:1px solid ButtonText; } }
+
+/* Inline action: inherits text metrics so a truncated description stays on three lines. */
+.ui-button--text{display:inline;min-height:0;padding:0;border:0;border-radius:2px;background:transparent;color:inherit;font:inherit;line-height:inherit;text-decoration:underline;text-decoration-color:currentColor;text-underline-offset:3px;text-decoration-thickness:1px;transition:opacity 140ms ease-out}
+@media(hover:hover){.ui-button--text:not(:disabled):not([aria-disabled=true]):hover{opacity:.75}}
+.ui-button--text:not(:disabled):not([aria-disabled=true]):active{opacity:.6}
+@media(prefers-reduced-motion:reduce){.ui-button--text{transition:none}}

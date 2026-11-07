@@ -4,3 +4,7 @@
 @import "../styles.css";
 @import "../control-states.css";
 @source "../";
+
+@import "../buttons.css";
+
+@import "../connections.css";

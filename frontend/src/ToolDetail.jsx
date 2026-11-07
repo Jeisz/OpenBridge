@@ -31,7 +31,7 @@ export function ToolDetail({id,onBack}){
  const tool=loaded?.tool??original;
  const identity=useBrandIdentity(tool||{id,name:''});
  if(!tool&&failed!=='missing'&&(failed||http&&fullName||status!=='ready'))return <div className="tool-detail wrap"><h1 id="detail-title" tabIndex={-1}>{!failed&&(fullName||status==='loading')?'Cargando ficha…':interfaceErrors.detail}</h1>{(failed||status==='error')&&<button className="ui-button ui-button--secondary" onClick={()=>fullName?setAttempt(n=>n+1):retry()}>{errorActions.retry}</button>}</div>;
- if(!tool||failed==='missing'&&!loaded)return <div className="tool-detail detail-missing wrap"><h1 id="detail-title" tabIndex={-1}>Herramienta no encontrada</h1><p>{interfaceErrors.missing}</p><button className="detail-back ui-wash" onClick={onBack}><ArrowLeft size={16}/> Cerrar ficha</button></div>;
+ if(!tool||failed==='missing'&&!loaded)return <div className="tool-detail detail-missing wrap"><h1 id="detail-title" tabIndex={-1}>Herramienta no encontrada</h1><p>{interfaceErrors.missing}</p><button className="detail-back ui-button ui-button--secondary" onClick={onBack}><ArrowLeft size={16}/> Cerrar ficha</button></div>;
  const detail=tool,profile=loaded?.profile??profiles[original?.id??id]??{summary:tool.description||null,homepage:null,ideas:[]},brand=identity.palette;
  const hasHealth=Number.isFinite(detail.healthScore);
  const tone=!hasHealth?'unknown':detail.healthScore>=80?'good':detail.healthScore>=60?'moderate':'low';
