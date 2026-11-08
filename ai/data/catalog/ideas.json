@@ -486,6 +486,48 @@
       }
     },
     {
+      "github_id": 112024290,
+      "full_name": "caronc/apprise",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "fe3b549f54ad70a67f027ca0643317a9c00af80d4aa4042cb572a70c44ea7e87",
+      "review": {
+        "readme_chars": 7999,
+        "blocks": 0,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [
+          {
+            "title": "Enviar notificaciones con Apprise",
+            "integration_type": "sdk",
+            "summary": "Envía notificaciones asíncronas a múltiples plataformas como Telegram, Discord o Slack desde tu código usando una librería unificada.",
+            "evidence": "Developers who wish to provide a notification service no longer need to research each and every one out there. They no longer need to try to adapt to the new ones that comeout thereafter. They just need to include this one library and then they can immediately gain access to almost all of the notifications services available to us today.",
+            "code_block": null,
+            "compatible_stack": [
+              "Python"
+            ],
+            "dependencies": [
+              "Paquete apprise"
+            ],
+            "difficulty": "medium",
+            "triggers": [
+              "Alerta del sistema generada",
+              "Error crítico en la aplicación"
+            ],
+            "reason": "ningún nombre del stack aparece en la entrada"
+          }
+        ],
+        "input_tokens": 3445,
+        "output_tokens": 221,
+        "seconds": 2.97
+      }
+    },
+    {
       "github_id": 184460,
       "full_name": "celery/celery",
       "ideas": [
@@ -1141,6 +1183,106 @@
       }
     },
     {
+      "github_id": 464415161,
+      "full_name": "getlago/lago",
+      "ideas": [
+        {
+          "id": "llm-464415161-1",
+          "full_name": "getlago/lago",
+          "title": "Desplegar Lago en Docker para pruebas locales y desarrollo",
+          "integration_type": "docker",
+          "summary": "Ejecuta el servicio de facturación de Lago de manera aislada utilizando contenedores Docker para validar métricas y eventos de uso en tu entorno.",
+          "compatible_stack": [
+            "Docker"
+          ],
+          "dependencies": [
+            "Docker",
+            "Docker Compose"
+          ],
+          "difficulty": "low",
+          "triggers": [],
+          "snippet": "./examples/agentic-ai-demo/run.sh",
+          "snippet_language": "bash",
+          "docs_url": "https://github.com/getlago/lago#see-lago-price-an-ai-workload",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "f8a7ad2dc43359c65dcf04fdaf2af64b4f7af7f3c455cc8093141e26f592051e",
+          "evidence": "Docker Compose starts an isolated Lago service"
+        },
+        {
+          "id": "llm-464415161-2",
+          "full_name": "getlago/lago",
+          "title": "Construir la integración de facturación mediante la REST API y SDKs",
+          "integration_type": "rest_api",
+          "summary": "Conecta tu aplicación con la REST API y SDKs de Lago para programar flujos de facturación, registrar uso del producto y gestionar cobros.",
+          "compatible_stack": [
+            "REST API"
+          ],
+          "dependencies": [
+            "Instancia de Lago",
+            "Clave de API"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Consumo de recursos en la aplicación",
+            "Generación de factura mensual"
+          ],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://github.com/getlago/lago#build-with-your-ai-agent",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "f8a7ad2dc43359c65dcf04fdaf2af64b4f7af7f3c455cc8093141e26f592051e",
+          "evidence": "Build billing into your application | REST API and SDKs"
+        },
+        {
+          "id": "llm-464415161-3",
+          "full_name": "getlago/lago",
+          "title": "Instrumentar llamadas a LLMs con los SDKs de Lago para registrar uso de tokens",
+          "integration_type": "sdk",
+          "summary": "Utiliza los SDKs de agente para envolver clientes de LLM, normalizar el consumo y enviar eventos de tokens o costes de modelos sin bloquear las llamadas.",
+          "compatible_stack": [
+            "Python",
+            "JavaScript",
+            "TypeScript"
+          ],
+          "dependencies": [
+            "Paquete del SDK de Lago",
+            "Clave de API"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Invocación de modelo de lenguaje",
+            "Consumo de llamada a API"
+          ],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://github.com/getlago/lago#agentic-first-by-design",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "f8a7ad2dc43359c65dcf04fdaf2af64b4f7af7f3c455cc8093141e26f592051e",
+          "evidence": "Lago Agent SDK for Python"
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "f8a7ad2dc43359c65dcf04fdaf2af64b4f7af7f3c455cc8093141e26f592051e",
+      "review": {
+        "readme_chars": 7663,
+        "blocks": 6,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 2798,
+        "output_tokens": 530,
+        "seconds": 2.17
+      }
+    },
+    {
       "github_id": 36502,
       "full_name": "git/git",
       "ideas": [],
@@ -1554,6 +1696,163 @@
       }
     },
     {
+      "github_id": 552877440,
+      "full_name": "juspay/hyperswitch",
+      "ideas": [
+        {
+          "id": "llm-552877440-1",
+          "full_name": "juspay/hyperswitch",
+          "title": "Desplegar Hyperswitch con Docker",
+          "integration_type": "docker",
+          "summary": "Despliega el servidor de pagos y el panel de control localmente mediante Docker para probar pasarelas de pago y reglas de enrutamiento.",
+          "compatible_stack": [
+            "Docker",
+            "Podman"
+          ],
+          "dependencies": [
+            "Docker o Podman instalado"
+          ],
+          "difficulty": "medium",
+          "triggers": [],
+          "snippet": "# One-click local setup\n\ngit clone --depth 1 --branch latest https://github.com/juspay/hyperswitch\n\ncd hyperswitch\n\nscripts/setup.sh",
+          "snippet_language": "bash",
+          "docs_url": "https://github.com/juspay/hyperswitch#quickstart",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "dae07b763c8ef6fb0afcd4e65c80eb8946939a6bff6012210af3570ac4c4016e",
+          "evidence": "Local Setup via Docker"
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "dae07b763c8ef6fb0afcd4e65c80eb8946939a6bff6012210af3570ac4c4016e",
+      "review": {
+        "readme_chars": 7820,
+        "blocks": 1,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 2840,
+        "output_tokens": 154,
+        "seconds": 1.15
+      }
+    },
+    {
+      "github_id": 11125589,
+      "full_name": "keycloak/keycloak",
+      "ideas": [
+        {
+          "id": "llm-11125589-1",
+          "full_name": "keycloak/keycloak",
+          "title": "Desplegar Keycloak con Docker",
+          "integration_type": "docker",
+          "summary": "Ejecuta Keycloak como un contenedor en tu infraestructura para gestionar la autenticación y la identidad de tus servicios.",
+          "compatible_stack": [
+            "Docker"
+          ],
+          "dependencies": [
+            "Imagen de Docker de Keycloak"
+          ],
+          "difficulty": "medium",
+          "triggers": [],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://github.com/keycloak/keycloak#getting-started",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "4b7b52bc5782e4e824038c69008eea452b94f25860145a7af39f396d6c1ae26e",
+          "evidence": "docker run quay.io/keycloak/keycloak start-dev"
+        },
+        {
+          "id": "llm-11125589-2",
+          "full_name": "keycloak/keycloak",
+          "title": "Instalar el adaptador de Node.js",
+          "integration_type": "sdk",
+          "summary": "Conecta tu aplicación Node.js a Keycloak para añadir autenticación y asegurar tus servicios.",
+          "compatible_stack": [
+            "Node.js"
+          ],
+          "dependencies": [
+            "Paquete Keycloak Node.js Connect"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Inicio de sesión de usuario"
+          ],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://github.com/keycloak/keycloak#other-keycloak-projects",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "4b7b52bc5782e4e824038c69008eea452b94f25860145a7af39f396d6c1ae26e",
+          "evidence": "* Keycloak Node.js Connect - Node.js adapter for Keycloak"
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "4b7b52bc5782e4e824038c69008eea452b94f25860145a7af39f396d6c1ae26e",
+      "review": {
+        "readme_chars": 2302,
+        "blocks": 0,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1502,
+        "output_tokens": 216,
+        "seconds": 1.81
+      }
+    },
+    {
+      "github_id": 6325420,
+      "full_name": "killbill/killbill",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "2e5bec06bc24c7f7aabd636b076bd6fca992f936d0644caf7922ecdb63c34035",
+      "review": {
+        "readme_chars": 3081,
+        "blocks": 0,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [
+          {
+            "title": "Llamar a la API REST de Kill Bill",
+            "integration_type": "rest_api",
+            "summary": "Integra la plataforma de cobros en tu aplicación realizando peticiones HTTP a su API para gestionar catálogos, precios, suscripciones y pagos.",
+            "evidence": "The REST API is documented on apidocs.killbill.io.",
+            "code_block": null,
+            "compatible_stack": [
+              "HTTP"
+            ],
+            "dependencies": [
+              "Kill Bill corriendo en infraestructura propia"
+            ],
+            "difficulty": "medium",
+            "triggers": [
+              "Alta de un nuevo cliente",
+              "Creación de una suscripción"
+            ],
+            "reason": "ningún nombre del stack aparece en la entrada"
+          }
+        ],
+        "input_tokens": 1665,
+        "output_tokens": 132,
+        "seconds": 22.65
+      }
+    },
+    {
       "github_id": 138597372,
       "full_name": "Kludex/starlette",
       "ideas": [],
@@ -1573,6 +1872,54 @@
         "input_tokens": 1800,
         "output_tokens": 5,
         "seconds": 1.39
+      }
+    },
+    {
+      "github_id": 193833307,
+      "full_name": "knadh/listmonk",
+      "ideas": [
+        {
+          "id": "llm-193833307-1",
+          "full_name": "knadh/listmonk",
+          "title": "Desplegar listmonk con Docker",
+          "integration_type": "docker",
+          "summary": "Ejecuta el gestor de newsletters como un contenedor en tu infraestructura usando la imagen oficial para aislarlo de la aplicación principal.",
+          "compatible_stack": [
+            "Docker",
+            "Docker Compose"
+          ],
+          "dependencies": [
+            "PostgreSQL database"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Despliegue de la infraestructura"
+          ],
+          "snippet": "# Download the compose file to the current directory.\ncurl -LO https://github.com/knadh/listmonk/raw/master/docker-compose.yml\n\n# Run the services in the background.\ndocker compose up -d",
+          "snippet_language": "shell",
+          "docs_url": "https://github.com/knadh/listmonk#docker",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "e5a8ed9cbdcc626d97de538a1d69eebd39ea866d322c651b564c9a83f4ea9a53",
+          "evidence": "The latest image is available on DockerHub at listmonk/listmonk:latest."
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "e5a8ed9cbdcc626d97de538a1d69eebd39ea866d322c651b564c9a83f4ea9a53",
+      "review": {
+        "readme_chars": 1329,
+        "blocks": 1,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1384,
+        "output_tokens": 108,
+        "seconds": 1.21
       }
     },
     {
@@ -1645,6 +1992,175 @@
         "input_tokens": 1860,
         "output_tokens": 196,
         "seconds": 1.21
+      }
+    },
+    {
+      "github_id": 19816070,
+      "full_name": "MariaDB/server",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "285f8ca318f44289f5c63dab5e38168e77f41e71973c8dc5b60210aea5c76ed3",
+      "review": {
+        "readme_chars": 3643,
+        "blocks": 0,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1883,
+        "output_tokens": 4,
+        "seconds": 0.88
+      }
+    },
+    {
+      "github_id": 130688011,
+      "full_name": "meilisearch/meilisearch",
+      "ideas": [
+        {
+          "id": "llm-130688011-1",
+          "full_name": "meilisearch/meilisearch",
+          "title": "Desplegar Meilisearch con Docker",
+          "integration_type": "docker",
+          "summary": "Ejecuta el motor de búsqueda en un contenedor Docker en tu propia infraestructura para ofrecer búsqueda de texto completo y semántica.",
+          "compatible_stack": [
+            "Docker"
+          ],
+          "dependencies": [
+            "Docker instalado"
+          ],
+          "difficulty": "low",
+          "triggers": [],
+          "snippet": "docker run -it --rm \\\n  -p 7700:7700 \\\n  -v $(pwd)/meili_data:/meili_data \\\n  getmeili/meilisearch:latest",
+          "snippet_language": "sh",
+          "docs_url": "https://github.com/meilisearch/meilisearch#1-get-a-meilisearch-instance",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "5035f74d867d944591e4b83795cc735f67c7853e1abb322b4f6def925f52c8a8",
+          "evidence": "docker run -it --rm \\"
+        },
+        {
+          "id": "llm-130688011-2",
+          "full_name": "meilisearch/meilisearch",
+          "title": "Consultar la API REST de búsqueda",
+          "integration_type": "rest_api",
+          "summary": "Llama a la API HTTP de Meilisearch desde tu aplicación para indexar documentos y realizar búsquedas rápidas con tolerancia a errores ortográficos.",
+          "compatible_stack": [
+            "JavaScript",
+            "Python",
+            "PHP",
+            "Go"
+          ],
+          "dependencies": [
+            "Instancia de Meilisearch corriendo",
+            "API key"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Búsqueda realizada por el usuario en la interfaz",
+            "Creación o actualización de un documento"
+          ],
+          "snippet": "curl -X POST \"https://ms-url-example.meilisearch.io/indexes/movies/search\" \\\n  -H 'Content-Type: application/json' \\\n  -H \"Authorization: Bearer apiKey\" \\\n  --data-binary '{ \"q\": \"wondre woman\" }'",
+          "snippet_language": "sh",
+          "docs_url": "https://github.com/meilisearch/meilisearch#3-search-typo-included",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "5035f74d867d944591e4b83795cc735f67c7853e1abb322b4f6def925f52c8a8",
+          "evidence": "curl -X POST \"https://ms-url-example.meilisearch.io/indexes/movies/search\" \\"
+        },
+        {
+          "id": "llm-130688011-3",
+          "full_name": "meilisearch/meilisearch",
+          "title": "Usar los SDKs oficiales en tu aplicación",
+          "integration_type": "sdk",
+          "summary": "Instala las librerías cliente en tu código para integrar las capacidades de búsqueda híbrida y filtrado de forma nativa.",
+          "compatible_stack": [
+            "JavaScript",
+            "Python",
+            "PHP",
+            "Ruby",
+            "Go",
+            "Rust",
+            "React"
+          ],
+          "dependencies": [
+            "Instancia de Meilisearch activa"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Consulta de búsqueda en la aplicación"
+          ],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://github.com/meilisearch/meilisearch#3-search-typo-included",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "5035f74d867d944591e4b83795cc735f67c7853e1abb322b4f6def925f52c8a8",
+          "evidence": "Next steps: follow a 5-minute quick start for JavaScript, Python, PHP, Ruby, Go, Rust, or React, or follow the Cloud getting started guide."
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "5035f74d867d944591e4b83795cc735f67c7853e1abb322b4f6def925f52c8a8",
+      "review": {
+        "readme_chars": 7962,
+        "blocks": 4,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 3005,
+        "output_tokens": 560,
+        "seconds": 2.27
+      }
+    },
+    {
+      "github_id": 30203935,
+      "full_name": "metabase/metabase",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "90f420650df35525acd1d49e30bdf1336c90289a97c45a412fcf06619201973b",
+      "review": {
+        "readme_chars": 3147,
+        "blocks": 0,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [
+          {
+            "title": "Integrar analíticas mediante la API",
+            "integration_type": "rest_api",
+            "summary": "Integra analíticas en tu aplicación llamando a la API de Metabase para incrustar gráficos, paneles o realizar consultas.",
+            "evidence": "Hit our API to integrate analytics. Check out our guide, Working with the Metabase API.",
+            "code_block": null,
+            "compatible_stack": [
+              "HTTP"
+            ],
+            "dependencies": [
+              "Metabase corriendo",
+              "Credenciales de API"
+            ],
+            "difficulty": "medium",
+            "triggers": [
+              "Solicitud de datos del usuario",
+              "Carga del panel de control"
+            ],
+            "reason": "ningún nombre del stack aparece en la entrada"
+          }
+        ],
+        "input_tokens": 1758,
+        "output_tokens": 133,
+        "seconds": 1.25
       }
     },
     {
@@ -1883,6 +2399,55 @@
         "input_tokens": 3288,
         "output_tokens": 9,
         "seconds": 0.81
+      }
+    },
+    {
+      "github_id": 400215964,
+      "full_name": "novuhq/novu",
+      "ideas": [
+        {
+          "id": "llm-400215964-1",
+          "full_name": "novuhq/novu",
+          "title": "Enviar notificaciones multicanal con Novu",
+          "integration_type": "rest_api",
+          "summary": "Envía notificaciones a través de múltiples canales como Inbox, Email, SMS, Push y Chat usando una única API HTTP unificada.",
+          "compatible_stack": [
+            "React"
+          ],
+          "dependencies": [
+            "Cuenta en Novu",
+            "Credenciales de la API"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Evento importante en la aplicación",
+            "Acción del usuario que requiere aviso"
+          ],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://github.com/novuhq/novu#-communication-infrastructure-for-products",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "1f6919d3165b56999b73589ad1b880e5598f38eb8b5008288c91c2ca299847d5",
+          "evidence": "Novu provides a unified API to send notifications through multiple channels — Inbox/In-App, Push, Email, SMS, and Chat."
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "1f6919d3165b56999b73589ad1b880e5598f38eb8b5008288c91c2ca299847d5",
+      "review": {
+        "readme_chars": 7792,
+        "blocks": 1,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 2918,
+        "output_tokens": 213,
+        "seconds": 1.73
       }
     },
     {
@@ -2178,6 +2743,80 @@
       }
     },
     {
+      "github_id": 135321861,
+      "full_name": "ory/kratos",
+      "ideas": [
+        {
+          "id": "llm-135321861-1",
+          "full_name": "ory/kratos",
+          "title": "Desplegar Ory Kratos como servicio de autenticación en contenedor Docker",
+          "integration_type": "docker",
+          "summary": "Ejecuta Ory Kratos como un contenedor Docker en tu infraestructura para centralizar la gestión de identidad y los flujos de autenticación de tu aplicación.",
+          "compatible_stack": [
+            "Docker",
+            "Kubernetes",
+            "Linux",
+            "Windows"
+          ],
+          "dependencies": [
+            "Docker",
+            "Base de datos PostgreSQL, MySQL o CockroachDB"
+          ],
+          "difficulty": "medium",
+          "triggers": [],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://github.com/ory/kratos#self-host-ory-kratos",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "1fd15a0f1abf2822c29d95e943b8672f747a78a5e862f197661e04b8774e92b9",
+          "evidence": "Install Kratos on Linux, macOS, Windows, and Docker"
+        },
+        {
+          "id": "llm-135321861-2",
+          "full_name": "ory/kratos",
+          "title": "Gestionar identidades y usuarios mediante la API HTTP",
+          "integration_type": "rest_api",
+          "summary": "Conecta tu aplicación a los endpoints HTTP de Ory Kratos para consumir los flujos de inicio de sesión, registro, recuperación y verificación de cuentas de forma centralizada.",
+          "compatible_stack": [
+            "Kubernetes"
+          ],
+          "dependencies": [
+            "Instancia de Ory Kratos en ejecución"
+          ],
+          "difficulty": "high",
+          "triggers": [
+            "Solicitud de inicio de sesión del usuario",
+            "Registro de nuevo usuario"
+          ],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://github.com/ory/kratos#what-is-ory-kratos",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "1fd15a0f1abf2822c29d95e943b8672f747a78a5e862f197661e04b8774e92b9",
+          "evidence": "Ory Kratos is an API first identity and user management system that follows cloud architecture best practices."
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "1fd15a0f1abf2822c29d95e943b8672f747a78a5e862f197661e04b8774e92b9",
+      "review": {
+        "readme_chars": 7316,
+        "blocks": 1,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 2832,
+        "output_tokens": 379,
+        "seconds": 2.16
+      }
+    },
+    {
       "github_id": 596892,
       "full_name": "pallets/flask",
       "ideas": [],
@@ -2247,6 +2886,56 @@
       }
     },
     {
+      "github_id": 327089870,
+      "full_name": "payloadcms/payload",
+      "ideas": [
+        {
+          "id": "llm-327089870-1",
+          "full_name": "payloadcms/payload",
+          "title": "Instalar Payload en tu aplicación Next.js",
+          "integration_type": "sdk",
+          "summary": "Integra un backend completo y un panel de administración en TypeScript directamente dentro de la carpeta /app de tu aplicación Next.js.",
+          "compatible_stack": [
+            "Next.js",
+            "React",
+            "TypeScript"
+          ],
+          "dependencies": [
+            "Node.js",
+            "Base de datos compatible"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Iniciar un nuevo proyecto Next.js"
+          ],
+          "snippet": "pnpx create-payload-app@latest",
+          "snippet_language": "text",
+          "docs_url": "https://payloadcms.com/",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "abb9828ad09338053c9b26f15df1f88578e71e10c32b65b0ff6a39bac61983d4",
+          "evidence": "Payload is the first-ever Next.js native CMS that can install directly in your existing `/app` folder."
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "abb9828ad09338053c9b26f15df1f88578e71e10c32b65b0ff6a39bac61983d4",
+      "review": {
+        "readme_chars": 4594,
+        "blocks": 2,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 2187,
+        "output_tokens": 202,
+        "seconds": 1.71
+      }
+    },
+    {
       "github_id": 359952601,
       "full_name": "pgvector/pgvector",
       "ideas": [],
@@ -2269,6 +2958,28 @@
       }
     },
     {
+      "github_id": 160427405,
+      "full_name": "plausible/analytics",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "60d739240536f8f2d2b605335db5a86e44b50b5c67f4b6b4e5943cd655dd014e",
+      "review": {
+        "readme_chars": 4931,
+        "blocks": 0,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 2088,
+        "output_tokens": 4,
+        "seconds": 1.71
+      }
+    },
+    {
       "github_id": 50565430,
       "full_name": "pnpm/pnpm",
       "ideas": [],
@@ -2288,6 +2999,124 @@
         "input_tokens": 1652,
         "output_tokens": 4,
         "seconds": 0.79
+      }
+    },
+    {
+      "github_id": 88740103,
+      "full_name": "postalserver/postal",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "b3e52cabb1672d83b33c4550253d0eecc38b5224adacba325328f96945e4cab5",
+      "review": {
+        "readme_chars": 322,
+        "blocks": 0,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1082,
+        "output_tokens": 9,
+        "seconds": 1.0
+      }
+    },
+    {
+      "github_id": 927442,
+      "full_name": "postgres/postgres",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "11edc06d3b180f08fdd9f7fe7ddb9c5f0ea2c6e08c390c316164ed4c3d32f70e",
+      "review": {
+        "readme_chars": 821,
+        "blocks": 0,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1185,
+        "output_tokens": 9,
+        "seconds": 0.91
+      }
+    },
+    {
+      "github_id": 235901813,
+      "full_name": "PostHog/posthog",
+      "ideas": [
+        {
+          "id": "llm-235901813-1",
+          "full_name": "PostHog/posthog",
+          "title": "Instalar el SDK de PostHog",
+          "integration_type": "sdk",
+          "summary": "Captura analíticas de eventos, errores y sesiones de usuario en tu aplicación instalando los SDKs oficiales.",
+          "compatible_stack": [
+            "Python",
+            "JavaScript",
+            "React",
+            "PHP"
+          ],
+          "dependencies": [
+            "Cuenta en PostHog Cloud"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Inicio de sesión del usuario",
+            "Navegación por la aplicación"
+          ],
+          "snippet": "npx -y @posthog/wizard@latest",
+          "snippet_language": "bash",
+          "docs_url": "https://github.com/PostHog/posthog#setting-up-posthog",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "a65fc8ec2a1d7cf756b4beea87b3d2d3f907005c2ba31fac53448a8167898b2f",
+          "evidence": "We have SDKs and libraries for popular languages and frameworks like:"
+        },
+        {
+          "id": "llm-235901813-2",
+          "full_name": "PostHog/posthog",
+          "title": "Desplegar PostHog con Docker",
+          "integration_type": "docker",
+          "summary": "Ejecuta una instancia propia de PostHog para almacenar datos de analíticas y errores mediante contenedores.",
+          "compatible_stack": [
+            "Docker",
+            "Linux"
+          ],
+          "dependencies": [
+            "Docker instalado en el servidor"
+          ],
+          "difficulty": "high",
+          "triggers": [],
+          "snippet": "/bin/bash -c \"$(curl -fsSL https://raw.githubusercontent.com/posthog/posthog/HEAD/bin/deploy-hobby)\"",
+          "snippet_language": "bash",
+          "docs_url": "https://github.com/PostHog/posthog#self-hosting-the-open-source-hobby-deploy-advanced",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "a65fc8ec2a1d7cf756b4beea87b3d2d3f907005c2ba31fac53448a8167898b2f",
+          "evidence": "If you want to self-host PostHog, you can deploy a hobby instance in one line on Linux with Docker (recommended 4GB memory):"
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "a65fc8ec2a1d7cf756b4beea87b3d2d3f907005c2ba31fac53448a8167898b2f",
+      "review": {
+        "readme_chars": 6851,
+        "blocks": 3,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 2760,
+        "output_tokens": 347,
+        "seconds": 1.55
       }
     },
     {
@@ -2727,6 +3556,104 @@
       }
     },
     {
+      "github_id": 268163609,
+      "full_name": "qdrant/qdrant",
+      "ideas": [
+        {
+          "id": "llm-268163609-1",
+          "full_name": "qdrant/qdrant",
+          "title": "Desplegar Qdrant en contenedor",
+          "integration_type": "docker",
+          "summary": "Ejecuta Qdrant localmente mediante Docker para disponer de una base de datos de vectores para búsquedas de similitud.",
+          "compatible_stack": [
+            "Docker"
+          ],
+          "dependencies": [
+            "Docker"
+          ],
+          "difficulty": "low",
+          "triggers": [],
+          "snippet": "docker run -p 6333:6333 qdrant/qdrant",
+          "snippet_language": "bash",
+          "docs_url": "https://github.com/qdrant/qdrant#client-server",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "5f7bc5939ff8c34cc583048cd6c11ad1437fc072b21c8d0bf072cac4a403ee57",
+          "evidence": "docker run -p 6333:6333 qdrant/qdrant"
+        },
+        {
+          "id": "llm-268163609-2",
+          "full_name": "qdrant/qdrant",
+          "title": "Conectar la aplicación con el cliente SDK de Qdrant",
+          "integration_type": "sdk",
+          "summary": "Integra las librerías oficiales de Qdrant en tu código para almacenar, buscar y gestionar vectores con metadatos asociados.",
+          "compatible_stack": [
+            "Python",
+            "Go",
+            "Rust",
+            "JavaScript"
+          ],
+          "dependencies": [
+            "qdrant-client"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Consulta de búsqueda semántica",
+            "Almacenamiento de nuevos embeddings"
+          ],
+          "snippet": "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"http://localhost:6333\")",
+          "snippet_language": "python",
+          "docs_url": "https://github.com/qdrant/qdrant#clients",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "5f7bc5939ff8c34cc583048cd6c11ad1437fc072b21c8d0bf072cac4a403ee57",
+          "evidence": "Qdrant offers the following client libraries to help you integrate it into your application stack:"
+        },
+        {
+          "id": "llm-268163609-3",
+          "full_name": "qdrant/qdrant",
+          "title": "Consumir la API REST de Qdrant",
+          "integration_type": "rest_api",
+          "summary": "Realiza peticiones HTTP a la API REST de Qdrant para gestionar colecciones y realizar búsquedas vectoriales desde cualquier lenguaje.",
+          "compatible_stack": [
+            "REST API"
+          ],
+          "dependencies": [
+            "Servidor Qdrant en ejecución"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Petición HTTP externa",
+            "Indexación de documentos"
+          ],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://github.com/qdrant/qdrant#rest",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "5f7bc5939ff8c34cc583048cd6c11ad1437fc072b21c8d0bf072cac4a403ee57",
+          "evidence": "Qdrant provides a REST API with an OpenAPI 3.0 specification, enabling client generation for virtually any framework or programming language."
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "5f7bc5939ff8c34cc583048cd6c11ad1437fc072b21c8d0bf072cac4a403ee57",
+      "review": {
+        "readme_chars": 7920,
+        "blocks": 3,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 2853,
+        "output_tokens": 526,
+        "seconds": 2.5
+      }
+    },
+    {
       "github_id": 10270250,
       "full_name": "react/react",
       "ideas": [
@@ -2918,6 +3845,51 @@
       }
     },
     {
+      "github_id": 722597620,
+      "full_name": "rustfs/rustfs",
+      "ideas": [
+        {
+          "id": "llm-722597620-1",
+          "full_name": "rustfs/rustfs",
+          "title": "Desplegar RustFS con Docker",
+          "integration_type": "docker",
+          "summary": "Despliega RustFS como un contenedor Docker en tu infraestructura para gestionar el almacenamiento de objetos de forma aislada.",
+          "compatible_stack": [
+            "Docker"
+          ],
+          "dependencies": [
+            "Docker"
+          ],
+          "difficulty": "medium",
+          "triggers": [],
+          "snippet": "curl -O https://rustfs.com/install_rustfs.sh && bash install_rustfs.sh",
+          "snippet_language": "bash",
+          "docs_url": "https://github.com/rustfs/rustfs#2-docker-quick-start-option-2",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "75d075034b70cdc98bedae1706b32c461af70ae79be43cc619f8c272a2a22587",
+          "evidence": "2. Docker Quick Start (Option 2)"
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "75d075034b70cdc98bedae1706b32c461af70ae79be43cc619f8c272a2a22587",
+      "review": {
+        "readme_chars": 8000,
+        "blocks": 1,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 2936,
+        "output_tokens": 146,
+        "seconds": 1.18
+      }
+    },
+    {
       "github_id": 843222,
       "full_name": "scikit-learn/scikit-learn",
       "ideas": [
@@ -2995,6 +3967,51 @@
       }
     },
     {
+      "github_id": 21827146,
+      "full_name": "seaweedfs/seaweedfs",
+      "ideas": [
+        {
+          "id": "llm-21827146-1",
+          "full_name": "seaweedfs/seaweedfs",
+          "title": "Desplegar SeaweedFS con Docker",
+          "integration_type": "docker",
+          "summary": "Despliega SeaweedFS como contenedor para ejecutar un almacén de objetos S3 compatible directamente en tu infraestructura.",
+          "compatible_stack": [
+            "Docker"
+          ],
+          "dependencies": [
+            "Docker instalado"
+          ],
+          "difficulty": "low",
+          "triggers": [],
+          "snippet": "docker run -p 8333:8333 -v weed-data:/data \\\n  -e AWS_ACCESS_KEY_ID=admin \\\n  -e AWS_SECRET_ACCESS_KEY=secret \\\n  -e S3_BUCKET=my-bucket \\\n  chrislusf/seaweedfs",
+          "snippet_language": "bash",
+          "docs_url": "https://github.com/seaweedfs/seaweedfs#docker",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "725ff8e072884d9c16263498413cda25d858550015742035a68690f93ccce331",
+          "evidence": "docker run -p 8333:8333 -v weed-data:/data \\"
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "725ff8e072884d9c16263498413cda25d858550015742035a68690f93ccce331",
+      "review": {
+        "readme_chars": 7964,
+        "blocks": 9,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 3290,
+        "output_tokens": 156,
+        "seconds": 1.22
+      }
+    },
+    {
       "github_id": 159271175,
       "full_name": "sqlalchemy/sqlalchemy",
       "ideas": [
@@ -3063,6 +4080,204 @@
         "input_tokens": 2298,
         "output_tokens": 4,
         "seconds": 0.91
+      }
+    },
+    {
+      "github_id": 43441403,
+      "full_name": "strapi/strapi",
+      "ideas": [
+        {
+          "id": "llm-43441403-1",
+          "full_name": "strapi/strapi",
+          "title": "Consumir las APIs REST y GraphQL desde la aplicación",
+          "integration_type": "rest_api",
+          "summary": "Conecta tu aplicación para consumir los contenidos estructurados y generados automáticamente por Strapi mediante sus endpoints REST y GraphQL.",
+          "compatible_stack": [
+            "REST",
+            "GraphQL"
+          ],
+          "dependencies": [
+            "Servidor Strapi en ejecución",
+            "Base de datos configurada"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Solicitud de contenido desde el frontend de la aplicación"
+          ],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://strapi.io/",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "24fe62910af7f90c524687c6a78ebde6c5a031c2f659e2db4934362c98c1ce33",
+          "evidence": "Auto-generated REST & GraphQL APIs for every content type"
+        },
+        {
+          "id": "llm-43441403-2",
+          "full_name": "strapi/strapi",
+          "title": "Desplegar Strapi con Docker",
+          "integration_type": "docker",
+          "summary": "Ejecuta Strapi en un contenedor Docker utilizando la configuración generada para tu proyecto y conéctalo con tu aplicación.",
+          "compatible_stack": [
+            "Docker"
+          ],
+          "dependencies": [
+            "Docker",
+            "Docker Compose"
+          ],
+          "difficulty": "medium",
+          "triggers": [],
+          "snippet": "npx @strapi-community/dockerize@latest",
+          "snippet_language": "bash",
+          "docs_url": "https://github.com/strapi/strapi#docker",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "24fe62910af7f90c524687c6a78ebde6c5a031c2f659e2db4934362c98c1ce33",
+          "evidence": "npx @strapi-community/dockerize@latest"
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "24fe62910af7f90c524687c6a78ebde6c5a031c2f659e2db4934362c98c1ce33",
+      "review": {
+        "readme_chars": 4950,
+        "blocks": 2,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 2185,
+        "output_tokens": 325,
+        "seconds": 1.72
+      }
+    },
+    {
+      "github_id": 214587193,
+      "full_name": "supabase/supabase",
+      "ideas": [
+        {
+          "id": "llm-214587193-1",
+          "full_name": "supabase/supabase",
+          "title": "Conectar tu aplicación usando las librerías cliente de Supabase",
+          "integration_type": "sdk",
+          "summary": "Integra Supabase en tu código utilizando las librerías oficiales para JavaScript, Python, Flutter, Swift y otros lenguajes para gestionar bases de datos, autenticación y almacenamiento.",
+          "compatible_stack": [
+            "JavaScript",
+            "Python",
+            "Flutter",
+            "Swift"
+          ],
+          "dependencies": [
+            "Cuenta o instancia de Supabase"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Inicio de sesión del usuario",
+            "Consulta de datos en la aplicación"
+          ],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://github.com/supabase/supabase#client-libraries",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "dfcf9bc3d1e25b2f94488546299166c8648c81d2674f710950dcc68df2190ba0",
+          "evidence": "Language\nClient\nFeature-Clients (bundled in Supabase client)"
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "dfcf9bc3d1e25b2f94488546299166c8648c81d2674f710950dcc68df2190ba0",
+      "review": {
+        "readme_chars": 5496,
+        "blocks": 4,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 2591,
+        "output_tokens": 208,
+        "seconds": 1.77
+      }
+    },
+    {
+      "github_id": 231921809,
+      "full_name": "supertokens/supertokens-core",
+      "ideas": [
+        {
+          "id": "llm-231921809-1",
+          "full_name": "supertokens/supertokens-core",
+          "title": "Usar SDK de backend para autenticación",
+          "integration_type": "sdk",
+          "summary": "Integra la gestión de usuarios y sesiones en el servidor instalando los SDKs disponibles para lenguajes populares.",
+          "compatible_stack": [
+            "Node.js",
+            "Go",
+            "Python",
+            "React.js"
+          ],
+          "dependencies": [
+            "SuperTokens Core en ejecución",
+            "Paquete SDK del lenguaje correspondiente"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Registro de usuario",
+            "Inicio de sesión"
+          ],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://github.com/supertokens/supertokens-core#open-source-auth-provider",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "32d92dc46222da7c73beab7f3fa2e3e13f0806987a4424fb0b661c5c63d02787",
+          "evidence": "SDKs available for popular languages and front-end frameworks e.g. Node.js, Go, Python, React.js, React Native, Vanilla JS, etc."
+        },
+        {
+          "id": "llm-231921809-2",
+          "full_name": "supertokens/supertokens-core",
+          "title": "Desplegar el servicio de autenticación con Docker",
+          "integration_type": "docker",
+          "summary": "Ejecuta el servicio central de SuperTokens como un contenedor HTTP para gestionar la lógica de autenticación y base de datos.",
+          "compatible_stack": [
+            "Docker"
+          ],
+          "dependencies": [
+            "Motor de Docker",
+            "Base de datos compatible"
+          ],
+          "difficulty": "high",
+          "triggers": [],
+          "snippet": null,
+          "snippet_language": null,
+          "docs_url": "https://github.com/supertokens/supertokens-core#-why-java",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "32d92dc46222da7c73beab7f3fa2e3e13f0806987a4424fb0b661c5c63d02787",
+          "evidence": "we provide the JDK along with the binary/docker image when distributing it."
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "32d92dc46222da7c73beab7f3fa2e3e13f0806987a4424fb0b661c5c63d02787",
+      "review": {
+        "readme_chars": 7090,
+        "blocks": 0,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 2812,
+        "output_tokens": 364,
+        "seconds": 2.55
       }
     },
     {
@@ -3317,6 +4532,171 @@
       }
     },
     {
+      "github_id": 9852918,
+      "full_name": "TryGhost/Ghost",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "3a58063e979fe6e08bbb2e276a5964a814c41ba922270c984a1f6bd6354b82b8",
+      "review": {
+        "readme_chars": 2513,
+        "blocks": 3,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1620,
+        "output_tokens": 5,
+        "seconds": 1.4
+      }
+    },
+    {
+      "github_id": 79317191,
+      "full_name": "typesense/typesense",
+      "ideas": [
+        {
+          "id": "llm-79317191-1",
+          "full_name": "typesense/typesense",
+          "title": "Desplegar Typesense con Docker",
+          "integration_type": "docker",
+          "summary": "Ejecuta el motor de búsqueda en un contenedor Docker para dotar a tu aplicación de una infraestructura de búsqueda rápida y tolerante a fallos.",
+          "compatible_stack": [
+            "Docker"
+          ],
+          "dependencies": [
+            "Docker instalado y funcionando"
+          ],
+          "difficulty": "low",
+          "triggers": [],
+          "snippet": "docker run -p 8108:8108 -v/tmp/data:/data typesense/typesense:29.0 --data-dir /data --api-key=Hu52dwsas2AdxdE",
+          "snippet_language": "text",
+          "docs_url": "https://github.com/typesense/typesense#quick-start",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "b707dc33254c1e32ff55e9ab4ee5821d7ab9acc2b997e9bcfa9c2d497cbc87af",
+          "evidence": "docker run -p 8108:8108 -v/tmp/data:/data typesense/typesense:29.0 --data-dir /data --api-key=Hu52dwsas2AdxdE"
+        },
+        {
+          "id": "llm-79317191-2",
+          "full_name": "typesense/typesense",
+          "title": "Integrar la búsqueda en la aplicación con SDK",
+          "integration_type": "sdk",
+          "summary": "Conecta tu aplicación al motor de búsqueda usando el cliente oficial para crear colecciones, indexar documentos y realizar consultas complejas.",
+          "compatible_stack": [
+            "Python",
+            "JavaScript",
+            "PHP",
+            "Ruby"
+          ],
+          "dependencies": [
+            "Servidor Typesense corriendo",
+            "Clave de API"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Búsqueda de texto realizada por el usuario",
+            "Creación o actualización de un registro en la base de datos"
+          ],
+          "snippet": "pip install typesense",
+          "snippet_language": "text",
+          "docs_url": "https://github.com/typesense/typesense#quick-start",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "b707dc33254c1e32ff55e9ab4ee5821d7ab9acc2b997e9bcfa9c2d497cbc87af",
+          "evidence": "pip install typesense"
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "b707dc33254c1e32ff55e9ab4ee5821d7ab9acc2b997e9bcfa9c2d497cbc87af",
+      "review": {
+        "readme_chars": 7903,
+        "blocks": 5,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 3142,
+        "output_tokens": 383,
+        "seconds": 1.72
+      }
+    },
+    {
+      "github_id": 280363952,
+      "full_name": "umami-software/umami",
+      "ideas": [
+        {
+          "id": "llm-280363952-1",
+          "full_name": "umami-software/umami",
+          "title": "Desplegar Umami con Docker",
+          "integration_type": "docker",
+          "summary": "Despliega Umami y su base de datos como contenedor para alojar tu propia plataforma de analítica web con la imagen oficial.",
+          "compatible_stack": [
+            "Docker",
+            "PostgreSQL"
+          ],
+          "dependencies": [
+            "Docker",
+            "PostgreSQL"
+          ],
+          "difficulty": "medium",
+          "triggers": [],
+          "snippet": "docker pull docker.umami.is/umami-software/umami:latest",
+          "snippet_language": "bash",
+          "docs_url": "https://github.com/umami-software/umami#-installing-with-docker",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "d509d712973d1bd0a67fa896f95baae1c22c9f08229c40e0d25e53a5aa373ddc",
+          "evidence": "docker pull docker.umami.is/umami-software/umami:latest"
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "d509d712973d1bd0a67fa896f95baae1c22c9f08229c40e0d25e53a5aa373ddc",
+      "review": {
+        "readme_chars": 2551,
+        "blocks": 9,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 1759,
+        "output_tokens": 166,
+        "seconds": 1.84
+      }
+    },
+    {
+      "github_id": 775743011,
+      "full_name": "valkey-io/valkey",
+      "ideas": [],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "bc7b06e71aea1f3eb0d6727a8a129e9089ac1e79f6cf59f5e92c5eeb503363bd",
+      "review": {
+        "readme_chars": 7955,
+        "blocks": 1,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 3172,
+        "output_tokens": 4,
+        "seconds": 0.88
+      }
+    },
+    {
       "github_id": 70107786,
       "full_name": "vercel/next.js",
       "ideas": [],
@@ -3496,6 +4876,76 @@
         "input_tokens": 0,
         "output_tokens": 0,
         "seconds": 0.0
+      }
+    },
+    {
+      "github_id": 247714750,
+      "full_name": "zitadel/zitadel",
+      "ideas": [
+        {
+          "id": "llm-247714750-1",
+          "full_name": "zitadel/zitadel",
+          "title": "Desplegar ZITADEL con Docker Compose",
+          "integration_type": "docker",
+          "summary": "Despliega la infraestructura de identidad ZITADEL en un contenedor Docker en tu entorno para gestionar la autenticación y autorización.",
+          "compatible_stack": [
+            "Docker"
+          ],
+          "dependencies": [
+            "Docker Compose"
+          ],
+          "difficulty": "medium",
+          "triggers": [],
+          "snippet": "# Docker Compose — up and running in under 3 minutes\ncurl -LO https://raw.githubusercontent.com/zitadel/zitadel/main/deploy/compose/docker-compose.yml \\\n  && curl -LO https://raw.githubusercontent.com/zitadel/zitadel/main/deploy/compose/.env.example \\\n  && cp .env.example .env \\\n  && docker compose up -d --wait",
+          "snippet_language": "bash",
+          "docs_url": "https://github.com/zitadel/zitadel#zitadel-self-hosted",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "e0bd5d16d7eee19e5599c9549bda582d6362e50b496aea619c3cfc79b224892a",
+          "evidence": "curl -LO https://raw.githubusercontent.com/zitadel/zitadel/main/deploy/compose/docker-compose.yml \\\n  && curl -LO https://raw.githubusercontent.com/zitadel/zitadel/main/deploy/compose/.env.example \\\n  && cp .env.example .env \\\n  && docker compose up -d --wait"
+        },
+        {
+          "id": "llm-247714750-2",
+          "full_name": "zitadel/zitadel",
+          "title": "Usar la API REST v2 para gestionar usuarios",
+          "integration_type": "rest_api",
+          "summary": "Conecta tu aplicación con la API REST de ZITADEL para automatizar la creación y gestión de usuarios.",
+          "compatible_stack": [
+            "HTTP"
+          ],
+          "dependencies": [
+            "ZITADEL Domain",
+            "Access Token"
+          ],
+          "difficulty": "medium",
+          "triggers": [
+            "Registro de un nuevo usuario en la aplicación"
+          ],
+          "snippet": "curl -X POST https://$ZITADEL_DOMAIN/v2/users/human \\\n  -H \"Authorization: Bearer $ACCESS_TOKEN\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"username\": \"alice@example.com\",\n    \"profile\": { \"givenName\": \"Alice\", \"familyName\": \"Smith\" },\n    \"email\": { \"email\": \"alice@example.com\", \"sendCode\": {} }\n  }'",
+          "snippet_language": "bash",
+          "docs_url": "https://github.com/zitadel/zitadel#integrate-with-the-v2-api",
+          "generated_by": "llm",
+          "reviewed_at": null,
+          "based_on_hash": "e0bd5d16d7eee19e5599c9549bda582d6362e50b496aea619c3cfc79b224892a",
+          "evidence": "ZITADEL exposes every capability over a typed API. Here's how to create a user with the V2 REST API:"
+        }
+      ],
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "5",
+      "ai_input_hash": "e0bd5d16d7eee19e5599c9549bda582d6362e50b496aea619c3cfc79b224892a",
+      "review": {
+        "readme_chars": 5568,
+        "blocks": 2,
+        "skipped": null,
+        "failed": false,
+        "attempts": 1,
+        "problems_first": [],
+        "problems_final": [],
+        "dropped_ideas": [],
+        "input_tokens": 2538,
+        "output_tokens": 393,
+        "seconds": 1.67
       }
     }
   ]

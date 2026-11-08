@@ -1,7 +1,7 @@
 {
   "source": "public.v_repos_for_ai",
-  "taken_at": "2026-10-29T20:42:17+00:00",
-  "count": 100,
+  "taken_at": "2026-11-08T16:26:25+00:00",
+  "count": 127,
   "command": "python -m ai.scripts.export_catalog_snapshot",
   "ignored_columns": [
     "content_hash",
@@ -9,7 +9,9 @@
     "name"
   ],
   "missing_fields": [
+    "disabled",
     "health_score",
+    "is_maintained",
     "open_issues_count"
   ]
 }

@@ -12,7 +12,9 @@ las evaluaciones. Cada corrida compara la vista con lo publicado y con los archi
 (ai/catalog_diff.py) y hace lo que falta: un repo cuyo borrador ya está al día se publica sin
 llamar al modelo. Si se corta (por ejemplo, por el límite del día del proveedor), se vuelve a
 correr el mismo comando y termina. Un cambio de reglas (otra versión del prompt, otro modelo)
-no se regenera aquí: queda como pendiente, porque es una decisión aparte.
+no se regenera aquí: queda como pendiente, porque es una decisión aparte (se regenera con el
+script del lote, p. ej. `enrich_catalog --new-version`). Lo que se regeneró así sí se publica
+aquí: un registro del borrador distinto del publicado cuenta como desactualizado en la base.
 
 Al escribir también se calculan y guardan los vectores de búsqueda que faltan o quedaron viejos
 (ai.ai_embeddings), con lo publicado en esa misma transacción; el modelo de embeddings se carga
@@ -57,6 +59,7 @@ REGENERATE = {NO_RECORD, INPUT_CHANGED}           # cambió la entrada: se pide 
 RESET = {NAME_CHANGED, ARCHIVED_CHANGED}          # misma entrada: se quita el registro y se rehace
 ORPHANS_SQL = Path(__file__).resolve().parents[1] / "sql" / "consultas" / "huerfanos_ia.sql"
 MAX_DELETE = 10   # más huérfanos que esto suele ser un error de lectura de la vista, no repos que salieron
+PUBLISHED_KEYS = ("ai_input_hash", "provider", "model", "prompt_version")
 
 # Solo filas que se pueden regenerar: nunca categorías humanas ni ideas revisadas o de una persona.
 DELETE_ORPHANS = (
@@ -103,12 +106,37 @@ def version_block(path: Path, code_version: str) -> str | None:
     return f"el archivo está en la versión {stored} de las reglas y el código en la {code_version}"
 
 
+def replaced_in_draft(draft: dict[int, dict], published: dict[int, dict]) -> set[int]:
+    """github_id cuyo registro en el borrador no es el que está publicado.
+
+    Pasa con un cambio de reglas o de modelo: lo publicado sigue al día con su propia versión,
+    así que la comparación con la vista no lo marca, pero el borrador ya tiene otro resultado.
+    """
+    return {github_id for github_id, record in draft.items()
+            if github_id in published
+            and any(record.get(k) != published[github_id].get(k) for k in PUBLISHED_KEYS)}
+
+
+def publishable(stale: list[tuple[Repo, str]], replaced: list[Repo],
+                draft_stale: set[int]) -> list[Repo]:
+    """Desactualizado en la base o reemplazado en el borrador, solo si el borrador está al día."""
+    repos, seen = [], set()
+    for repo in [r for r, _ in stale] + replaced:
+        if repo.github_id not in draft_stale and repo.github_id not in seen:
+            seen.add(repo.github_id)
+            repos.append(repo)
+    return repos
+
+
 def make_plan(diff: CatalogDiff, enrichment_block: str | None = None,
-              ideas_block: str | None = None, published: CatalogDiff | None = None) -> Plan:
+              ideas_block: str | None = None, published: CatalogDiff | None = None,
+              replaced: dict[str, list[Repo]] | None = None) -> Plan:
     """Decide qué hacer con cada diferencia. No lee ni escribe nada.
 
     diff: la vista frente a los archivos (borrador). published: la vista frente a lo publicado;
     se publica lo que está desactualizado en la base y ya está al día en el borrador.
+    replaced: repos cuyo registro del borrador no es el publicado (por ejemplo, regenerados con
+    otra versión de las reglas); se publican igual que lo desactualizado.
     """
     plan = Plan(
         refresh_snapshot=bool(diff.new or diff.removed or diff.renamed
@@ -116,12 +144,14 @@ def make_plan(diff: CatalogDiff, enrichment_block: str | None = None,
         drop=diff.orphans,
     )
     if published is not None:
+        replaced = replaced or {}
         draft_stale = {"enrichment": {r.github_id for r, _ in diff.enrichment_stale},
                        "ideas": {r.github_id for r, _ in diff.ideas_stale}}
-        plan.publish_enrichment = [r for r, _ in published.enrichment_stale
-                                   if r.github_id not in draft_stale["enrichment"]]
-        plan.publish_ideas = [r for r, _ in published.ideas_stale
-                              if r.github_id not in draft_stale["ideas"]]
+        plan.publish_enrichment = publishable(published.enrichment_stale,
+                                              replaced.get("enrichment", []),
+                                              draft_stale["enrichment"])
+        plan.publish_ideas = publishable(published.ideas_stale, replaced.get("ideas", []),
+                                         draft_stale["ideas"])
         plan.unpublish = published.orphans
     for repo, why in diff.enrichment_stale:
         if why == NAME_CHANGED:
@@ -199,10 +229,16 @@ def generate_files(plan: Plan, live: list[Repo], columns: list[str], provider: s
 def current_state(live: list[Repo], published: dict[str, dict[int, dict]]) -> Plan:
     """Compara la vista con lo publicado y con los archivos tal como están ahora, y arma el plan."""
     known = load_repos("snapshot")
-    draft = diff_catalog(live, known, load_records(ENRICHMENT_FILE), load_records(IDEAS_FILE))
+    records = {"enrichment": load_records(ENRICHMENT_FILE), "ideas": load_records(IDEAS_FILE)}
+    draft = diff_catalog(live, known, records["enrichment"], records["ideas"])
     public = diff_catalog(live, known, published["enrichment"], published["ideas"])
+    by_id = {r.github_id: r for r in live}
+    replaced = {kind: [by_id[i] for i in sorted(replaced_in_draft(records[kind], published[kind]))
+                       if i in by_id]
+                for kind in records}
     plan = make_plan(draft, version_block(ENRICHMENT_FILE, ENRICHMENT_VERSION),
-                     version_block(IDEAS_FILE, IDEAS_VERSION), published=public)
+                     version_block(IDEAS_FILE, IDEAS_VERSION), published=public,
+                     replaced=replaced)
     print(report(public, len(live), len(known)))
     print(describe_plan(plan))
     return plan

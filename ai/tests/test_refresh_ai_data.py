@@ -6,7 +6,9 @@ import pytest
 
 from ai import catalog
 from ai.catalog import ENRICHMENT_FILE, load_repos
-from ai.catalog_diff import ARCHIVED_CHANGED, NAME_CHANGED, OTHER_MODEL, diff_catalog
+from ai.catalog_diff import (ARCHIVED_CHANGED, NAME_CHANGED, OTHER_MODEL, CatalogDiff,
+                             diff_catalog, enrichment_message)
+from ai.enrich import input_hash
 from ai.published import UPSERT_PROCESSING, processing_rows, to_records
 from ai.scripts import export_catalog_snapshot, refresh_ai_data as refresh
 from ai.scripts.batch import load_records, save_records, stored_version
@@ -124,6 +126,40 @@ def test_no_publica_un_borrador_desactualizado(data):
     plan = refresh.make_plan(diff_catalog(live, repos, enrichment, ideas), published=published)
     assert repo.github_id not in {r.github_id for r in plan.publish_ideas}
     assert [r.github_id for r in plan.ideas] == [repo.github_id]   # primero se regenera
+
+
+def test_reemplazado_compara_version_modelo_y_huella():
+    base = {"ai_input_hash": "h", "provider": "gemini", "model": "m", "prompt_version": "4"}
+    draft = {1: dict(base), 2: dict(base, prompt_version="5"), 3: dict(base, ai_input_hash="x"),
+             4: dict(base)}
+    published = {1: dict(base), 2: dict(base), 3: dict(base)}
+    # 4 no está publicado: ese caso ya lo marca la comparación de siempre (sin datos de la IA).
+    assert refresh.replaced_in_draft(draft, published) == {2, 3}
+
+
+def test_cambio_de_reglas_en_el_borrador_se_publica(data):
+    # Lo publicado sigue al día con su propia versión (3), así que la comparación con la vista
+    # no lo marca; el borrador ya tiene otro resultado y tiene que publicarse sin llamar al modelo.
+    repos, enrichment, ideas = data
+    repo = repos[0]
+    record = enrichment[repo.github_id]
+    old = dict(record, prompt_version="3",
+               ai_input_hash=input_hash(enrichment_message(repo), record["provider"], "3"))
+    published = {"enrichment": {**enrichment, repo.github_id: old}, "ideas": ideas}
+    plan = refresh.current_state(repos, published)
+    assert [r.github_id for r in plan.publish_enrichment] == [repo.github_id]
+    assert plan.publish_ideas == [] and plan.model_calls == 0
+
+
+def test_no_publica_un_reemplazo_si_el_borrador_esta_desactualizado(data):
+    repos, enrichment, ideas = data
+    repo = repos[0]
+    live = [repo.model_copy(update={"readme_text": "Nuevo.\n\n" + (repo.readme_text or "")})]
+    live += repos[1:]
+    plan = refresh.make_plan(diff_catalog(live, repos, enrichment, ideas),
+                             published=CatalogDiff(), replaced={"enrichment": [repo]})
+    assert plan.publish_enrichment == []
+    assert [r.github_id for r in plan.enrichment] == [repo.github_id]   # primero se regenera
 
 
 def test_lo_publicado_se_lee_igual_que_los_archivos(data):

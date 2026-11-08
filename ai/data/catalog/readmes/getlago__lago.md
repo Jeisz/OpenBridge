@@ -1,0 +1,281 @@
+<!-- PROJECT LOGO -->
+<div align="center">
+  <a href="https://github.com/getlago/lago">
+    <img src="./docs/images/readme-hero-assets/lago-product-platform.png" alt="Lago product interfaces for billable metrics, real-time usage, alerts, invoices, credits, and pricing">
+  </a>
+
+  <h1 align="center">Lago</h1>
+
+  <p>
+    <strong>Agentic-first monetization infrastructure for AI products</strong>
+    <br />
+    Meter tokens, compute, API calls, or any product usage.<br />
+    Turn usage into pricing, credits, entitlements, invoices, payments, and revenue.
+    <br />
+    Use Lago Direct for your own product, or Lago Embedded to power monetization for your customers.
+    <br />
+    <br />
+    <a href="https://getlago.com/pricing"><strong>Talk to us about Lago Cloud</strong></a>
+    ·
+    <a href="#build-with-your-ai-agent"><strong>Build with your AI agent</strong></a>
+    ·
+    <a href="#see-lago-price-an-ai-workload"><strong>Run the AI billing demo</strong></a>
+    ·
+    <a href="https://getlago.com/docs/welcome"><strong>Documentation</strong></a>
+  </p>
+</div>
+
+<p align="center">
+  <a href="https://github.com/getlago/lago/stargazers"><img src="https://img.shields.io/github/stars/getlago/lago" alt="GitHub stars"></a>
+  <a href="https://github.com/getlago/lago/releases"><img src="https://img.shields.io/github/v/release/getlago/lago" alt="Latest release"></a>
+  <a href="https://github.com/getlago/lago/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-AGPLv3-purple" alt="AGPLv3 license"></a>
+  <a href="https://getlago.com/slack"><img src="https://img.shields.io/badge/Slack-community-%234A154B" alt="Lago Slack community"></a>
+</p>
+
+<p align="center">
+  <img src="./docs/images/readme-customer-proof-v1.png" alt="Trusted by Mistral AI, Groq, PayPal, Synthesia, and Blacksmith. Lago issues $829 million in invoices each month.">
+</p>
+
+<p align="center">
+  <em>“Lago has been able to follow the pace of our releases and has allowed us to focus on what we do best.”</em>
+  <br />
+  <strong>Timothée Lacroix, CTO at Mistral AI</strong>
+  ·
+  <a href="https://getlago.com/blog/mistral-billing">Read the customer story</a>
+</p>
+
+---
+
+## Build with your AI agent
+
+Give your coding agent Lago's public documentation, then choose the API, CLI, or MCP for your workflow. Paste this prompt to start:
+
+```text
+Read https://getlago.com/llms.txt and follow the relevant Lago guides for this
+project. Use https://swagger.getlago.com/openapi.yaml for exact API fields.
+Help me design and implement a billing integration. Ask before live access.
+```
+
+| Your task | Start here |
+| --- | --- |
+| Build billing into your application | [REST API and SDKs](https://getlago.com/developers) |
+| Inspect billing, run diagnostics, or write scripts | [Lago CLI](https://github.com/getlago/lago-cli) |
+| Give an assistant tools for live billing data and supported operations | [Lago MCP server](https://github.com/getlago/lago-agent-toolkit) |
+| Give your agent current billing and API context | [Documentation index](https://getlago.com/llms.txt) or [documentation MCP](https://getlago.com/docs/mcp) |
+
+These interfaces work independently. Application code uses an SDK or the REST API; no Lago plugin is required. Confirm the target organization and environment, keep API keys out of prompts and source control, and review financial changes before execution.
+
+Follow the [agent setup guide](https://getlago.com/docs/guide/ai-agents/for-agents) for connection details and validation, or explore the [website overview](https://getlago.com/for-agents). To see real usage become a charge locally, run the maintained demo below.
+
+## See Lago price an AI workload
+
+Run the maintained demo from this repository:
+
+```bash
+./examples/agentic-ai-demo/run.sh
+```
+
+It starts the Lago version that matches this checkout, creates a disposable local organization, and prices three illustrative AI requests. Each request sends one input-token event and one output-token event:
+
+```text
+3 AI requests
+5,000 input tokens  x $0.000002 = $0.01
+1,250 output tokens x $0.000008 = $0.01
+Lago usage total                   = $0.02
+```
+
+Docker Compose starts an isolated Lago service, then a small script seeds and verifies the example through Lago's API. It retrieves current usage, independently reconciles the result, and retries one transaction to confirm that usage does not increase. Everything stays on your machine; the demo does not access Lago Cloud. The bundled credentials and API key are disposable and only intended for this local demo.
+
+Log into [http://localhost:8080](http://localhost:8080) with `agentic-ai-demo@example.local` / `agentic-ai-demo-local-password`, then open **Customers → Agentic AI Demo Customer → Agentic AI Demo subscription → Usage**.
+
+Requirements: Docker, `curl`, and `jq`. If ports 8080 or 3001 are occupied, set `LAGO_DEMO_UI_PORT` and `LAGO_DEMO_API_PORT` before running. The demo keeps Lago running so you can inspect the customer, metrics, plan, subscription, events, and usage in the UI. Remove its isolated Compose project and data volume when you are done:
+
+```bash
+./examples/agentic-ai-demo/run.sh --cleanup
+```
+
+<details>
+<summary><strong>Use Claude Code, Codex, or Cursor</strong></summary>
+
+Open this repository in your coding agent and paste:
+
+```text
+Run Lago's maintained Agentic AI demo by following this README. Keep it local;
+do not modify source files or unrelated Docker resources. When it passes, give
+me the UI URL, token usage and charges, idempotency evidence, and cleanup
+command. Then offer to connect this agent to Lago's local MCP server.
+```
+
+</details>
+
+## What is Lago?
+
+Lago is the programmable system between product usage and revenue. Send events from your application, turn them into billable metrics, apply pricing and entitlements, then generate invoices and collect payments.
+
+```text
+Usage events -> Metering -> Pricing and credits -> Entitlements -> Invoices -> Payments -> Revenue
+```
+
+Use Lago to launch and change pricing without rebuilding billing:
+
+- tokens by model, input, output, cache, reasoning, or tool call
+- GPU, CPU, storage, and other compute consumption
+- API calls, transactions, seats, active users, or custom events
+- prepaid credits with automatic top-ups
+- subscriptions with allowances, minimum commitments, and overages
+- self-serve plans and negotiated enterprise contracts in the same system
+
+Lago is headless and API-first. Your application, internal tools, and agents use the same billing primitives through the REST API, SDKs, webhooks, and MCP server. Product, finance, and operations teams can use the Lago UI when a human interface is faster.
+
+## How Lago fits into your stack
+
+<p align="center">
+  <img src="./docs/images/how-lago-fits-v1.png" alt="Lago Direct connects AI products, coding agents, and internal teams through APIs, Agent SDKs, the MCP server, and Lago UI. Lago Embedded lets platforms offer the same capabilities through APIs and white-label interfaces. Both use the Lago platform for metering, pricing, credits, entitlements, invoicing, payments, and revenue.">
+</p>
+
+Lago keeps metering and pricing independent from payment processing. Connect Stripe, Adyen, GoCardless, or another provider without making its product catalog your source of truth.
+
+## Lago Direct and Lago Embedded
+
+The same Lago engine supports two operating models:
+
+| | **Lago Direct** | **[Lago Embedded](https://getlago.com/platform/embedded)** |
+|---|---|---|
+| **Who monetizes** | You monetize your own product | Your customers monetize through your platform |
+| **Experience** | Your application and teams use Lago through APIs, agent interfaces, and Lago UI | Your customers use billing capabilities inside your product through APIs and white-label interfaces |
+| **Brand** | Lago powers your billing stack | Lago stays behind the scenes under your brand |
+| **Public example** | [Mistral AI](https://getlago.com/blog/mistral-billing) | [PayPal](https://getlago.com/blog/paypal-x-lago) |
+
+**Lago Direct** is the standard way to use Lago: send your own product usage, model your pricing, and bill your customers. **Lago Embedded** uses the same primitives to let platforms, marketplaces, AI builders, fintech products, and developer tools offer metering and billing to their customers.
+
+Both models start with Lago's open-source billing engine and can be paired with Premium deployment, customization, security, and support options. With Lago Embedded, you control the customer experience and which capabilities your users can access.
+
+## Agentic-first by design
+
+Agentic-first means Lago's billing model is available as structured, inspectable interfaces instead of being trapped in a dashboard.
+
+| Interface | What it enables | Availability |
+|---|---|---|
+| **[REST API and OpenAPI](https://github.com/getlago/lago-openapi)** | Program every core billing workflow and generate typed clients or tools from the schema | Open source |
+| **[Lago CLI](https://github.com/getlago/lago-cli)** | Run billing commands, inspect structured output, and automate terminal workflows | Open source, MIT |
+| **[Lago MCP server](https://github.com/getlago/lago-agent-toolkit)** | Give an MCP-compatible agent tools to read and write invoices, usage, customers, payments, credit notes, coupons, and other Lago primitives | Open source, MIT |
+| **[Lago Agent SDK for Python](https://github.com/getlago/lago-agent-sdk-python)** | Wrap supported LLM clients, normalize usage, and send token or model-cost events without blocking the LLM call | Open source, MIT |
+| **[Lago Agent SDK for JavaScript and TypeScript](https://github.com/getlago/lago-agent-sdk-js)** | Instrument OpenAI, Anthropic, Mistral, Gemini, and AWS Bedrock clients with under 5 ms p99 wrapper overhead | Open source, MIT |
+| **[Finance Assistant](https://getlago.com/platform/ai)** | Ask read-only questions about billing, usage, and revenue in plain language | Available |
+| **[Billing Assistant](https://getlago.com/docs/guide/ai-agents/billing-assistant)** | Query billing data and run operations in natural language, with confirmation for important or destructive actions | Premium, available upon request |
+
+The MCP server exposes read and write tools and inherits the permissions of its Lago API key. Treat agent credentials as privileged, control who can access the agent, review tool calls, and keep human confirmation around sensitive billing changes.
+
+## Platform
+
+| Layer | Capabilities |
+|---|---|
+| **Meter usage** | Real-time event ingestion, filters, dimensions, custom aggregations, batch ingestion, and idempotency by `transaction_id` |
+| **Model pricing** | Usage-based, recurring, prepaid, percentage, graduated, package, volume, minimum-commitment, and hybrid charges |
+| **Control access** | Entitlements, allowances, wallets, credit grants, top-ups, and usage alerts |
+| **Bill customers** | Subscriptions, invoices, credit notes, taxes, multiple currencies, multiple entities, and customer-specific overrides |
+| **Collect revenue** | Payment-provider orchestration, retries, dunning, and payment-status synchronization |
+| **Understand revenue** | Usage, MRR, invoice, customer, and revenue analytics |
+| **Connect the stack** | Salesforce, HubSpot, NetSuite, Xero, Avalara, cloud marketplaces, data warehouses, and webhooks |
+| **Lago Direct** | Meter and bill your own customers through Lago APIs, agent interfaces, and UI |
+| **[Lago Embedded](https://getlago.com/platform/embedded)** | White-label metering and billing for platforms, marketplaces, AI builders, and fintech products |
+
+Explore [metering](https://getlago.com/platform/usage-metering), [billing and invoicing](https://getlago.com/platform/billing-invoicing), [entitlements](https://getlago.com/platform/entitlements), [cash collection](https://getlago.com/platform/cash-collection), [revenue analytics](https://getlago.com/platform/revenue-analytics), and [integrations](https://getlago.com/docs/integrations/introduction).
+
+## Production characteristics
+
+- **Idempotent ingestion.** Lago deduplicates usage events by `transaction_id`, so retrying an event does not bill it twice. [Read the ingestion guide](https://getlago.com/docs/guide/events/ingesting-usage).
+- **Atomic batches.** If one event in a batch is invalid, Lago rejects the batch and persists none of its events. [Read the batch API reference](https://getlago.com/docs/api-reference/events/batch).
+- **Asynchronous processing.** Dedicated workers can isolate events, billing, payments, invoices, webhooks, PDFs, alerts, and analytics as volume grows. [Review the architecture](./docs/architecture.md).
+- **Observable operation.** Lago exposes Prometheus metrics for APIs, queues, workers, events, billing, webhooks, and dependencies. [Review monitoring](./docs/monitoring.md).
+- **Deployment control.** Lago Cloud runs and updates the platform for you. When you need to run it yourself, self-host Lago in your cloud or deploy it on-premise; self-hosted production deployments can separate and scale stateful services and workers independently.
+- **Security.** Lago is SOC 2 Type II certified and supports self-hosting for teams that need infrastructure and data control. [Review security](https://getlago.com/security).
+
+## Chosen by teams operating at scale
+
+Mistral AI, Groq, PayPal, Synthesia, Blacksmith, and other teams have publicly selected Lago for billing. The figures below describe the companies using Lago, not volume processed by Lago.
+
+| Company | Lago use | Public company context |
+|---|---|---|
+| **[Mistral AI](https://getlago.com/blog/mistral-billing)** | Token metering, prepaid credits, invoicing, taxes, and payment collection for paid AI products | Reported at more than $400M in annualized revenue run rate |
+| **[Groq](https://getlago.com/customers)** | Lago customer | More than 5M developers and trillions of AI tokens processed weekly |
+| **[Blacksmith](https://getlago.com/blog/blacksmith-billing)** | Usage-based billing for compute-intensive CI workloads | More than 6,000 companies; raised a $45M Series B at a $550M valuation |
+| **[Synthesia](https://getlago.com/customers)** | Lago customer | Approximately $140M ARR |
+| **[PayPal](https://getlago.com/blog/paypal-x-lago)** | Embedded, usage-based billing for merchants | More than 430M active accounts worldwide |
+
+Sources for company context: [Mistral AI](https://observer.com/2026/07/arthur-menschs-mistral-is-europes-best-bet-for-sovereign-a-i/), [Groq](https://groq.com/newsroom/groq-raises-usd650m-to-scale-its-ai-inference-cloud-business), [Blacksmith](https://www.blacksmith.sh/blog/announcing-blacksmiths-series-b-led-by-peak-xv-partners), [Synthesia](https://www.synthesia.io/post/how-we-scaled-our-billing-system-from-40m-to-140m-arr), and [PayPal](https://newsroom.paypal-corp.com/2026-07-02-PayPal-Joins-the-European-Payments-Council).
+
+## Deployment options
+
+Lago Cloud and self-hosted Lago differ in deployment, not features. Your code uses the same API and SDKs either way; only the base URL changes.
+
+### 1. Lago Cloud (recommended)
+
+With [Lago Cloud](https://getlago.com/docs/guide/lago-cloud), there is nothing to deploy or maintain. Lago runs and updates the platform for you in US or EU regions and provides commercial support, so your team never operates billing infrastructure. [Talk to us about Lago Cloud](https://getlago.com/pricing).
+
+### 2. Self-hosted and on-premise
+
+Run the open-source platform from this repository (AGPLv3) in your cloud or on your own infrastructure when you need to inspect, extend, and operate billing yourself. Start with [Deploy Lago](#deploy-lago) below and the [self-hosted deployment guide](https://getlago.com/docs/guide/lago-self-hosted/docker#configuration).
+
+### Also available
+
+| Option | Best for | Access |
+|---|---|---|
+| **Agent tooling** | Teams that want to meter LLM usage or expose billing primitives to agents | Separate open-source Agent SDK and MCP repositories, MIT |
+| **Premium capabilities** | Teams that need selected assistants, enterprise integrations, governance, or embedded use cases | Availability varies by feature; [talk to us](https://getlago.com/pricing) |
+
+## Deploy Lago
+
+To self-host Lago or deploy it on-premise, start with a source-based local deployment:
+
+```bash
+git clone --depth 1 https://github.com/getlago/lago.git
+cd lago
+
+echo "LAGO_RSA_PRIVATE_KEY=\"$(openssl genrsa 2048 | openssl base64 -A)\"" >> .env
+docker compose up -d
+```
+
+> [!IMPORTANT]
+> **Upgrading the front image.** From v1.56.0 ([getlago/lago-front#4359](https://github.com/getlago/lago-front/pull/4359)), the `front` container runs nginx as uid 65532 (not root), with a read-only root filesystem, and listens on **8080** (8443 for TLS) instead of 80 (443). The `docker-compose.yml` in this repository already maps the host ports to the new container ports. If you run your own Compose file, Kubernetes manifests or reverse proxy:
+>
+> - Point it at container port `8080`. The host port can stay `80`.
+> - Give `/tmp` a writable mount (a tmpfs or an emptyDir). The container writes its pid file, `env-config.js` and `csp.conf` there.
+> - If you mount your own nginx `default.conf`, listen on 8080/8443, and copy the `env-config.js` location, the dotfile location (it keeps `/.env.sh` private) and the `include /tmp/csp.conf` lines from `extra/nginx-selfsigned.conf`. Do not set `ssl_dhparam`: the image cannot load DH parameter files.
+> - Make TLS keys readable by uid 65532 (`extra/init-selfsigned.sh` and `extra/init-letsencrypt.sh` do this).
+> - Remove any `command:` override for the front service. It never reached nginx; use the `entrypoint:` in `docker-compose.yml` instead.
+
+Use the [self-hosted deployment guide](https://getlago.com/docs/guide/lago-self-hosted/docker#configuration) for persistent storage, SMTP, TLS, object storage, Redis, database configuration, and upgrades. For larger deployments, use the [Lago Helm charts](https://github.com/getlago/lago-helm-charts) and configure [dedicated workers](./docs/architecture.md#dedicated-workers).
+
+## SDKs and developer resources
+
+| Language | Client |
+|---|---|
+| **Node.js** | [lago-javascript-client](https://github.com/getlago/lago-javascript-client) |
+| **Python** | [lago-python-client](https://github.com/getlago/lago-python-client) |
+| **Ruby** | [lago-ruby-client](https://github.com/getlago/lago-ruby-client) |
+| **Go** | [lago-go-client](https://github.com/getlago/lago-go-client) |
+
+- [Getting started](https://getlago.com/docs/welcome)
+- [API reference](https://getlago.com/docs/api-reference/intro)
+- [OpenAPI specification](https://github.com/getlago/lago-openapi)
+- [Pricing templates](https://getlago.com/docs/templates/introduction)
+- [Architecture](./docs/architecture.md)
+- [Monitoring](./docs/monitoring.md)
+- [Changelog](https://getlago.com/docs/changelog/product)
+- [Public roadmap](https://getlago.canny.io/)
+- [System status](https://status.getlago.com/)
+
+## Contributing
+
+Lago is built in the open. Read the [contributing guide](./CONTRIBUTING.md) and [development environment setup](./docs/dev_environment.md) to get started.
+
+Look for issues labeled [`beginner`](https://github.com/getlago/lago/issues?q=is%3Aissue%20state%3Aopen%20label%3Abeginner) or [`help-wanted`](https://github.com/getlago/lago/issues?q=is%3Aissue%20state%3Aopen%20label%3Ahelp-wanted), or join the [Lago Slack community](https://getlago.com/slack).
+
+## License
+
+The Lago platform is distributed under the [AGPLv3 license](./LICENSE). Read [why Lago chose AGPLv3](https://getlago.com/blog/open-source-licensing-and-why-lago-chose-agplv3). Lago's Agent SDKs and MCP server are distributed from separate repositories under the MIT license.
+
+## Analytics and tracking
+
+Self-hosted Lago instances collect basic product analytics by default. Lago does not collect customer PII or financial data through this tracking. [Review what is collected or opt out](https://getlago.com/docs/guide/lago-self-hosted/tracking-analytics).
