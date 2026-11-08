@@ -8,9 +8,9 @@ Uso, desde la raíz del repo:
 
 import argparse
 import time
-from datetime import date
+from datetime import date, datetime
 
-from ai import embeddings
+from ai import catalog, embeddings
 from ai.eval.golden import (DEFAULT_GOLDEN,
                             EVAL_DIR,
                             GOLDEN_FILES,
@@ -40,18 +40,28 @@ def top_cell(results: list[SearchResult]) -> str:
 def render_report(model: str, min_score: float | None, golden_name: str,
                   golden: SearchGoldenSet, n_repos: int, summary: dict, times: dict,
                   rows: list[tuple[SearchQuery, list[SearchResult], QueryOutcome]],
-                  fields: tuple[TextField, ...] = TEXT_FIELDS, variant: str | None = None) -> str:
-    taken = f" del {golden.catalog_taken_at:%Y-%m-%d}" if golden.catalog_taken_at else ""
+                  fields: tuple[TextField, ...] = TEXT_FIELDS, variant: str | None = None,
+                  snapshot_at: str | None = None) -> str:
+    labels = (f" (etiquetas del catálogo del {golden.catalog_taken_at:%Y-%m-%d})"
+              if golden.catalog_taken_at else "")
+    measured = f" del {snapshot_at[:10]}" if snapshot_at else ""
     option = f" --texto {variant}" if variant else ""
     lines = [
         f"# Evaluación de la búsqueda · {model}",
         "",
         f"Generado con `python -m ai.eval.run_search_eval --golden {golden_name}{option}` "
         f"el {date.today()}. "
-        f"Golden set `{golden_name}` v{golden.version} · catálogo `{golden.source}`{taken} · "
+        f"Golden set `{golden_name}` v{golden.version}{labels} · "
+        f"catálogo `{golden.source}`{measured} · "
         f"{n_repos} repos · k = {K} · CPU · "
         f"datos de la IA en el texto: {', '.join(fields) or 'ninguno'}.",
         "",
+    ]
+    if (snapshot_at and golden.catalog_taken_at
+            and golden.catalog_taken_at != datetime.fromisoformat(snapshot_at)):
+        lines += ["> ⚠ Las etiquetas son de otro catálogo: estas cifras no son válidas ni "
+                  "comparables hasta volver a etiquetar.", ""]
+    lines += [
         "## Resumen",
         "",
         "| Métrica | Valor |",
@@ -174,8 +184,9 @@ def main(argv: list[str] | None = None) -> None:
     RESULTS_DIR.mkdir(exist_ok=True)
     suffix = f"-texto-{args.texto}" if args.texto else ""
     path = RESULTS_DIR / f"{REPORT_PREFIX[args.golden]}-{short(model).lower()}{suffix}.md"
+    snapshot_at = catalog.snapshot_taken_at() if golden.source == "snapshot" else None
     path.write_text(render_report(model, spec.min_score, args.golden, golden, n_repos,
-                                  summary, times, rows, fields, args.texto),
+                                  summary, times, rows, fields, args.texto, snapshot_at),
                     encoding="utf-8",)
 
     print(f"Modelo: {model} · golden set: {args.golden} · catálogo: {golden.source} ({n_repos} repos)")

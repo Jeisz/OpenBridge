@@ -191,6 +191,13 @@ def describe_plan(plan: Plan) -> str:
     return "\n".join(lines)
 
 
+def describe_replaced(replaced: dict[str, list[Repo]]) -> str:
+    """Línea del informe para lo regenerado que aún no se publicó (la comparación con la vista no lo ve)."""
+    return ("Reemplazados en los archivos, sin publicar todavía: "
+            f"enriquecimiento {len(replaced.get('enrichment', []))} · "
+            f"ideas {len(replaced.get('ideas', []))}")
+
+
 def check_provider(path: Path, provider: str) -> None:
     """Un solo modelo por archivo: termina si los registros son de otro proveedor."""
     used = {r["provider"] for r in load_records(path).values()}
@@ -240,6 +247,7 @@ def current_state(live: list[Repo], published: dict[str, dict[int, dict]]) -> Pl
                      version_block(IDEAS_FILE, IDEAS_VERSION), published=public,
                      replaced=replaced)
     print(report(public, len(live), len(known)))
+    print(describe_replaced(replaced))
     print(describe_plan(plan))
     return plan
 

@@ -174,11 +174,10 @@ def test_lo_publicado_se_lee_igual_que_los_archivos(data):
     assert not diff_catalog(repos, repos, published["enrichment"], published["ideas"]).has_changes
 
 
-def test_bloqueo_por_version_de_los_archivos_del_repo():
-    # Hoy: enriquecimiento en una versión anterior al código, ideas al día.
-    assert refresh.version_block(ENRICHMENT_FILE, refresh.ENRICHMENT_VERSION) is not None
-    assert refresh.version_block(IDEAS_FILE, refresh.IDEAS_VERSION) is None
-
+def test_el_informe_cuenta_los_reemplazados(data):
+    repos, _, _ = data
+    text = refresh.describe_replaced({"enrichment": repos[:2], "ideas": []})
+    assert "enriquecimiento 2 · ideas 0" in text
 
 # --- Archivos (en una copia temporal) ---
 
@@ -196,6 +195,16 @@ def files(tmp_path, monkeypatch):
     monkeypatch.setattr(export_catalog_snapshot, "README_DIR", folder / "readmes")
     monkeypatch.setattr(export_catalog_snapshot, "META_FILE", folder / "meta.json")
     return folder
+
+
+def test_bloqueo_por_version_solo_si_el_archivo_es_de_otra_version(tmp_path):
+    # Sin archivo o en la misma versión de las reglas se puede regenerar; en otra, no.
+    path = tmp_path / "enrichment.json"
+    assert refresh.version_block(path, "5") is None
+    save_records(path, {}, "4")
+    assert refresh.version_block(path, "5") is not None
+    save_records(path, {}, "5")
+    assert refresh.version_block(path, "5") is None
 
 
 def test_edit_records_quita_y_renombra_sin_cambiar_la_version(files):

@@ -17,11 +17,11 @@ import argparse
 import json
 import time
 from collections import defaultdict
-from datetime import date
+from datetime import date, datetime
 
 from dotenv import load_dotenv
 
-from ai import embeddings
+from ai import catalog, embeddings
 from ai.assistant import CANDIDATES_LOGGED, CANDIDATES_SHOWN, asistir
 from ai.eval.assistant_cases import CASE_FILES, load_assistant_cases
 from ai.eval.flow_metrics import BUDGET_SECONDS, flow_outcome, summarize
@@ -127,19 +127,26 @@ def render_runs(providers, outcomes, runs) -> list[str]:
 
 
 def render_report(providers, summaries, cold, outcomes, answers, cases, runs,
-                  n_repos, min_score, shown) -> str:
+                  n_repos, min_score, shown, snapshot_at=None, labels_at=None) -> str:
     def row(label, fmt):
         return f"| {label} | " + " | ".join(fmt(summaries[p]) for p in providers) + " |"
 
+    measured = f" (snapshot del {snapshot_at[:10]})" if snapshot_at else ""
+    labels = f"; etiquetas de los casos del catálogo del {labels_at:%Y-%m-%d}" if labels_at else ""
     lines = [
         "# Comparación de modelos · flujo completo del asistente",
         "",
         f"Generado con `python -m ai.eval.run_assistant_eval` el {date.today()} "
         f"a las {time.strftime('%H:%M')}. {len(cases)} casos × {runs} corridas por proveedor; "
-        f"catálogo de {n_repos} repos; umbral {min_score}; el modelo ve {shown} "
+        f"catálogo de {n_repos} repos{measured}{labels}; umbral {min_score}; el modelo ve {shown} "
         f"candidatos por necesidad y se registran {max(CANDIDATES_LOGGED, shown)}. "
         "La llamada de calentamiento no se cuenta.",
         "",
+    ]
+    if snapshot_at and labels_at and labels_at != datetime.fromisoformat(snapshot_at):
+        lines += ["> ⚠ Las etiquetas de los casos son de otro catálogo: estas cifras no son "
+                  "válidas ni comparables hasta volver a etiquetar.", ""]
+    lines += [
         "## Modelos",
         "",
         "| Proveedor | Modelo | Razonamiento | Arranque en frío |",
@@ -294,7 +301,8 @@ def main() -> None:
     stem = RESULTS_DIR / name
     stem.with_suffix(".md").write_text(
         render_report(ran, summaries, cold, outcomes, answers, cases, args.runs,
-                      len(index.repos), min_score, args.shown),
+                      len(index.repos), min_score, args.shown,
+                      catalog.snapshot_taken_at(), case_set.catalog_taken_at),
         encoding="utf-8")
     stem.with_suffix(".json").write_text(
         json.dumps(answers, ensure_ascii=False, indent=2), encoding="utf-8")
