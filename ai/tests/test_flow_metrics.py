@@ -35,7 +35,7 @@ def assisted(results, pick, other_limitations=(), title="Observabilidad", missin
                 "rationale": rationale}],
         links=[], assumptions=[], other_limitations=list(other_limitations))
     found_ = {"observability": results, **{c: [] for c in missing}}
-    response = assistant.to_response(draft, understood.needs, found_)
+    response = assistant.to_response(draft, understood.needs, found_, request=CASE.query)
     if final_extra:
         response = response.model_copy(
             update={"limitations": [*response.limitations, *final_extra]})

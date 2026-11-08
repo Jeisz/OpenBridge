@@ -8,21 +8,10 @@ from collections import defaultdict
 from dataclasses import dataclass
 from statistics import median
 
-from ai.assistant import Understood
+from ai.assistant import Understood, evidence_is_literal
 from ai.eval.assistant_cases import AssistantCase
 
 QUERY_WORDS = (3, 8)  # largo de consulta que pide el prompt
-
-
-def normalize(text: str) -> str:
-    """Minúsculas y espacios simples, para comparar fragmentos de texto."""
-    return " ".join(text.lower().split())
-
-
-def evidence_is_literal(evidence: str, request: str) -> bool:
-    """El fragmento aparece en el pedido, sin contar mayúsculas, espacios ni comillas."""
-    fragment = normalize(evidence).strip(" .,;:\"'«»")
-    return bool(fragment) and fragment in normalize(request)
 
 
 def query_length_ok(query: str) -> bool:

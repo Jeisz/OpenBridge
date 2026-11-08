@@ -111,7 +111,8 @@ def test_caja_descartada_conexion_invalida_y_necesidad_sin_candidatos():
               links=[{"from_need": "ai", "to_need": "cache", "protocol": "REST",
                       "description": "consulta"}],
               other=["Otra limitación."])
-    response = assistant.to_response(d, needs("ai", "cache", "auth"), CANDIDATES)
+    response = assistant.to_response(d, needs("ai", "cache", "auth"), CANDIDATES,
+                                     request=REQUEST)
     assert response.status == "ok"
     assert [c.full_name for c in response.components] == ["run-llama/llama_index"]
     assert response.connections == []        # apuntaba a la caja descartada
@@ -125,7 +126,8 @@ def test_limitaciones_del_modelo_que_repiten_una_necesidad_sin_herramienta_se_qu
               other=["Falta una caché para las respuestas.",        # repite la descartada
                      "La AUTENTICACION de usuarios no está cubierta.",  # repite la sin candidatos
                      "LangChain podría complementar a LlamaIndex."])
-    response = assistant.to_response(d, needs("ai", "cache", "auth"), CANDIDATES)
+    response = assistant.to_response(d, needs("ai", "cache", "auth"), CANDIDATES,
+                                     request=REQUEST)
     assert response.limitations == [
         response.limitations[0],                  # "Caché: ninguna de las herramientas…" (sistema)
         response.limitations[1],                  # "Autenticación: no se encontraron…" (sistema)
@@ -139,36 +141,81 @@ def test_el_filtro_compara_palabras_completas():
     d = draft([box("redis/redis", need="cache")],
               other=["Gestionar la materia prima queda fuera.",   # "materia" no es "IA"
                      "La IA del sistema no está cubierta."])        # repite la necesidad de IA
-    response = assistant.to_response(d, needs("ai", "cache"), {"cache": CANDIDATES["cache"]})
+    response = assistant.to_response(d, needs("ai", "cache"), {"cache": CANDIDATES["cache"]},
+                                     request=REQUEST)
     assert response.limitations[-1] == "Gestionar la materia prima queda fuera."
     assert not any("La IA del sistema" in text for text in response.limitations)
 
 
 def test_sin_necesidades_sin_herramienta_no_se_quita_nada():
     d = draft(VALID, other=["La caché necesita memoria suficiente.", "Otra limitación."])
-    response = assistant.to_response(d, needs("ai", "cache"), CANDIDATES)
+    response = assistant.to_response(d, needs("ai", "cache"), CANDIDATES, request=REQUEST)
     assert response.limitations == ["La caché necesita memoria suficiente.", "Otra limitación."]
 
 
 def test_si_descarta_todo_queda_sin_evidencia():
     response = assistant.to_response(draft([box(None), box(None, need="cache")]),
-                                     needs("ai", "cache"), CANDIDATES)
+                                     needs("ai", "cache"), CANDIDATES, request=REQUEST)
     assert response.status == "no_evidence"
     assert response.components == []
 
 
 def test_solo_relacionado_queda_sin_herramienta_aunque_traiga_nombre():
     d = draft([box(), box("redis/redis", need="cache", fit="only_related")])
-    response = assistant.to_response(d, needs("ai", "cache"), CANDIDATES)
+    response = assistant.to_response(d, needs("ai", "cache"), CANDIDATES, request=REQUEST)
     assert [c.full_name for c in response.components] == ["run-llama/llama_index"]
     assert response.limitations[0].startswith("Caché: ninguna de las herramientas encontradas")
 
 
 def test_plantillas_cumplen_el_contrato():
     assert assistant.clarification_response(["¿Qué vende tu negocio?"]).status == "needs_clarification"
-    response = assistant.no_evidence_response(needs("payments", "auth"))
+    response = assistant.no_evidence_response(needs("payments", "auth"), request=REQUEST)
     assert response.status == "no_evidence"
     assert len(response.limitations) == 2
+
+
+# --- Línea de una necesidad sin herramientas ---
+
+PAYMENTS_REQUEST = "Tenemos un gimnasio y queremos cobrar las mensualidades en línea con tarjeta."
+NO_TOOLS = "Pagos: no se encontraron herramientas del catálogo"
+
+
+def payments_need(evidence):
+    """Necesidad de pagos; la consulta va sin tildes, como a veces la escribe el modelo."""
+    return assistant.understanding_schema()(
+        needs=[{"category": "payments", "query": "cobro de mensualidades en linea",
+                "evidence": evidence}],
+        clarification_questions=[]).needs[0]
+
+
+@pytest.mark.parametrize("evidence, expected", [
+    ("cobrar las mensualidades en línea", f"{NO_TOOLS} para «cobrar las mensualidades en línea»."),
+    # comillas, punto final, mayúscula y espacios de más: se cita limpia, con la forma del usuario
+    ("«Cobrar las  mensualidades en línea.»",
+     f"{NO_TOOLS} para «Cobrar las mensualidades en línea»."),
+    ("", f"{NO_TOOLS}."),                                    # sin evidencia
+    ("pagar con criptomonedas", f"{NO_TOOLS}."),              # no está en el pedido
+    ("cobrar mensualidades en línea", f"{NO_TOOLS}."),       # parafrasea: no es literal
+])
+def test_linea_sin_herramientas_cita_al_usuario_o_solo_la_categoria(evidence, expected):
+    assert assistant._missing_line(payments_need(evidence), PAYMENTS_REQUEST) == expected
+
+
+def test_linea_sin_herramientas_con_cita_larga_queda_solo_la_categoria():
+    fragment = "cobrar las mensualidades en línea" + " y las inscripciones de cada sede" * 4
+    request = f"Queremos {fragment}."
+    assert len(fragment) > assistant.EVIDENCE_CHARS
+    assert assistant._missing_line(payments_need(fragment), request) == f"{NO_TOOLS}."
+    cut = fragment[:assistant.EVIDENCE_CHARS]               # justo en el límite: se cita
+    expected = f"{NO_TOOLS} para «{cut.strip()}»."
+    assert assistant._missing_line(payments_need(cut), request) == expected
+
+
+def test_sin_evidencia_del_catalogo_cita_al_usuario_y_no_la_consulta():
+    response = assistant.no_evidence_response([payments_need("cobrar las mensualidades en línea")],
+                                              request=PAYMENTS_REQUEST)
+    assert response.limitations == [f"{NO_TOOLS} para «cobrar las mensualidades en línea»."]
+    assert "linea" not in response.limitations[0]
 
 
 # --- generar_mapa ---

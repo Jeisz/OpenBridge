@@ -33,6 +33,8 @@ TITLE_CHARS = 80         # límite del contrato
 CANDIDATES_SHOWN = 5    # candidatos por necesidad que ve el modelo
 CANDIDATES_LOGGED = 5   # los que se registran para medir el techo de la búsqueda
 BUDGET_SECONDS = 15.0   # tiempo de la IA por pedido (contrato: el frontend espera 20 s)
+EVIDENCE_CHARS = 120    # cita del usuario en las limitaciones; más larga, solo la categoría
+QUOTE_EDGES = " .,;:\"'«»"  # lo que se quita de los bordes de una cita
 
 Understood = LLMResult  # nombre que usan las métricas de entender
 
@@ -295,9 +297,28 @@ def draft_problems(draft: BaseModel, candidates: dict[str, list[SearchResult]]) 
     return problems
 
 
-def _missing_line(need) -> str:
+def _compact(text: str) -> str:
+    """Minúsculas y espacios simples, para comparar fragmentos de texto."""
+    return " ".join(text.lower().split())
+
+
+def evidence_is_literal(evidence: str, request: str) -> bool:
+    """El fragmento aparece en el pedido, sin contar mayúsculas, espacios ni comillas."""
+    fragment = _compact(evidence).strip(QUOTE_EDGES)
+    return bool(fragment) and fragment in _compact(request)
+
+
+def _missing_line(need, request: str) -> str:
+    """Línea del sistema para una necesidad sin herramientas.
+
+    Cita las palabras del usuario (la evidencia) si salen del pedido y son cortas; si no,
+    solo nombra la categoría. La consulta de búsqueda no se muestra: es texto interno.
+    """
     name = load_categories()[need.category].name
-    return f"{name}: no se encontraron herramientas del catálogo para «{need.query}»."
+    quote = " ".join(need.evidence.split()).strip(QUOTE_EDGES)
+    if len(quote) <= EVIDENCE_CHARS and evidence_is_literal(quote, request):
+        return f"{name}: no se encontraron herramientas del catálogo para «{quote}»."
+    return f"{name}: no se encontraron herramientas del catálogo."
 
 
 def _plain(text: str) -> str:
@@ -311,13 +332,14 @@ def _names(text: str, category_name: str) -> bool:
     return re.search(rf"\b{re.escape(_plain(category_name))}\b", _plain(text)) is not None
 
 
-def to_response(draft: BaseModel, needs, candidates: dict[str, list[SearchResult]]) -> AssistantResponse:
+def to_response(draft: BaseModel, needs, candidates: dict[str, list[SearchResult]], *,
+                request: str) -> AssistantResponse:
     """Arma la respuesta del contrato a partir del borrador. Lanza ValidationError si no cumple.
 
     Una caja sin repo (el modelo no eligió ninguno o juzgó que el candidato solo se
     relaciona con la necesidad) pasa a las limitaciones. Cada necesidad sin herramienta
     aparece una sola vez: con la línea del sistema; las limitaciones del modelo que la
-    nombran se quitan, porque la repetirían.
+    nombran se quitan, porque la repetirían. `request`: el pedido, para citar al usuario.
     """
     names = load_categories()
     components, keys, limitations = [], {}, []
@@ -338,7 +360,8 @@ def to_response(draft: BaseModel, needs, candidates: dict[str, list[SearchResult
                    for link in draft.links
                    if link.from_need in keys and link.to_need in keys
                    and link.from_need != link.to_need]
-    limitations += [_missing_line(n) for n in needs if not candidates.get(n.category)]
+    limitations += [_missing_line(n, request) for n in needs
+                    if not candidates.get(n.category)]
     limitations += [text for text in draft.other_limitations
                     if not any(_names(text, name) for name in uncovered)]
     return AssistantResponse(
@@ -362,13 +385,13 @@ def clarification_response(questions: list[str]) -> AssistantResponse:
         clarification_questions=questions, generated_at=datetime.now(timezone.utc))
 
 
-def no_evidence_response(needs) -> AssistantResponse:
+def no_evidence_response(needs, *, request: str) -> AssistantResponse:
     """Ninguna necesidad con candidatos: respuesta de plantilla, sin llamar a generar."""
     names = ", ".join(load_categories()[n.category].name.lower() for n in needs)
     return AssistantResponse(
         id=uuid4().hex, status="no_evidence",
         summary=f"No se encontraron herramientas del catálogo para lo que pides: {names}.",
-        limitations=[_missing_line(n) for n in needs],
+        limitations=[_missing_line(n, request) for n in needs],
         generated_at=datetime.now(timezone.utc))
 
 
@@ -397,7 +420,7 @@ def generar_mapa(request: str, needs, candidates: dict[str, list[SearchResult]],
         problems = draft_problems(draft, with_tools)
         if not problems:
             try:
-                to_response(draft, needs, candidates)
+                to_response(draft, needs, candidates, request=request)
             except ValidationError as err:
                 problems = [f"la respuesta no cumple el contrato: {err}"]
         return problems
@@ -405,7 +428,7 @@ def generar_mapa(request: str, needs, candidates: dict[str, list[SearchResult]],
     result = generate_valid(messages, schema, check, provider,
                              format_hint=_format_hint(with_tools), deadline=deadline)
     ok = result.data is not None and not result.problems_final
-    return (to_response(result.data, needs, candidates) if ok else None), result
+    return (to_response(result.data, needs, candidates, request=request) if ok else None), result
 
 
 # --- Flujo completo ---
@@ -450,7 +473,7 @@ def asistir(request: str, buscar, *, min_score: float,
 
     candidates = {c: found[:shown] for c, found in out.found.items() if found}
     if not candidates:
-        out.response = no_evidence_response(data.needs)
+        out.response = no_evidence_response(data.needs, request=request)
         return out
     out.response, out.generated = generar_mapa(request, data.needs, candidates,
                                                provider=provider, deadline=deadline)
