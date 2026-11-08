@@ -45,6 +45,10 @@ _SUPABASE_HOST_PATTERN = re.compile(
     r"^(?:[a-z0-9-]+\.)*pooler\.supabase\.com$|^db\.[a-z0-9]+\.supabase\.co$",
     re.IGNORECASE,
 )
+_SUPABASE_POOLER_HOST_PATTERN = re.compile(
+    r"^(?:[a-z0-9-]+\.)*pooler\.supabase\.com$",
+    re.IGNORECASE,
+)
 _LOCAL_HOSTS = frozenset({"localhost", "127.0.0.1", "::1"})
 
 _TARGET_SETTINGS: dict[str, Mapping[str, object]] = {
@@ -106,6 +110,19 @@ class DatabaseTarget:
             f"db={self.database} user={self.user} tls={self.sslmode} "
             f"escrituras={writes}"
         )
+
+    @property
+    def database_role(self) -> str:
+        """Rol con el que PostgreSQL identifica la sesión (``current_user``).
+
+        El pooler de Supabase exige el usuario con el formato
+        ``rol.<ref-del-proyecto>``, pero dentro de la sesión ``current_user``
+        devuelve solo ``rol``. En cualquier otro host el usuario configurado
+        es el rol tal cual.
+        """
+        if _SUPABASE_POOLER_HOST_PATTERN.match(self.host):
+            return self.user.split(".", 1)[0]
+        return self.user
 
     def __str__(self) -> str:  # pragma: no cover - trivial
         return self.describe()

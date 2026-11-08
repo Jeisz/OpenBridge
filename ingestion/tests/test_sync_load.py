@@ -167,6 +167,50 @@ def test_apply_blocks_missing_hash_version_column():
     assert 42 not in engine.repos
 
 
+def test_apply_accepts_pooler_user_with_project_suffix():
+    # El pooler exige "rol.<ref>"; dentro de la sesión current_user es "rol".
+    engine = FakeCatalogEngine(user="openbridge_data_sync")
+    plan = plan_for(repo_row(), engine)
+    target = supabase_target(user="openbridge_data_sync.abcd1234")
+    summary = apply(engine, plan, target=target)
+    assert summary.inserted_repositories == 1
+    assert 42 in engine.repos
+
+
+def test_apply_blocks_pooler_user_with_other_session_role():
+    engine = FakeCatalogEngine(user="otro_rol")
+    plan = plan_for(repo_row(), engine)
+    target = supabase_target(user="openbridge_data_sync.abcd1234")
+    with pytest.raises(LoadPlanError, match="Usuario de conexión"):
+        apply(engine, plan, target=target)
+    assert engine.rollback_count == 1
+    assert 42 not in engine.repos
+
+
+def test_apply_keeps_strict_user_check_outside_pooler():
+    # Fuera del pooler no se quita ningún sufijo: el usuario debe coincidir tal cual.
+    engine = FakeCatalogEngine(user="openbridge_data_sync")
+    plan = plan_for(repo_row(), engine)
+    target = supabase_target(
+        host="db.abcd1234.supabase.co", user="openbridge_data_sync.abcd1234"
+    )
+    with pytest.raises(LoadPlanError, match="Usuario de conexión"):
+        apply(engine, plan, target=target)
+    assert engine.rollback_count == 1
+    assert 42 not in engine.repos
+
+
+def test_database_role_strips_suffix_only_on_pooler():
+    pooler = supabase_target(user="openbridge_data_sync.abcd1234")
+    direct = supabase_target(
+        host="db.abcd1234.supabase.co", user="openbridge_data_sync.abcd1234"
+    )
+    plain = supabase_target(user="openbridge_data_sync")
+    assert pooler.database_role == "openbridge_data_sync"
+    assert direct.database_role == "openbridge_data_sync.abcd1234"
+    assert plain.database_role == "openbridge_data_sync"
+
+
 def test_apply_rolls_back_when_readme_write_fails():
     engine = FakeCatalogEngine(fail_readme_for=42)
     plan = plan_for(repo_row(), engine)

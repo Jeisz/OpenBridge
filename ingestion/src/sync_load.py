@@ -287,7 +287,7 @@ def apply_sync_plan(
                 "Base de datos inesperada: se bloquea la escritura y se revierte"
             )
         user = connection.execute(text(CURRENT_USER_SQL)).scalar_one()
-        if user != target.user or is_admin_user(str(user)):
+        if user != target.database_role or is_admin_user(str(user)):
             raise LoadPlanError(
                 "Usuario de conexión no autorizado: se bloquea la escritura"
             )
