@@ -2,8 +2,8 @@
 
 No hay reglas de negocio inventadas:
 
-- `is_maintained` y `health_score` se devuelven siempre en NULL porque no hay
-  campo ni fórmula acordados.
+- `is_maintained` se calcula según contrato (archived=False y pushed_at dentro
+  de los últimos 180 días). `health_score` se devuelve en NULL (sin fórmula acordada).
 - Ningún NULL se convierte en 0/false. `archived` es obligatorio en el contrato,
   así que una fila sin ese dato se reporta como catálogo no disponible.
 - El resumen de IA se recorta a los 250 caracteres del contrato y se registra un
@@ -11,7 +11,7 @@ No hay reglas de negocio inventadas:
 - Las ideas de un repositorio archivado se omiten: el contrato lo prohíbe.
 """
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import datetime, timezone
 import logging
 import re
 from math import ceil
@@ -58,6 +58,37 @@ def _to_datetime(value: Any) -> datetime | None:
     except ValueError:
         logger.warning("pushed_at no interpretable como ISO 8601: %r", value)
         return None
+
+
+def compute_is_maintained(
+    archived: Any,
+    pushed_at: datetime | str | None,
+    *,
+    reference_time: datetime | None = None,
+) -> bool | None:
+    """Calcula si un repositorio se considera mantenido.
+
+    Reglas de negocio:
+    - archived = True -> False (un repositorio archivado nunca está mantenido).
+    - archived = None -> None (estado desconocido).
+    - archived = False:
+        - Si pushed_at existe y está dentro de los últimos 180 días -> True.
+        - Si pushed_at existe y es anterior a 180 días -> False.
+        - Si pushed_at es None/inválido -> None (actividad desconocida).
+    """
+    if archived is True:
+        return False
+    if archived is None:
+        return None
+    dt = _to_datetime(pushed_at) if not isinstance(pushed_at, datetime) else pushed_at
+    if dt is None:
+        return None
+    ref = reference_time or datetime.now(timezone.utc)
+    if dt.tzinfo is None and ref.tzinfo is not None:
+        dt = dt.replace(tzinfo=timezone.utc)
+    elif dt.tzinfo is not None and ref.tzinfo is None:
+        ref = ref.replace(tzinfo=timezone.utc)
+    return (ref - dt).total_seconds() <= 180 * 86400
 
 
 def _as_list(value: Any) -> list[Any]:
@@ -218,6 +249,16 @@ class CatalogService:
 
     def _repo_payload(self, row: dict[str, Any]) -> dict[str, Any]:
         """Traduce una fila SQL al contrato; no rellena huecos con valores falsos."""
+        if "is_maintained" in row:
+            if row.get("archived") is True:
+                is_maintained = False
+            else:
+                is_maintained = row["is_maintained"]
+        else:
+            is_maintained = compute_is_maintained(
+                row.get("archived"), row.get("pushed_at")
+            )
+
         return {
             "github_id": row["github_id"],
             "full_name": row["full_name"],
@@ -238,7 +279,7 @@ class CatalogService:
             "categories": _as_list(row.get("categories")),
             "html_url": row.get("html_url"),
             "disabled": row.get("disabled"),
-            "is_maintained": None,
+            "is_maintained": is_maintained,
             "health_score": None,
         }
 

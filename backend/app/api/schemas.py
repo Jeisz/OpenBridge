@@ -49,7 +49,7 @@ class CatalogRepo(Repo):
     )
     is_maintained: bool | None = Field(
         default=None,
-        description="Pendiente: ni el campo ni el criterio están acordados (siempre NULL).",
+        description="Calculado según contrato: no archivado y push en los últimos 180 días. NULL = sin dato.",
     )
     health_score: float | None = Field(
         default=None,

@@ -32,7 +32,12 @@ def test_detail_wraps_the_repo_and_its_ideas():
 def test_detail_without_ai_results_is_200_with_empty_values():
     repository = FakeRepository(
         detail=detail_row(
-            summary_es=None, use_cases=None, categories=None, ideas=None, readme_text=None
+            summary_es=None,
+            use_cases=None,
+            categories=None,
+            ideas=None,
+            readme_text=None,
+            is_maintained=None,
         )
     )
     with build_client(repository) as client:
@@ -45,6 +50,16 @@ def test_detail_without_ai_results_is_200_with_empty_values():
     assert body["repo"]["readme_text"] is None
     assert body["repo"]["is_maintained"] is None
     assert body["repo"]["health_score"] is None
+
+
+def test_detail_computes_is_maintained_per_contract():
+    repository = FakeRepository(
+        detail=detail_row(archived=False, pushed_at="2026-10-22T22:19:40Z")
+    )
+    with build_client(repository) as client:
+        body = client.get("/repos/keycloak/keycloak").json()
+
+    assert body["repo"]["is_maintained"] is True
 
 
 def test_detail_maps_integration_ideas_with_full_name():

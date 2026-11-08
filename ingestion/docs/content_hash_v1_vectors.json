@@ -1,0 +1,74 @@
+{
+  "contract_version": "openbridge-ai-v1",
+  "vectors": [
+    {
+      "name": "readme-disponible",
+      "repository": {
+        "github_id": 42,
+        "full_name": "example/proyecto",
+        "name": "proyecto",
+        "description": "Café ☕",
+        "homepage": null,
+        "language": "Python",
+        "topics": [
+          "api",
+          "backend"
+        ],
+        "stargazers_count": 5,
+        "forks_count": 1,
+        "pushed_at": "2026-10-20T12:30:00Z",
+        "archived": false,
+        "license_spdx_id": "MIT"
+      },
+      "readme_text": "# Café ☕\n",
+      "canonical_json": "{\"contract_version\":\"openbridge-ai-v1\",\"readme_text\":\"# Café ☕\\n\",\"repository\":{\"archived\":false,\"description\":\"Café ☕\",\"forks_count\":1,\"full_name\":\"example/proyecto\",\"github_id\":42,\"homepage\":null,\"language\":\"Python\",\"license_spdx_id\":\"MIT\",\"name\":\"proyecto\",\"pushed_at\":\"2026-10-20T12:30:00.000000Z\",\"stargazers_count\":5,\"topics\":[\"api\",\"backend\"]}}",
+      "sha256": "1f3bc17fd2bf01ed581344e247cf7cacbc4979062f0579b529bf49c3fc0b2fc0"
+    },
+    {
+      "name": "readme-ausente-404",
+      "repository": {
+        "github_id": 42,
+        "full_name": "example/proyecto",
+        "name": "proyecto",
+        "description": "Café ☕",
+        "homepage": null,
+        "language": "Python",
+        "topics": [
+          "api",
+          "backend"
+        ],
+        "stargazers_count": 5,
+        "forks_count": 1,
+        "pushed_at": "2026-10-20T12:30:00Z",
+        "archived": false,
+        "license_spdx_id": "MIT"
+      },
+      "readme_text": null,
+      "canonical_json": "{\"contract_version\":\"openbridge-ai-v1\",\"readme_text\":null,\"repository\":{\"archived\":false,\"description\":\"Café ☕\",\"forks_count\":1,\"full_name\":\"example/proyecto\",\"github_id\":42,\"homepage\":null,\"language\":\"Python\",\"license_spdx_id\":\"MIT\",\"name\":\"proyecto\",\"pushed_at\":\"2026-10-20T12:30:00.000000Z\",\"stargazers_count\":5,\"topics\":[\"api\",\"backend\"]}}",
+      "sha256": "f1037387558eb6838976973dd215a99b9531af7c8f1f15f745fd544d4511c80e"
+    },
+    {
+      "name": "readme-vacio",
+      "repository": {
+        "github_id": 42,
+        "full_name": "example/proyecto",
+        "name": "proyecto",
+        "description": "Café ☕",
+        "homepage": null,
+        "language": "Python",
+        "topics": [
+          "api",
+          "backend"
+        ],
+        "stargazers_count": 5,
+        "forks_count": 1,
+        "pushed_at": "2026-10-20T12:30:00Z",
+        "archived": false,
+        "license_spdx_id": "MIT"
+      },
+      "readme_text": "",
+      "canonical_json": "{\"contract_version\":\"openbridge-ai-v1\",\"readme_text\":\"\",\"repository\":{\"archived\":false,\"description\":\"Café ☕\",\"forks_count\":1,\"full_name\":\"example/proyecto\",\"github_id\":42,\"homepage\":null,\"language\":\"Python\",\"license_spdx_id\":\"MIT\",\"name\":\"proyecto\",\"pushed_at\":\"2026-10-20T12:30:00.000000Z\",\"stargazers_count\":5,\"topics\":[\"api\",\"backend\"]}}",
+      "sha256": "96dd991da8283c57eb870bb8f061b89d5bd1d8cd52b29f8637d51c8427e4cc0c"
+    }
+  ]
+}

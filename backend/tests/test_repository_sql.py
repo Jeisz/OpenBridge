@@ -68,8 +68,18 @@ def test_maintenance_approximation_only_uses_archived_and_disabled():
     assert "COALESCE(r.archived, FALSE) = FALSE" in active_sql
     assert "COALESCE(r.disabled, FALSE) = FALSE" in active_sql
     assert "= TRUE" in inactive_sql
-    assert "is_maintained" not in active_sql
+    where_active = active_sql[active_sql.index("WHERE") :]
+    assert "is_maintained" not in where_active
     assert "health" not in active_sql
+
+
+def test_sql_includes_is_maintained_expression():
+    list_sql, _ = build_list_statement(RepoFilters(), limit=1, offset=0)
+    detail_sql = build_detail_statement()
+    assert "AS is_maintained" in list_sql
+    assert "AS is_maintained" in detail_sql
+    assert "180 days" in list_sql
+    assert "180 days" in detail_sql
 
 
 def test_detail_reads_view_base_table_and_ai_results():

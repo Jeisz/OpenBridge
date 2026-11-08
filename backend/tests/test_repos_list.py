@@ -140,7 +140,15 @@ def test_without_filters_the_repository_gets_empty_filters():
 
 def test_missing_ai_data_is_null_not_zero_or_false():
     repository = FakeRepository(
-        [list_row(summary_es=None, disabled=None, description=None, categories=None)]
+        [
+            list_row(
+                summary_es=None,
+                disabled=None,
+                description=None,
+                categories=None,
+                is_maintained=None,
+            )
+        ]
     )
     with build_client(repository) as client:
         item = client.get("/repos").json()[0]
@@ -151,6 +159,34 @@ def test_missing_ai_data_is_null_not_zero_or_false():
     assert item["categories"] == []
     assert item["is_maintained"] is None
     assert item["health_score"] is None
+
+
+def test_is_maintained_computes_boolean_from_pushed_at_and_archived():
+    # Activo reciente (< 180 días): True
+    with build_client(
+        FakeRepository([list_row(archived=False, pushed_at="2026-10-22T22:19:40Z")])
+    ) as client:
+        item = client.get("/repos").json()[0]
+        assert item["is_maintained"] is True
+
+    # Archivado: siempre False
+    with build_client(
+        FakeRepository([list_row(archived=True, pushed_at="2026-10-22T22:19:40Z")])
+    ) as client:
+        item = client.get("/repos").json()[0]
+        assert item["is_maintained"] is False
+
+    # Activo pero desactualizado (> 180 días): False
+    with build_client(
+        FakeRepository([list_row(archived=False, pushed_at="2025-01-01T00:00:00Z")])
+    ) as client:
+        item = client.get("/repos").json()[0]
+        assert item["is_maintained"] is False
+
+    # Sin dato explícito en base de datos: None (actividad desconocida)
+    with build_client(FakeRepository([list_row(archived=False, is_maintained=None)])) as client:
+        item = client.get("/repos").json()[0]
+        assert item["is_maintained"] is None
 
 
 def test_archived_null_is_not_served_as_false():

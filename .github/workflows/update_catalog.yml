@@ -1,0 +1,182 @@
+name: update-catalog
+
+# 06:00 America/Bogota (UTC-5) equivale a 11:00 UTC.
+on:
+  schedule:
+    - cron: "0 11 * * *"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "dry-run (predeterminado) o apply (requiere aprobación)"
+        type: choice
+        options:
+          - dry-run
+          - apply
+        default: dry-run
+
+permissions:
+  contents: read
+
+# Evita dos sincronizaciones simultáneas; no cancela una ejecución en curso.
+concurrency:
+  group: update-catalog
+  cancel-in-progress: false
+
+defaults:
+  run:
+    working-directory: ingestion
+
+jobs:
+  sync:
+    name: Sincronización del catálogo
+    runs-on: ubuntu-latest
+    # Margen sobre el presupuesto nominal del lote (100 repositorios ≈ 201
+    # peticiones, 2 por repositorio) sin dejar una ejecución colgada.
+    timeout-minutes: 45
+    env:
+      PYTHONUNBUFFERED: "1"
+      OPENBRIDGE_SYNC_TARGET: supabase
+      # Solo lectura por defecto; el paso de escritura la habilita explícitamente.
+      OPENBRIDGE_SYNC_ALLOW_WRITES: "0"
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      OPENBRIDGE_SUPABASE_DB_HOST: ${{ secrets.OPENBRIDGE_SUPABASE_DB_HOST }}
+      OPENBRIDGE_SUPABASE_DB_PORT: ${{ secrets.OPENBRIDGE_SUPABASE_DB_PORT }}
+      OPENBRIDGE_SUPABASE_DB_NAME: ${{ secrets.OPENBRIDGE_SUPABASE_DB_NAME }}
+      OPENBRIDGE_SUPABASE_DB_USER: ${{ secrets.OPENBRIDGE_SUPABASE_DB_USER }}
+      OPENBRIDGE_SUPABASE_DB_PASSWORD: ${{ secrets.OPENBRIDGE_SUPABASE_DB_PASSWORD }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: ingestion/requirements.txt
+
+      - name: Instalar dependencias
+        run: python -m pip install --requirement requirements.txt
+
+      - name: Pruebas offline (sin red ni PostgreSQL)
+        run: python -m pytest tests -q
+
+      - name: Plan de sincronización (dry-run, 0 escrituras)
+        if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.mode == 'apply') }}
+        shell: bash
+        run: |
+          set +e
+          python scripts/update_catalog.py \
+            --live \
+            --dry-run \
+            --target supabase \
+            --fail-on-incomplete \
+            --summary-file "$RUNNER_TEMP/openbridge_sync_summary.md"
+          status=$?
+          set -e
+          case "$status" in
+            0) echo "Plan completo (código 0)." ;;
+            # Con --fail-on-incomplete una ejecución incompleta sale 1, no 3:
+            # la rama 3 solo se alcanzaría si se retira la bandera.
+            3) echo "::warning::Plan incompleto (código 3); la bandera --fail-on-incomplete no está activa." ;;
+            *) echo "::error::La sincronización devolvió el código $status (1 = incompleto o error)."; exit "$status" ;;
+          esac
+
+      # Activación futura de escrituras: deshabilitada por defecto.
+      # Requiere (1) dispatch manual con mode=apply, (2) variable de repositorio
+      # OPENBRIDGE_SYNC_ALLOW_WRITES=1 y (3) el secreto de confirmación
+      # OPENBRIDGE_SYNC_CONFIRMATION. Sin la variable, el paso se omite aunque
+      # se solicite apply; la ejecución programada nunca escribe.
+      - name: Aplicación manual (deshabilitada por defecto)
+        if: >-
+          github.event_name == 'workflow_dispatch' &&
+          inputs.mode == 'apply' &&
+          vars.OPENBRIDGE_SYNC_ALLOW_WRITES == '1'
+        shell: bash
+        env:
+          OPENBRIDGE_SYNC_ALLOW_WRITES: "1"
+          OPENBRIDGE_SYNC_CONFIRMATION: ${{ secrets.OPENBRIDGE_SYNC_CONFIRMATION }}
+        run: |
+          python scripts/update_catalog.py \
+            --live \
+            --apply \
+            --target supabase \
+            --summary-file "$RUNNER_TEMP/openbridge_sync_summary_apply.md"
+
+      - name: Resumen en la ejecución
+        if: always()
+        shell: bash
+        run: |
+          for file in \
+            "$RUNNER_TEMP/openbridge_sync_summary.md" \
+            "$RUNNER_TEMP/openbridge_sync_summary_apply.md"; do
+            if [ -f "$file" ]; then
+              cat "$file" >> "$GITHUB_STEP_SUMMARY"
+            fi
+          done
+          echo "Resumen de sincronización generado (saneado, sin secretos)." >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Publicar resumen como artefacto
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: openbridge-sync-summary
+          path: |
+            ${{ runner.temp }}/openbridge_sync_summary.md
+            ${{ runner.temp }}/openbridge_sync_summary_apply.md
+          if-no-files-found: ignore
+          retention-days: 90
+
+  notify:
+    name: Notificar fallo de sincronización
+    needs: sync
+    # Solo se ejecuta si el trabajo principal falla; nunca escribe en el catálogo.
+    if: ${{ always() && needs.sync.result == 'failure' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    # Permisos mínimos: el resto del workflow es contents: read; solo este
+    # trabajo puede abrir o comentar una incidencia.
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - name: Abrir o actualizar la incidencia de fallo
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const title = 'update-catalog: fallo en la sincronización del catálogo';
+            const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const body = [
+              `La ejecución de \`${context.workflow}\` falló.`,
+              '',
+              `- Evento: \`${context.eventName}\``,
+              `- Referencia: \`${context.ref}\``,
+              `- SHA: \`${context.sha}\``,
+              `- Ejecución: ${runUrl}`,
+              '',
+              'Revisar el resumen y el artefacto de la ejecución. No se aplicó ningún cambio al catálogo: la ejecución programada es siempre dry-run.',
+            ].join('\n');
+            const { data: open } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              per_page: 50,
+            });
+            const existing = open.find((issue) => issue.title === title);
+            if (existing) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: existing.number,
+                body,
+              });
+              core.info(`Comentario añadido a la incidencia #${existing.number}`);
+            } else {
+              const { data: created } = await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title,
+                body,
+              });
+              core.info(`Incidencia creada #${created.number}`);
+            }

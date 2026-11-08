@@ -66,8 +66,8 @@ def test_v12_field_types_are_the_contract_types():
     assert isinstance(item["archived"], bool)
     assert item["disabled"] is True
     assert item["open_issues_count"] is None
-    # Sin criterio aplicado en la API, `is_maintained` no se inventa.
-    assert item["is_maintained"] is None
+    # Según contrato Repo v1.2, `is_maintained` es bool (True para repo activo reciente).
+    assert item["is_maintained"] is True
     assert isinstance(item["categories"], list)
     for assignment in item["categories"]:
         assert set(assignment) == {"category_id", "assigned_by"}
