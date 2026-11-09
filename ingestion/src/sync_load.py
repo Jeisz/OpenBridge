@@ -6,8 +6,12 @@ Complementa ``load.py`` (carga inicial insert-only) con la aplicación de un
 * lectura del estado en transacción de solo lectura;
 * aplicación transaccional de INSERT/UPDATE con control optimista de versión;
 * verificación posterior de hashes, READMEs y campos operativos
-  (``disabled``, ``open_issues_count``, ``is_maintained``), que no forman
-  parte del hash ``openbridge-ai-v1`` (ADR-001/ADR-005).
+  (``disabled`` y ``open_issues_count``), que no forman parte del hash
+  ``openbridge-ai-v1`` (ADR-001).
+
+``is_maintained`` no se persiste: es un valor derivado que calcula la API a
+partir de ``archived`` y ``pushed_at`` (ADR-005), de modo que la sincronización
+no depende de ninguna columna física para ese campo.
 
 No ejecuta DDL y no contiene ninguna sentencia DELETE. La API de escritura
 exige confirmación explícita y un destino habilitado para escritura.
@@ -50,7 +54,7 @@ REQUIRED_COLUMNS_SQL = """
     WHERE table_schema = 'public'
       AND table_name = 'catalog_repositories'
       AND column_name IN (
-          'content_hash_version', 'disabled', 'open_issues_count', 'is_maintained'
+          'content_hash_version', 'disabled', 'open_issues_count'
       )
 """
 
@@ -59,7 +63,7 @@ READ_STATE_SQL = """
         r.github_id, r.full_name, r.name, r.description, r.homepage,
         r.language, r.topics, r.stargazers_count, r.forks_count, r.pushed_at,
         r.archived, r.license_spdx_id, r.content_hash, r.content_hash_version,
-        r.disabled, r.open_issues_count, r.is_maintained,
+        r.disabled, r.open_issues_count,
         m.github_id AS readme_github_id, m.readme_text
     FROM public.catalog_repositories AS r
     LEFT JOIN public.catalog_readmes AS m ON m.github_id = r.github_id
@@ -76,13 +80,13 @@ INSERT_REPOSITORY_SQL = """
         github_id, full_name, name, description, homepage, language,
         topics, stargazers_count, forks_count, pushed_at,
         archived, license_spdx_id, content_hash, content_hash_version,
-        disabled, open_issues_count, is_maintained
+        disabled, open_issues_count
     ) VALUES (
         :github_id, :full_name, :name, :description, :homepage, :language,
         CAST(:topics AS TEXT[])::TEXT, :stargazers_count,
         :forks_count, :pushed_at, :archived, :license_spdx_id,
         :content_hash, :content_hash_version,
-        :disabled, :open_issues_count, :is_maintained
+        :disabled, :open_issues_count
     ) ON CONFLICT (github_id) DO NOTHING RETURNING github_id
 """
 
@@ -97,8 +101,7 @@ UPDATE_REPOSITORY_SQL = """
         content_hash = :content_hash,
         content_hash_version = :content_hash_version,
         disabled = :disabled,
-        open_issues_count = :open_issues_count,
-        is_maintained = :is_maintained
+        open_issues_count = :open_issues_count
     WHERE github_id = :github_id
       AND content_hash IS NOT DISTINCT FROM :previous_content_hash
       AND content_hash_version IS NOT DISTINCT FROM :previous_content_hash_version
@@ -156,7 +159,6 @@ _METADATA_KEYS = (
     "license_spdx_id",
     "disabled",
     "open_issues_count",
-    "is_maintained",
 )
 _WRITE_KEYS = (
     "github_id",
@@ -171,8 +173,9 @@ _WRITE_KEYS = (
     "archived",
     "license_spdx_id",
 )
-#: Campos operativos que no forman parte de ``openbridge-ai-v1`` (ADR-005).
-SUPPLEMENTARY_KEYS = ("disabled", "open_issues_count", "is_maintained")
+#: Campos operativos que no forman parte de ``openbridge-ai-v1`` (ADR-001).
+#: ``is_maintained`` no aparece: es derivado y lo calcula el backend.
+SUPPLEMENTARY_KEYS = ("disabled", "open_issues_count")
 REQUIRED_COLUMNS = ("content_hash_version",) + SUPPLEMENTARY_KEYS
 
 

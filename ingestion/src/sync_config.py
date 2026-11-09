@@ -24,7 +24,7 @@ from sqlalchemy.engine import URL
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 REPOSITORY_ROOT = PROJECT_ROOT.parent
-DEFAULT_APPROVED_PATH = PROJECT_ROOT / "approved_repositories_100_verified.txt"
+DEFAULT_APPROVED_PATH = PROJECT_ROOT / "approved_repositories_127_verified.txt"
 
 TARGET_LOCAL = "local"
 TARGET_SUPABASE = "supabase"

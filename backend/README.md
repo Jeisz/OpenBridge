@@ -93,8 +93,10 @@ lectura y los permisos que faltan están en
   omiten y se registran.
 - `archived` es obligatorio en el contrato: si la base lo trae NULL, la API
   responde 503 `catalog_unavailable` en vez de inventar `false`.
-- `is_maintained` y `health_score` viajan siempre en `null`: no hay campo,
-  criterio ni fórmula acordados. No se inventan valores.
+- `is_maintained` se calcula en la API (no archivado y `pushed_at` dentro de los
+  180 días); no existe columna y la sincronización no la requiere.
+- `health_score` viaja siempre en `null`: no hay fórmula acordada y no se
+  inventan valores.
 - `maintenance=active|inactive` es la aproximación local acordada con Frontend
   (`active` = ni archivado ni deshabilitado).
 - Orden del listado: `full_name ASC`, elegido para que la paginación sea

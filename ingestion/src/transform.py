@@ -16,7 +16,9 @@ from typing import Any, Mapping, Sequence
 #: Campos operativos que NO forman parte del hash ``openbridge-ai-v1``
 #: (ADR-001 fija exactamente 12 campos del repositorio). Viajan en
 #: ``TransformationResult.supplementary`` para no alterar la huella de IA.
-SUPPLEMENTARY_FIELDS = ("disabled", "open_issues_count", "is_maintained")
+#: ``is_maintained`` queda fuera a propósito: es un valor derivado que calcula
+#: el backend desde ``archived`` y ``pushed_at``; no se persiste.
+SUPPLEMENTARY_FIELDS = ("disabled", "open_issues_count")
 
 #: Ventana de actividad de la regla ``is_maintained`` (ADR-005).
 MAINTENANCE_WINDOW_DAYS = 180
@@ -31,8 +33,8 @@ class TransformationResult:
     repositories: list[dict[str, Any]]
     readmes: list[dict[str, Any]]
     observations: list[dict[str, str]]
-    #: Metadatos operativos por ``github_id``: ``disabled``,
-    #: ``open_issues_count`` e ``is_maintained``. Nunca se incluyen en el hash.
+    #: Metadatos operativos por ``github_id``: ``disabled`` y
+    #: ``open_issues_count``. Nunca se incluyen en el hash.
     supplementary: list[dict[str, Any]] = field(default_factory=list)
 
 
@@ -147,17 +149,19 @@ def transform_records(
     fase nunca convierte fallos de descarga en README vacío o en texto ``None``.
 
     ``repositories`` conserva exactamente los 12 campos del contrato de hash
-    ``openbridge-ai-v1``. ``disabled``, ``open_issues_count`` e
-    ``is_maintained`` se entregan aparte en ``supplementary`` para no alterar
-    la huella de IA (ADR-001/ADR-005).
+    ``openbridge-ai-v1``. ``disabled`` y ``open_issues_count`` se entregan
+    aparte en ``supplementary`` para no alterar la huella de IA (ADR-001).
+    ``is_maintained`` no se persiste ni viaja en el plan: es un valor derivado
+    que el backend calcula desde ``archived`` y ``pushed_at``.
 
-    ``reference_time`` fija el instante del lote para ``is_maintained``; si se
-    omite se usa el reloj UTC. No genera ``content_hash`` ni escritura SQL. No
-    edita los diccionarios de entrada.
+    ``reference_time`` se conserva en la firma pública por compatibilidad y se
+    valida (debe tener zona horaria). No genera ``content_hash`` ni escritura
+    SQL. No edita los diccionarios de entrada.
     """
     if isinstance(records, (str, bytes)) or not isinstance(records, Sequence):
         raise TransformationError("records: se requiere una secuencia de registros")
-    reference = _reference_time(reference_time)
+    # Se valida la zona horaria aunque ya no se derive ``is_maintained`` aquí.
+    _reference_time(reference_time)
 
     repositories: list[dict[str, Any]] = []
     readmes: list[dict[str, Any]] = []
@@ -231,9 +235,6 @@ def transform_records(
             "github_id": github_id,
             "disabled": disabled,
             "open_issues_count": open_issues_count,
-            "is_maintained": is_maintained(
-                archived, repo["pushed_at"], reference_time=reference
-            ),
         })
 
     return TransformationResult(repositories, readmes, observations, supplementary)

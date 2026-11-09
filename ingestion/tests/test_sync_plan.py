@@ -499,7 +499,6 @@ def test_insert_carries_operational_fields_outside_the_hash():
     assert action.supplementary == {
         "disabled": False,
         "open_issues_count": 7,
-        "is_maintained": True,
     }
     assert action.content_hash == content_hash_v1(
         result.repositories[0], result.readmes[0]["readme_text"]
@@ -525,7 +524,7 @@ def test_operational_flags_change_updates_row():
     repo = result.repositories[0]
     text = result.readmes[0]["readme_text"]
     row = stored_row(
-        repo, text=text, supplementary={"is_maintained": False, "disabled": True}
+        repo, text=text, supplementary={"open_issues_count": 3, "disabled": True}
     )
     plan = plan_for(result, state_from(row, text=text))
     action = plan.actions[0]
@@ -555,7 +554,7 @@ def test_missing_operational_fields_block_repository_writes():
     "extra,message",
     [
         ({"disabled": 1}, "disabled debe ser booleano"),
-        ({"is_maintained": "si"}, "is_maintained debe ser booleano"),
+        ({"is_maintained": True}, "Metadatos operativos desconocidos"),
         ({"open_issues_count": -1}, "open_issues_count debe ser un entero"),
         ({"extra": "x"}, "Metadatos operativos desconocidos"),
     ],

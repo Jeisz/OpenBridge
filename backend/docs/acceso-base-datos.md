@@ -116,13 +116,14 @@ catálogo, la IA debe ejecutarse. Ninguna de las dos cosas es parte de esta tare
 
 | Campo | Estado real | Respuesta de la API |
 | --- | --- | --- |
-| `is_maintained` | no hay columna en `public.catalog_repositories` ni DDL aplicado en `main` | `null` siempre |
+| `is_maintained` | no hay columna en `public.catalog_repositories` ni DDL aplicado en `main`; la API lo deriva de `archived` y `pushed_at` | `true`/`false` calculado; `null` si falta un dato |
 | `health_score` | no hay columna ni fórmula acordada | `null` siempre |
 
-La API no calcula ninguno de los dos: no se inventan valores. Cuando el equipo de
-datos cree `is_maintained` (hay una propuesta de DDL sin ejecutar) y Jeison
-entregue la fórmula de `health_score`, sólo hay que añadirlos al `SELECT`: el
-contrato ya los admite (`bool | None` y `float | None` entre 0 y 100).
+La sincronización de ingesta ya no escribe `is_maintained` ni valida una columna
+física para ese campo: el valor se calcula en la API con la regla de 180 días.
+`health_score` sigue pendiente de fórmula; cuando Jeison la entregue, sólo hay
+que añadirlo al `SELECT`: el contrato ya lo admite (`float | None` entre 0 y
+100).
 
 ### Filas que la API no puede servir
 

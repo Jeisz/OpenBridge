@@ -21,7 +21,12 @@ from sync_doubles import (  # noqa: E402
     supabase_target,
 )
 from sync_load import (  # noqa: E402
+    INSERT_REPOSITORY_SQL,
+    READ_STATE_SQL,
+    REQUIRED_COLUMNS,
+    REQUIRED_COLUMNS_SQL,
     SYNC_WRITE_CONFIRMATION,
+    UPDATE_REPOSITORY_SQL,
     apply_sync_plan,
     read_catalog_state,
     verify_sync_result,
@@ -292,7 +297,7 @@ def test_apply_persists_operational_fields():
     assert summary.inserted_repositories == 1
     assert engine.repos[42]["disabled"] is False
     assert engine.repos[42]["open_issues_count"] == 7
-    assert engine.repos[42]["is_maintained"] is True
+    assert "is_maintained" not in engine.repos[42]
     assert verify_sync_result(engine, plan) == ()
 
 
@@ -307,21 +312,56 @@ def test_apply_updates_operational_fields_without_changing_the_hash():
     assert engine.repos[42]["content_hash"] == action.previous_content_hash
 
 
-def test_apply_blocks_missing_operational_column():
-    engine = FakeCatalogEngine(missing_columns=("is_maintained",))
+def test_apply_updates_disabled_without_changing_the_hash():
+    engine = FakeCatalogEngine(
+        {42: stored_row(repo_row(), supplementary={"disabled": True})}, {42: TEXT}
+    )
     plan = plan_for(repo_row(), engine)
-    with pytest.raises(LoadPlanError, match="is_maintained"):
+    action = plan.actions[0]
+    assert action.repository_action == "UPDATE"
+    assert action.reasons == ("supplementary_changed",)
+    summary = apply(engine, plan)
+    assert summary.updated_repositories == 1
+    assert engine.repos[42]["disabled"] is False
+    assert engine.repos[42]["content_hash"] == action.previous_content_hash
+
+
+def test_apply_blocks_missing_operational_column():
+    engine = FakeCatalogEngine(missing_columns=("open_issues_count",))
+    plan = plan_for(repo_row(), engine)
+    with pytest.raises(LoadPlanError, match="open_issues_count"):
         apply(engine, plan)
     assert 42 not in engine.repos
     assert engine.rollback_count == 1
+
+
+def test_apply_runs_without_a_physical_is_maintained_column():
+    """El pipeline no depende de una columna física ``is_maintained``."""
+    engine = FakeCatalogEngine(missing_columns=("is_maintained",))
+    plan = plan_for(repo_row(), engine)
+    assert apply(engine, plan).inserted_repositories == 1
+    assert engine.repos[42]["disabled"] is False
+    assert engine.repos[42]["open_issues_count"] == 7
+    assert verify_sync_result(engine, plan) == ()
+
+
+def test_sync_statements_never_reference_is_maintained():
+    for statement in (
+        REQUIRED_COLUMNS_SQL,
+        READ_STATE_SQL,
+        INSERT_REPOSITORY_SQL,
+        UPDATE_REPOSITORY_SQL,
+    ):
+        assert "is_maintained" not in statement
+    assert "is_maintained" not in REQUIRED_COLUMNS
 
 
 def test_verify_sync_result_detects_operational_mismatch():
     engine = FakeCatalogEngine()
     plan = plan_for(repo_row(), engine)
     apply(engine, plan)
-    engine.repos[42]["is_maintained"] = False
+    engine.repos[42]["open_issues_count"] = 1
     problems = verify_sync_result(engine, plan)
     assert problems
-    assert "is_maintained" in problems[0]
+    assert "open_issues_count" in problems[0]
 

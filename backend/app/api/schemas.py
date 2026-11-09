@@ -11,8 +11,9 @@ la API sólo documenta cómo los rellena.
 Un repositorio que cumple `Repo` cumple `CatalogRepo`; el frontend ignora los
 campos extra.
 
-`is_maintained` y `health_score` viajan siempre en NULL: no hay campo, criterio
-ni fórmula acordados, y no se inventan valores.
+`is_maintained` no se persiste: se calcula en la API (no archivado y
+`pushed_at` dentro de los 180 días). `health_score` viaja siempre en NULL: no
+hay fórmula acordada y no se inventan valores.
 
 La paginación no viaja en el cuerpo: va en las cabeceras `X-Total-Count`,
 `X-Total-Pages`, `X-Page` y `X-Page-Size`, porque el cuerpo es el array.

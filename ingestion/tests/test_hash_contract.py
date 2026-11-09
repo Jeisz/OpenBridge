@@ -324,7 +324,7 @@ def test_safe_cli_never_uses_network_or_sql():
 
 
 def test_supplementary_fields_do_not_change_the_fingerprint():
-    """disabled / open_issues_count / is_maintained quedan fuera de openbridge-ai-v1."""
+    """disabled / open_issues_count quedan fuera de openbridge-ai-v1."""
     baseline = hashed(transformed())[0].content_hash
     changed_extra = hashed(
         transformed(disabled=True, open_issues_count=999)

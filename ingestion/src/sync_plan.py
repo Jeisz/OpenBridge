@@ -442,8 +442,6 @@ def _index_supplementary(
             )
         if type(extra["disabled"]) is not bool:
             raise SyncPlanError("disabled debe ser booleano")
-        if type(extra["is_maintained"]) is not bool:
-            raise SyncPlanError("is_maintained debe ser booleano")
         if type(extra["open_issues_count"]) is not int or extra["open_issues_count"] < 0:
             raise SyncPlanError("open_issues_count debe ser un entero no negativo")
         output[identifier] = extra
@@ -466,8 +464,6 @@ def _validate_action_supplementary(action: SyncAction) -> None:
         )
     if type(values["disabled"]) is not bool:
         raise SyncPlanError("disabled inválido en el plan")
-    if type(values["is_maintained"]) is not bool:
-        raise SyncPlanError("is_maintained inválido en el plan")
     if type(values["open_issues_count"]) is not int or values["open_issues_count"] < 0:
         raise SyncPlanError("open_issues_count inválido en el plan")
 

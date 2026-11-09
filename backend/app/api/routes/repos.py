@@ -122,8 +122,8 @@ def list_repos(
         "`categories: []`, `use_cases: []` e `integration_ideas: []`.\n\n"
         "La ficha cumple `shared.contracts.repo_detail`: como mucho tres ideas, "
         "todas del mismo repositorio, y ninguna si el repositorio está archivado.\n\n"
-        "`is_maintained` y `health_score` viajan en `null`: no hay campo, "
-        "criterio ni fórmula acordados."
+        "`is_maintained` se calcula en la API desde `archived` y `pushed_at`; "
+        "`health_score` viaja en `null` porque no hay fórmula acordada."
     ),
     responses={
         200: {"description": "Ficha del repositorio."},

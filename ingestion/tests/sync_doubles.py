@@ -153,7 +153,6 @@ class FakeCatalogEngine:
                     "content_hash_version",
                     "disabled",
                     "open_issues_count",
-                    "is_maintained",
                 )
                 if name not in self.missing_columns
             ]
@@ -231,12 +230,11 @@ def repo_row(identifier=42, name="proyecto", **overrides):
 
 
 def supplementary_row(identifier=42, **overrides):
-    """Campos operativos fuera del hash (``disabled``/``open_issues_count``/``is_maintained``)."""
+    """Campos operativos fuera del hash (``disabled``/``open_issues_count``)."""
     data = {
         "github_id": identifier,
         "disabled": False,
         "open_issues_count": 7,
-        "is_maintained": True,
     }
     data.update(overrides)
     return data

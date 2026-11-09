@@ -19,7 +19,8 @@ Data Engineer; los notebooks exploratorios quedan en `notebooks/`.
 | `scripts/update_catalog.py` | Coordinador CLI de la sincronización (dry-run por defecto) |
 | `tests/` | Pruebas offline (sin red ni PostgreSQL) |
 | `docs/` | ADR-001…004, runbook operativo y vectores del hash |
-| `approved_repositories_100_verified.txt` | Lista aprobada de repositorios |
+| `approved_repositories_127_verified.txt` | Lista aprobada vigente (127 repositorios: los 100 verificados + los 27 ya publicados en el catálogo) |
+| `approved_repositories_100_verified.txt` | Lista verificada previa de 100 repositorios (subconjunto de la vigente) |
 
 ## Uso
 

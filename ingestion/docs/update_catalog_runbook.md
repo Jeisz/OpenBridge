@@ -42,7 +42,7 @@ Opciones relevantes:
 
 - `--dry-run` (predeterminado) y `--apply` son mutuamente excluyentes.
 - `--repositories RUTA` usa otra lista aprobada (por defecto
-  `approved_repositories_100_verified.txt`).
+  `approved_repositories_127_verified.txt`).
 - `--summary-file RUTA` escribe el resumen Markdown saneado.
 - `--target local|supabase`; si se omite, se usa `OPENBRIDGE_SYNC_TARGET`.
 - `--require-complete` (con `--apply`) bloquea la escritura si el plan queda
@@ -79,13 +79,13 @@ extraer y compara `resources.core.remaining` con lo que necesita el lote.
 | Concepto | Valor | Justificación |
 | --- | --- | --- |
 | Peticiones por repositorio | `2` | `GET /repos/{owner}/{repo}` + `GET /repos/{owner}/{repo}/readme`; `_approved_endpoints` no genera ningún otro endpoint y topics, licencia y fechas llegan en el payload de metadatos |
-| Lote de 100 repositorios | `200` | `100 × 2`, el tamaño real de `approved_repositories_100_verified.txt` |
+| Lote de 127 repositorios | `254` | `127 × 2`, el tamaño real de `approved_repositories_127_verified.txt` |
 | Sondeo | `+1` | la petición a `/rate_limit`, contada aparte del lote |
 | Colchón mínimo | `250` | constante `RATE_LIMIT_HEADROOM`; absorbe reintentos y ejecuciones concurrentes |
 
-Con token (límite de `5000`/hora) el consumo nominal es `200 + 1 = 201` (4,0 %).
-La condición exigida es `200 ≤ 5000 − 250 = 4750`, de modo que tras el lote
-quedan `4550` peticiones de margen.
+Con token (límite de `5000`/hora) el consumo nominal es `254 + 1 = 255` (5,1 %).
+La condición exigida es `254 ≤ 5000 − 250 = 4750`, de modo que tras el lote
+quedan `4496` peticiones de margen.
 
 Por qué `250` y no un valor menor: cada reintento por `5xx`/timeout puede añadir
 hasta `max_attempts − 1 = 2` peticiones por endpoint, así que un lote degradado
@@ -306,7 +306,7 @@ WHERE m.github_id IS NULL;
   preserva y se advierte (los renombrados requieren revisión).
 - `topics` se compara aceptando arreglo de PostgreSQL o JSON; formatos
   desconocidos se preservan sin escribir.
-- Extraer 100 repositorios implica ~200 peticiones HTTP; sin `GITHUB_TOKEN` la
+- Extraer 127 repositorios implica ~254 peticiones HTTP; sin `GITHUB_TOKEN` la
   cuota anónima (60/h) no alcanza y el plan quedará incompleto.
 - La verificación posterior se ejecuta en una conexión nueva de solo lectura; si
   falla, los datos ya aplicados se informan como discrepancia y el proceso

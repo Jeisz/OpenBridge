@@ -20,6 +20,7 @@ from __future__ import annotations
 import argparse
 from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass
+from datetime import datetime, timezone
 import os
 from pathlib import Path
 import sys
@@ -68,7 +69,11 @@ from sync_plan import (  # noqa: E402
     build_sync_plan,
     validate_plan,
 )
-from transform import TransformationError, transform_records  # noqa: E402
+from transform import (  # noqa: E402
+    TransformationError,
+    is_maintained,
+    transform_records,
+)
 
 EXIT_OK = 0
 EXIT_ERROR = 1
@@ -246,8 +251,17 @@ def _preflight(
         for item in getattr(result, "supplementary", [])
         if isinstance(item, Mapping)
     }
+    # ``is_maintained`` no se persiste: se reporta el valor derivado que la API
+    # calculará con la misma regla de ADR-005 (archived + ventana de 180 días).
+    reference = datetime.now(timezone.utc)
     maintained = sum(
-        1 for item in extras.values() if item.get("is_maintained") is True
+        1
+        for repository in repositories.values()
+        if is_maintained(
+            repository.get("archived"),
+            repository.get("pushed_at"),
+            reference_time=reference,
+        )
     )
     archived_repositories = sum(
         1 for repository in repositories.values() if repository.get("archived") is True

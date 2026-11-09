@@ -304,7 +304,8 @@ def fetch_repositories(
         open_issues_count = payload.get("open_issues_count")
         if type(disabled) is not bool or type(open_issues_count) is not int or open_issues_count < 0:
             # Campos operativos del contrato (disabled/open_issues_count):
-            # sin ellos no se puede calcular is_maintained ni publicar la fila.
+            # sin ellos no se puede publicar la fila ni derivar
+            # is_maintained en la API.
             audit[-1]["success"] = False
             audit[-1]["error_type"] = "Metadatos_operativos_invalidos"
             continue

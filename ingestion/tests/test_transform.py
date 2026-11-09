@@ -169,28 +169,38 @@ def test_supplementary_fields_stay_out_of_the_hash_payload():
             "github_id": 123,
             "disabled": True,
             "open_issues_count": 9,
-            "is_maintained": True,
         }
     ]
 
 
-def test_is_maintained_with_recent_push_is_true():
+def test_pipeline_does_not_persist_is_maintained():
+    """``is_maintained`` es derivado: no viaja en ``supplementary``."""
     result = transform_records(
         [sample(pushed_at="2026-10-24T12:00:00Z")], reference_time=REFERENCE
     )
-    assert result.supplementary[0]["is_maintained"] is True
+    assert "is_maintained" not in result.supplementary[0]
+    repository = result.repositories[0]
+    assert repository["archived"] is False
+    assert repository["pushed_at"] == "2026-10-24T12:00:00Z"
+    assert is_maintained(
+        repository["archived"], repository["pushed_at"], reference_time=REFERENCE
+    ) is True
 
 
 def test_is_maintained_archived_repository_is_false():
-    result = transform_records([sample(archived=True)], reference_time=REFERENCE)
-    assert result.supplementary[0]["is_maintained"] is False
+    repository = transform_records([sample(archived=True)]).repositories[0]
+    assert is_maintained(
+        repository["archived"], repository["pushed_at"], reference_time=REFERENCE
+    ) is False
 
 
 def test_is_maintained_without_recent_activity_is_false():
-    result = transform_records(
-        [sample(pushed_at="2026-01-01T00:00:00Z")], reference_time=REFERENCE
-    )
-    assert result.supplementary[0]["is_maintained"] is False
+    repository = transform_records(
+        [sample(pushed_at="2026-01-01T00:00:00Z")]
+    ).repositories[0]
+    assert is_maintained(
+        repository["archived"], repository["pushed_at"], reference_time=REFERENCE
+    ) is False
 
 
 def test_is_maintained_window_is_inclusive():

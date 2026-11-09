@@ -30,8 +30,9 @@ jobs:
   sync:
     name: Sincronización del catálogo
     runs-on: ubuntu-latest
-    # Margen sobre el presupuesto nominal del lote (100 repositorios ≈ 201
-    # peticiones, 2 por repositorio) sin dejar una ejecución colgada.
+    # Margen sobre el presupuesto nominal del lote (127 repositorios ≈ 255
+    # peticiones: 2 por repositorio más 1 de comprobación de límites) sin dejar
+    # una ejecución colgada.
     timeout-minutes: 45
     env:
       PYTHONUNBUFFERED: "1"

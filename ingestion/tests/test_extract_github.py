@@ -114,7 +114,7 @@ def test_fork_excluido_sin_pedir_readme():
      "open_issues_count": 4},
 ])
 def test_metadatos_operativos_invalidos(payload):
-    """Sin disabled/open_issues_count no se puede publicar la fila ni calcular is_maintained."""
+    """Sin disabled/open_issues_count no se puede publicar la fila ni derivar is_maintained."""
     fake, calls = queued_get([FakeResponse(200, payload)])
     records, audit = extract.fetch_repositories(["apache/airflow"], enabled=True, http_get=fake)
     assert records == [] and len(calls) == 1
